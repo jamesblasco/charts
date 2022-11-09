@@ -66,11 +66,11 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
           final bucket = sales.sales / maxMeasure;
 
           if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
+            return Colors.blue;
           } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
+            return Colors.red;
           } else {
-            return charts.MaterialPalette.green.shadeDefault;
+            return Colors.green;
           }
         },
         domainFn: (LinearSales sales, _) => sales.year,
@@ -133,11 +133,11 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
           final bucket = sales.sales / maxMeasure;
 
           if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
+            return Colors.blue;
           } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
+            return Colors.red;
           } else {
-            return charts.MaterialPalette.green.shadeDefault;
+            return Colors.green;
           }
         },
         domainFn: (LinearSales sales, _) => sales.year,

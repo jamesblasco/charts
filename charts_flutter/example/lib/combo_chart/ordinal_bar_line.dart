@@ -71,19 +71,19 @@ class OrdinalComboBarLineChart extends StatelessWidget {
     return [
       new charts.Series<OrdinalSales, String>(
           id: 'Desktop',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
       new charts.Series<OrdinalSales, String>(
           id: 'Tablet',
-          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
       new charts.Series<OrdinalSales, String>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData)
@@ -135,19 +135,19 @@ class OrdinalComboBarLineChart extends StatelessWidget {
     return [
       new charts.Series<OrdinalSales, String>(
           id: 'Desktop',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
       new charts.Series<OrdinalSales, String>(
           id: 'Tablet',
-          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
       new charts.Series<OrdinalSales, String>(
           id: 'Mobile ',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData)

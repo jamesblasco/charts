@@ -13,11 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import '../../../common.dart';
 import '../../chart/cartesian/axis/spec/axis_spec.dart' show LineStyleSpec;
 import '../color.dart' show Color;
 import '../graphics_factory.dart' show GraphicsFactory;
 import '../line_style.dart' show LineStyle;
-import '../material_palette.dart' show MaterialPalette;
+import '../material_palette.dart' show Colors, MaterialPalette;
 import '../palette.dart' show Palette;
 import 'style.dart' show Style;
 
@@ -25,23 +26,23 @@ class MaterialStyle implements Style {
   const MaterialStyle();
 
   @override
-  Color get black => MaterialPalette.black;
+  Color get black => Colors.black;
 
   @override
-  Color get transparent => MaterialPalette.transparent;
+  Color get transparent => Colors.transparent;
 
   @override
-  Color get white => MaterialPalette.white;
+  Color get white => Colors.white;
 
   @override
-  List<Palette> getOrderedPalettes(int count) =>
+  List<MaterialColor> getOrderedPalettes(int count) =>
       MaterialPalette.getOrderedPalettes(count);
 
   @override
   LineStyle createAxisLineStyle(
       GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
     return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
+      ..color = spec?.color ?? Colors.grey
       ..dashPattern = spec?.dashPattern
       ..strokeWidth = spec?.thickness ?? 1;
   }
@@ -50,7 +51,7 @@ class MaterialStyle implements Style {
   LineStyle createTickLineStyle(
       GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
     return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
+      ..color = spec?.color ?? Colors.grey
       ..dashPattern = spec?.dashPattern
       ..strokeWidth = spec?.thickness ?? 1;
   }
@@ -59,49 +60,49 @@ class MaterialStyle implements Style {
   int get tickLength => 3;
 
   @override
-  Color get tickColor => MaterialPalette.gray.shade800;
+  Color get tickColor => Colors.grey.shade800;
 
   @override
   LineStyle createGridlineStyle(
       GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
     return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shade300
+      ..color = spec?.color ?? Colors.grey.shade300
       ..dashPattern = spec?.dashPattern
       ..strokeWidth = spec?.thickness ?? 1;
   }
 
   @override
-  Color get arcLabelOutsideLeaderLine => MaterialPalette.gray.shade600;
+  Color get arcLabelOutsideLeaderLine => Colors.grey.shade600;
 
   @override
-  Color get defaultSeriesColor => MaterialPalette.gray.shadeDefault;
+  Color get defaultSeriesColor => Colors.grey;
 
   @override
-  Color get arcStrokeColor => MaterialPalette.white;
+  Color get arcStrokeColor => Colors.white;
 
   @override
-  Color get legendEntryTextColor => MaterialPalette.gray.shade800;
+  Color get legendEntryTextColor => Colors.grey.shade800;
 
   @override
-  Color get legendTitleTextColor => MaterialPalette.gray.shade800;
+  Color get legendTitleTextColor => Colors.grey.shade800;
 
   @override
-  Color get linePointHighlighterColor => MaterialPalette.gray.shade600;
+  Color get linePointHighlighterColor => Colors.grey.shade600;
 
   @override
-  Color get noDataColor => MaterialPalette.gray.shade200;
+  Color get noDataColor => Colors.grey.shade200;
 
   @override
-  Color get rangeAnnotationColor => MaterialPalette.gray.shade100;
+  Color get rangeAnnotationColor => Colors.grey.shade100;
 
   @override
-  Color get sliderFillColor => MaterialPalette.white;
+  Color get sliderFillColor => Colors.white;
 
   @override
-  Color get sliderStrokeColor => MaterialPalette.gray.shade600;
+  Color get sliderStrokeColor => Colors.grey.shade600;
 
   @override
-  Color get chartBackgroundColor => MaterialPalette.white;
+  Color get chartBackgroundColor => Colors.white;
 
   @override
   double get rangeBandSize => 0.65;

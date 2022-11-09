@@ -36,8 +36,8 @@ class LinePainter {
       required Paint paint,
       required List<Point> points,
       Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
+      Color? fill,
+      Color? stroke,
       bool? roundEndCaps,
       double? strokeWidthPx,
       List<int>? dashPattern,
@@ -57,7 +57,7 @@ class LinePainter {
             clipBounds.height.toDouble()));
     }
 
-    paint.color = new Color.fromARGB(stroke!.a, stroke.r, stroke.g, stroke.b);
+    paint.color = stroke!;
 
     if (shader != null) {
       paint.shader = shader;

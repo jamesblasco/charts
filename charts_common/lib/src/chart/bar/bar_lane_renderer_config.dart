@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import '../../common/style/style_factory.dart' show StyleFactory;
 import '../../common/symbol_renderer.dart';

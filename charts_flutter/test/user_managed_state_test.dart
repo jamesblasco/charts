@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -120,7 +121,7 @@ List<charts.Series<OrdinalSales, String>> _createSampleData() {
   return [
     new charts.Series<OrdinalSales, String>(
       id: 'Sales',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+      colorFn: (_, __) => Colors.blue,
       domainFn: (OrdinalSales sales, _) => sales.year,
       measureFn: (OrdinalSales sales, _) => sales.sales,
       data: data,

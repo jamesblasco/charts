@@ -95,21 +95,21 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
     return [
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: myDesktopData,
       ),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: myTabletData,
       ),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 1',
-        colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault,
+        colorFn: (_, __) => Colors.grey,
         domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
         domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
         domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,
@@ -124,7 +124,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
         domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
         domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,

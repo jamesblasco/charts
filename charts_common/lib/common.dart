@@ -282,7 +282,7 @@ export 'src/common/date_time_factory.dart'
 export 'src/common/gesture_listener.dart' show GestureListener;
 export 'src/common/graphics_factory.dart' show GraphicsFactory;
 export 'src/common/line_style.dart' show LineStyle;
-export 'src/common/material_palette.dart' show MaterialPalette;
+
 export 'src/common/math.dart' show NullablePoint;
 export 'src/common/performance.dart' show Performance;
 export 'src/common/proxy_gesture_listener.dart' show ProxyGestureListener;
@@ -308,6 +308,7 @@ export 'src/data/series.dart' show AttributeKey, Series, TypedAccessorFn;
 export 'src/data/tree.dart' show Tree, TreeNode;
 export 'src/data/graph.dart' show Graph;
 export 'src/data/sankey_graph.dart' show SankeyGraph;
+export  'package:charts/charts.dart';
 //
 // DO NOT ADD ANYTHING BELOW THIS. IT WILL BREAK OPENSOURCE.
 //

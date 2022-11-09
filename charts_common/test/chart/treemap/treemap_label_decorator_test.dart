@@ -16,6 +16,7 @@
 // limitations under the License.
 
 import 'dart:math' show pi, Rectangle;
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
 import 'package:charts_common/src/chart/common/processed_series.dart'

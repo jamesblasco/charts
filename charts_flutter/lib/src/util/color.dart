@@ -15,14 +15,3 @@
 
 import 'package:charts_common/common.dart' as common show Color;
 import 'dart:ui' as ui;
-
-class ColorUtil {
-  static ui.Color toDartColor(common.Color color) {
-    return ui.Color.fromARGB(color.a, color.r, color.g, color.b);
-  }
-
-  static common.Color fromDartColor(ui.Color color) {
-    return common.Color(
-        r: color.red, g: color.green, b: color.blue, a: color.alpha);
-  }
-}

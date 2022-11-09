@@ -17,6 +17,7 @@
 
 import 'dart:math' show Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart';
 import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart';
@@ -168,20 +169,20 @@ void main() {
         data: [_s1D1, _s1D2, _s1D3],
         domainFn: (row, _) => row.campaign,
         measureFn: (row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.blue.shadeDefault);
+        colorFn: (_, __) => Colors.blue);
 
     _series2 = Series<MyRow, int>(
         id: 's2',
         data: [_s2D1, _s2D2, _s2D3],
         domainFn: (row, _) => row.campaign,
         measureFn: (row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.red.shadeDefault);
+        colorFn: (_, __) => Colors.red);
 
     _annotations1 = [
       RangeAnnotationSegment(1, 2, RangeAnnotationAxisType.domain,
           startLabel: 'Ann 1'),
       RangeAnnotationSegment(4, 5, RangeAnnotationAxisType.domain,
-          color: MaterialPalette.gray.shade200, endLabel: 'Ann 2'),
+          color: Colors.grey.shade200, endLabel: 'Ann 2'),
       RangeAnnotationSegment(5, 5.5, RangeAnnotationAxisType.measure,
           startLabel: 'Really long tick start label',
           endLabel: 'Really long tick end label'),
@@ -194,9 +195,9 @@ void main() {
     _annotations2 = [
       RangeAnnotationSegment(1, 2, RangeAnnotationAxisType.domain),
       RangeAnnotationSegment(4, 5, RangeAnnotationAxisType.domain,
-          color: MaterialPalette.gray.shade200),
+          color: Colors.grey.shade200),
       RangeAnnotationSegment(8, 10, RangeAnnotationAxisType.domain,
-          color: MaterialPalette.gray.shade300),
+          color: Colors.grey.shade300),
     ];
 
     _annotations3 = [
@@ -205,7 +206,7 @@ void main() {
       LineAnnotationSegment(4, RangeAnnotationAxisType.measure,
           startLabel: 'Ann 2 Start',
           endLabel: 'Ann 2 End',
-          color: MaterialPalette.gray.shade200,
+          color: Colors.grey.shade200,
           dashPattern: _dashPattern),
     ];
   });
@@ -228,7 +229,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 20.0,
               endPosition: 40.0,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               startLabel: 'Ann 1',
               labelAnchor: AnnotationLabelAnchor.end,
               labelDirection: AnnotationLabelDirection.vertical,
@@ -238,7 +239,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 80.0,
               endPosition: 100.0,
-              color: MaterialPalette.gray.shade200,
+              color: Colors.grey.shade200,
               endLabel: 'Ann 2',
               labelAnchor: AnnotationLabelAnchor.end,
               labelDirection: AnnotationLabelDirection.vertical,
@@ -251,7 +252,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 0.0,
               endPosition: 2.78,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               startLabel: 'Really long tick start label',
               endLabel: 'Really long tick end label',
               labelAnchor: AnnotationLabelAnchor.end,
@@ -262,7 +263,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 27.78,
               endPosition: 55.56,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               startLabel: 'Ann 4 Start',
               endLabel: 'Ann 4 End',
               labelAnchor: AnnotationLabelAnchor.end,
@@ -273,7 +274,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 61.11,
               endPosition: 94.44,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               startLabel: 'Ann 5 Start',
               endLabel: 'Ann 5 End',
               labelAnchor: AnnotationLabelAnchor.end,
@@ -299,7 +300,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 10.0,
               endPosition: 20.0,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               labelAnchor: AnnotationLabelAnchor.end,
               labelDirection: AnnotationLabelDirection.vertical,
               labelPosition: AnnotationLabelPosition.auto),
@@ -308,7 +309,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 40.0,
               endPosition: 50.0,
-              color: MaterialPalette.gray.shade200,
+              color: Colors.grey.shade200,
               labelAnchor: AnnotationLabelAnchor.end,
               labelDirection: AnnotationLabelDirection.vertical,
               labelPosition: AnnotationLabelPosition.auto),
@@ -317,7 +318,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 80.0,
               endPosition: 100.0,
-              color: MaterialPalette.gray.shade300,
+              color: Colors.grey.shade300,
               labelAnchor: AnnotationLabelAnchor.end,
               labelDirection: AnnotationLabelDirection.vertical,
               labelPosition: AnnotationLabelPosition.auto),
@@ -341,7 +342,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 0.0,
               endPosition: 0.0,
-              color: MaterialPalette.gray.shade100,
+              color: Colors.grey.shade100,
               startLabel: 'Ann 1 Start',
               endLabel: 'Ann 1 End',
               labelAnchor: AnnotationLabelAnchor.end,
@@ -352,7 +353,7 @@ void main() {
           tester.doesAnnotationExist(
               startPosition: 13.64,
               endPosition: 13.64,
-              color: MaterialPalette.gray.shade200,
+              color: Colors.grey.shade200,
               dashPattern: _dashPattern,
               startLabel: 'Ann 2 Start',
               endLabel: 'Ann 2 End',

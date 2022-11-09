@@ -7,6 +7,8 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  charts:
+    path: ../charts
   collection: ^1.14.5
   logging: ^1.0.2
   meta: ^1.1.1

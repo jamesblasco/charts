@@ -135,14 +135,14 @@ class DomainA11yExploreBarChart extends StatelessWidget {
     return [
       new charts.Series<OrdinalSales, String>(
         id: 'Mobile Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileData,
       ),
       new charts.Series<OrdinalSales, String>(
         id: 'Tablet Sales',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletData,

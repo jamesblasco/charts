@@ -16,6 +16,7 @@
 // limitations under the License.
 
 import 'dart:math' show Point, Rectangle;
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/bar/bar_target_line_renderer.dart';
 import 'package:charts_common/src/chart/bar/bar_target_line_renderer_config.dart';
 import 'package:charts_common/src/chart/bar/base_bar_renderer.dart';
@@ -582,8 +583,7 @@ void main() {
         when(measureAxis.getLocation(75)).thenReturn(75.0);
         when(measureAxis.getLocation(100)).thenReturn(100.0);
 
-        final color = Color.fromHex(code: '#000000');
-
+        final color = Colors.black;
         final series = MutableSeries<String>(Series<MyRow, String>(
             id: 'Desktop',
             domainFn: (MyRow row, _) => row.campaign,

@@ -77,21 +77,21 @@ class NumericComboLinePointChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData)
@@ -142,21 +142,21 @@ class NumericComboLinePointChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData)

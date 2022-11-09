@@ -17,6 +17,7 @@
 
 import 'dart:math' show Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:charts_common/src/chart/common/base_chart.dart';
@@ -160,7 +161,7 @@ void main() {
         data: [_s1D1, _s1D2, _s1D3],
         domainFn: (MyRow row, _) => row.campaign,
         measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.blue.shadeDefault))
+        colorFn: (_, __) => Colors.blue))
       ..measureFn = (_) => 0.0;
 
     _series2 = MutableSeries(Series<MyRow, int>(
@@ -168,7 +169,7 @@ void main() {
         data: [_s2D1, _s2D2, _s2D3],
         domainFn: (MyRow row, _) => row.campaign,
         measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.red.shadeDefault))
+        colorFn: (_, __) => Colors.red))
       ..measureFn = (_) => 0.0;
   });
 

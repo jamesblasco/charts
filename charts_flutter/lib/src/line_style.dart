@@ -13,11 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart' as common show Color, LineStyle;
+import 'dart:ui';
+
+import 'package:charts_common/common.dart' as common show LineStyle;
 
 class LineStyle implements common.LineStyle {
   @override
-  common.Color? color;
+  Color? color;
 
   @override
   List<int>? dashPattern;

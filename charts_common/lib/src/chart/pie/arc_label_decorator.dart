@@ -15,6 +15,7 @@
 
 import 'dart:math' show cos, min, sin, pi, Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show immutable, protected;
 
 import '../../common/color.dart' show Color;
@@ -40,9 +41,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   static const _defaultLabelPosition = ArcLabelPosition.auto;
   static const _defaultLabelPadding = 5;
   static final _defaultInsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Color.white);
+      TextStyleSpec(fontSize: 12, color: Colors.white);
   static final _defaultOutsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Color.black);
+      TextStyleSpec(fontSize: 12, color: Colors.black);
   static final _defaultLeaderLineStyle = ArcLabelLeaderLineStyleSpec(
       length: 20.0,
       thickness: 1.0,
@@ -237,7 +238,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec.color ?? Color.black
+      ..color = labelSpec.color ?? Colors.black
       ..fontFamily = labelSpec.fontFamily
       ..fontSize = labelSpec.fontSize ?? 12
       ..lineHeight = labelSpec.lineHeight;

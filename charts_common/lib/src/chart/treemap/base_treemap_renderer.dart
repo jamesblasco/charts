@@ -251,7 +251,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
       series.fillColorFn ??= (int? index) {
         var node = series.data[index!] as TreeNode<Object>;
-        return colorPalettes[node.depth % count].shadeDefault;
+        return colorPalettes[node.depth % count];
       };
 
       // Pattern color and stroke color defaults to the default config stroke

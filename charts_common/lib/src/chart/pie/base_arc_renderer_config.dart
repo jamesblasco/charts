@@ -15,6 +15,8 @@
 
 import 'dart:math' show pi;
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import '../../common/style/style_factory.dart' show StyleFactory;
 import '../../common/symbol_renderer.dart';

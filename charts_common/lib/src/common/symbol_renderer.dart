@@ -15,10 +15,10 @@
 
 import 'dart:math' show Rectangle, Point, min, sqrt;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show protected;
 
 import '../chart/common/chart_canvas.dart' show ChartCanvas, FillPatternType;
-import 'color.dart' show Color;
 import 'style/style_factory.dart' show StyleFactory;
 
 /// Strategy for rendering a symbol.

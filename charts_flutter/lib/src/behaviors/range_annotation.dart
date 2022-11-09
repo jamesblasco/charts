@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:ui';
+
 import 'package:charts_common/common.dart' as common
     show
         AnnotationLabelAnchor,
@@ -20,12 +22,10 @@ import 'package:charts_common/common.dart' as common
         AnnotationLabelPosition,
         AnnotationSegment,
         ChartBehavior,
-        Color,
-        MaterialPalette,
         RangeAnnotation,
         TextStyleSpec;
 import 'package:collection/collection.dart' show ListEquality;
-import 'package:flutter/widgets.dart' show hashValues;
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart' show immutable;
 
 import 'chart_behavior.dart' show ChartBehavior, GestureType;
@@ -56,7 +56,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   final common.TextStyleSpec? defaultLabelStyleSpec;
 
   /// Default color for annotations.
-  final common.Color? defaultColor;
+  final Color? defaultColor;
 
   /// Whether or not the range of the axis should be extended to include the
   /// annotation start and end values.
@@ -71,7 +71,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   final int? layoutPaintOrder;
 
   RangeAnnotation(this.annotations,
-      {common.Color? defaultColor,
+      {Color? defaultColor,
       this.defaultLabelAnchor,
       this.defaultLabelDirection,
       this.defaultLabelPosition,
@@ -79,8 +79,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
       this.extendAxis,
       this.labelPadding,
       this.layoutPaintOrder})
-      : this.defaultColor =
-            defaultColor ?? common.MaterialPalette.gray.shade100;
+      : this.defaultColor = defaultColor ?? Colors.grey.shade100;
 
   @override
   common.RangeAnnotation<D> createCommonBehavior() =>

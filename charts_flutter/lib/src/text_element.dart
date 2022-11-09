@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui' show TextAlign, TextDirection;
+import 'dart:ui' show Color, TextAlign, TextDirection;
 import 'package:charts_common/common.dart' as common
     show
         MaxWidthStrategy,
@@ -22,7 +22,7 @@ import 'package:charts_common/common.dart' as common
         TextMeasurement,
         TextStyle;
 import 'package:flutter/rendering.dart'
-    show Color, TextBaseline, TextPainter, TextSpan, TextStyle;
+    show TextBaseline, TextPainter, TextSpan, TextStyle;
 
 /// Flutter implementation for text measurement and painter.
 class TextElement implements common.TextElement {
@@ -139,10 +139,10 @@ class TextElement implements common.TextElement {
     var color = (textStyle == null || textStyle!.color == null)
         ? null
         : new Color.fromARGB(
-            (textStyle!.color!.a * _opacity!).round(),
-            textStyle!.color!.r,
-            textStyle!.color!.g,
-            textStyle!.color!.b,
+            (textStyle!.color!.alpha * _opacity!).round(),
+            textStyle!.color!.red,
+            textStyle!.color!.green,
+            textStyle!.color!.blue,
           );
 
     _textPainter = new TextPainter(

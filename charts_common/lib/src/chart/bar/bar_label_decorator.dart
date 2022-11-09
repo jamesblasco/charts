@@ -15,6 +15,8 @@
 
 import 'dart:math' show Rectangle;
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/text_element.dart' show TextDirection, TextElement;
@@ -34,9 +36,9 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   static const _defaultVerticalLabelAnchor = BarLabelAnchor.end;
   static const _defaultlabelVerticalPosition = BarLabelVerticalPosition.middle;
   static final _defaultInsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Color.white);
+      TextStyleSpec(fontSize: 12, color: Colors.white);
   static final _defaultOutsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Color.black);
+      TextStyleSpec(fontSize: 12, color: Colors.black);
   static final _labelSplitPattern = '\n';
   static final _defaultMultiLineLabelPadding = 2;
 
@@ -394,7 +396,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec? labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec?.color ?? Color.black
+      ..color = labelSpec?.color ?? Colors.black
       ..fontFamily = labelSpec?.fontFamily
       ..fontSize = labelSpec?.fontSize ?? 12
       ..lineHeight = labelSpec?.lineHeight

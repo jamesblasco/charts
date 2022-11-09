@@ -15,6 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:charts_common/src/chart/common/base_chart.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
@@ -112,8 +113,8 @@ void main() {
   final s2D2 = MyRow('s2d2', 22);
   final s2D3 = MyRow('s2d3', 23);
 
-  final blue = Color(r: 0x21, g: 0x96, b: 0xF3);
-  final red = Color(r: 0xF4, g: 0x43, b: 0x36);
+  final blue = Colors.blue;
+  final red = Colors.red;
 
   ConcreteChart chart;
 

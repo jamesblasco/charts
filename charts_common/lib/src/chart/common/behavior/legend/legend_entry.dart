@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
+
 import '../../../../common/color.dart';
 import '../../../../common/symbol_renderer.dart';
 import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;

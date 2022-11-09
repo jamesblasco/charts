@@ -15,6 +15,7 @@
 
 import 'dart:math' show Rectangle, pi;
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/common/color.dart';
@@ -33,7 +34,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   static const _defaultLabelPadding = 4;
   static const _defaultFontSize = 12;
   static final _defaultLabelStyle =
-      TextStyleSpec(fontSize: _defaultFontSize, color: Color.black);
+      TextStyleSpec(fontSize: _defaultFontSize, color: Colors.black);
 
   /// Rotation value of 90 degrees clockwise.
   static const _90DegreeClockwise = pi / 2;
@@ -115,7 +116,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   TextStyle _asTextStyle(
           GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) =>
       graphicsFactory.createTextPaint()
-        ..color = labelSpec.color ?? Color.black
+        ..color = labelSpec.color ?? Colors.black
         ..fontFamily = labelSpec.fontFamily
         ..fontSize = labelSpec.fontSize ?? _defaultFontSize
         ..lineHeight = labelSpec.lineHeight;

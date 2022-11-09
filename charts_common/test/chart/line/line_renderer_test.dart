@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/line/line_renderer.dart';
 import 'package:charts_common/src/chart/line/line_renderer_config.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart'
     show MutableSeries, ImmutableSeries;
 import 'package:charts_common/src/common/color.dart';
-import 'package:charts_common/src/common/material_palette.dart'
-    show MaterialPalette;
+
 import 'package:charts_common/src/data/series.dart' show Series;
 
 import 'package:mockito/mockito.dart';
@@ -58,45 +58,37 @@ void main() {
 
   setUp(() {
     myFakeDesktopData = [
-      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-      MyRow(
-          'MyCampaign2', 2, 25, MaterialPalette.green.shadeDefault, null, 2.0),
-      MyRow('MyCampaign3', 3, 100, MaterialPalette.red.shadeDefault, null, 2.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.red.shadeDefault, null,
-          2.0),
+      MyRow('MyCampaign1', 1, 5, Colors.blue, null, 2.0),
+      MyRow('MyCampaign2', 2, 25, Colors.green, null, 2.0),
+      MyRow('MyCampaign3', 3, 100, Colors.red, null, 2.0),
+      MyRow('MyOtherCampaign', 4, 75, Colors.red, null, 2.0),
     ];
 
     myFakeTabletData = [
-      MyRow(
-          'MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, [2, 2], 2.0),
-      MyRow(
-          'MyCampaign2', 2, 25, MaterialPalette.blue.shadeDefault, [3, 3], 2.0),
-      MyRow('MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, [4, 4],
-          2.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.blue.shadeDefault, [4, 4],
-          2.0),
+      MyRow('MyCampaign1', 1, 5, Colors.blue, [2, 2], 2.0),
+      MyRow('MyCampaign2', 2, 25, Colors.blue, [3, 3], 2.0),
+      MyRow('MyCampaign3', 3, 100, Colors.blue, [4, 4], 2.0),
+      MyRow('MyOtherCampaign', 4, 75, Colors.blue, [4, 4], 2.0),
     ];
 
     myFakeMobileData = [
-      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-      MyRow('MyCampaign2', 2, 25, MaterialPalette.blue.shadeDefault, null, 3.0),
-      MyRow(
-          'MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, null, 4.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.blue.shadeDefault, null,
-          4.0),
+      MyRow('MyCampaign1', 1, 5, Colors.blue, null, 2.0),
+      MyRow('MyCampaign2', 2, 25, Colors.blue, null, 3.0),
+      MyRow('MyCampaign3', 3, 100, Colors.blue, null, 4.0),
+      MyRow('MyOtherCampaign', 4, 75, Colors.blue, null, 4.0),
     ];
 
     numericSeriesList = [
       MutableSeries<int>(Series<MyRow, int>(
           id: 'Desktop',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           data: myFakeDesktopData)),
       MutableSeries<int>(Series<MyRow, int>(
           id: 'Tablet',
-          colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
@@ -104,7 +96,7 @@ void main() {
           data: myFakeTabletData)),
       MutableSeries<int>(Series<MyRow, int>(
           id: 'Mobile',
-          colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
@@ -115,14 +107,14 @@ void main() {
     ordinalSeriesList = [
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Desktop',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           data: myFakeDesktopData)),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Tablet',
-          colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
@@ -130,7 +122,7 @@ void main() {
           data: myFakeTabletData)),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile',
-          colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
@@ -156,7 +148,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       var segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -174,7 +166,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.red.shadeDefault));
+      expect(segment.color, equals(Colors.red));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -192,7 +184,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -220,7 +212,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       var segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -238,7 +230,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.red.shadeDefault));
+      expect(segment.color, equals(Colors.red));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -256,7 +248,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
@@ -314,21 +306,21 @@ void main() {
       expect(styleSegments.length, equals(3));
 
       var segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
       expect(segment.strokeWidthPx, equals(2.0));
 
       segment = styleSegments[1];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
       expect(segment.strokeWidthPx, equals(2.0));
 
       segment = styleSegments[2];
-      expect(segment.color, equals(MaterialPalette.red.shadeDefault));
+      expect(segment.color, equals(Colors.red));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
@@ -346,21 +338,21 @@ void main() {
       expect(styleSegments.length, equals(3));
 
       segment = segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, equals([2, 2]));
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
       expect(segment.strokeWidthPx, equals(2.0));
 
       segment = styleSegments[1];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, equals([3, 3]));
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
       expect(segment.strokeWidthPx, equals(2.0));
 
       segment = styleSegments[2];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, equals([4, 4]));
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
@@ -378,21 +370,21 @@ void main() {
       expect(styleSegments.length, equals(3));
 
       segment = segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
       expect(segment.strokeWidthPx, equals(2.0));
 
       segment = styleSegments[1];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
       expect(segment.strokeWidthPx, equals(3.0));
 
       segment = styleSegments[2];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
@@ -406,22 +398,14 @@ void main() {
 
     test('with numeric data and repeats in style', () {
       var myFakeData = [
-        MyRow(
-            'MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-        MyRow('MyCampaign2', 2, 25, MaterialPalette.green.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign4', 4, 75, MaterialPalette.green.shadeDefault, null,
-            2.0),
-        MyRow(
-            'MyCampaign1', 5, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-        MyRow('MyCampaign2', 6, 25, MaterialPalette.green.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign3', 7, 100, MaterialPalette.blue.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign4', 8, 75, MaterialPalette.green.shadeDefault, null,
-            2.0),
+        MyRow('MyCampaign1', 1, 5, Colors.blue, null, 2.0),
+        MyRow('MyCampaign2', 2, 25, Colors.green, null, 2.0),
+        MyRow('MyCampaign3', 3, 100, Colors.blue, null, 2.0),
+        MyRow('MyCampaign4', 4, 75, Colors.green, null, 2.0),
+        MyRow('MyCampaign1', 5, 5, Colors.blue, null, 2.0),
+        MyRow('MyCampaign2', 6, 25, Colors.green, null, 2.0),
+        MyRow('MyCampaign3', 7, 100, Colors.blue, null, 2.0),
+        MyRow('MyCampaign4', 8, 75, Colors.green, null, 2.0),
       ];
 
       numericSeriesList = [
@@ -451,42 +435,42 @@ void main() {
       expect(styleSegments.length, equals(8));
 
       var segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
 
       segment = styleSegments[1];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
 
       segment = styleSegments[2];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
 
       segment = styleSegments[3];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.domainExtent.start, equals(4));
       expect(segment.domainExtent.end, equals(5));
 
       segment = styleSegments[4];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.domainExtent.start, equals(5));
       expect(segment.domainExtent.end, equals(6));
 
       segment = styleSegments[5];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.domainExtent.start, equals(6));
       expect(segment.domainExtent.end, equals(7));
 
       segment = styleSegments[6];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.domainExtent.start, equals(7));
       expect(segment.domainExtent.end, equals(8));
 
       segment = styleSegments[7];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.domainExtent.start, equals(8));
       expect(segment.domainExtent.end, equals(8));
     });
@@ -507,7 +491,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       var segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.blue.shadeDefault));
+      expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));
@@ -520,7 +504,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.red.shadeDefault));
+      expect(segment.color, equals(Colors.red));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));
@@ -533,7 +517,7 @@ void main() {
       expect(styleSegments.length, equals(1));
 
       segment = styleSegments[0];
-      expect(segment.color, equals(MaterialPalette.green.shadeDefault));
+      expect(segment.color, equals(Colors.green));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));

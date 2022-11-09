@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
+
 import '../base_chart.dart' show BaseChart, LifecycleListener;
 import '../processed_series.dart' show MutableSeries;
 import '../selection_model/selection_model.dart'

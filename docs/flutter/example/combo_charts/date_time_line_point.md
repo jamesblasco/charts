@@ -80,21 +80,21 @@ class DateTimeComboLinePointChart extends StatelessWidget {
     return [
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
       new charts.Series<TimeSeriesSales, DateTime>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (TimeSeriesSales sales, _) => sales.time,
           measureFn: (TimeSeriesSales sales, _) => sales.sales,
           data: mobileSalesData)

@@ -16,9 +16,10 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show pi, Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart';
 
-import '../../../common/color.dart' show Color;
+
 import '../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../common/style/style_factory.dart' show StyleFactory;
 import '../../../common/text_element.dart'
@@ -56,7 +57,7 @@ class RangeAnnotation<D> implements ChartBehavior<D> {
   static const _defaultLabelPosition = AnnotationLabelPosition.auto;
   static const _defaultLabelPadding = 5;
   static final _defaultLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Color.black);
+      TextStyleSpec(fontSize: 12, color: Colors.black);
 
   /// List of annotations to render on the chart.
   final List<AnnotationSegment<Object>> annotations;
@@ -1080,7 +1081,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   TextStyle _getTextStyle(
       GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
     return graphicsFactory.createTextPaint()
-      ..color = labelSpec.color ?? Color.black
+      ..color = labelSpec.color ?? Colors.black
       ..fontFamily = labelSpec.fontFamily
       ..fontSize = labelSpec.fontSize ?? 12
       ..lineHeight = labelSpec.lineHeight;
@@ -1142,7 +1143,7 @@ class _AnnotationElement<D> {
     return _AnnotationElement<D>(
       annotation: _DatumAnnotation.from(annotation),
       annotationSegment: annotationSegment,
-      color: color != null ? Color.fromOther(color: color!) : null,
+      color: color,
       startLabel: startLabel,
       endLabel: endLabel,
       middleLabel: middleLabel,

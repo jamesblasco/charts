@@ -15,13 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
 import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart';
 import 'package:charts_common/src/chart/scatter_plot/symbol_annotation_renderer.dart';
 import 'package:charts_common/src/chart/scatter_plot/symbol_annotation_renderer_config.dart';
-import 'package:charts_common/src/common/material_palette.dart'
-    show MaterialPalette;
+
 import 'package:charts_common/src/data/series.dart' show Series;
 
 import 'package:test/test.dart';
@@ -56,7 +56,7 @@ void main() {
     numericSeriesList = [
       MutableSeries<int>(Series<MyRow, int>(
           id: 'Desktop',
-          colorFn: (MyRow row, _) => MaterialPalette.blue.shadeDefault,
+          colorFn: (MyRow row, _) => Colors.blue,
           domainFn: (MyRow row, _) => row.campaign,
           domainLowerBoundFn: (MyRow row, _) => row.campaignLower,
           domainUpperBoundFn: (MyRow row, _) => row.campaignUpper,

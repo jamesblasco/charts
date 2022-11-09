@@ -17,6 +17,7 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
+import 'package:charts/charts.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -64,15 +65,13 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         labelAccessorFn: (OrdinalSales sales, _) =>
             '${sales.year}: \$${sales.sales.toString()}',
         insideLabelStyleAccessorFn: (OrdinalSales sales, _) {
-          final color = (sales.year == '2014')
-              ? charts.MaterialPalette.red.shadeDefault
-              : charts.MaterialPalette.yellow.shadeDefault.darker;
+          final color =
+              (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
           return new charts.TextStyleSpec(color: color);
         },
         outsideLabelStyleAccessorFn: (OrdinalSales sales, _) {
-          final color = (sales.year == '2014')
-              ? charts.MaterialPalette.red.shadeDefault
-              : charts.MaterialPalette.yellow.shadeDefault.darker;
+          final color =
+              (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
           return new charts.TextStyleSpec(color: color);
         },
       ),
@@ -115,15 +114,13 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         labelAccessorFn: (OrdinalSales sales, _) =>
             '${sales.year}: \$${sales.sales.toString()}',
         insideLabelStyleAccessorFn: (OrdinalSales sales, _) {
-          final color = (sales.year == '2014')
-              ? charts.MaterialPalette.red.shadeDefault
-              : charts.MaterialPalette.yellow.shadeDefault.darker;
+          final color =
+              (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
           return new charts.TextStyleSpec(color: color);
         },
         outsideLabelStyleAccessorFn: (OrdinalSales sales, _) {
-          final color = (sales.year == '2014')
-              ? charts.MaterialPalette.red.shadeDefault
-              : charts.MaterialPalette.yellow.shadeDefault.darker;
+          final color =
+              (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
           return new charts.TextStyleSpec(color: color);
         },
       ),

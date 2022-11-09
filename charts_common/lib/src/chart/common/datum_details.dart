@@ -15,6 +15,8 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import '../../common/math.dart' show NullablePoint;
 import '../../common/symbol_renderer.dart' show SymbolRenderer;

@@ -15,9 +15,9 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart';
 
-import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/style/style_factory.dart' show StyleFactory;
 import '../../common/symbol_renderer.dart' show SymbolRenderer;
@@ -224,7 +224,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
         var index = 0;
         seriesList.forEach((series) {
           if (series.colorFn == null) {
-            final color = palettes[index % palettes.length].shadeDefault;
+            final color = palettes[index % palettes.length];
             index++;
             series.colorFn = (_) => color;
             series.seriesColor ??= color;

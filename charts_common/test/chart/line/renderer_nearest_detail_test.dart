@@ -17,6 +17,7 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
@@ -65,7 +66,7 @@ void main() {
     ));
 
     series.measureOffsetFn = (_) => 0.0;
-    series.colorFn = (_) => Color.fromHex(code: '#000000');
+    series.colorFn = (_) => Colors.black;
 
     // Mock the Domain axis results.
     final domainAxis = MockDomainAxis();

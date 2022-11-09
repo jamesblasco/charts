@@ -26,15 +26,15 @@ class PointPainter {
       required Paint paint,
       required Point point,
       required double radius,
-      common.Color? fill,
-      common.Color? stroke,
+      Color? fill,
+      Color? stroke,
       double? strokeWidthPx}) {
     if (point == null) {
       return;
     }
 
     if (fill != null) {
-      paint.color = new Color.fromARGB(fill.a, fill.r, fill.g, fill.b);
+      paint.color = fill;
       paint.style = PaintingStyle.fill;
 
       canvas.drawCircle(
@@ -44,7 +44,7 @@ class PointPainter {
     // [Canvas.drawCircle] does not support drawing a circle with both a fill
     // and a stroke at this time. Use a separate circle for the stroke.
     if (stroke != null && strokeWidthPx != null && strokeWidthPx > 0.0) {
-      paint.color = new Color.fromARGB(stroke.a, stroke.r, stroke.g, stroke.b);
+      paint.color = stroke;
       paint.strokeWidth = strokeWidthPx;
       paint.strokeJoin = StrokeJoin.bevel;
       paint.style = PaintingStyle.stroke;

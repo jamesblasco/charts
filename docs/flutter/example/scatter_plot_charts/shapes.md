@@ -57,7 +57,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
       new LinearSales(12, 75, 4.0, null, null, null),
       // Render a hollow circle, filled in with white.
       new LinearSales(
-          13, 225, 5.0, 'circle', charts.MaterialPalette.white, 2.0),
+          13, 225, 5.0, 'circle', Colors.white, 2.0),
       new LinearSales(16, 50, 4.0, null, null, null),
       new LinearSales(24, 75, 3.0, null, null, null),
       new LinearSales(25, 100, 3.0, 'circle', null, null),
@@ -65,10 +65,10 @@ class ShapesScatterPlotChart extends StatelessWidget {
       new LinearSales(37, 10, 4.5, null, null, null),
       // Render a hollow circle, filled in with white.
       new LinearSales(
-          45, 300, 8.0, 'circle', charts.MaterialPalette.white, 2.0),
+          45, 300, 8.0, 'circle', Colors.white, 2.0),
       new LinearSales(52, 15, 4.0, null, null, null),
       // Render a hollow square, filled in with white.
-      new LinearSales(56, 200, 7.0, null, charts.MaterialPalette.white, 2.0),
+      new LinearSales(56, 200, 7.0, null, Colors.white, 2.0),
     ];
 
     final maxMeasure = 300;
@@ -82,11 +82,11 @@ class ShapesScatterPlotChart extends StatelessWidget {
           final bucket = sales.sales / maxMeasure;
 
           if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
+            return Colors.blue;
           } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
+            return Colors.red;
           } else {
-            return charts.MaterialPalette.green.shadeDefault;
+            return Colors.green;
           }
         },
         domainFn: (LinearSales sales, _) => sales.year,

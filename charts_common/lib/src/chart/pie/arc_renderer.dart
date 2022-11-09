@@ -16,6 +16,8 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show max, pi, Point;
 
+import 'package:charts/charts.dart';
+import 'package:charts_common/src/common/palette.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
 import '../../common/style/style_factory.dart' show StyleFactory;

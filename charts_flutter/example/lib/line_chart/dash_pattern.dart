@@ -72,14 +72,14 @@ class DashPatternLineChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         dashPatternFn: (_, __) => [2, 2],
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -87,7 +87,7 @@ class DashPatternLineChart extends StatelessWidget {
       ),
       new charts.Series<LinearSales, int>(
         id: 'Mobile',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         dashPatternFn: (_, __) => [8, 3, 2, 3],
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -128,14 +128,14 @@ class DashPatternLineChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         dashPatternFn: (_, __) => [2, 2],
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -143,7 +143,7 @@ class DashPatternLineChart extends StatelessWidget {
       ),
       new charts.Series<LinearSales, int>(
         id: 'Mobile',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         dashPatternFn: (_, __) => [8, 3, 2, 3],
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

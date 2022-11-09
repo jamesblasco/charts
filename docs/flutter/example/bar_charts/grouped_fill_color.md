@@ -67,9 +67,9 @@ class GroupedFillColorBarChart extends StatelessWidget {
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         fillColorFn: (_, __) =>
-            charts.MaterialPalette.blue.shadeDefault.lighter,
+            Colors.blue.lighter,
       ),
       // Solid red bars. Fill color will default to the series color if no
       // fillColorFn is configured.
@@ -77,7 +77,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
         id: 'Tablet',
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesData,
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (OrdinalSales sales, _) => sales.year,
       ),
       // Hollow green bars.
@@ -86,8 +86,8 @@ class GroupedFillColorBarChart extends StatelessWidget {
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        fillColorFn: (_, __) => charts.MaterialPalette.transparent,
+        colorFn: (_, __) => Colors.green,
+        fillColorFn: (_, __) => Colors.transparent,
       ),
     ];
   }

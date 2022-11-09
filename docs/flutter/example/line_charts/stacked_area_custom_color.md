@@ -64,10 +64,10 @@ class StackedAreaCustomColorLineChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
         // colorFn specifies that the line will be blue.
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         // areaColorFn specifies that the area skirt will be light blue.
         areaColorFn: (_, __) =>
-            charts.MaterialPalette.blue.shadeDefault.lighter,
+            Colors.blue.lighter,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
@@ -75,9 +75,9 @@ class StackedAreaCustomColorLineChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
         // colorFn specifies that the line will be red.
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         // areaColorFn specifies that the area skirt will be light red.
-        areaColorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
+        areaColorFn: (_, __) => Colors.red.lighter,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,
@@ -85,10 +85,10 @@ class StackedAreaCustomColorLineChart extends StatelessWidget {
       new charts.Series<LinearSales, int>(
         id: 'Mobile',
         // colorFn specifies that the line will be green.
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         // areaColorFn specifies that the area skirt will be light green.
         areaColorFn: (_, __) =>
-            charts.MaterialPalette.green.shadeDefault.lighter,
+            Colors.green.lighter,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeMobileData,

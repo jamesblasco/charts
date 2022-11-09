@@ -15,6 +15,7 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../common/color.dart' show Color;

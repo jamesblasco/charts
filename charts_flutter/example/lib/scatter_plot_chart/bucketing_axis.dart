@@ -101,48 +101,42 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
           id: 'Desktop',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.blue,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeDesktopData),
       new charts.Series<LinearSales, int>(
           id: 'Tablet',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.red.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.red,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeTabletData),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.green.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeMobileData),
       new charts.Series<LinearSales, int>(
           id: 'Chromebook',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.purple.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeChromebookData),
       new charts.Series<LinearSales, int>(
           id: 'Home',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.indigo.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.indigo,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeHomeData),
       new charts.Series<LinearSales, int>(
           id: 'Other',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.gray.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.grey,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
@@ -204,48 +198,42 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
           id: 'Desktop',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.blue,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeDesktopData),
       new charts.Series<LinearSales, int>(
           id: 'Tablet',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.red.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.red,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeTabletData),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.green.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeMobileData),
       new charts.Series<LinearSales, int>(
           id: 'Chromebook',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.purple.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeChromebookData),
       new charts.Series<LinearSales, int>(
           id: 'Home',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.indigo.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.indigo,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeHomeData),
       new charts.Series<LinearSales, int>(
           id: 'Other',
-          colorFn: (LinearSales sales, _) =>
-              charts.MaterialPalette.gray.shadeDefault,
+          colorFn: (LinearSales sales, _) => Colors.grey,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,

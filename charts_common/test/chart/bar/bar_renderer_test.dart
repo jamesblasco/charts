@@ -15,6 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/bar/bar_renderer.dart';
 import 'package:charts_common/src/chart/bar/bar_renderer_config.dart';
 import 'package:charts_common/src/chart/bar/base_bar_renderer.dart';
@@ -25,9 +26,7 @@ import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/chart/common/chart_context.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/common/material_palette.dart'
-    show MaterialPalette;
-import 'package:charts_common/src/common/color.dart';
+
 import 'package:charts_common/src/data/series.dart' show Series;
 
 import 'package:meta/meta.dart' show required;
@@ -154,21 +153,21 @@ void main() {
     seriesList = [
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Desktop',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
           data: myFakeDesktopAData)),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Tablet',
-          colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
           data: myFakeTabletAData)),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile',
-          colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -179,7 +178,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Desktop A',
           seriesCategory: 'A',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -187,7 +186,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Tablet A',
           seriesCategory: 'A',
-          colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -195,7 +194,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile A',
           seriesCategory: 'A',
-          colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -203,7 +202,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Desktop B',
           seriesCategory: 'B',
-          colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => Colors.blue,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -211,7 +210,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Tablet B',
           seriesCategory: 'B',
-          colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) => Colors.red,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -219,7 +218,7 @@ void main() {
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile B',
           seriesCategory: 'B',
-          colorFn: (_, __) => MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
@@ -818,7 +817,7 @@ void main() {
         when(measureAxis.getLocation(75)).thenReturn(75.0);
         when(measureAxis.getLocation(100)).thenReturn(100.0);
 
-        final color = Color.fromHex(code: '#000000');
+        final color = Colors.black;
 
         final series = MutableSeries<String>(Series<MyRow, String>(
             id: 'Desktop',
@@ -876,7 +875,7 @@ void main() {
         when(measureAxis.getLocation(75)).thenReturn(75.0);
         when(measureAxis.getLocation(100)).thenReturn(100.0);
 
-        final color = Color.fromHex(code: '#000000');
+        final color = Colors.black;
 
         final series = MutableSeries<String>(Series<MyRow, String>(
             id: 'Desktop',

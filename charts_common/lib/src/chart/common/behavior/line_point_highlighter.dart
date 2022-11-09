@@ -16,6 +16,7 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show max, min, Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart';
 
 import '../../../common/color.dart' show Color;

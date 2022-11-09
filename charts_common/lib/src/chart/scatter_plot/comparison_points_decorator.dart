@@ -15,6 +15,8 @@
 
 import 'dart:math' show Point, Rectangle;
 
+import 'package:charts/charts.dart';
+import 'package:charts_common/src/common/color.dart';
 import 'package:meta/meta.dart' show protected;
 
 import '../../common/graphics_factory.dart' show GraphicsFactory;

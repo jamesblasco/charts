@@ -43,8 +43,7 @@ class PiePainter {
     if (canvasPie.stroke != null &&
         canvasPie.strokeWidthPx != null &&
         canvasPie.slices.length > 1) {
-      paint.color = new Color.fromARGB(canvasPie.stroke!.a, canvasPie.stroke!.r,
-          canvasPie.stroke!.g, canvasPie.stroke!.b);
+      paint.color = canvasPie.stroke!;
 
       paint.strokeWidth = canvasPie.strokeWidthPx;
       paint.strokeJoin = StrokeJoin.bevel;

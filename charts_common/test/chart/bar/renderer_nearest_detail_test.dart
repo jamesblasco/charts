@@ -17,6 +17,7 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/bar/bar_renderer.dart';
 import 'package:charts_common/src/chart/bar/bar_renderer_config.dart';
 import 'package:charts_common/src/chart/bar/bar_target_line_renderer.dart';
@@ -118,7 +119,7 @@ void main() {
     ));
 
     series.measureOffsetFn = (_) => 0.0;
-    series.colorFn = (_) => Color.fromHex(code: '#000000');
+    series.colorFn = (_) => Colors.black;
 
     // Mock the Domain axis results.
     final domainAxis = MockOrdinalAxis();
@@ -174,7 +175,7 @@ void main() {
     ));
 
     series.measureOffsetFn = (_) => 0.0;
-    series.colorFn = (_) => Color.fromHex(code: '#000000');
+    series.colorFn = (_) => Colors.black;
 
     // Mock the Domain axis results.
     final domainAxis = MockDateTimeAxis();

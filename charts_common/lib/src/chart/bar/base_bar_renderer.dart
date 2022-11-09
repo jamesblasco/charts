@@ -16,6 +16,7 @@
 import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show Point, Rectangle, max;
 
+import 'package:charts/charts.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show protected;
 

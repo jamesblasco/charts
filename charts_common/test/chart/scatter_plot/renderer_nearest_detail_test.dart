@@ -55,7 +55,7 @@ void main() {
     ));
 
     series.measureOffsetFn = (_) => 0.0;
-    series.colorFn = (_) => Color.fromHex(code: '#000000');
+    series.colorFn = (_) => Colors.black;
 
     // Mock the Domain axis results.
     final domainAxis = MockNumericAxis();

@@ -15,10 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/base_chart.dart';
 import 'package:charts_common/src/chart/common/behavior/domain_highlighter.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
 import 'package:charts_common/src/chart/common/selection_model/selection_model.dart';
+import 'package:charts_common/src/common/color.dart';
 import 'package:charts_common/src/common/material_palette.dart';
 import 'package:charts_common/src/data/series.dart';
 import 'package:mockito/mockito.dart';
@@ -90,7 +92,7 @@ void main() {
         data: [_s1D1, _s1D2, _s1D3],
         domainFn: (MyRow row, _) => row.campaign,
         measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.blue.shadeDefault))
+        colorFn: (_, __) => Colors.blue))
       ..measureFn = (_) => 0.0;
 
     _series2 = MutableSeries(Series<MyRow, String>(
@@ -98,7 +100,7 @@ void main() {
         data: [_s2D1, _s2D2, _s2D3],
         domainFn: (MyRow row, _) => row.campaign,
         measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.red.shadeDefault))
+        colorFn: (_, __) => Colors.red))
       ..measureFn = (_) => 0.0;
   });
 
@@ -117,14 +119,14 @@ void main() {
 
       // Verify
       final s1ColorFn = _series1.colorFn;
-      expect(s1ColorFn(0), equals(MaterialPalette.blue.shadeDefault));
-      expect(s1ColorFn(1), equals(MaterialPalette.blue.shadeDefault.darker));
-      expect(s1ColorFn(2), equals(MaterialPalette.blue.shadeDefault));
+      expect(s1ColorFn(0), equals(Colors.blue));
+      expect(s1ColorFn(1), equals(Colors.blue.darker));
+      expect(s1ColorFn(2), equals(Colors.blue));
 
       final s2ColorFn = _series2.colorFn;
-      expect(s2ColorFn(0), equals(MaterialPalette.red.shadeDefault));
-      expect(s2ColorFn(1), equals(MaterialPalette.red.shadeDefault.darker));
-      expect(s2ColorFn(2), equals(MaterialPalette.red.shadeDefault));
+      expect(s2ColorFn(0), equals(Colors.red));
+      expect(s2ColorFn(1), equals(Colors.red.darker));
+      expect(s2ColorFn(2), equals(Colors.red));
     });
 
     test('listens to other selection models', () {
@@ -155,14 +157,14 @@ void main() {
 
       // Verify
       final s1ColorFn = _series1.colorFn;
-      expect(s1ColorFn(0), equals(MaterialPalette.blue.shadeDefault));
-      expect(s1ColorFn(1), equals(MaterialPalette.blue.shadeDefault));
-      expect(s1ColorFn(2), equals(MaterialPalette.blue.shadeDefault));
+      expect(s1ColorFn(0), equals(Colors.blue));
+      expect(s1ColorFn(1), equals(Colors.blue));
+      expect(s1ColorFn(2), equals(Colors.blue));
 
       final s2ColorFn = _series2.colorFn;
-      expect(s2ColorFn(0), equals(MaterialPalette.red.shadeDefault));
-      expect(s2ColorFn(1), equals(MaterialPalette.red.shadeDefault));
-      expect(s2ColorFn(2), equals(MaterialPalette.red.shadeDefault));
+      expect(s2ColorFn(0), equals(Colors.red));
+      expect(s2ColorFn(1), equals(Colors.red));
+      expect(s2ColorFn(2), equals(Colors.red));
     });
 
     test('cleans up', () {

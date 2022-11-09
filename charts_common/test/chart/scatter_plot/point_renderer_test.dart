@@ -15,12 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
 import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart';
 import 'package:charts_common/src/chart/scatter_plot/point_renderer_config.dart';
-import 'package:charts_common/src/common/material_palette.dart'
-    show MaterialPalette;
+
 import 'package:charts_common/src/data/series.dart' show Series;
 
 import 'package:test/test.dart';
@@ -61,11 +61,11 @@ void main() {
             final bucket = row.clickCount / maxMeasure;
 
             if (bucket < 1 / 3) {
-              return MaterialPalette.blue.shadeDefault;
+              return Colors.blue;
             } else if (bucket < 2 / 3) {
-              return MaterialPalette.red.shadeDefault;
+              return Colors.red;
             } else {
-              return MaterialPalette.green.shadeDefault;
+              return Colors.green;
             }
           },
           domainFn: (MyRow row, _) => row.campaign,

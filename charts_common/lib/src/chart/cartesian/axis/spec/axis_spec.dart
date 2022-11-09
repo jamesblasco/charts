@@ -13,9 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:ui';
+
 import 'package:meta/meta.dart' show immutable;
 
-import '../../../../common/color.dart' show Color;
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../common/chart_context.dart' show ChartContext;
 import '../axis.dart' show Axis;

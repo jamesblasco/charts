@@ -72,7 +72,7 @@ class NumericComboLineBarChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
@@ -81,7 +81,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
@@ -90,7 +90,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData),
@@ -139,7 +139,7 @@ class NumericComboLineBarChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
@@ -148,7 +148,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
@@ -157,7 +157,7 @@ class NumericComboLineBarChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData),

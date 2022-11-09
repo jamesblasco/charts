@@ -43,7 +43,7 @@ class SimpleLegendEntryLayout implements LegendEntryLayout {
     final materialSymbolSize = new Size(12.0, 12.0);
 
     final entryColor = legendEntry.color;
-    final color = entryColor == null ? null : ColorUtil.toDartColor(entryColor);
+    final color = entryColor;
 
     // Get the SymbolRendererBuilder wrapping a common.SymbolRenderer if needed.
     final SymbolRendererBuilder symbolRendererBuilder =
@@ -127,7 +127,7 @@ class SimpleLegendEntryLayout implements LegendEntryLayout {
   TextStyle _convertTextStyle(
       bool isHidden, BuildContext context, common.TextStyleSpec? textStyle) {
     Color? color = textStyle?.color != null
-        ? ColorUtil.toDartColor(textStyle!.color!)
+        ? textStyle!.color!
         : null;
     if (isHidden) {
       // Use a default color for hidden legend entries if none is provided.

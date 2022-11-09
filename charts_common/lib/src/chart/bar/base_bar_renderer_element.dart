@@ -13,7 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/color.dart' show Color;
+import 'package:charts/charts.dart';
+
+
 import '../common/chart_canvas.dart' show getAnimatedColor, FillPatternType;
 import '../common/processed_series.dart' show ImmutableSeries;
 
@@ -35,12 +37,10 @@ abstract class BaseBarRendererElement {
 
   BaseBarRendererElement.clone(BaseBarRendererElement other) {
     barStackIndex = other.barStackIndex;
-    color = other.color != null ? Color.fromOther(color: other.color!) : null;
+    color = other.color;
     cumulativeTotal = other.cumulativeTotal;
     dashPattern = other.dashPattern;
-    fillColor = other.fillColor != null
-        ? Color.fromOther(color: other.fillColor!)
-        : null;
+    fillColor = other.fillColor;
     fillPattern = other.fillPattern;
     measureAxisPosition = other.measureAxisPosition;
     measureOffset = other.measureOffset;

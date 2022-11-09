@@ -16,6 +16,7 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show min, Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show protected;
 import 'package:vector_math/vector_math.dart' show Vector2;
@@ -755,8 +756,8 @@ class PointRendererElement<D> {
     return PointRendererElement<D>(
       point: point != null ? DatumPoint<D>.from(point!) : null,
       index: index,
-      color: color != null ? Color.fromOther(color: color!) : null,
-      fillColor: fillColor != null ? Color.fromOther(color: fillColor!) : null,
+      color: color,
+      fillColor: fillColor,
       measureAxisPosition: measureAxisPosition,
       radiusPx: radiusPx,
       boundsLineRadiusPx: boundsLineRadiusPx,

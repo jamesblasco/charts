@@ -57,7 +57,7 @@ class AreaAndLineChart extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
@@ -66,7 +66,7 @@ class AreaAndLineChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customArea'),
       new charts.Series<LinearSales, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,

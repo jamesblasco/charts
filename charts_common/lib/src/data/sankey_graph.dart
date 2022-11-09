@@ -14,6 +14,7 @@
 // limitations under the License.
 import 'dart:collection' show LinkedHashMap;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart';
 
 import '../chart/common/chart_canvas.dart' show FillPatternType;

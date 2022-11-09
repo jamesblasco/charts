@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show protected;
 
 import 'dart:math' show Point;
@@ -67,7 +68,7 @@ class ArcRendererElement<D> {
     return ArcRendererElement<D>(
       startAngle: startAngle,
       endAngle: endAngle,
-      color: color == null ? null : Color.fromOther(color: color!),
+      color: color,
       index: index,
       key: key,
       series: series,

@@ -14,6 +14,8 @@
 // limitations under the License.
 import 'dart:collection' show LinkedHashMap;
 
+import 'package:charts/charts.dart';
+
 import '../chart/common/chart_canvas.dart';
 import '../common/color.dart';
 import '../common/typed_registry.dart';

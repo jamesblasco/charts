@@ -40,9 +40,9 @@ class CircleSectorPainter {
     required double innerRadius,
     required double startAngle,
     required double endAngle,
-    common.Color? fill,
+    Color? fill,
   }) {
-    paint.color = new Color.fromARGB(fill!.a, fill.r, fill.g, fill.b);
+    paint.color = fill!;
     paint.style = PaintingStyle.fill;
 
     final innerRadiusStartPoint = new Point<double>(

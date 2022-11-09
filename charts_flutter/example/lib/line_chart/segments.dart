@@ -28,6 +28,7 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
+import 'package:charts/charts.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
@@ -93,9 +94,9 @@ class SegmentsLineChart extends StatelessWidget {
     ];
 
     // Generate 2 shades of each color so that we can style the line segments.
-    final blue = charts.MaterialPalette.blue.makeShades(2);
-    final red = charts.MaterialPalette.red.makeShades(2);
-    final green = charts.MaterialPalette.green.makeShades(2);
+    final blue = Colors.blue.makeShades(2);
+    final red = Colors.red.makeShades(2);
+    final green = Colors.green.makeShades(2);
 
     return [
       new charts.Series<LinearSales, int>(
@@ -180,9 +181,9 @@ class SegmentsLineChart extends StatelessWidget {
     ];
 
     // Generate 2 shades of each color so that we can style the line segments.
-    final blue = charts.MaterialPalette.blue.makeShades(2);
-    final red = charts.MaterialPalette.red.makeShades(2);
-    final green = charts.MaterialPalette.green.makeShades(2);
+    final blue = Colors.blue.makeShades(2);
+    final red = Colors.red.makeShades(2);
+    final green = Colors.green.makeShades(2);
 
     return [
       new charts.Series<LinearSales, int>(

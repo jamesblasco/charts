@@ -100,7 +100,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
           data: []),
       new charts.Series<LinearClicks, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeDesktopData,
@@ -109,7 +109,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
       new charts.Series<LinearClicks, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeTabletData,
@@ -118,7 +118,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
       new charts.Series<LinearClicks, int>(
         id: 'Mobile',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeMobileData,
@@ -127,7 +127,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
       new charts.Series<LinearClicks, int>(
         id: 'Click Rate',
-        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        colorFn: (_, __) => Colors.purple,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeClickRateData,
@@ -220,7 +220,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
           data: []),
       new charts.Series<LinearClicks, int>(
         id: 'Desktop',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeDesktopData,
@@ -229,7 +229,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
       new charts.Series<LinearClicks, int>(
         id: 'Tablet',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => Colors.red,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeTabletData,
@@ -238,7 +238,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
       new charts.Series<LinearClicks, int>(
         id: 'Mobile',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        colorFn: (_, __) => Colors.green,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
         data: myFakeMobileData,
@@ -247,7 +247,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
       new charts.Series<LinearClicks, int>(
         id: 'Click Rate',
-        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        colorFn: (_, __) => Colors.purple,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
         measureFn: (LinearClicks clickCount, _) => clickCount.clickRate,
         data: myFakeClickRateData,

@@ -81,9 +81,9 @@ class SegmentsLineChart extends StatelessWidget {
     ];
 
     // Generate 2 shades of each color so that we can style the line segments.
-    final blue = charts.MaterialPalette.blue.makeShades(2);
-    final red = charts.MaterialPalette.red.makeShades(2);
-    final green = charts.MaterialPalette.green.makeShades(2);
+    final blue = Colors.blue.makeShades(2);
+    final red = Colors.red.makeShades(2);
+    final green = Colors.green.makeShades(2);
 
     return [
       new charts.Series<LinearSales, int>(

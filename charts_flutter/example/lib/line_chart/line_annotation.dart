@@ -80,17 +80,17 @@ class LineLineAnnotationChart extends StatelessWidget {
             startLabel: 'Domain 1'),
         new charts.LineAnnotationSegment(
             4, charts.RangeAnnotationAxisType.domain,
-            endLabel: 'Domain 2', color: charts.MaterialPalette.gray.shade200),
+            endLabel: 'Domain 2', color: Colors.grey.shade200),
         new charts.LineAnnotationSegment(
             20, charts.RangeAnnotationAxisType.measure,
             startLabel: 'Measure 1 Start',
             endLabel: 'Measure 1 End',
-            color: charts.MaterialPalette.gray.shade300),
+            color: Colors.grey.shade300),
         new charts.LineAnnotationSegment(
             65, charts.RangeAnnotationAxisType.measure,
             startLabel: 'Measure 2 Start',
             endLabel: 'Measure 2 End',
-            color: charts.MaterialPalette.gray.shade400),
+            color: Colors.grey.shade400),
       ]),
     ]);
   }

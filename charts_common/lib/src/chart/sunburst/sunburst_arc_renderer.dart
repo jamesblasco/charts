@@ -16,9 +16,11 @@
 import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show max, min, pi, Point;
 
+import 'package:charts/charts.dart';
+import 'package:charts_common/src/common/palette.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 
-import '../../common/color.dart' show Color;
+
 import '../../common/style/style_factory.dart' show StyleFactory;
 import '../../data/series.dart' show AttributeKey;
 import '../../data/tree.dart' show TreeNode;
@@ -502,7 +504,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
           }
         }
         series.colorFn ??=
-            (index) => nodeToColorMap[series.data[index!]] ?? Color.black;
+            (index) => nodeToColorMap[series.data[index!]] ?? Colors.black;
       }
     });
   }
@@ -638,7 +640,7 @@ class SunburstArcRendererElement<D> extends ArcRendererElement<D> {
         arcLength: arcLength,
         startAngle: startAngle,
         endAngle: endAngle,
-        color: color == null ? null : Color.fromOther(color: color!),
+        color: color,
         index: index,
         key: key,
         series: series,

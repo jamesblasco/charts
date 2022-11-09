@@ -15,6 +15,7 @@
 
 import 'dart:math' show max, min, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show protected;
 
 import '../../common/color.dart' show Color;

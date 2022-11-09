@@ -15,6 +15,8 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../common/chart_canvas.dart' show ChartCanvas;
@@ -26,11 +28,11 @@ import '../cartesian/axis/axis.dart' show ImmutableAxis, measureAxisKey;
 ///
 /// Used to represent confidence intervals for bar charts.
 class BarErrorDecorator<D> extends BarRendererDecorator<D> {
-  static const Color _defaultStrokeColor = Color.black;
+  static const Color _defaultStrokeColor = Colors.black;
   static const double _defaultStrokeWidthPx = 1;
   static const double _defaultEndpointLengthPx = 16;
 
-  static const Color _defaultOutlineColor = Color.white;
+  static const Color _defaultOutlineColor = Colors.white;
   static const double _defaultOutlineWidthPx = 0;
 
   final double strokeWidthPx;

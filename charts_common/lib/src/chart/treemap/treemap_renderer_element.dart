@@ -15,6 +15,7 @@
 
 import 'dart:math' show Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
 import 'package:charts_common/src/common/color.dart';
@@ -85,12 +86,9 @@ class TreeMapRendererElement<D> {
                 boundingRect.topLeft, boundingRect.bottomRight),
         area: area,
         fillPattern: fillPattern,
-        fillColor:
-            fillColor == null ? null : Color.fromOther(color: fillColor!),
-        patternColor:
-            patternColor == null ? null : Color.fromOther(color: patternColor!),
-        strokeColor:
-            strokeColor == null ? null : Color.fromOther(color: strokeColor!),
+        fillColor: fillColor,
+        patternColor: patternColor,
+        strokeColor: strokeColor,
         strokeWidthPx: strokeWidthPx,
         isLeaf: isLeaf,
         index: index,

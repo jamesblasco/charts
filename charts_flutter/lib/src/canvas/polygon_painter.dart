@@ -35,8 +35,8 @@ class PolygonPainter {
       required Paint paint,
       required List<Point> points,
       Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
+      Color? fill,
+      Color? stroke,
       double? strokeWidthPx}) {
     if (points.isEmpty) {
       return;
@@ -53,13 +53,9 @@ class PolygonPainter {
             clipBounds.height.toDouble()));
     }
 
-    final strokeColor = stroke != null
-        ? new Color.fromARGB(stroke.a, stroke.r, stroke.g, stroke.b)
-        : null;
+    final strokeColor = stroke;
 
-    final fillColor = fill != null
-        ? new Color.fromARGB(fill.a, fill.r, fill.g, fill.b)
-        : null;
+    final fillColor = fill;
 
     // If the line has a single point, draw a circle.
     if (points.length == 1) {

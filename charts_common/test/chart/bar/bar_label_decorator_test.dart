@@ -16,6 +16,7 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries;
 import 'package:charts_common/src/common/color.dart' show Color;
@@ -331,8 +332,8 @@ void main() {
         FakeBarRendererElement(
             'B', Rectangle(25, 80, 4, 20), (_) => 'LabelB', data)
       ];
-      final insideColor = Color(r: 0, g: 0, b: 0);
-      final outsideColor = Color(r: 255, g: 255, b: 255);
+      final insideColor = Colors.black;
+      final outsideColor = Colors.white;
       final decorator = BarLabelDecorator<String>(
           labelPadding: 0,
           insideLabelStyleSpec: TextStyleSpec(
@@ -666,8 +667,8 @@ void main() {
         FakeBarRendererElement(
             'B', Rectangle(0, 70, 5, 20), (_) => 'LabelB', data)
       ];
-      final insideColor = Color(r: 0, g: 0, b: 0);
-      final outsideColor = Color(r: 255, g: 255, b: 255);
+      final insideColor = Colors.black;
+      final outsideColor = Colors.white;
       final decorator = BarLabelDecorator<String>(
           labelPadding: 0,
           insideLabelStyleSpec: TextStyleSpec(

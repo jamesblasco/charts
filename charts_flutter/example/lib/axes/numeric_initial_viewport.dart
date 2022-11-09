@@ -72,7 +72,7 @@ class NumericInitialViewport extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: data,
@@ -115,7 +115,7 @@ class NumericInitialViewport extends StatelessWidget {
     return [
       new charts.Series<LinearSales, int>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: data,

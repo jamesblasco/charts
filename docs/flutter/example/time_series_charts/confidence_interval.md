@@ -52,7 +52,7 @@ class TimeSeriesConfidenceInterval extends StatelessWidget {
     return [
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         // When the measureLowerBoundFn and measureUpperBoundFn is defined,

@@ -82,11 +82,11 @@ class ScatterPlotComboLineChart extends StatelessWidget {
           final bucket = sales.sales / maxMeasure;
 
           if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
+            return Colors.blue;
           } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
+            return Colors.red;
           } else {
-            return charts.MaterialPalette.green.shadeDefault;
+            return Colors.green;
           }
         },
         domainFn: (LinearSales sales, _) => sales.year,
@@ -97,7 +97,7 @@ class ScatterPlotComboLineChart extends StatelessWidget {
       ),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+          colorFn: (_, __) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: myRegressionData)
@@ -163,11 +163,11 @@ class ScatterPlotComboLineChart extends StatelessWidget {
           final bucket = sales.sales / maxMeasure;
 
           if (bucket < 1 / 3) {
-            return charts.MaterialPalette.blue.shadeDefault;
+            return Colors.blue;
           } else if (bucket < 2 / 3) {
-            return charts.MaterialPalette.red.shadeDefault;
+            return Colors.red;
           } else {
-            return charts.MaterialPalette.green.shadeDefault;
+            return Colors.green;
           }
         },
         domainFn: (LinearSales sales, _) => sales.year,
@@ -178,7 +178,7 @@ class ScatterPlotComboLineChart extends StatelessWidget {
       ),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+          colorFn: (_, __) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: myRegressionData)

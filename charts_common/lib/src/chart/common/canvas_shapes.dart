@@ -15,6 +15,8 @@
 
 import 'dart:math' show Rectangle, min, max, Point;
 
+import 'package:charts/charts.dart';
+
 import '../../common/color.dart' show Color;
 import 'chart_canvas.dart' show FillPatternType;
 

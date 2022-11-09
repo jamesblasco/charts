@@ -15,7 +15,8 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import '../../common/color.dart' show Color;
+import 'package:charts/charts.dart';
+
 import '../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../common/text_element.dart' show TextElement;
 import 'canvas_shapes.dart' show CanvasBarStack, CanvasPie;
@@ -163,12 +164,18 @@ abstract class ChartCanvas {
 }
 
 Color getAnimatedColor(Color previous, Color target, double animationPercent) {
-  var r = (((target.r - previous.r) * animationPercent) + previous.r).round();
-  var g = (((target.g - previous.g) * animationPercent) + previous.g).round();
-  var b = (((target.b - previous.b) * animationPercent) + previous.b).round();
-  var a = (((target.a - previous.a) * animationPercent) + previous.a).round();
+  var r =
+      (((target.red - previous.red) * animationPercent) + previous.red).round();
+  var g =
+      (((target.green - previous.green) * animationPercent) + previous.green)
+          .round();
+  var b = (((target.blue - previous.blue) * animationPercent) + previous.blue)
+      .round();
+  var a =
+      (((target.alpha - previous.alpha) * animationPercent) + previous.alpha)
+          .round();
 
-  return Color(a: a, r: r, g: g, b: b);
+  return Color.fromARGB(a, r, g, b);
 }
 
 /// Defines the pattern for a color fill.

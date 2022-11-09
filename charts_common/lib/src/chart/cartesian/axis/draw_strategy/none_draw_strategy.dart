@@ -14,7 +14,9 @@
 // limitations under the License.
 
 import 'dart:math';
+import 'dart:ui';
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show immutable;
 
 import '../../../../common/color.dart' show Color;
@@ -64,7 +66,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   })  : axisLineStyle = StyleFactory.style
             .createAxisLineStyle(graphicsFactory, axisLineStyleSpec),
         noneTextStyle = graphicsFactory.createTextPaint()
-          ..color = Color.transparent
+          ..color = Colors.transparent
           ..fontSize = 0;
 
   @override

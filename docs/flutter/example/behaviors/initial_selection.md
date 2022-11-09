@@ -70,7 +70,7 @@ class InitialSelection extends StatelessWidget {
     return [
       new charts.Series<OrdinalSales, String>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: data,

@@ -70,7 +70,7 @@ The syntax is now cleaned up to be 'new BarChart()'. Please refer to the
 
 # 0.2.0
 
-* Update color palette. Please use MaterialPalette instead of QuantumPalette.
+* Update color palette. Please use Colors. instead of QuantumPalette.
 * Dart2 fixes
 
 # 0.1.0

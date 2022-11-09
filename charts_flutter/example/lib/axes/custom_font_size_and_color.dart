@@ -86,11 +86,10 @@ class CustomFontSizeAndColor extends StatelessWidget {
               // Tick and Label styling here.
               labelStyle: new charts.TextStyleSpec(
                   fontSize: 18, // size in Pts.
-                  color: charts.MaterialPalette.black),
+                  color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: new charts.LineStyleSpec(
-                  color: charts.MaterialPalette.black))),
+              lineStyle: new charts.LineStyleSpec(color: Colors.black))),
 
       /// Assign a custom style for the measure axis.
       primaryMeasureAxis: new charts.NumericAxisSpec(
@@ -99,11 +98,10 @@ class CustomFontSizeAndColor extends StatelessWidget {
               // Tick and Label styling here.
               labelStyle: new charts.TextStyleSpec(
                   fontSize: 18, // size in Pts.
-                  color: charts.MaterialPalette.black),
+                  color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: new charts.LineStyleSpec(
-                  color: charts.MaterialPalette.black))),
+              lineStyle: new charts.LineStyleSpec(color: Colors.black))),
     );
   }
 

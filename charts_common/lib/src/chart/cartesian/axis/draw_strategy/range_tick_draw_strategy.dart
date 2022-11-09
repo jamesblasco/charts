@@ -15,11 +15,11 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show immutable;
 
 import '../../../../common/graphics_factory.dart' show GraphicsFactory;
 import '../../../../common/line_style.dart' show LineStyle;
-import '../../../../common/material_palette.dart' show MaterialPalette;
 import '../../../../common/style/style_factory.dart' show StyleFactory;
 import '../../../../common/text_style.dart' show TextStyle;
 import '../../../common/chart_canvas.dart' show ChartCanvas;
@@ -185,7 +185,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
         StyleFactory.style.createTickLineStyle(graphicsFactory, lineStyleSpec);
     rangeShadeStyleSpec = rangeShadeStyleSpec ??
         LineStyleSpec(
-          color: MaterialPalette.gray.shade300,
+          color: Colors.grey.shade300,
         );
     rangeShadeStyle = StyleFactory.style
         .createTickLineStyle(graphicsFactory, rangeShadeStyleSpec);

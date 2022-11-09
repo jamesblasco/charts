@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts/charts.dart';
+
 import '../../chart/cartesian/axis/spec/axis_spec.dart' show LineStyleSpec;
 import '../color.dart' show Color;
 import '../graphics_factory.dart' show GraphicsFactory;
@@ -34,7 +36,7 @@ abstract class Style {
   Color get white;
 
   /// Gets list with [count] of palettes.
-  List<Palette> getOrderedPalettes(int count);
+  List<MaterialColor> getOrderedPalettes(int count);
 
   /// Creates [LineStyleSpec] for axis line from spec.
   ///

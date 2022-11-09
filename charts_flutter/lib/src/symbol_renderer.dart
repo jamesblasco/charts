@@ -15,7 +15,7 @@
 
 import 'dart:math' show Rectangle;
 import 'package:charts_common/common.dart' as common
-    show ChartCanvas, Color, FillPatternType, SymbolRenderer;
+    show ChartCanvas, FillPatternType, SymbolRenderer;
 import 'package:flutter/widgets.dart';
 import 'chart_canvas.dart' show ChartCanvas;
 import 'graphics_factory.dart' show GraphicsFactory;
@@ -63,9 +63,9 @@ abstract class CustomSymbolRenderer extends common.SymbolRenderer
   @override
   void paint(common.ChartCanvas canvas, Rectangle<num> bounds,
       {List<int>? dashPattern,
-      common.Color? fillColor,
+      Color? fillColor,
       common.FillPatternType? fillPattern,
-      common.Color? strokeColor,
+      Color? strokeColor,
       double? strokeWidthPx}) {
     // Intentionally ignored (never called).
   }
@@ -98,10 +98,7 @@ class _SymbolCustomPaint extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final bounds =
         new Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
-    final commonColor = color == null
-        ? null
-        : new common.Color(
-            r: color!.red, g: color!.green, b: color!.blue, a: color!.alpha);
+    final commonColor = color;
     symbolRenderer.paint(
         new ChartCanvas(canvas, GraphicsFactory(context)), bounds,
         fillColor: commonColor,

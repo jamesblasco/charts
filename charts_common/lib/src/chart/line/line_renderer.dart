@@ -15,6 +15,7 @@
 
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Rectangle, Point;
+import 'dart:ui';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show visibleForTesting;
@@ -104,11 +105,12 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           return null;
         }
 
-        return Color(
-            r: color.r,
-            g: color.g,
-            b: color.b,
-            a: (color.a * config.areaOpacity).round());
+        return Color.fromARGB(
+          (color.alpha * config.areaOpacity).round(),
+          color.red,
+          color.green,
+          color.blue,
+        );
       };
     });
 
@@ -1272,8 +1274,8 @@ class _LineRendererElement<D> {
   _LineRendererElement<D> clone() {
     return _LineRendererElement<D>(
       points: points != null ? List.of(points!) : null,
-      color: color != null ? Color.fromOther(color: color!) : null,
-      areaColor: areaColor != null ? Color.fromOther(color: areaColor!) : null,
+      color: color,
+      areaColor: areaColor,
       dashPattern: dashPattern != null ? List.of(dashPattern!) : null,
       domainExtent: domainExtent,
       measureAxisPosition: measureAxisPosition,
@@ -1436,8 +1438,8 @@ class _AreaRendererElement<D> {
   _AreaRendererElement<D> clone() {
     return _AreaRendererElement<D>(
       points: List.of(points),
-      color: color != null ? Color.fromOther(color: color!) : null,
-      areaColor: areaColor != null ? Color.fromOther(color: areaColor!) : null,
+      color: color,
+      areaColor: areaColor,
       domainExtent: domainExtent,
       measureAxisPosition: measureAxisPosition,
       positionExtent: positionExtent,

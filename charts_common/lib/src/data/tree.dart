@@ -15,6 +15,7 @@
 
 import 'dart:collection';
 
+import 'package:charts/charts.dart';
 import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/common/color.dart';
