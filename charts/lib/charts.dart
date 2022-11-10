@@ -8,4 +8,6 @@
 /// A Very Good Project created by Very Good CLI.
 library charts;
 
-export 'src/charts.dart';
+export 'core.dart';
+export 'src/behaviors/behaviors.dart';
+export 'src/charts/charts.dart';
