@@ -13,20 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui';
-
+import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart' show immutable;
 
-import 'package:charts/core.dart';
-
 @immutable
 class AxisSpec<D> extends Equatable {
-  final bool? showAxisLine;
-  final RenderSpec<D>? renderSpec;
-  final TickProviderSpec<D>? tickProviderSpec;
-  final TickFormatterSpec<D>? tickFormatterSpec;
-  final ScaleSpec<D>? scaleSpec;
 
   const AxisSpec({
     this.renderSpec,
@@ -52,9 +44,14 @@ class AxisSpec<D> extends Equatable {
       scaleSpec: scaleSpec ?? other.scaleSpec,
     );
   }
+  final bool? showAxisLine;
+  final RenderSpec<D>? renderSpec;
+  final TickProviderSpec<D>? tickProviderSpec;
+  final TickFormatterSpec<D>? tickFormatterSpec;
+  final ScaleSpec<D>? scaleSpec;
 
   void configure(
-      Axis<D> axis, ChartContext context, GraphicsFactory graphicsFactory) {
+      Axis<D> axis, ChartContext context, GraphicsFactory graphicsFactory,) {
     axis.resetDefaultConfiguration();
 
     if (showAxisLine != null) {
@@ -115,7 +112,7 @@ abstract class RenderSpec<D> extends Equatable {
   const RenderSpec();
 
   TickDrawStrategy<D> createDrawStrategy(
-      ChartContext context, GraphicsFactory graphicFactory);
+      ChartContext context, GraphicsFactory graphicFactory,);
 }
 
 enum TickLabelAnchor {

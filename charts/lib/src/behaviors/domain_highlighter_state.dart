@@ -24,25 +24,25 @@ import 'package:charts/core.dart';
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
 class DomainHighlighterState<D> implements ChartBehaviorState<D> {
+
+  DomainHighlighterState([this.selectionModelType = SelectionModelType.info]) {
+    _lifecycleListener =
+        LifecycleListener<D>(onPostprocess: _updateColorFunctions);
+  }
   final SelectionModelType selectionModelType;
 
   late BaseRenderChart<D> _chart;
 
   late LifecycleListener<D> _lifecycleListener;
 
-  DomainHighlighterState([this.selectionModelType = SelectionModelType.info]) {
-    _lifecycleListener =
-        LifecycleListener<D>(onPostprocess: _updateColorFunctions);
-  }
-
   void _selectionChanged(SelectionModel<D> selectionModel) {
     _chart.redraw(skipLayout: true, skipAnimation: true);
   }
 
   void _updateColorFunctions(List<MutableSeries<D>> seriesList) {
-    SelectionModel<D> selectionModel =
+    final SelectionModel<D> selectionModel =
         _chart.getSelectionModel(selectionModelType);
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       final origColorFn = series.colorFn;
 
       if (origColorFn != null) {
@@ -55,7 +55,7 @@ class DomainHighlighterState<D> implements ChartBehaviorState<D> {
           }
         };
       }
-    });
+    }
   }
 
   @override

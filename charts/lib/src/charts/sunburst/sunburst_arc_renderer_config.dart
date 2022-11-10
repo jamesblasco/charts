@@ -13,18 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show pi;
 
 import 'package:charts/charts/pie.dart';
 import 'package:charts/charts/sunburst.dart';
 
 /// Given the selected node and a list of currently expanded node, returns the
 /// new set of node to be expanded (shown beyond the initialDisplayLevel).
-typedef List<TreeNode<dynamic>> ExpandNodeCallback(
-    TreeNode<dynamic> node, List<TreeNode<dynamic>> expandedNode);
+typedef ExpandNodeCallback = List<TreeNode<dynamic>> Function(
+    TreeNode<dynamic> node, List<TreeNode<dynamic>> expandedNode,);
 
 /// Configuration for an [ArcRenderer].
 class SunburstArcRendererConfig<D> extends BaseArcRendererConfig<D> {
+
+  SunburstArcRendererConfig(
+      {super.customRendererId,
+      super.arcLength,
+      super.arcRendererDecorators,
+      super.arcRatio,
+      this.arcRatios,
+      super.arcWidth,
+      this.arcWidths,
+      this.colorAssignmentStrategy = SunburstColorStrategy.newShadePerLevel,
+      super.layoutPaintOrder,
+      int? maxDisplayLevel,
+      int? initialDisplayLevel,
+      super.minHoleWidthForCenterContent,
+      super.startAngle,
+      super.strokeWidthPx,})
+      : maxDisplayLevel = maxDisplayLevel ?? _maxInt32Value,
+        initialDisplayLevel =
+            initialDisplayLevel ?? maxDisplayLevel ?? _maxInt32Value;
   static const _maxInt32Value = 1 << 31;
 
   /// Ratio of the arc widths for each of the ring drawn in the sunburst. The
@@ -55,36 +73,6 @@ class SunburstArcRendererConfig<D> extends BaseArcRendererConfig<D> {
   /// The max level of rings to render in the sunburst. If unset, display all
   /// data.
   final int maxDisplayLevel;
-
-  SunburstArcRendererConfig(
-      {String? customRendererId,
-      double arcLength = 2 * pi,
-      List<ArcRendererDecorator<D>> arcRendererDecorators = const [],
-      double? arcRatio,
-      this.arcRatios,
-      int? arcWidth,
-      this.arcWidths,
-      this.colorAssignmentStrategy = SunburstColorStrategy.newShadePerLevel,
-      int layoutPaintOrder = LayoutViewPaintOrder.arc,
-      int? maxDisplayLevel,
-      int? initialDisplayLevel,
-      int minHoleWidthForCenterContent = 30,
-      double startAngle = -pi / 2,
-      double strokeWidthPx = 2.0,
-      SymbolRenderer? symbolRenderer})
-      : this.maxDisplayLevel = maxDisplayLevel ?? _maxInt32Value,
-        this.initialDisplayLevel =
-            initialDisplayLevel ?? maxDisplayLevel ?? _maxInt32Value,
-        super(
-            customRendererId: customRendererId,
-            arcLength: arcLength,
-            arcRatio: arcRatio,
-            arcWidth: arcWidth,
-            layoutPaintOrder: layoutPaintOrder,
-            minHoleWidthForCenterContent: minHoleWidthForCenterContent,
-            startAngle: startAngle,
-            strokeWidthPx: strokeWidthPx,
-            arcRendererDecorators: arcRendererDecorators);
 
   @override
   SunburstArcRenderer<D> build() {

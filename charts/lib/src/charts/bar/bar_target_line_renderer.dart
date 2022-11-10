@@ -22,11 +22,6 @@ import 'package:charts/charts/bar.dart';
 /// metrics.
 class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     _BarTargetLineRendererElement, _AnimatedBarTargetLine<D>> {
-  /// If we are grouped, use this spacing between the bars in a group.
-  final int _barGroupInnerPaddingPx;
-
-  /// Standard color for all bar target lines.
-  final _color = Color.fromARGB(153, 0,  0,  0);
 
   factory BarTargetLineRenderer({
     BarTargetLineRendererConfig<D>? config,
@@ -35,22 +30,25 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     config ??= BarTargetLineRendererConfig<D>();
     rendererId ??= 'barTargetLine';
     return BarTargetLineRenderer._internal(
-        config: config, rendererId: rendererId);
+        config: config, rendererId: rendererId,);
   }
 
   BarTargetLineRenderer._internal({
-    required BarTargetLineRendererConfig<D> config,
-    required String rendererId,
+    required BarTargetLineRendererConfig<D> super.config,
+    required super.rendererId,
   })  : _barGroupInnerPaddingPx = config.barGroupInnerPaddingPx,
         super(
-            config: config,
-            rendererId: rendererId,
             layoutPaintOrder:
-                config.layoutPaintOrder ?? LayoutViewPaintOrder.barTargetLine);
+                config.layoutPaintOrder ?? LayoutViewPaintOrder.barTargetLine,);
+  /// If we are grouped, use this spacing between the bars in a group.
+  final int _barGroupInnerPaddingPx;
+
+  /// Standard color for all bar target lines.
+  final _color = const Color.fromARGB(153, 0,  0,  0);
 
   @override
   void configureSeries(List<MutableSeries<D>> seriesList) {
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       series.colorFn ??= (_) => _color;
       series.fillColorFn ??= (_) => _color;
 
@@ -63,12 +61,12 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           series.seriesColor = _color;
         }
       }
-    });
+    }
   }
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
@@ -92,17 +90,17 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
         previousBarGroupWeight,
         barGroupWeight,
         allBarGroupWeights,
-        numBarGroups);
+        numBarGroups,);
 
     NullablePoint chartPosition;
 
     if (renderingVertically) {
       chartPosition = NullablePoint(
           (points[0].x + (points[1].x - points[0].x) / 2).toDouble(),
-          points[0].y.toDouble());
+          points[0].y.toDouble(),);
     } else {
       chartPosition = NullablePoint(points[0].x.toDouble(),
-          (points[0].y + (points[1].y - points[0].y) / 2).toDouble());
+          (points[0].y + (points[1].y - points[0].y) / 2).toDouble(),);
     }
 
     return DatumDetails.from(details, chartPosition: chartPosition);
@@ -112,7 +110,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   _BarTargetLineRendererElement getBaseDetails(dynamic datum, int index) {
     final localConfig = config as BarTargetLineRendererConfig<D>;
     return _BarTargetLineRendererElement(
-        roundEndCaps: localConfig.roundEndCaps);
+        roundEndCaps: localConfig.roundEndCaps,);
   }
 
   /// Generates an [_AnimatedBarTargetLine] to represent the previous and
@@ -141,9 +139,9 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       required int numBarGroups,
       double? strokeWidthPx,
       bool? measureIsNull,
-      bool? measureIsNegative}) {
+      bool? measureIsNegative,}) {
     return _AnimatedBarTargetLine(
-        key: key, datum: datum, series: series, domainValue: domainValue)
+        key: key, datum: datum, series: series, domainValue: domainValue,)
       ..setNewTarget(makeBarRendererElement(
           color: color,
           details: details,
@@ -164,7 +162,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           allBarGroupWeights: allBarGroupWeights,
           numBarGroups: numBarGroups,
           measureIsNull: measureIsNull,
-          measureIsNegative: measureIsNegative));
+          measureIsNegative: measureIsNegative,),);
   }
 
   /// Generates a [_BarTargetLineRendererElement] to represent the rendering
@@ -190,7 +188,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       List<double>? allBarGroupWeights,
       required int numBarGroups,
       bool? measureIsNull,
-      bool? measureIsNegative}) {
+      bool? measureIsNegative,}) {
     return _BarTargetLineRendererElement(roundEndCaps: details.roundEndCaps)
       ..color = color
       ..dashPattern = dashPattern
@@ -212,7 +210,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           previousBarGroupWeight,
           barGroupWeight,
           allBarGroupWeights,
-          numBarGroups);
+          numBarGroups,);
   }
 
   @override
@@ -221,7 +219,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     double animationPercent,
     Iterable<_BarTargetLineRendererElement> barElements,
   ) {
-    barElements.forEach((_BarTargetLineRendererElement bar) {
+    for (final bar in barElements) {
       // TODO: Combine common line attributes into
       // GraphicsFactory.lineStyle or similar.
       canvas.drawLine(
@@ -230,8 +228,8 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           stroke: bar.color,
           roundEndCaps: bar.roundEndCaps,
           strokeWidthPx: bar.strokeWidthPx,
-          dashPattern: bar.dashPattern);
-    });
+          dashPattern: bar.dashPattern,);
+    }
   }
 
   /// Generates a set of points that describe a bar target line.
@@ -247,7 +245,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       double? previousBarGroupWeight,
       double? barGroupWeight,
       List<double>? allBarGroupWeights,
-      int numBarGroups) {
+      int numBarGroups,) {
     // If no weights were passed in, default to equal weight per bar.
     if (barGroupWeight == null) {
       barGroupWeight = 1 / numBarGroups;
@@ -259,7 +257,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     // Calculate how wide each bar target line should be within the group of
     // bar target lines. If we only have one series, or are stacked, then
     // barWidth should equal domainWidth.
-    var spacingLoss = _barGroupInnerPaddingPx * (numBarGroups - 1);
+    final spacingLoss = _barGroupInnerPaddingPx * (numBarGroups - 1);
     var desiredWidth = ((domainWidth - spacingLoss) / numBarGroups).round();
 
     if (maxBarWidthPx != null) {
@@ -277,14 +275,14 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
               .floor();
     }
     // Get the overdraw boundaries.
-    var overDrawOuterPx = localConfig.overDrawOuterPx;
-    var overDrawPx = localConfig.overDrawPx;
+    final overDrawOuterPx = localConfig.overDrawOuterPx;
+    final overDrawPx = localConfig.overDrawPx;
 
-    var overDrawStartPx = (barGroupIndex == 0) && overDrawOuterPx != null
+    final overDrawStartPx = (barGroupIndex == 0) && overDrawOuterPx != null
         ? overDrawOuterPx
         : overDrawPx;
 
-    var overDrawEndPx =
+    final overDrawEndPx =
         (barGroupIndex == numBarGroups - 1) && overDrawOuterPx != null
             ? overDrawOuterPx
             : overDrawPx;
@@ -295,26 +293,26 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
     // Calculate the start and end of the bar target line, taking into account
     // accumulated padding for grouped bars.
-    num previousAverageWidth = adjustedBarGroupIndex > 0
+    final num previousAverageWidth = adjustedBarGroupIndex > 0
         ? ((domainWidth - spacingLoss) *
                 (previousBarGroupWeight! / adjustedBarGroupIndex))
             .round()
         : 0;
 
-    var domainStart = (domainAxis.getLocation(domainValue)! -
+    final domainStart = (domainAxis.getLocation(domainValue)! -
             (domainWidth / 2) +
             (previousAverageWidth + _barGroupInnerPaddingPx) *
                 adjustedBarGroupIndex -
             overDrawStartPx)
         .round();
 
-    var domainEnd = domainStart + barWidth + overDrawStartPx + overDrawEndPx;
+    final domainEnd = domainStart + barWidth + overDrawStartPx + overDrawEndPx;
 
     measureValue = measureValue ?? 0;
 
     // Calculate measure locations. Stacked bars should have their
     // offset calculated previously.
-    var measureStart =
+    final measureStart =
         measureAxis.getLocation(measureValue + measureOffsetValue)!.round();
 
     List<Point<int>> points;
@@ -351,20 +349,20 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 }
 
 class _BarTargetLineRendererElement extends BaseBarRendererElement {
+
+  _BarTargetLineRendererElement({required this.roundEndCaps});
+
+  _BarTargetLineRendererElement.clone(_BarTargetLineRendererElement super.other)
+      : points = List.of(other.points),
+        roundEndCaps = other.roundEndCaps,
+        super.clone();
   late List<Point<int>> points;
 
   bool roundEndCaps;
 
-  _BarTargetLineRendererElement({required this.roundEndCaps});
-
-  _BarTargetLineRendererElement.clone(_BarTargetLineRendererElement other)
-      : points = List.of(other.points),
-        roundEndCaps = other.roundEndCaps,
-        super.clone(other);
-
   @override
   void updateAnimationPercent(BaseBarRendererElement previous,
-      BaseBarRendererElement target, double animationPercent) {
+      BaseBarRendererElement target, double animationPercent,) {
     final localPrevious = previous as _BarTargetLineRendererElement;
     final localTarget = target as _BarTargetLineRendererElement;
 
@@ -375,7 +373,7 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
 
     int pointIndex;
     for (pointIndex = 0; pointIndex < targetPoints.length; pointIndex++) {
-      var targetPoint = targetPoints[pointIndex];
+      final targetPoint = targetPoints[pointIndex];
 
       // If we have more points than the previous line, animate in the new point
       // by starting its measure position at the last known official point.
@@ -387,10 +385,10 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
         previousPoint = Point<int>(targetPoint.x, lastPoint.y);
       }
 
-      var x = ((targetPoint.x - previousPoint.x) * animationPercent) +
+      final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
           previousPoint.x;
 
-      var y = ((targetPoint.y - previousPoint.y) * animationPercent) +
+      final y = ((targetPoint.y - previousPoint.y) * animationPercent) +
           previousPoint.y;
 
       if (points.length - 1 >= pointIndex) {
@@ -419,11 +417,10 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
 class _AnimatedBarTargetLine<D>
     extends BaseAnimatedBar<D, _BarTargetLineRendererElement> {
   _AnimatedBarTargetLine(
-      {required String key,
-      required dynamic datum,
-      required ImmutableSeries<D> series,
-      required D? domainValue})
-      : super(key: key, datum: datum, series: series, domainValue: domainValue);
+      {required super.key,
+      required super.datum,
+      required super.series,
+      required super.domainValue,});
 
   @override
   void animateElementToMeasureAxisPosition(BaseBarRendererElement target) {
@@ -434,7 +431,7 @@ class _AnimatedBarTargetLine<D>
       final targetPoint = localTarget.points[index];
 
       newPoints.add(
-          Point<int>(targetPoint.x, localTarget.measureAxisPosition!.round()));
+          Point<int>(targetPoint.x, localTarget.measureAxisPosition!.round()),);
     }
     localTarget.points = newPoints;
   }

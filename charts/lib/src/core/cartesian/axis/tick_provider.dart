@@ -69,7 +69,7 @@ abstract class BaseTickProvider<D> extends TickProvider<D> {
       final tick = Tick(
           value: value,
           textElement: graphicsFactory.createTextElement(labels[i]),
-          locationPx: scale[value]?.toDouble());
+          locationPx: scale[value]?.toDouble(),);
 
       ticks.add(tick);
     }
@@ -83,6 +83,8 @@ abstract class BaseTickProvider<D> extends TickProvider<D> {
 
 /// A hint for the tick provider to determine step size and tick count.
 class TickHint<D> {
+
+  TickHint(this.start, this.end, {required this.tickCount});
   /// The starting hint tick value.
   final D start;
 
@@ -91,6 +93,4 @@ class TickHint<D> {
 
   /// Number of ticks.
   final int tickCount;
-
-  TickHint(this.start, this.end, {required this.tickCount});
 }

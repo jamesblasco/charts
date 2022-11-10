@@ -16,14 +16,50 @@
 import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
 
-import '../../core/behavior/chart_behavior.dart'
-    show ChartBehavior, GestureType;
 
 /// Behavior that generates semantic nodes for each domain.
 class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
+
+  factory DomainA11yExploreBehavior({
+    VocalizationCallback? vocalizationCallback,
+    ExploreModeTrigger? exploreModeTrigger,
+    double? minimumWidth,
+    String? exploreModeEnabledAnnouncement,
+    String? exploreModeDisabledAnnouncement,
+  }) {
+    final desiredGestures = <GestureType>{};
+    exploreModeTrigger ??= ExploreModeTrigger.pressHold;
+
+    switch (exploreModeTrigger) {
+      case ExploreModeTrigger.pressHold:
+        desiredGestures.add(GestureType.onLongPress);
+        break;
+      case ExploreModeTrigger.tap:
+        desiredGestures.add(GestureType.onTap);
+        break;
+    }
+
+    return DomainA11yExploreBehavior._internal(
+      vocalizationCallback: vocalizationCallback,
+      desiredGestures: desiredGestures,
+      exploreModeTrigger: exploreModeTrigger,
+      minimumWidth: minimumWidth,
+      exploreModeEnabledAnnouncement: exploreModeEnabledAnnouncement,
+      exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement,
+    );
+  }
+
+  DomainA11yExploreBehavior._internal(
+      {this.vocalizationCallback,
+      this.exploreModeTrigger,
+      required this.desiredGestures,
+      this.minimumWidth,
+      this.exploreModeEnabledAnnouncement,
+      this.exploreModeDisabledAnnouncement,});
   /// Returns a string for a11y vocalization from a list of series datum.
   final VocalizationCallback? vocalizationCallback;
 
+  @override
   final Set<GestureType> desiredGestures;
 
   /// The gesture that activates explore mode. Defaults to long press.
@@ -43,43 +79,6 @@ class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
   /// Optionally notify the OS when explore mode is disabled.
   final String? exploreModeDisabledAnnouncement;
 
-  DomainA11yExploreBehavior._internal(
-      {this.vocalizationCallback,
-      this.exploreModeTrigger,
-      required this.desiredGestures,
-      this.minimumWidth,
-      this.exploreModeEnabledAnnouncement,
-      this.exploreModeDisabledAnnouncement});
-
-  factory DomainA11yExploreBehavior({
-    VocalizationCallback? vocalizationCallback,
-    ExploreModeTrigger? exploreModeTrigger,
-    double? minimumWidth,
-    String? exploreModeEnabledAnnouncement,
-    String? exploreModeDisabledAnnouncement,
-  }) {
-    final desiredGestures = Set<GestureType>();
-    exploreModeTrigger ??= ExploreModeTrigger.pressHold;
-
-    switch (exploreModeTrigger) {
-      case ExploreModeTrigger.pressHold:
-        desiredGestures..add(GestureType.onLongPress);
-        break;
-      case ExploreModeTrigger.tap:
-        desiredGestures..add(GestureType.onTap);
-        break;
-    }
-
-    return DomainA11yExploreBehavior._internal(
-      vocalizationCallback: vocalizationCallback,
-      desiredGestures: desiredGestures,
-      exploreModeTrigger: exploreModeTrigger,
-      minimumWidth: minimumWidth,
-      exploreModeEnabledAnnouncement: exploreModeEnabledAnnouncement,
-      exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement,
-    );
-  }
-
   @override
   DomainA11yExploreBehaviorState<D> createBehaviorState() {
     return DomainA11yExploreBehaviorState<D>(
@@ -87,7 +86,7 @@ class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
         exploreModeTrigger: exploreModeTrigger,
         minimumWidth: minimumWidth,
         exploreModeEnabledAnnouncement: exploreModeEnabledAnnouncement,
-        exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement);
+        exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement,);
   }
 
   @override

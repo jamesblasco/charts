@@ -20,31 +20,23 @@ import 'package:charts/core.dart';
 
 /// A rectangle to be painted by [ChartCanvas].
 class CanvasRect {
-  final Rectangle<int> bounds;
-  final List<int>? dashPattern;
-  final Color? fill;
-  final FillPatternType? pattern;
-  final Color? stroke;
-  final double? strokeWidthPx;
 
   CanvasRect(this.bounds,
       {this.dashPattern,
       this.fill,
       this.pattern,
       this.stroke,
-      this.strokeWidthPx});
+      this.strokeWidthPx,});
+  final Rectangle<int> bounds;
+  final List<int>? dashPattern;
+  final Color? fill;
+  final FillPatternType? pattern;
+  final Color? stroke;
+  final double? strokeWidthPx;
 }
 
 /// A stack of [CanvasRect] to be painted by [ChartCanvas].
 class CanvasBarStack {
-  final List<CanvasRect> segments;
-  final int? radius;
-  final int stackedBarPadding;
-  final bool roundTopLeft;
-  final bool roundTopRight;
-  final bool roundBottomLeft;
-  final bool roundBottomRight;
-  final Rectangle<int> fullStackRect;
 
   factory CanvasBarStack(
     List<CanvasRect> segments, {
@@ -98,10 +90,21 @@ class CanvasBarStack {
     required this.roundBottomRight,
     required this.fullStackRect,
   });
+  final List<CanvasRect> segments;
+  final int? radius;
+  final int stackedBarPadding;
+  final bool roundTopLeft;
+  final bool roundTopRight;
+  final bool roundBottomLeft;
+  final bool roundBottomRight;
+  final Rectangle<int> fullStackRect;
 }
 
 /// A list of [CanvasPieSlice]s to be painted by [ChartCanvas].
 class CanvasPie {
+
+  CanvasPie(this.slices, this.center, this.radius, this.innerRadius,
+      {this.stroke, this.strokeWidthPx = 0.0,});
   final List<CanvasPieSlice> slices;
   Point center;
   double radius;
@@ -112,16 +115,13 @@ class CanvasPie {
 
   /// Stroke width of separator lines between arcs.
   double strokeWidthPx;
-
-  CanvasPie(this.slices, this.center, this.radius, this.innerRadius,
-      {this.stroke, this.strokeWidthPx = 0.0});
 }
 
 /// A circle sector to be painted by [ChartCanvas].
 class CanvasPieSlice {
+
+  CanvasPieSlice(this.startAngle, this.endAngle, {this.fill});
   double startAngle;
   double endAngle;
   Color? fill;
-
-  CanvasPieSlice(this.startAngle, this.endAngle, {this.fill});
 }

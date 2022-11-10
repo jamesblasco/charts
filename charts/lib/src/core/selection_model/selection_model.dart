@@ -30,13 +30,11 @@ import 'package:equatable/equatable.dart';
 /// for each datum for a given domain/time, but highlights the closest entry to
 /// match up with highlighting/bolding of the line and legend.
 class SelectionModel<D> extends Equatable {
-  var _selectedDatum = <SeriesDatum<D>>[];
-  var _selectedSeries = <ImmutableSeries<D>>[];
 
   /// Create selection model with the desired selection.
   SelectionModel(
       {List<SeriesDatum<D>>? selectedData,
-      List<ImmutableSeries<D>>? selectedSeries}) {
+      List<ImmutableSeries<D>>? selectedSeries,}) {
     if (selectedData != null) {
       _selectedDatum = selectedData;
     }
@@ -53,18 +51,18 @@ class SelectionModel<D> extends Equatable {
 
   /// Create selection model from configuration.
   SelectionModel.fromConfig(List<SeriesDatumConfig<D>>? selectedDataConfig,
-      List<String>? selectedSeriesConfig, List<ImmutableSeries<D>> seriesList) {
+      List<String>? selectedSeriesConfig, List<ImmutableSeries<D>> seriesList,) {
     final selectedDataMap = <String, List<D>>{};
 
     if (selectedDataConfig != null) {
       for (final config in selectedDataConfig) {
         selectedDataMap[config.seriesId] ??= <D>[];
-        selectedDataMap[config.seriesId]!.add(config.domainValue as D);
+        selectedDataMap[config.seriesId]!.add(config.domainValue);
       }
 
       // Add to list of selected series.
       _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          selectedDataMap.keys.contains(series.id)));
+          selectedDataMap.keys.contains(series.id),),);
 
       // Add to list of selected data.
       for (final series in seriesList) {
@@ -93,9 +91,11 @@ class SelectionModel<D> extends Equatable {
           .toSet();
 
       _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          remainingSeriesToAdd.contains(series.id)));
+          remainingSeriesToAdd.contains(series.id),),);
     }
   }
+  var _selectedDatum = <SeriesDatum<D>>[];
+  var _selectedSeries = <ImmutableSeries<D>>[];
 
   /// Returns true if this [SelectionModel] has a selected datum.
   bool get hasDatumSelection => _selectedDatum.isNotEmpty;
@@ -134,6 +134,10 @@ class SelectionModel<D> extends Equatable {
 
   @override
   List<Object?> get props => [_selectedDatum, _selectedSeries];
+
+
+
+
 }
 
 /// A [SelectionModel] that can be updated.
@@ -150,8 +154,9 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   /// When set to true, prevents the model from being updated.
   set locked(bool locked) {
     _locked = locked;
-    _lockChangedListeners
-        .forEach((listener) => listener(SelectionModel.fromOther(this)));
+    for (final listener in _lockChangedListeners) {
+      listener(SelectionModel.fromOther(this));
+    }
   }
 
   bool get locked => _locked;
@@ -165,7 +170,7 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   /// ordered by distance from mouse, closest first.
   bool updateSelection(
       List<SeriesDatum<D>> datumSelection, List<ImmutableSeries<D>> seriesList,
-      {bool notifyListeners = true}) {
+      {bool notifyListeners = true,}) {
     if (_locked) return false;
 
     final origSelectedDatum = _selectedDatum;
@@ -176,14 +181,18 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
 
     // Provide a copy, so listeners get an immutable model.
     final copyOfSelectionModel = SelectionModel.fromOther(this);
-    _updatedListeners.forEach((listener) => listener(copyOfSelectionModel));
+    for (final listener in _updatedListeners) {
+      listener(copyOfSelectionModel);
+    }
 
     final changed = !ListEquality<SeriesDatum<D>>()
             .equals(origSelectedDatum, _selectedDatum) ||
         !ListEquality<ImmutableSeries<D>>()
             .equals(origSelectedSeries, _selectedSeries);
     if (notifyListeners && changed) {
-      _changedListeners.forEach((listener) => listener(copyOfSelectionModel));
+      for (final listener in _changedListeners) {
+        listener(copyOfSelectionModel);
+      }
     }
     return changed;
   }

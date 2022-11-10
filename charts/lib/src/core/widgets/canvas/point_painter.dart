@@ -27,7 +27,7 @@ class PointPainter {
       required double radius,
       Color? fill,
       Color? stroke,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     if (point == null) {
       return;
     }
@@ -37,7 +37,7 @@ class PointPainter {
       paint.style = PaintingStyle.fill;
 
       canvas.drawCircle(
-          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint);
+          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint,);
     }
 
     // [Canvas.drawCircle] does not support drawing a circle with both a fill
@@ -49,7 +49,7 @@ class PointPainter {
       paint.style = PaintingStyle.stroke;
 
       canvas.drawCircle(
-          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint);
+          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint,);
     }
   }
 }

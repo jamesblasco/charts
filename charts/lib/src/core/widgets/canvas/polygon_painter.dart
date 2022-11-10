@@ -36,7 +36,7 @@ class PolygonPainter {
       Rectangle<num>? clipBounds,
       Color? fill,
       Color? stroke,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     if (points.isEmpty) {
       return;
     }
@@ -49,7 +49,7 @@ class PolygonPainter {
             clipBounds.left.toDouble(),
             clipBounds.top.toDouble(),
             clipBounds.width.toDouble(),
-            clipBounds.height.toDouble()));
+            clipBounds.height.toDouble(),),);
     }
 
     final strokeColor = stroke;
@@ -64,7 +64,7 @@ class PolygonPainter {
       }
       paint.style = PaintingStyle.fill;
       canvas.drawCircle(Offset(point.x.toDouble(), point.y.toDouble()),
-          strokeWidthPx!, paint);
+          strokeWidthPx!, paint,);
     } else {
       if (strokeColor != null && strokeWidthPx != null) {
         paint.strokeWidth = strokeWidthPx;
@@ -80,7 +80,7 @@ class PolygonPainter {
       final path = Path()
         ..moveTo(points.first.x.toDouble(), points.first.y.toDouble());
 
-      for (var point in points) {
+      for (final point in points) {
         path.lineTo(point.x.toDouble(), point.y.toDouble());
       }
 

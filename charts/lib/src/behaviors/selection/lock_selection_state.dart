@@ -30,15 +30,6 @@ import 'package:charts/core.dart';
 /// Any previous LockSelection behavior for that selection model will be
 /// removed.
 class LockSelectionState<D> implements ChartBehaviorState<D> {
-  late GestureListener _listener;
-
-  /// Type of selection model that should be updated by input events.
-  final SelectionModelType selectionModelType;
-
-  /// Type of input event that should trigger selection.
-  final SelectionTrigger eventTrigger = SelectionTrigger.tap;
-
-  BaseRenderChart<D>? _chart;
 
   LockSelectionState({this.selectionModelType = SelectionModelType.info}) {
     // Setup the appropriate gesture listening.
@@ -51,6 +42,15 @@ class LockSelectionState<D> implements ChartBehaviorState<D> {
             'trigger "$eventTrigger"');
     }
   }
+  late GestureListener _listener;
+
+  /// Type of selection model that should be updated by input events.
+  final SelectionModelType selectionModelType;
+
+  /// Type of input event that should trigger selection.
+  final SelectionTrigger eventTrigger = SelectionTrigger.tap;
+
+  BaseRenderChart<D>? _chart;
 
   bool _onTapTest(Point<double> chartPoint) {
     // If the tap is within the drawArea, then claim the event from others.

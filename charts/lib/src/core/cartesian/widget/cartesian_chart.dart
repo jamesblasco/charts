@@ -5,13 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class CartesianChart<D> extends BaseChart<D> {
-  final AxisSpec? domainAxis;
-  final NumericAxisSpec? primaryMeasureAxis;
-  final NumericAxisSpec? secondaryMeasureAxis;
-  final LinkedHashMap<String, NumericAxisSpec>? disjointMeasureAxes;
-  final bool? flipVerticalAxis;
-
-  CartesianChart(
+  const CartesianChart(
     super.seriesList, {
     super.animate,
     super.animationDuration,
@@ -29,10 +23,18 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     super.userManagedState,
     this.flipVerticalAxis,
   });
+  final AxisSpec? domainAxis;
+  final NumericAxisSpec? primaryMeasureAxis;
+  final NumericAxisSpec? secondaryMeasureAxis;
+  final LinkedHashMap<String, NumericAxisSpec>? disjointMeasureAxes;
+  final bool? flipVerticalAxis;
 
   @override
-  void updateRenderChart(BaseRenderChart<D> baseChart, BaseChart<D>? oldWidget,
-      BaseChartState<D> chartState) {
+  void updateRenderChart(
+    BaseRenderChart<D> baseChart,
+    BaseChart<D>? oldWidget,
+    BaseChartState<D> chartState,
+  ) {
     super.updateRenderChart(baseChart, oldWidget, chartState);
 
     final prev = oldWidget as CartesianChart?;
@@ -66,13 +68,13 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   @protected
   LinkedHashMap<String, NumericAxis>? createDisjointMeasureAxes() {
     if (disjointMeasureAxes != null) {
-      final disjointAxes = LinkedHashMap<String, NumericAxis>();
+      final disjointAxes = <String, NumericAxis>{};
 
       disjointMeasureAxes!.forEach((String axisId, NumericAxisSpec axisSpec) {
         disjointAxes[axisId] = axisSpec.createAxis();
       });
 
-      return disjointAxes;
+      return LinkedHashMap.from(disjointAxes);
     } else {
       return null;
     }

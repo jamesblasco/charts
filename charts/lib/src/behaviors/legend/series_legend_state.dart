@@ -24,6 +24,25 @@ import 'package:meta/meta.dart' show protected;
 ///
 /// By default this behavior creates a legend entry per series.
 class SeriesLegendBehaviorState<D> extends LegendBehaviorState<D> {
+
+  SeriesLegendBehaviorState({
+    SelectionModelType? selectionModelType,
+    LegendEntryGenerator<D>? legendEntryGenerator,
+    MeasureFormatter? measureFormatter,
+    MeasureFormatter? secondaryMeasureFormatter,
+    bool? showMeasures,
+    LegendDefaultMeasure? legendDefaultMeasure,
+    super.entryTextStyle,
+  }) : super(
+            selectionModelType: selectionModelType ?? SelectionModelType.info,
+            legendEntryGenerator:
+                legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),) {
+    // Calling the setters will automatically use non-null default values.
+    this.showMeasures = showMeasures;
+    this.legendDefaultMeasure = legendDefaultMeasure;
+    this.measureFormatter = measureFormatter;
+    this.secondaryMeasureFormatter = secondaryMeasureFormatter;
+  }
   /// List of currently hidden series, by ID.
   final _hiddenSeriesList = <String>{};
 
@@ -35,26 +54,6 @@ class SeriesLegendBehaviorState<D> extends LegendBehaviorState<D> {
 
   /// Whether or not the series legend should show measures on datum selection.
   late bool _showMeasures;
-
-  SeriesLegendBehaviorState({
-    SelectionModelType? selectionModelType,
-    LegendEntryGenerator<D>? legendEntryGenerator,
-    MeasureFormatter? measureFormatter,
-    MeasureFormatter? secondaryMeasureFormatter,
-    bool? showMeasures,
-    LegendDefaultMeasure? legendDefaultMeasure,
-    TextStyleSpec? entryTextStyle,
-  }) : super(
-            selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),
-            entryTextStyle: entryTextStyle) {
-    // Calling the setters will automatically use non-null default values.
-    this.showMeasures = showMeasures;
-    this.legendDefaultMeasure = legendDefaultMeasure;
-    this.measureFormatter = measureFormatter;
-    this.secondaryMeasureFormatter = secondaryMeasureFormatter;
-  }
 
   /// Sets a list of series IDs that should be hidden by default on first chart
   /// draw.

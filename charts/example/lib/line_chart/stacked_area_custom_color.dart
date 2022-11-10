@@ -22,7 +22,6 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:charts/charts.dart';
-import 'package:charts/core.dart';
 import 'package:charts/charts.dart' as charts;
 import 'package:flutter/material.dart';
 

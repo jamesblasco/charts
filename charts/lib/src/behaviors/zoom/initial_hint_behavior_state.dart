@@ -23,6 +23,14 @@ import 'package:meta/meta.dart' show protected;
 /// This behavior animates to the final viewport from an initial translate and
 /// or scale factor.
 abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
+
+  InitialHintBehaviorState() {
+    _listener = GestureListener(onTapTest: onTapTest);
+
+    _lifecycleListener = LifecycleListener<D>(
+        onAxisConfigured: _onAxisConfigured,
+        onAnimationComplete: _onAnimationComplete,);
+  }
   /// Listens for drag gestures.
   late GestureListener _listener;
 
@@ -38,7 +46,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   @protected
   CartesianRenderChart<D>? get chart => _chart;
 
-  Duration _hintDuration = Duration(milliseconds: 3000);
+  Duration _hintDuration = const Duration(milliseconds: 3000);
 
   /// The amount of time to animate to the desired viewport.
   ///
@@ -50,7 +58,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
     _hintDuration = duration;
   }
 
-  double _maxHintTranslate = 0.0;
+  double _maxHintTranslate = 0;
 
   // TODO: Translation animation only works for ordinal axis.
   /// The maximum amount ordinal values to shift the viewport for the the hint
@@ -98,19 +106,11 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   late double _targetViewportTranslatePx;
   late double _targetViewportScalingFactor;
 
-  InitialHintBehaviorState() {
-    _listener = GestureListener(onTapTest: onTapTest);
-
-    _lifecycleListener = LifecycleListener<D>(
-        onAxisConfigured: _onAxisConfigured,
-        onAnimationComplete: _onAnimationComplete);
-  }
-
   @override
   void attachTo(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'InitialHintBehavior can only be attached to a CartesianChart<D>');
+          'InitialHintBehavior can only be attached to a CartesianChart<D>',);
     }
 
     _chart = chart;
@@ -123,7 +123,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   void removeFrom(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart) {
       throw ArgumentError(
-          'InitialHintBehavior can only be removed from a CartesianChart<D>');
+          'InitialHintBehavior can only be removed from a CartesianChart<D>',);
     }
 
     stopHintAnimation();
@@ -176,8 +176,8 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
 
       assert(_initialViewportScalingFactor != null);
       domainAxis.setViewportSettings(
-          _initialViewportScalingFactor!, _initialViewportTranslatePx!);
-      chart!.redraw(skipAnimation: true, skipLayout: false);
+          _initialViewportScalingFactor!, _initialViewportTranslatePx!,);
+      chart!.redraw(skipAnimation: true);
     }
   }
 
@@ -223,10 +223,10 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
     final percent = hintAnimationPercent;
 
     final scaleFactor = _lerpDouble(
-        _initialViewportScalingFactor, _targetViewportScalingFactor, percent);
+        _initialViewportScalingFactor, _targetViewportScalingFactor, percent,);
 
     var translatePx = _lerpDouble(
-        _initialViewportTranslatePx, _targetViewportTranslatePx, percent);
+        _initialViewportTranslatePx, _targetViewportTranslatePx, percent,);
 
     // If there is a scale factor animation, need to scale the translatePx so
     // the animation appears to be zooming in on the viewport when there is no
@@ -241,7 +241,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
     final chart = this.chart!;
     final domainAxis = chart.domainAxis!;
     domainAxis.setViewportSettings(scaleFactor, translatePx,
-        drawAreaWidth: chart.drawAreaBounds.width);
+        drawAreaWidth: chart.drawAreaBounds.width,);
 
     if (percent >= 1.0) {
       stopHintAnimation();

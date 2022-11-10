@@ -15,11 +15,21 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show protected;
-import 'package:charts/core.dart';
 import 'package:charts/charts/pie.dart';
+import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show protected;
 
 class ArcRendererElementList<D> {
+
+  ArcRendererElementList({
+    required this.arcs,
+    required this.center,
+    required this.innerRadius,
+    required this.radius,
+    required this.startAngle,
+    this.stroke,
+    this.strokeWidthPx,
+  });
   final List<ArcRendererElement<D>> arcs;
   final Point<double> center;
   final double innerRadius;
@@ -31,26 +41,9 @@ class ArcRendererElementList<D> {
 
   /// Stroke width of separator lines between arcs.
   final double? strokeWidthPx;
-
-  ArcRendererElementList({
-    required this.arcs,
-    required this.center,
-    required this.innerRadius,
-    required this.radius,
-    required this.startAngle,
-    this.stroke,
-    this.strokeWidthPx,
-  });
 }
 
 class ArcRendererElement<D> {
-  double startAngle;
-  double endAngle;
-  Color? color;
-  int? index;
-  num? key;
-  D? domain;
-  ImmutableSeries<D> series;
 
   ArcRendererElement({
     required this.startAngle,
@@ -61,6 +54,13 @@ class ArcRendererElement<D> {
     this.domain,
     required this.series,
   });
+  double startAngle;
+  double endAngle;
+  Color? color;
+  int? index;
+  num? key;
+  D? domain;
+  ImmutableSeries<D> series;
 
   ArcRendererElement<D> clone() {
     return ArcRendererElement<D>(
@@ -74,7 +74,7 @@ class ArcRendererElement<D> {
   }
 
   void updateAnimationPercent(ArcRendererElement<D> previous,
-      ArcRendererElement<D> target, double animationPercent) {
+      ArcRendererElement<D> target, double animationPercent,) {
     startAngle =
         ((target.startAngle - previous.startAngle) * animationPercent) +
             previous.startAngle;
@@ -103,6 +103,8 @@ class AnimatedArcList<D> {
 
 @protected
 class AnimatedArc<D> {
+
+  AnimatedArc(this.key, this.datum, this.domain);
   final String key;
   Object? datum;
   D? domain;
@@ -114,8 +116,6 @@ class AnimatedArc<D> {
   // Flag indicating whether this arc is being animated out of the chart.
   bool animatingOut = false;
 
-  AnimatedArc(this.key, this.datum, this.domain);
-
   /// Animates a arc that was removed from the series out of the view.
   ///
   /// This should be called in place of "setNewTarget" for arcs that represent
@@ -123,7 +123,7 @@ class AnimatedArc<D> {
   ///
   /// Animates the angle of the arc to [endAngle], in radians.
   void animateOut(double endAngle) {
-    var newTarget = _currentArc!.clone();
+    final newTarget = _currentArc!.clone();
 
     // Animate the arc out by setting the angles to 0.
     newTarget.startAngle = endAngle;

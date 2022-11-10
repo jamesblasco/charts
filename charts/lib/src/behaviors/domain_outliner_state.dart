@@ -21,6 +21,15 @@ import 'package:charts/core.dart';
 /// This is typically used for treemap charts to highlight nodes.
 /// For bars and pies, prefers to use [DomainHighlighter] for UX consistency.
 class DomainOutlinerState<D> implements ChartBehaviorState<D> {
+
+  DomainOutlinerState({
+    this.selectionType = SelectionModelType.info,
+    double? defaultStrokePx,
+    double? strokePaddingPx,
+  })  : defaultStrokePx = defaultStrokePx ?? 2.0,
+        strokePaddingPx = strokePaddingPx ?? 1.0 {
+    _lifecycleListener = LifecycleListener<D>(onPostprocess: _outline);
+  }
   final SelectionModelType selectionType;
 
   /// Default stroke width of the outline if the series has no stroke width
@@ -40,15 +49,6 @@ class DomainOutlinerState<D> implements ChartBehaviorState<D> {
 
   late LifecycleListener<D> _lifecycleListener;
 
-  DomainOutlinerState({
-    this.selectionType = SelectionModelType.info,
-    double? defaultStrokePx,
-    double? strokePaddingPx,
-  })  : defaultStrokePx = defaultStrokePx ?? 2.0,
-        strokePaddingPx = strokePaddingPx ?? 1.0 {
-    _lifecycleListener = LifecycleListener<D>(onPostprocess: _outline);
-  }
-
   void _selectionChange(SelectionModel<D> selectionModel) {
     _chart.redraw(skipLayout: true, skipAnimation: true);
   }
@@ -56,7 +56,7 @@ class DomainOutlinerState<D> implements ChartBehaviorState<D> {
   void _outline(List<MutableSeries<D>> seriesList) {
     final selectionModel = _chart.getSelectionModel(selectionType);
 
-    for (var series in seriesList) {
+    for (final series in seriesList) {
       final strokeWidthPxFn = series.strokeWidthPxFn;
       final colorFn = series.colorFn;
 

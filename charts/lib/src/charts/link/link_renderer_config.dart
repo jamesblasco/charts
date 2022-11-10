@@ -14,11 +14,16 @@
 // limitations under the License.
 
 import 'package:charts/charts/link.dart';
-import 'link_renderer.dart';
 
 /// Configuration for a [SankeyRenderer].
 class LinkRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+
+  LinkRendererConfig(
+      {this.customRendererId,
+      this.layoutPaintOrder = LayoutViewPaintOrder.bar,
+      SymbolRenderer? symbolRenderer,})
+      : symbolRenderer = symbolRenderer ?? const RectSymbolRenderer();
   @override
   final String? customRendererId;
 
@@ -30,12 +35,6 @@ class LinkRendererConfig<D> extends LayoutViewConfig
 
   /// The order to paint this renderer on the canvas.
   final int layoutPaintOrder;
-
-  LinkRendererConfig(
-      {this.customRendererId,
-      this.layoutPaintOrder = LayoutViewPaintOrder.bar,
-      SymbolRenderer? symbolRenderer})
-      : symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
 
   @override
   LinkRenderer<D> build() {

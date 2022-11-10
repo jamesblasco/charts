@@ -31,6 +31,65 @@ import 'package:meta/meta.dart';
 ///       the data.
 @immutable
 class Slider<D> extends ChartBehavior<D> {
+  /// Constructs a [Slider].
+  ///
+  /// [eventTrigger] sets the type of gesture handled by the slider.
+  ///
+  /// [handleRenderer] draws a handle for the slider. Defaults to a rectangle.
+  ///
+  /// [initialDomainValue] sets the initial position of the slider in domain
+  /// units. The default is the center of the chart.
+  ///
+  /// [onChangeCallback] will be called when the position of the slider
+  /// changes during a drag event.
+  ///
+  /// [snapToDatum] configures the slider to snap snap onto the nearest datum
+  /// (by domain distance) when dragged. By default, the slider can be
+  /// positioned anywhere along the domain axis.
+  ///
+  /// [style] configures the color and sizing of the slider line and handle.
+  ///
+  /// [layoutPaintOrder] configures the order in which the behavior should be
+  /// painted. This value should be relative to LayoutPaintViewOrder.slider.
+  /// (e.g. LayoutViewPaintOrder.slider + 1).
+  factory Slider(
+      {SelectionTrigger? eventTrigger,
+      SymbolRenderer? handleRenderer,
+      dynamic? initialDomainValue,
+      String? roleId,
+      SliderListenerCallback? onChangeCallback,
+      bool snapToDatum = false,
+      SliderStyle? style,
+      int layoutPaintOrder = LayoutViewPaintOrder.slider,}) {
+    eventTrigger ??= SelectionTrigger.tapAndDrag;
+    handleRenderer ??= const RectSymbolRenderer();
+    // Default the handle size large enough to tap on a mobile device.
+    style ??= SliderStyle(handleSize: const Rectangle<int>(0, 0, 20, 30));
+    return Slider._internal(
+      eventTrigger: eventTrigger,
+      handleRenderer: handleRenderer,
+      initialDomainValue: initialDomainValue,
+      onChangeCallback: onChangeCallback,
+      roleId: roleId,
+      snapToDatum: snapToDatum,
+      style: style,
+      desiredGestures: Slider._getDesiredGestures(eventTrigger),
+      layoutPaintOrder: layoutPaintOrder,
+    );
+  }
+
+  Slider._internal({
+    required this.eventTrigger,
+    this.onChangeCallback,
+    this.initialDomainValue,
+    this.roleId,
+    required this.snapToDatum,
+    this.style,
+    this.handleRenderer,
+    required this.desiredGestures,
+    this.layoutPaintOrder,
+  });
+  @override
   final Set<GestureType> desiredGestures;
 
   /// Type of input event for the slider.
@@ -71,66 +130,8 @@ class Slider<D> extends ChartBehavior<D> {
   /// Renderer for the handle. Defaults to a rectangle.
   final SymbolRenderer? handleRenderer;
 
-  Slider._internal(
-      {required this.eventTrigger,
-      this.onChangeCallback,
-      this.initialDomainValue,
-      this.roleId,
-      required this.snapToDatum,
-      this.style,
-      this.handleRenderer,
-      required this.desiredGestures,
-      this.layoutPaintOrder});
-
-  /// Constructs a [Slider].
-  ///
-  /// [eventTrigger] sets the type of gesture handled by the slider.
-  ///
-  /// [handleRenderer] draws a handle for the slider. Defaults to a rectangle.
-  ///
-  /// [initialDomainValue] sets the initial position of the slider in domain
-  /// units. The default is the center of the chart.
-  ///
-  /// [onChangeCallback] will be called when the position of the slider
-  /// changes during a drag event.
-  ///
-  /// [snapToDatum] configures the slider to snap snap onto the nearest datum
-  /// (by domain distance) when dragged. By default, the slider can be
-  /// positioned anywhere along the domain axis.
-  ///
-  /// [style] configures the color and sizing of the slider line and handle.
-  ///
-  /// [layoutPaintOrder] configures the order in which the behavior should be
-  /// painted. This value should be relative to LayoutPaintViewOrder.slider.
-  /// (e.g. LayoutViewPaintOrder.slider + 1).
-  factory Slider(
-      {SelectionTrigger? eventTrigger,
-      SymbolRenderer? handleRenderer,
-      dynamic? initialDomainValue,
-      String? roleId,
-      SliderListenerCallback? onChangeCallback,
-      bool snapToDatum = false,
-      SliderStyle? style,
-      int layoutPaintOrder = LayoutViewPaintOrder.slider}) {
-    eventTrigger ??= SelectionTrigger.tapAndDrag;
-    handleRenderer ??= RectSymbolRenderer();
-    // Default the handle size large enough to tap on a mobile device.
-    style ??= SliderStyle(handleSize: Rectangle<int>(0, 0, 20, 30));
-    return Slider._internal(
-        eventTrigger: eventTrigger,
-        handleRenderer: handleRenderer,
-        initialDomainValue: initialDomainValue,
-        onChangeCallback: onChangeCallback,
-        roleId: roleId,
-        snapToDatum: snapToDatum,
-        style: style,
-        desiredGestures: Slider._getDesiredGestures(eventTrigger),
-        layoutPaintOrder: layoutPaintOrder);
-  }
-
-  static Set<GestureType> _getDesiredGestures(
-      SelectionTrigger eventTrigger) {
-    final desiredGestures = Set<GestureType>();
+  static Set<GestureType> _getDesiredGestures(SelectionTrigger eventTrigger) {
+    final desiredGestures = <GestureType>{};
     switch (eventTrigger) {
       case SelectionTrigger.tapAndDrag:
         desiredGestures
@@ -146,23 +147,25 @@ class Slider<D> extends ChartBehavior<D> {
         break;
       default:
         throw ArgumentError(
-            'Slider does not support the event trigger ' + '"$eventTrigger"');
+          'Slider does not support the event trigger ' '"$eventTrigger"',
+        );
     }
     return desiredGestures;
   }
 
   @override
   SliderState<D> createBehaviorState() => SliderState<D>(
-      eventTrigger: eventTrigger,
-      handleRenderer: handleRenderer,
-      initialDomainValue: initialDomainValue as D,
-      onChangeCallback: onChangeCallback,
-      roleId: roleId,
-      snapToDatum: snapToDatum,
-      style: style);
+        eventTrigger: eventTrigger,
+        handleRenderer: handleRenderer,
+        initialDomainValue: initialDomainValue as D,
+        onChangeCallback: onChangeCallback,
+        roleId: roleId,
+        snapToDatum: snapToDatum,
+        style: style,
+      );
 
   @override
-  void updateBehaviorState(ChartBehaviorState<D> commonBehavior) {}
+  void updateBehaviorState(ChartBehaviorState<D> behaviorState) {}
 
   @override
   String get role => 'Slider-${eventTrigger.toString()}';

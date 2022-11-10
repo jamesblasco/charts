@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'text_measurement.dart' show TextMeasurement;
-import 'text_style.dart' show TextPaintStyle;
+import 'package:charts/src/core/common/text_measurement.dart' show TextMeasurement;
+import 'package:charts/src/core/common/text_style.dart' show TextPaintStyle;
 
 /// Interface for accessing text measurement and painter.
 abstract class TextElement {

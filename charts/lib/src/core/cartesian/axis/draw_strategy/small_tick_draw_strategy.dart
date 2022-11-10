@@ -15,45 +15,33 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show immutable;
-
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show immutable;
 
 @immutable
 class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
+
+  const SmallTickRendererSpec({
+    super.labelStyle,
+    this.lineStyle,
+    super.axisLineStyle,
+    super.labelAnchor,
+    super.labelJustification,
+    super.labelOffsetFromAxisPx,
+    super.labelCollisionOffsetFromAxisPx,
+    super.labelOffsetFromTickPx,
+    super.labelCollisionOffsetFromTickPx,
+    this.tickLengthPx,
+    super.minimumPaddingBetweenLabelsPx,
+    super.labelRotation,
+    super.labelCollisionRotation,
+  });
   final LineStyleSpec? lineStyle;
   final int? tickLengthPx;
 
-  const SmallTickRendererSpec({
-    TextStyleSpec? labelStyle,
-    this.lineStyle,
-    LineStyleSpec? axisLineStyle,
-    TickLabelAnchor? labelAnchor,
-    TickLabelJustification? labelJustification,
-    int? labelOffsetFromAxisPx,
-    int? labelCollisionOffsetFromAxisPx,
-    int? labelOffsetFromTickPx,
-    int? labelCollisionOffsetFromTickPx,
-    this.tickLengthPx,
-    int? minimumPaddingBetweenLabelsPx,
-    int? labelRotation,
-    int? labelCollisionRotation,
-  }) : super(
-            labelStyle: labelStyle,
-            labelAnchor: labelAnchor,
-            labelJustification: labelJustification,
-            labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-            labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-            labelOffsetFromTickPx: labelOffsetFromTickPx,
-            labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-            minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-            labelRotation: labelRotation,
-            labelCollisionRotation: labelCollisionRotation,
-            axisLineStyle: axisLineStyle);
-
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicsFactory) =>
+          ChartContext context, GraphicsFactory graphicsFactory,) =>
       SmallTickDrawStrategy<D>(
         context,
         graphicsFactory,
@@ -78,42 +66,30 @@ class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
 
 /// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
 class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
-  int tickLength;
-  LineStyle lineStyle;
 
   SmallTickDrawStrategy(
-      ChartContext chartContext, GraphicsFactory graphicsFactory,
+      super.chartContext, super.graphicsFactory,
       {int? tickLengthPx,
       LineStyleSpec? lineStyleSpec,
-      TextStyleSpec? labelStyleSpec,
+      super.labelStyleSpec,
       LineStyleSpec? axisLineStyleSpec,
-      TickLabelAnchor? labelAnchor,
-      TickLabelJustification? labelJustification,
-      int? labelOffsetFromAxisPx,
-      int? labelCollisionOffsetFromAxisPx,
-      int? labelOffsetFromTickPx,
-      int? labelCollisionOffsetFromTickPx,
-      int? minimumPaddingBetweenLabelsPx,
-      int? labelRotation,
-      int? labelCollisionRotation})
+      super.labelAnchor,
+      super.labelJustification,
+      super.labelOffsetFromAxisPx,
+      super.labelCollisionOffsetFromAxisPx,
+      super.labelOffsetFromTickPx,
+      super.labelCollisionOffsetFromTickPx,
+      super.minimumPaddingBetweenLabelsPx,
+      super.labelRotation,
+      super.labelCollisionRotation,})
       : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
         lineStyle = StyleFactory.style
             .createTickLineStyle(graphicsFactory, lineStyleSpec),
         super(
-          chartContext,
-          graphicsFactory,
-          labelStyleSpec: labelStyleSpec,
           axisLineStyleSpec: axisLineStyleSpec ?? lineStyleSpec,
-          labelAnchor: labelAnchor,
-          labelJustification: labelJustification,
-          labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-          labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-          labelOffsetFromTickPx: labelOffsetFromTickPx,
-          labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-          minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-          labelRotation: labelRotation,
-          labelCollisionRotation: labelCollisionRotation,
         );
+  int tickLength;
+  LineStyle lineStyle;
 
   @override
   void draw(ChartCanvas canvas, Tick<D> tick,
@@ -122,8 +98,8 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       required Rectangle<int> drawAreaBounds,
       required bool isFirst,
       required bool isLast,
-      bool collision = false}) {
-    var tickPositions = calculateTickPositions(
+      bool collision = false,}) {
+    final tickPositions = calculateTickPositions(
       tick,
       orientation,
       axisBounds,
@@ -147,7 +123,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
         drawAreaBounds: drawAreaBounds,
         isFirst: isFirst,
         isLast: isLast,
-        collision: collision);
+        collision: collision,);
   }
 
   List<Point<num>> calculateTickPositions(

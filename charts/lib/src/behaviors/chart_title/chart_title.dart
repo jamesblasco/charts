@@ -17,13 +17,52 @@ import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show immutable;
 
-import '../../core/behavior/chart_behavior.dart'
-    show ChartBehavior, GestureType;
-
 /// Chart behavior that adds a ChartTitle widget to a chart.
 @immutable
 class ChartTitle<D> extends ChartBehavior<D> {
-  final desiredGestures = Set<GestureType>();
+
+  /// Constructs a [ChartTitle].
+  ///
+  /// [title] primary text for the title.
+  ///
+  /// [behaviorPosition] layout position for the title. Defaults to the top of
+  /// the chart.
+  ///
+  /// [innerPadding] space between the "inside" of the chart, and the title
+  /// behavior itself.
+  ///
+  /// [maxWidthStrategy] strategy for handling title text that is too large to
+  /// fit. Defaults to  truncating the text with ellipses.
+  ///
+  /// [titleDirection] direction of the chart title text.
+  ///
+  /// [titleOutsideJustification] Justification of the title text if it is
+  /// positioned outside of the draw. Defaults to the middle of the margin area.
+  ///
+  /// [titlePadding] space between the title and sub-title text, if defined.
+  ///
+  /// [titleStyleSpec] style of the [title] text.
+  ///
+  /// [subTitle] secondary text for the sub-title. Optional.
+  ///
+  /// [subTitleStyleSpec] style of the [subTitle] text.
+  ChartTitle(
+    this.title, {
+    this.behaviorPosition,
+    this.innerPadding,
+    this.layoutMinSize,
+    this.layoutPreferredSize,
+    this.outerPadding,
+    this.maxWidthStrategy,
+    this.titleDirection,
+    this.titleOutsideJustification,
+    this.titlePadding,
+    this.titleStyleSpec,
+    this.subTitle,
+    this.subTitleStyleSpec,
+  });
+  @override
+  final desiredGestures = <GestureType>{};
 
   final BehaviorPosition? behaviorPosition;
 
@@ -95,47 +134,6 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// bottom edge.
   final int? outerPadding;
 
-  /// Constructs a [ChartTitle].
-  ///
-  /// [title] primary text for the title.
-  ///
-  /// [behaviorPosition] layout position for the title. Defaults to the top of
-  /// the chart.
-  ///
-  /// [innerPadding] space between the "inside" of the chart, and the title
-  /// behavior itself.
-  ///
-  /// [maxWidthStrategy] strategy for handling title text that is too large to
-  /// fit. Defaults to  truncating the text with ellipses.
-  ///
-  /// [titleDirection] direction of the chart title text.
-  ///
-  /// [titleOutsideJustification] Justification of the title text if it is
-  /// positioned outside of the draw. Defaults to the middle of the margin area.
-  ///
-  /// [titlePadding] space between the title and sub-title text, if defined.
-  ///
-  /// [titleStyleSpec] style of the [title] text.
-  ///
-  /// [subTitle] secondary text for the sub-title. Optional.
-  ///
-  /// [subTitleStyleSpec] style of the [subTitle] text.
-  ChartTitle(
-    this.title, {
-    this.behaviorPosition,
-    this.innerPadding,
-    this.layoutMinSize,
-    this.layoutPreferredSize,
-    this.outerPadding,
-    this.maxWidthStrategy,
-    this.titleDirection,
-    this.titleOutsideJustification,
-    this.titlePadding,
-    this.titleStyleSpec,
-    this.subTitle,
-    this.subTitleStyleSpec,
-  });
-
   @override
   ChartTitleBehaviorState<D> createBehaviorState() =>
       ChartTitleBehaviorState<D>(title,
@@ -150,7 +148,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
           titlePadding: titlePadding,
           titleStyleSpec: titleStyleSpec,
           subTitle: subTitle,
-          subTitleStyleSpec: subTitleStyleSpec);
+          subTitleStyleSpec: subTitleStyleSpec,);
 
   @override
   void updateBehaviorState(ChartBehaviorState commonBehavior) {}

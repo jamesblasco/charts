@@ -27,6 +27,8 @@ abstract class BaseSymbolRenderer extends Equatable {
 
 /// Strategy for rendering a symbol bounded within a box.
 abstract class SymbolRenderer extends BaseSymbolRenderer {
+
+  const SymbolRenderer({required this.isSolid});
   /// Whether the symbol should be rendered as a solid shape, or a hollow shape.
   ///
   /// If this is true, then fillColor and strokeColor will be used to fill in
@@ -38,14 +40,12 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
   /// configured.
   final bool isSolid;
 
-  SymbolRenderer({required this.isSolid});
-
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
       {List<int>? dashPattern,
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx});
+      double? strokeWidthPx,});
 
   @protected
   double? getSolidStrokeWidthPx(double? strokeWidthPx) {
@@ -66,16 +66,15 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
 /// An optional second point can describe an extended symbol.
 abstract class PointSymbolRenderer extends BaseSymbolRenderer {
   void paint(ChartCanvas canvas, Point<double> p1, double radius,
-      {required Point<double> p2, Color? fillColor, Color? strokeColor});
+      {required Point<double> p2, Color? fillColor, Color? strokeColor,});
 }
 
 /// Rounded rectangular symbol with corners having [radius].
 class RoundedRectSymbolRenderer extends SymbolRenderer {
-  final double radius;
 
-  RoundedRectSymbolRenderer({bool isSolid = true, double? radius})
-      : radius = radius ?? 1.0,
-        super(isSolid: isSolid);
+  const RoundedRectSymbolRenderer({super.isSolid = true, double? radius})
+      : radius = radius ?? 1.0;
+  final double radius;
 
   @override
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
@@ -83,7 +82,7 @@ class RoundedRectSymbolRenderer extends SymbolRenderer {
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     canvas.drawRRect(bounds,
         fill: getSolidFillColor(fillColor),
         fillPattern: fillPattern,
@@ -92,7 +91,7 @@ class RoundedRectSymbolRenderer extends SymbolRenderer {
         roundTopLeft: true,
         roundTopRight: true,
         roundBottomRight: true,
-        roundBottomLeft: true);
+        roundBottomLeft: true,);
   }
 
   @override
@@ -106,6 +105,11 @@ class RoundedRectSymbolRenderer extends SymbolRenderer {
 
 /// Line symbol renderer.
 class LineSymbolRenderer extends SymbolRenderer {
+
+  const LineSymbolRenderer(
+      {List<int>? dashPattern, super.isSolid = true, double? strokeWidth,})
+      : strokeWidth = strokeWidth ?? strokeWidthForRoundEndCaps,
+        _dashPattern = dashPattern;
   static const roundEndCapsPixels = 2;
   static const minLengthToRoundCaps = (roundEndCapsPixels * 2) + 1;
   static const strokeWidthForRoundEndCaps = 4.0;
@@ -117,19 +121,13 @@ class LineSymbolRenderer extends SymbolRenderer {
   /// Dash pattern for the line.
   final List<int>? _dashPattern;
 
-  LineSymbolRenderer(
-      {List<int>? dashPattern, bool isSolid = true, double? strokeWidth})
-      : strokeWidth = strokeWidth ?? strokeWidthForRoundEndCaps,
-        _dashPattern = dashPattern,
-        super(isSolid: isSolid);
-
   @override
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
       {List<int>? dashPattern,
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     final centerHeight = (bounds.bottom - bounds.top) / 2;
 
     // If we have a dash pattern, do not round the end caps, and set
@@ -178,7 +176,7 @@ class LineSymbolRenderer extends SymbolRenderer {
 
 /// Circle symbol renderer.
 class CircleSymbolRenderer extends SymbolRenderer {
-  CircleSymbolRenderer({bool isSolid = true}) : super(isSolid: isSolid);
+  const CircleSymbolRenderer({super.isSolid = true});
 
   @override
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
@@ -186,7 +184,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     final center = Point(
       bounds.left + (bounds.width / 2),
       bounds.top + (bounds.height / 2),
@@ -197,7 +195,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
         radius: radius,
         fill: getSolidFillColor(fillColor),
         stroke: strokeColor,
-        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx));
+        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),);
   }
 
   @override
@@ -211,7 +209,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
 
 /// Rectangle symbol renderer.
 class RectSymbolRenderer extends SymbolRenderer {
-  RectSymbolRenderer({bool isSolid = true}) : super(isSolid: isSolid);
+  const RectSymbolRenderer({super.isSolid = true});
 
   @override
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
@@ -219,11 +217,11 @@ class RectSymbolRenderer extends SymbolRenderer {
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     canvas.drawRect(bounds,
         fill: getSolidFillColor(fillColor),
         stroke: strokeColor,
-        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx));
+        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),);
   }
 
   @override
@@ -234,7 +232,7 @@ class RectSymbolRenderer extends SymbolRenderer {
 
 /// This [SymbolRenderer] renders an upward pointing equilateral triangle.
 class TriangleSymbolRenderer extends SymbolRenderer {
-  TriangleSymbolRenderer({bool isSolid = true}) : super(isSolid: isSolid);
+  const TriangleSymbolRenderer({super.isSolid = true});
 
   @override
   void paint(ChartCanvas canvas, Rectangle<num> bounds,
@@ -242,7 +240,7 @@ class TriangleSymbolRenderer extends SymbolRenderer {
       Color? fillColor,
       FillPatternType? fillPattern,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     // To maximize the size of the triangle in the available space, we can use
     // the width as the length of each size. Set the bottom edge to be the full
     // width, and then calculate the height based on the 30/60/90 degree right
@@ -257,7 +255,7 @@ class TriangleSymbolRenderer extends SymbolRenderer {
         ],
         fill: getSolidFillColor(fillColor),
         stroke: strokeColor,
-        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx));
+        strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),);
   }
 
   @override
@@ -275,13 +273,13 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
       {required Point<double> p2,
       Color? fillColor,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     if (p1 == null) {
-      throw ArgumentError('Invalid point p1 "${p1}"');
+      throw ArgumentError('Invalid point p1 "$p1"');
     }
 
     if (p2 == null) {
-      throw ArgumentError('Invalid point p2 "${p2}"');
+      throw ArgumentError('Invalid point p2 "$p2"');
     }
 
     final adjustedP1 = Point<double>(p1.x, p1.y);
@@ -291,7 +289,7 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
         points: [adjustedP1, adjustedP2],
         stroke: strokeColor,
         roundEndCaps: true,
-        strokeWidthPx: radius * 2);
+        strokeWidthPx: radius * 2,);
   }
 
   @override
@@ -312,13 +310,13 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
       {required Point<double> p2,
       Color? fillColor,
       Color? strokeColor,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     if (p1 == null) {
-      throw ArgumentError('Invalid point p1 "${p1}"');
+      throw ArgumentError('Invalid point p1 "$p1"');
     }
 
     if (p2 == null) {
-      throw ArgumentError('Invalid point p2 "${p2}"');
+      throw ArgumentError('Invalid point p2 "$p2"');
     }
 
     final adjustedP1 = Point<double>(p1.x, p1.y);
@@ -328,7 +326,7 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
         points: [adjustedP1, adjustedP2],
         stroke: strokeColor,
         roundEndCaps: false,
-        strokeWidthPx: radius * 2);
+        strokeWidthPx: radius * 2,);
   }
 
   @override

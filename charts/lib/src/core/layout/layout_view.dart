@@ -15,9 +15,9 @@
 
 import 'dart:math' show Rectangle;
 
+import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:charts/core.dart';
 
 /// Position of a [LayoutView].
 enum LayoutPosition {
@@ -81,6 +81,12 @@ class LayoutViewPositionOrder {
 
 /// A configuration for margin (empty space) around a layout child view.
 class ViewMargin {
+
+  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
+      : topPx = topPx ?? 0,
+        bottomPx = bottomPx ?? 0,
+        rightPx = rightPx ?? 0,
+        leftPx = leftPx ?? 0;
   /// A [ViewMargin] with all zero px.
   static const empty = ViewMargin(topPx: 0, bottomPx: 0, rightPx: 0, leftPx: 0);
 
@@ -88,12 +94,6 @@ class ViewMargin {
   final int bottomPx;
   final int rightPx;
   final int leftPx;
-
-  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
-      : topPx = topPx ?? 0,
-        bottomPx = bottomPx ?? 0,
-        rightPx = rightPx ?? 0,
-        leftPx = leftPx ?? 0;
 
   /// Total width.
   int get width => leftPx + rightPx;
@@ -105,6 +105,19 @@ class ViewMargin {
 /// Configuration of a [LayoutView].
 @immutable
 class LayoutViewConfig extends Equatable {
+
+  /// Creates new [LayoutParams].
+  ///
+  /// [paintOrder] the order that this component will be drawn.
+  /// [position] the [ComponentPosition] of this component.
+  /// [positionOrder] the order of this component in a chart margin.
+  const LayoutViewConfig({
+    this.id,
+    this.paintOrder,
+    this.position,
+    this.positionOrder,
+    ViewMargin? viewMargin,
+  }) : viewMargin = viewMargin ?? ViewMargin.empty;
   /// Unique identifier for the [LayoutView].
   final String? id;
 
@@ -128,19 +141,6 @@ class LayoutViewConfig extends Equatable {
 
   /// Defines the space around a layout component.
   final ViewMargin viewMargin;
-
-  /// Creates new [LayoutParams].
-  ///
-  /// [paintOrder] the order that this component will be drawn.
-  /// [position] the [ComponentPosition] of this component.
-  /// [positionOrder] the order of this component in a chart margin.
-  LayoutViewConfig({
-    this.id,
-    this.paintOrder,
-    this.position,
-    this.positionOrder,
-    ViewMargin? viewMargin,
-  }) : viewMargin = viewMargin ?? ViewMargin.empty;
 
   /// Returns true if it is a full position.
   bool get isFullPosition =>
@@ -179,14 +179,6 @@ class LayoutViewConfig extends Equatable {
 ///
 /// The measurement is tight to the component, without adding [ComponentBuffer].
 class ViewMeasuredSizes {
-  /// All zeroes component size.
-  static const zero = ViewMeasuredSizes(
-      preferredWidth: 0, preferredHeight: 0, minWidth: 0, minHeight: 0);
-
-  final int preferredWidth;
-  final int preferredHeight;
-  final int minWidth;
-  final int minHeight;
 
   /// Create a new [ViewSizes].
   ///
@@ -198,9 +190,17 @@ class ViewMeasuredSizes {
       {required this.preferredWidth,
       required this.preferredHeight,
       int? minWidth,
-      int? minHeight})
+      int? minHeight,})
       : minWidth = minWidth ?? 0,
         minHeight = minHeight ?? 0;
+  /// All zeroes component size.
+  static const zero = ViewMeasuredSizes(
+      preferredWidth: 0, preferredHeight: 0, minWidth: 0, minHeight: 0,);
+
+  final int preferredWidth;
+  final int preferredHeight;
+  final int minWidth;
+  final int minHeight;
 }
 
 /// A component that measures its size and accepts bounds to complete layout.
@@ -239,7 +239,7 @@ abstract class LayoutView {
 /// a [LayoutPosition] that a [LayoutManager] can use to place components on the
 /// chart.
 LayoutPosition layoutPosition(BehaviorPosition behaviorPosition,
-    OutsideJustification outsideJustification, bool isRtl) {
+    OutsideJustification outsideJustification, bool isRtl,) {
   LayoutPosition position;
   switch (behaviorPosition) {
     case BehaviorPosition.bottom:

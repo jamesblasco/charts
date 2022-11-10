@@ -13,10 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
 import 'package:charts/charts/bar.dart';
-export 'widgets/bar_chart.dart';
+
 export 'bar_error_decorator.dart';
 export 'bar_label_decorator.dart';
 export 'bar_lane_renderer.dart';
@@ -29,20 +27,15 @@ export 'bar_target_line_renderer_config.dart';
 export 'base_bar_renderer.dart';
 export 'base_bar_renderer_config.dart';
 export 'base_bar_renderer_element.dart';
+export 'widgets/bar_chart.dart';
 
 class BarRenderChart extends OrdinalCartesianRenderChart {
   BarRenderChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
-      : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
+      {super.vertical,
+      super.layoutConfig,
+      super.primaryMeasureAxis,
+      super.secondaryMeasureAxis,
+      super.disjointMeasureAxes,});
 
   @override
   SeriesRenderer<String> makeDefaultRenderer() {

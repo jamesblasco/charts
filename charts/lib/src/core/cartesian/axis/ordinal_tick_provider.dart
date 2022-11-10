@@ -37,8 +37,9 @@ class OrdinalTickProvider extends BaseTickProvider<String> {
         scale: scale,
         formatter: formatter,
         formatterValueCache: formatterValueCache,
-        tickDrawStrategy: tickDrawStrategy);
+        tickDrawStrategy: tickDrawStrategy,);
   }
 
+  @override
   List<Object?> get props => [];
 }

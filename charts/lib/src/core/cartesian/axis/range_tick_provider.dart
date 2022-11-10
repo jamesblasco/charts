@@ -16,8 +16,8 @@ import 'package:charts/core.dart';
 
 /// A strategy that provides normal ticks and range ticks.
 class RangeTickProvider<D> extends TickProvider<D> {
+  const RangeTickProvider(this.tickSpec);
   final List<TickSpec<D>> tickSpec;
-  RangeTickProvider(this.tickSpec);
 
   @override
   List<Tick<D>> getTicks({
@@ -55,7 +55,7 @@ class RangeTickProvider<D> extends TickProvider<D> {
     if (!allTicksHaveLabels) {
       formattedValues = formatter.format(
           tickSpec.map((spec) => spec.value).toList(), formatterValueCache,
-          stepSize: scale.domainStepSize);
+          stepSize: scale.domainStepSize,);
     }
 
     for (var i = 0; i < tickSpec.length; i++) {

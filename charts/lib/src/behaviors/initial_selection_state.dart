@@ -17,6 +17,16 @@ import 'package:charts/core.dart';
 
 /// Behavior that sets initial selection.
 class InitialSelectionState<D> implements ChartBehaviorState<D> {
+
+  // TODO : When the series changes, if the user does not also
+  // change the index the wrong item could be highlighted.
+  InitialSelectionState(
+      {this.selectionModelType = SelectionModelType.info,
+      this.selectedDataConfig,
+      this.selectedSeriesConfig,
+      this.shouldPreserveSelectionOnDraw = false,}) {
+    _lifecycleListener = LifecycleListener<D>(onData: _setInitialSelection);
+  }
   final SelectionModelType selectionModelType;
 
   /// List of series id of initially selected series.
@@ -33,16 +43,6 @@ class InitialSelectionState<D> implements ChartBehaviorState<D> {
   late LifecycleListener<D> _lifecycleListener;
   bool _firstDraw = true;
 
-  // TODO : When the series changes, if the user does not also
-  // change the index the wrong item could be highlighted.
-  InitialSelectionState(
-      {this.selectionModelType = SelectionModelType.info,
-      this.selectedDataConfig,
-      this.selectedSeriesConfig,
-      this.shouldPreserveSelectionOnDraw = false}) {
-    _lifecycleListener = LifecycleListener<D>(onData: _setInitialSelection);
-  }
-
   void _setInitialSelection(List<MutableSeries<D>> seriesList) {
     if (!_firstDraw && !shouldPreserveSelectionOnDraw) {
       return;
@@ -50,11 +50,11 @@ class InitialSelectionState<D> implements ChartBehaviorState<D> {
     _firstDraw = false;
 
     final immutableModel = SelectionModel<D>.fromConfig(
-        selectedDataConfig, selectedSeriesConfig, seriesList);
+        selectedDataConfig, selectedSeriesConfig, seriesList,);
 
     _chart!.getSelectionModel(selectionModelType).updateSelection(
         immutableModel.selectedDatum, immutableModel.selectedSeries,
-        notifyListeners: false);
+        notifyListeners: false,);
   }
 
   @override

@@ -65,22 +65,22 @@ class BucketingNumericTickProvider extends NumericTickProvider {
     bool viewportExtensionEnabled = false,
     TickHint<num>? tickHint,
   }) {
-    final _threshold = this._threshold;
-    final _showBucket = this._showBucket;
+    final threshold = _threshold;
+    final showBucket = _showBucket;
 
-    if (_threshold == null) {
+    if (threshold == null) {
       throw ArgumentError(
-          'Bucketing threshold must be set before getting ticks.');
+          'Bucketing threshold must be set before getting ticks.',);
     }
 
-    if (_showBucket == null) {
+    if (showBucket == null) {
       throw ArgumentError(
-          'The showBucket flag must be set before getting ticks.');
+          'The showBucket flag must be set before getting ticks.',);
     }
 
     final localFormatter = _BucketingFormatter(
-        threshold: _threshold,
-        originalFormatter: formatter as SimpleTickFormatterBase<num>);
+        threshold: threshold,
+        originalFormatter: formatter as SimpleTickFormatterBase<num>,);
 
     final ticks = super.getTicks(
         context: context,
@@ -90,21 +90,21 @@ class BucketingNumericTickProvider extends NumericTickProvider {
         formatterValueCache: formatterValueCache,
         tickDrawStrategy: tickDrawStrategy,
         orientation: orientation,
-        viewportExtensionEnabled: viewportExtensionEnabled);
+        viewportExtensionEnabled: viewportExtensionEnabled,);
 
     // Create a tick for the threshold.
     final thresholdTick = Tick<num>(
-        value: _threshold,
+        value: threshold,
         textElement: graphicsFactory
-            .createTextElement(localFormatter.formatValue(_threshold)),
-        locationPx: (_showBucket ? scale[_threshold] : scale[0])!.toDouble(),
+            .createTextElement(localFormatter.formatValue(threshold)),
+        locationPx: (showBucket ? scale[threshold] : scale[0])!.toDouble(),
         labelOffsetPx:
-            _showBucket ? -0.5 * (scale[_threshold]! - scale[0]!) : 0.0);
+            showBucket ? -0.5 * (scale[threshold]! - scale[0]!) : 0.0,);
     tickDrawStrategy.decorateTicks(<Tick<num>>[thresholdTick]);
 
     // Filter out ticks that sit below the threshold.
     ticks.removeWhere((Tick<num> tick) =>
-        tick.value <= thresholdTick.value && tick.value != 0.0);
+        tick.value <= thresholdTick.value && tick.value != 0.0,);
 
     // Finally, add our threshold tick to the list.
     ticks.add(thresholdTick);
@@ -119,8 +119,8 @@ class BucketingNumericTickProvider extends NumericTickProvider {
 }
 
 class _BucketingFormatter extends SimpleTickFormatterBase<num> {
-  _BucketingFormatter(
-      {required this.threshold, required this.originalFormatter});
+  const _BucketingFormatter(
+      {required this.threshold, required this.originalFormatter,});
 
   /// All values smaller than the threshold will be formatted into an empty
   /// string.
@@ -134,7 +134,7 @@ class _BucketingFormatter extends SimpleTickFormatterBase<num> {
     if (value < threshold) {
       return '';
     } else if (value == threshold) {
-      return '< ' + originalFormatter.formatValue(value);
+      return '< ${originalFormatter.formatValue(value)}';
     } else {
       return originalFormatter.formatValue(value);
     }

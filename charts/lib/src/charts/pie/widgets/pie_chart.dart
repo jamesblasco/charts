@@ -14,10 +14,9 @@
 // limitations under the License.
 
 import 'package:charts/charts/pie.dart';
-import 'package:charts/core.dart';
 
 class PieChart<D> extends BaseChart<D> {
-  PieChart(
+  const PieChart(
     super.seriesList, {
     super.animate,
     super.animationDuration,

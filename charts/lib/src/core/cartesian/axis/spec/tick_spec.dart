@@ -20,9 +20,6 @@ import 'package:charts/core.dart';
 ///
 /// Used to define a tick that is used by static tick provider.
 class TickSpec<D> {
-  final D value;
-  final String? label;
-  final TextStyleSpec? style;
 
   /// [value] the value of this tick
   /// [label] optional label for this tick. If not set, uses the tick formatter
@@ -30,4 +27,7 @@ class TickSpec<D> {
   /// [style] optional style for this tick. If not set, uses the style of the
   /// axis.
   const TickSpec(this.value, {this.label, this.style});
+  final D value;
+  final String? label;
+  final TextStyleSpec? style;
 }

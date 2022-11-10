@@ -20,6 +20,8 @@ import 'package:flutter/widgets.dart';
 
 /// Layout delegate that layout chart widget with [BuildableBehavior] widgets.
 class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
+
+  WidgetLayoutDelegate(this.chartID, this.idAndBehavior, this.isRTL);
   /// ID of the common chart widget.
   final String chartID;
 
@@ -28,8 +30,6 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
 
   /// ID and [BuildableBehavior] of the widgets for calculating offset.
   final Map<String, BuildableBehavior> idAndBehavior;
-
-  WidgetLayoutDelegate(this.chartID, this.idAndBehavior, this.isRTL);
 
   @override
   void performLayout(Size size) {
@@ -57,12 +57,12 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
 
         behaviorSize = layoutChild(behaviorID, BoxConstraints.loose(size));
         if (behaviorPosition == BehaviorPosition.top) {
-          chartOffset = Offset(0.0, behaviorSize.height);
+          chartOffset = Offset(0, behaviorSize.height);
           availableHeight -= behaviorSize.height;
         } else if (behaviorPosition == BehaviorPosition.bottom) {
           availableHeight -= behaviorSize.height;
         } else if (behaviorPosition == leftPosition) {
-          chartOffset = Offset(behaviorSize.width, 0.0);
+          chartOffset = Offset(behaviorSize.width, 0);
           availableWidth -= behaviorSize.width;
         } else if (behaviorPosition == rightPosition) {
           availableWidth -= behaviorSize.width;
@@ -83,7 +83,7 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
       // In the delegate, all children are required to have layout called
       // exactly once.
       final behaviorOffset = _getBehaviorOffset(idAndBehavior[behaviorID]!,
-          behaviorSize: behaviorSize, chartSize: chartSize, isRTL: isRTL);
+          behaviorSize: behaviorSize, chartSize: chartSize, isRTL: isRTL,);
 
       positionChild(behaviorID, behaviorOffset);
     }
@@ -100,7 +100,7 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
   Offset _getBehaviorOffset(BuildableBehavior behavior,
       {required Size behaviorSize,
       required Size chartSize,
-      required bool isRTL}) {
+      required bool isRTL,}) {
     late Offset behaviorOffset;
 
     final behaviorPosition = behavior.position;
@@ -121,12 +121,12 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
               Offset(behavior.drawAreaBounds!.left.toDouble(), heightOffset);
           break;
         case _HorizontalJustification.left:
-          behaviorOffset = Offset(0.0, heightOffset);
+          behaviorOffset = Offset(0, heightOffset);
           break;
         case _HorizontalJustification.rightDrawArea:
           behaviorOffset = Offset(
               behavior.drawAreaBounds!.right - behaviorSize.width,
-              heightOffset);
+              heightOffset,);
           break;
         case _HorizontalJustification.right:
           behaviorOffset =
@@ -149,11 +149,11 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
           break;
         case OutsideJustification.start:
         case OutsideJustification.middle:
-          behaviorOffset = Offset(widthOffset, 0.0);
+          behaviorOffset = Offset(widthOffset, 0);
           break;
         case OutsideJustification.endDrawArea:
           behaviorOffset = Offset(widthOffset,
-              behavior.drawAreaBounds!.bottom - behaviorSize.height);
+              behavior.drawAreaBounds!.bottom - behaviorSize.height,);
           break;
         case OutsideJustification.end:
           behaviorOffset =
@@ -161,7 +161,7 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
           break;
       }
     } else if (behaviorPosition == BehaviorPosition.inside) {
-      var rightOffset = Offset(chartSize.width - behaviorSize.width, 0.0);
+      final rightOffset = Offset(chartSize.width - behaviorSize.width, 0);
 
       switch (insideJustification) {
         case InsideJustification.topStart:
@@ -177,7 +177,7 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   _HorizontalJustification getOutsideJustification(
-      OutsideJustification justification, bool isRTL) {
+      OutsideJustification justification, bool isRTL,) {
     _HorizontalJustification mappedJustification;
 
     switch (justification) {

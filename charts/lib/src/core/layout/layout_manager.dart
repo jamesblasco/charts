@@ -15,8 +15,8 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import '../layout/layout_config.dart' show LayoutConfig;
-import 'layout_view.dart' show LayoutView;
+import 'package:charts/src/core/layout/layout_config.dart' show LayoutConfig;
+import 'package:charts/src/core/layout/layout_view.dart' show LayoutView;
 
 abstract class LayoutManager {
   /// Adds a view to be managed by the LayoutManager.

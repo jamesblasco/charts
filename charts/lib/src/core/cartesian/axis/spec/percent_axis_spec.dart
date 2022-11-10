@@ -13,29 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show immutable;
-import 'package:intl/intl.dart';
 import 'package:charts/core.dart';
+import 'package:intl/intl.dart';
+import 'package:meta/meta.dart' show immutable;
 
 /// Convenience [AxisSpec] specialized for numeric percentage axes.
 @immutable
 class PercentAxisSpec extends NumericAxisSpec {
   /// Creates a [NumericAxisSpec] that is specialized for percentage data.
   PercentAxisSpec({
-    RenderSpec<num>? renderSpec,
+    super.renderSpec,
     NumericTickProviderSpec? tickProviderSpec,
     NumericTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
+    super.showAxisLine,
     NumericExtents? viewport,
   }) : super(
-            renderSpec: renderSpec,
             tickProviderSpec: tickProviderSpec ??
                 const BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
             tickFormatterSpec: tickFormatterSpec ??
                 BasicNumericTickFormatterSpec.fromNumberFormat(
-                    NumberFormat.percentPattern()),
-            showAxisLine: showAxisLine,
-            viewport: viewport ?? const NumericExtents(0.0, 1.0));
+                    NumberFormat.percentPattern(),),
+            viewport: viewport ?? const NumericExtents(0.0, 1.0),);
 
   @override
   List<Object?> get props => [super.props];

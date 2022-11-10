@@ -14,35 +14,31 @@
 // limitations under the License.
 
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:charts/charts.dart';
-import 'package:meta/meta.dart' show immutable;
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show immutable;
 
 /// Renders no ticks no labels, and claims no space in layout.
 /// However, it does render the axis line if asked to by the axis.
 @immutable
 class NoneRenderSpec<D> extends RenderSpec<D> {
-  final LineStyleSpec? axisLineStyle;
 
   const NoneRenderSpec({this.axisLineStyle});
+  final LineStyleSpec? axisLineStyle;
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicFactory) =>
-      NoneDrawStrategy<D>(context, graphicFactory,
-          axisLineStyleSpec: axisLineStyle);
+          ChartContext context, GraphicsFactory graphicFactory,) =>
+      NoneDrawStrategy<D>( graphicFactory,
+          axisLineStyleSpec: axisLineStyle,);
   @override
   List<Object?> get props => [];
 }
 
 class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
-  LineStyle axisLineStyle;
-  TextPaintStyle noneTextStyle;
 
   NoneDrawStrategy(
-    ChartContext chartContext,
     GraphicsFactory graphicsFactory, {
     LineStyleSpec? axisLineStyleSpec,
   })  : axisLineStyle = StyleFactory.style
@@ -50,15 +46,17 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
         noneTextStyle = graphicsFactory.createTextPaint()
           ..color = Colors.transparent
           ..fontSize = 0;
+  LineStyle axisLineStyle;
+  TextPaintStyle noneTextStyle;
 
   @override
   void updateTickWidth(List<Tick<D>> ticks, int maxWidth, int maxHeight,
       AxisOrientation orientation,
-      {bool collision = false}) {}
+      {bool collision = false,}) {}
 
   @override
   CollisionReport<D> collides(
-          List<Tick<D>>? ticks, AxisOrientation? orientation) =>
+          List<Tick<D>>? ticks, AxisOrientation? orientation,) =>
       CollisionReport(ticksCollide: false, ticks: ticks);
 
   @override
@@ -67,12 +65,14 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     // still be set to handle the case of the draw strategy being switched to
     // a different draw strategy. The new draw strategy will try to animate
     // the old ticks out and the text style property is used.
-    ticks.forEach((tick) => tick.textElement!.textStyle = noneTextStyle);
+    for (final tick in ticks) {
+      tick.textElement!.textStyle = noneTextStyle;
+    }
   }
 
   @override
   void drawAxisLine(ChartCanvas canvas, AxisOrientation orientation,
-      Rectangle<int> axisBounds) {
+      Rectangle<int> axisBounds,) {
     Point<num> start;
     Point<num> end;
 
@@ -112,19 +112,19 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
       required Rectangle<int> drawAreaBounds,
       required bool isFirst,
       required bool isLast,
-      bool collision = false}) {}
+      bool collision = false,}) {}
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
       List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+      {bool collision = false,}) {
+    return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
   }
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
       List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+      {bool collision = false,}) {
+    return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
   }
 }

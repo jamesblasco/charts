@@ -25,7 +25,19 @@ import 'package:flutter/material.dart';
 /// range.
 @immutable
 class RangeAnnotation<D> extends ChartBehavior<D> {
-  final desiredGestures = Set<GestureType>();
+
+  RangeAnnotation(this.annotations,
+      {Color? defaultColor,
+      this.defaultLabelAnchor,
+      this.defaultLabelDirection,
+      this.defaultLabelPosition,
+      this.defaultLabelStyleSpec,
+      this.extendAxis,
+      this.labelPadding,
+      this.layoutPaintOrder,})
+      : defaultColor = defaultColor ?? Colors.grey.shade100;
+  @override
+  final desiredGestures = <GestureType>{};
 
   /// List of annotations to render on the chart.
   final List<AnnotationSegment<Object>> annotations;
@@ -57,28 +69,17 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   /// (e.g. LayoutViewPaintOrder.rangeAnnotation + 1)
   final int? layoutPaintOrder;
 
-  RangeAnnotation(this.annotations,
-      {Color? defaultColor,
-      this.defaultLabelAnchor,
-      this.defaultLabelDirection,
-      this.defaultLabelPosition,
-      this.defaultLabelStyleSpec,
-      this.extendAxis,
-      this.labelPadding,
-      this.layoutPaintOrder})
-      : this.defaultColor = defaultColor ?? Colors.grey.shade100;
-
   @override
   RangeAnnotationState<D> createBehaviorState() =>
       RangeAnnotationState<D>(annotations,
-          defaultColor: defaultColor,
+          
           defaultLabelAnchor: defaultLabelAnchor,
           defaultLabelDirection: defaultLabelDirection,
           defaultLabelPosition: defaultLabelPosition,
           defaultLabelStyleSpec: defaultLabelStyleSpec,
           extendAxis: extendAxis,
           labelPadding: labelPadding,
-          layoutPaintOrder: layoutPaintOrder);
+          layoutPaintOrder: layoutPaintOrder,);
 
   @override
   void updateBehaviorState(ChartBehaviorState commonBehavior) {}

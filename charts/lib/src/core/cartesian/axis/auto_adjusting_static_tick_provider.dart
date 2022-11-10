@@ -24,10 +24,10 @@ import 'package:charts/core.dart';
 /// The [TextPaintStyle] is not overridden during [TickDrawStrategy.decorateTicks].
 /// If the [TickSpec] style is null, then the default [TextPaintStyle] is used.
 class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
+
+  const AutoAdjustingStaticTickProvider(this.tickSpec, this.allowedTickIncrements);
   final List<TickSpec<D>> tickSpec;
   final List<int> allowedTickIncrements;
-
-  AutoAdjustingStaticTickProvider(this.tickSpec, this.allowedTickIncrements);
 
   @override
   List<Tick<D>> getTicks({
@@ -54,7 +54,7 @@ class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
           tickDrawStrategy: tickDrawStrategy,
           orientation: orientation,
           viewportExtensionEnabled: viewportExtensionEnabled,
-          tickHint: tickHint);
+          tickHint: tickHint,);
       if (ticksForTheFirstIncrement.isEmpty) {
         ticksForTheFirstIncrement = ticks;
       }

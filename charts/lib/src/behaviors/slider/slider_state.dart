@@ -15,9 +15,7 @@
 
 import 'dart:math';
 
-import 'package:charts/behaviors.dart';
 import 'package:charts/charts.dart';
-import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -32,6 +30,91 @@ import 'package:meta/meta.dart';
 ///   longPressHold - Mouse/Touch for a while on the handle, then drag across
 ///       the data.
 class SliderState<D> implements ChartBehaviorState<D> {
+
+  /// Constructs a [SliderState].
+  ///
+  /// [eventTrigger] sets the type of gesture handled by the slider.
+  ///
+  /// [handleRenderer] draws a handle for the slider. Defaults to a rectangle.
+  ///
+  /// [initialDomainValue] sets the initial position of the slider in domain
+  /// units. The default is the center of the chart.
+  ///
+  /// [onChangeCallback] will be called when the position of the slider
+  /// changes during a drag event.
+  ///
+  /// [roleId] optional custom role ID for the slider. This can be used to allow
+  /// multiple [SliderState] behaviors on the same chart. Normally, there can only be
+  /// one slider (per event trigger type) on a chart. This setting allows for
+  /// configuring multiple independent sliders.
+  ///
+  /// [snapToDatum] configures the slider to snap snap onto the nearest datum
+  /// (by domain distance) when dragged. By default, the slider can be
+  /// positioned anywhere along the domain axis.
+  ///
+  /// [style] configures the color and sizing of the slider line and handle.
+  ///
+  /// [layoutPaintOrder] configures the order in which the behavior should be
+  /// painted. This value should be relative to LayoutPaintViewOrder.slider.
+  /// (e.g. LayoutViewPaintOrder.slider + 1).
+  SliderState(
+      {this.eventTrigger = SelectionTrigger.tapAndDrag,
+      SymbolRenderer? handleRenderer,
+      D? initialDomainValue,
+      SliderListenerCallback<D>? onChangeCallback,
+      String? roleId,
+      this.snapToDatum = false,
+      SliderStyle? style,
+      this.layoutPaintOrder = LayoutViewPaintOrder.slider,})
+      : _handleRenderer = handleRenderer ?? const RectSymbolRenderer(),
+        _roleId = roleId ?? '',
+        _style = style ?? SliderStyle(),
+        _domainValue = initialDomainValue {
+    if (_domainValue != null) {
+      _dragStateToFireOnPostRender = SliderListenerDragState.initial;
+    }
+
+    // Setup the appropriate gesture listening.
+    switch (eventTrigger) {
+      case SelectionTrigger.tapAndDrag:
+        _gestureListener = GestureListener(
+            onTapTest: _onTapTest,
+            onTap: _onSelect,
+            onDragStart: _onSelect,
+            onDragUpdate: _onSelect,
+            onDragEnd: _onDragEnd,);
+        break;
+      case SelectionTrigger.pressHold:
+        _gestureListener = GestureListener(
+            onTapTest: _onTapTest,
+            onLongPress: _onSelect,
+            onDragStart: _onSelect,
+            onDragUpdate: _onSelect,
+            onDragEnd: _onDragEnd,);
+        break;
+      case SelectionTrigger.longPressHold:
+        _gestureListener = GestureListener(
+            onTapTest: _onTapTest,
+            onLongPress: _onLongPressSelect,
+            onDragStart: _onSelect,
+            onDragUpdate: _onSelect,
+            onDragEnd: _onDragEnd,);
+        break;
+      default:
+        throw ArgumentError('Slider does not support the event trigger '
+            '"$eventTrigger"');
+    }
+
+    // Set up chart draw cycle listeners.
+    _lifecycleListener = LifecycleListener<D>(
+      onData: _setInitialDragState,
+      onAxisConfigured: _updateViewData,
+      onPostrender: _fireChangeEvent,
+    );
+
+    // Set up slider event listeners.
+    _sliderEventListener = SliderEventListener<D>(onChange: onChangeCallback);
+  }
   late _SliderLayoutView<D> _view;
 
   late GestureListener _gestureListener;
@@ -101,91 +184,6 @@ class SliderState<D> implements ChartBehaviorState<D> {
   /// This should be set any time the state of the slider has changed.
   SliderListenerDragState? _dragStateToFireOnPostRender;
 
-  /// Constructs a [SliderState].
-  ///
-  /// [eventTrigger] sets the type of gesture handled by the slider.
-  ///
-  /// [handleRenderer] draws a handle for the slider. Defaults to a rectangle.
-  ///
-  /// [initialDomainValue] sets the initial position of the slider in domain
-  /// units. The default is the center of the chart.
-  ///
-  /// [onChangeCallback] will be called when the position of the slider
-  /// changes during a drag event.
-  ///
-  /// [roleId] optional custom role ID for the slider. This can be used to allow
-  /// multiple [SliderState] behaviors on the same chart. Normally, there can only be
-  /// one slider (per event trigger type) on a chart. This setting allows for
-  /// configuring multiple independent sliders.
-  ///
-  /// [snapToDatum] configures the slider to snap snap onto the nearest datum
-  /// (by domain distance) when dragged. By default, the slider can be
-  /// positioned anywhere along the domain axis.
-  ///
-  /// [style] configures the color and sizing of the slider line and handle.
-  ///
-  /// [layoutPaintOrder] configures the order in which the behavior should be
-  /// painted. This value should be relative to LayoutPaintViewOrder.slider.
-  /// (e.g. LayoutViewPaintOrder.slider + 1).
-  SliderState(
-      {this.eventTrigger = SelectionTrigger.tapAndDrag,
-      SymbolRenderer? handleRenderer,
-      D? initialDomainValue,
-      SliderListenerCallback<D>? onChangeCallback,
-      String? roleId,
-      this.snapToDatum = false,
-      SliderStyle? style,
-      this.layoutPaintOrder = LayoutViewPaintOrder.slider})
-      : _handleRenderer = handleRenderer ?? RectSymbolRenderer(),
-        _roleId = roleId ?? '',
-        _style = style ?? SliderStyle(),
-        _domainValue = initialDomainValue {
-    if (_domainValue != null) {
-      _dragStateToFireOnPostRender = SliderListenerDragState.initial;
-    }
-
-    // Setup the appropriate gesture listening.
-    switch (eventTrigger) {
-      case SelectionTrigger.tapAndDrag:
-        _gestureListener = GestureListener(
-            onTapTest: _onTapTest,
-            onTap: _onSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDragEnd);
-        break;
-      case SelectionTrigger.pressHold:
-        _gestureListener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDragEnd);
-        break;
-      case SelectionTrigger.longPressHold:
-        _gestureListener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onLongPressSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDragEnd);
-        break;
-      default:
-        throw ArgumentError('Slider does not support the event trigger '
-            '"$eventTrigger"');
-    }
-
-    // Set up chart draw cycle listeners.
-    _lifecycleListener = LifecycleListener<D>(
-      onData: _setInitialDragState,
-      onAxisConfigured: _updateViewData,
-      onPostrender: _fireChangeEvent,
-    );
-
-    // Set up slider event listeners.
-    _sliderEventListener = SliderEventListener<D>(onChange: onChangeCallback);
-  }
-
   bool _onTapTest(Point<double> chartPoint) {
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
     _handleDrag = _sliderContainsPoint(chartPoint);
@@ -238,7 +236,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
           // over.
           _dragStateToFireOnPostRender = SliderListenerDragState.end;
 
-          _chart!.redraw(skipAnimation: false, skipLayout: true);
+          _chart!.redraw(skipLayout: true);
         }
       }
     } else {
@@ -283,12 +281,12 @@ class SliderState<D> implements ChartBehaviorState<D> {
     _moveSliderToDomain(_domainValue);
 
     // Move the handle to the current event position.
-    final _handleBounds = this._handleBounds!;
-    final _domainCenterPoint = this._domainCenterPoint!;
+    final handleBounds = _handleBounds!;
+    final domainCenterPoint = _domainCenterPoint!;
     final element = _SliderElement<D>(
-      domainCenterPoint: Point<int>(_domainCenterPoint.x, _domainCenterPoint.y),
-      buttonBounds: Rectangle<int>(_handleBounds.left, _handleBounds.top,
-          _handleBounds.width, _handleBounds.height),
+      domainCenterPoint: Point<int>(domainCenterPoint.x, domainCenterPoint.y),
+      buttonBounds: Rectangle<int>(handleBounds.left, handleBounds.top,
+          handleBounds.width, handleBounds.height,),
       fill: _style.fillColor,
       stroke: _style.strokeColor,
       strokeWidthPx: _style.strokeWidthPx,
@@ -301,8 +299,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
 
   /// Fires a [SliderListenerDragState] change event if needed.
   void _fireChangeEvent(ChartCanvas _) {
-    if (SliderListenerDragState == null ||
-        _sliderEventListener.onChange == null) {
+    if (_sliderEventListener.onChange == null) {
       return;
     }
 
@@ -331,7 +328,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
         Point<int>(_domainCenterPoint!.x, _domainCenterPoint!.y),
         _domainValue,
         _roleId,
-        dragState);
+        dragState,);
   }
 
   /// Moves the slider along the domain axis (and primary measure axis if
@@ -396,7 +393,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
             Point<int>(positionX.round(), _domainCenterPoint!.y);
       } else {
         _domainCenterPoint = Point<int>(positionX.round(),
-            (viewBounds.top + viewBounds.height / 2).round());
+            (viewBounds.top + viewBounds.height / 2).round(),);
       }
 
       num handleReferenceY;
@@ -426,7 +423,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
                   _style.handleOffset.y)
               .round(),
           _style.handleSize.width,
-          _style.handleSize.height);
+          _style.handleSize.height,);
     }
 
     return positionChanged;
@@ -506,7 +503,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     assert(chart.vertical);
 
     _view = _SliderLayoutView<D>(
-        layoutPaintOrder: layoutPaintOrder, handleRenderer: _handleRenderer);
+        layoutPaintOrder: layoutPaintOrder, handleRenderer: _handleRenderer,);
 
     chart.addView(_view);
     chart.addGestureListener(_gestureListener);
@@ -527,6 +524,16 @@ class SliderState<D> implements ChartBehaviorState<D> {
 
 /// Style configuration for a [SliderState] behavior.
 class SliderStyle extends Equatable {
+
+  SliderStyle(
+      {Color? fillColor,
+      this.handleOffset = const Point<double>(0, 0),
+      this.handleSize = const Rectangle<int>(0, 0, 10, 20),
+      Color? strokeColor,
+      this.handlePosition = SliderHandlePosition.middle,
+      this.strokeWidthPx = 2.0,})
+      : fillColor = fillColor ?? StyleFactory.style.sliderFillColor,
+        strokeColor = strokeColor ?? StyleFactory.style.sliderStrokeColor;
   /// Fill color of the handle of the slider.
   Color fillColor;
 
@@ -547,16 +554,6 @@ class SliderStyle extends Equatable {
 
   /// Stroke color of the slider line and hte slider handle
   Color strokeColor = StyleFactory.style.sliderStrokeColor;
-
-  SliderStyle(
-      {Color? fillColor,
-      this.handleOffset = const Point<double>(0.0, 0.0),
-      this.handleSize = const Rectangle<int>(0, 0, 10, 20),
-      Color? strokeColor,
-      this.handlePosition = SliderHandlePosition.middle,
-      this.strokeWidthPx = 2.0})
-      : fillColor = fillColor ?? StyleFactory.style.sliderFillColor,
-        strokeColor = strokeColor ?? StyleFactory.style.sliderStrokeColor;
 @override
   List<Object?> get props => [fillColor,handleOffset,handleSize,strokeWidthPx,strokeColor,handlePosition];
 
@@ -576,6 +573,14 @@ enum SliderHandlePosition { middle, top, manual }
 
 /// Layout view component for [SliderState].
 class _SliderLayoutView<D> extends LayoutView {
+
+  _SliderLayoutView(
+      {required int layoutPaintOrder, required SymbolRenderer handleRenderer,})
+      : layoutConfig = LayoutViewConfig(
+            paintOrder: layoutPaintOrder,
+            position: LayoutPosition.DrawArea,
+            positionOrder: LayoutViewPositionOrder.drawArea,),
+        _handleRenderer = handleRenderer;
   @override
   final LayoutViewConfig layoutConfig;
 
@@ -591,14 +596,6 @@ class _SliderLayoutView<D> extends LayoutView {
 
   /// Rendering data for the slider line and handle.
   _AnimatedSlider<D>? _sliderHandle;
-
-  _SliderLayoutView(
-      {required int layoutPaintOrder, required SymbolRenderer handleRenderer})
-      : layoutConfig = LayoutViewConfig(
-            paintOrder: layoutPaintOrder,
-            position: LayoutPosition.DrawArea,
-            positionOrder: LayoutViewPositionOrder.drawArea),
-        _handleRenderer = handleRenderer;
 
   set sliderHandle(_AnimatedSlider<D> value) {
     _sliderHandle = value;
@@ -624,12 +621,12 @@ class _SliderLayoutView<D> extends LayoutView {
           Point<num>(sliderElement.domainCenterPoint.x, _drawAreaBounds.bottom),
         ],
         stroke: sliderElement.stroke,
-        strokeWidthPx: sliderElement.strokeWidthPx);
+        strokeWidthPx: sliderElement.strokeWidthPx,);
 
     _handleRenderer.paint(canvas, sliderElement.buttonBounds,
         fillColor: sliderElement.fill,
         strokeColor: sliderElement.stroke,
-        strokeWidthPx: sliderElement.strokeWidthPx);
+        strokeWidthPx: sliderElement.strokeWidthPx,);
   }
 
   @override
@@ -641,11 +638,6 @@ class _SliderLayoutView<D> extends LayoutView {
 
 /// Rendering information for a slider control element.
 class _SliderElement<D> {
-  Point<int> domainCenterPoint;
-  Rectangle<int> buttonBounds;
-  Color fill;
-  Color stroke;
-  double strokeWidthPx;
 
   _SliderElement({
     required this.domainCenterPoint,
@@ -654,6 +646,11 @@ class _SliderElement<D> {
     required this.stroke,
     required this.strokeWidthPx,
   });
+  Point<int> domainCenterPoint;
+  Rectangle<int> buttonBounds;
+  Color fill;
+  Color stroke;
+  double strokeWidthPx;
 
   _SliderElement<D> clone() {
     return _SliderElement<D>(
@@ -666,7 +663,7 @@ class _SliderElement<D> {
   }
 
   void updateAnimationPercent(_SliderElement<D> previous,
-      _SliderElement<D> target, double animationPercent) {
+      _SliderElement<D> target, double animationPercent,) {
     final previousPoint = previous.domainCenterPoint;
     final targetPoint = target.domainCenterPoint;
 
@@ -694,7 +691,7 @@ class _SliderElement<D> {
             previousBounds.left;
 
     buttonBounds = Rectangle<int>(left.round(), top.round(),
-        (right - left).round(), (bottom - top).round());
+        (right - left).round(), (bottom - top).round(),);
 
     fill = getAnimatedColor(previous.fill, target.fill, animationPercent);
 
@@ -709,14 +706,14 @@ class _SliderElement<D> {
 /// Animates the slider control element of the behavior between different
 /// states.
 class _AnimatedSlider<D> {
+
+  _AnimatedSlider();
   _SliderElement<D>? _previousSlider;
   late _SliderElement<D> _targetSlider;
   _SliderElement<D>? _currentSlider;
 
   // Flag indicating whether this point is being animated out of the chart.
   bool animatingOut = false;
-
-  _AnimatedSlider();
 
   /// Animates a point that was removed from the series out of the view.
   ///
@@ -735,7 +732,7 @@ class _AnimatedSlider<D> {
     final left = right;
 
     newTarget.buttonBounds = Rectangle<int>(left.round(), top.round(),
-        (right - left).round(), (bottom - top).round());
+        (right - left).round(), (bottom - top).round(),);
 
     // Animate the stroke width to 0 so that we don't get a lingering line after
     // animation is done.
@@ -760,7 +757,7 @@ class _AnimatedSlider<D> {
     }
 
     _currentSlider!.updateAnimationPercent(
-        _previousSlider!, _targetSlider, animationPercent);
+        _previousSlider!, _targetSlider, animationPercent,);
 
     return _currentSlider!;
   }
@@ -768,10 +765,10 @@ class _AnimatedSlider<D> {
 
 /// Event handler for slider events.
 class SliderEventListener<D> {
-  /// Called when the position of the slider has changed during a drag event.
-  final SliderListenerCallback<D>? onChange;
 
   SliderEventListener({this.onChange});
+  /// Called when the position of the slider has changed during a drag event.
+  final SliderListenerCallback<D>? onChange;
 }
 
 /// Callback function for [SliderState] drag events.
@@ -784,7 +781,7 @@ class SliderEventListener<D> {
 ///
 /// [dragState] indicates the current state of a drag event.
 typedef SliderListenerCallback<D> = void Function(Point<int> point, D? domain,
-    String roleId, SliderListenerDragState dragState);
+    String roleId, SliderListenerDragState dragState,);
 
 /// Describes the current state of a slider change as a result of a drag event.
 ///
@@ -806,9 +803,9 @@ enum SliderListenerDragState { initial, drag, end }
 /// Helper class that exposes fewer private internal properties for unit tests.
 @visibleForTesting
 class SliderTester<D> {
-  final SliderState<D> behavior;
 
   SliderTester(this.behavior);
+  final SliderState<D> behavior;
 
   Point<int>? get domainCenterPoint => behavior._domainCenterPoint;
 

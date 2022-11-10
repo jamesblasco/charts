@@ -16,8 +16,8 @@
 import 'dart:math' show Point;
 
 import 'package:charts/behaviors.dart';
-import 'package:meta/meta.dart' show protected;
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show protected;
 
 /// Adds domain axis panning support to a chart.
 ///
@@ -67,7 +67,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
         onTapTest: onTapTest,
         onDragStart: onDragStart,
         onDragUpdate: onDragUpdate,
-        onDragEnd: onDragEnd);
+        onDragEnd: onDragEnd,);
   }
 
   /// Injects the behavior into a chart.
@@ -75,7 +75,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   void attachTo(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>');
+          'PanBehavior can only be attached to a CartesianChart<D>',);
     }
 
     _chart = chart;
@@ -95,7 +95,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   void removeFrom(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>');
+          'PanBehavior can only be attached to a CartesianChart<D>',);
     }
 
     _chart = chart;
@@ -171,7 +171,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     final chart = this.chart!;
     domainAxis.setViewportSettings(domainScalingFactor, domainChange,
         drawAreaWidth: chart.drawAreaBounds.width,
-        drawAreaHeight: chart.drawAreaBounds.height);
+        drawAreaHeight: chart.drawAreaBounds.height,);
 
     _lastPosition = localPosition;
 
@@ -181,7 +181,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
 
   @protected
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec) {
+      Point<double> localPosition, double scale, double pixelsPerSec,) {
     onPanEnd();
     return true;
   }
@@ -205,10 +205,10 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     // request redraw.
     _domainAxisTickProvider.mode = PanningTickProviderMode.passThrough;
 
-    final _chart = this._chart!;
-    _chart.getMeasureAxis().lockAxis = false;
-    _chart.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = false;
-    _chart.redraw();
+    final chart = _chart!;
+    chart.getMeasureAxis().lockAxis = false;
+    chart.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = false;
+    chart.redraw();
 
     _panningCompletedCallback?.call();
   }

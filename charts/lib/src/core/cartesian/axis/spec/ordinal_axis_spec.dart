@@ -13,16 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show immutable;
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show immutable;
 
 /// [AxisSpec] specialized for ordinal/non-continuous axes typically for bars.
 @immutable
 class OrdinalAxisSpec extends AxisSpec<String> {
-  /// Sets viewport for this Axis.
-  ///
-  /// If pan / zoom behaviors are set, this is the initial viewport.
-  final OrdinalViewport? viewport;
 
   /// Creates a [AxisSpec] that specialized for ordinal domain charts.
   ///
@@ -35,23 +31,21 @@ class OrdinalAxisSpec extends AxisSpec<String> {
   ///     formatted.
   /// [showAxisLine] override to force the axis to draw the axis line.
   const OrdinalAxisSpec({
-    RenderSpec<String>? renderSpec,
-    OrdinalTickProviderSpec? tickProviderSpec,
-    OrdinalTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
-    OrdinalScaleSpec? scaleSpec,
+    super.renderSpec,
+    OrdinalTickProviderSpec? super.tickProviderSpec,
+    OrdinalTickFormatterSpec? super.tickFormatterSpec,
+    super.showAxisLine,
+    OrdinalScaleSpec? super.scaleSpec,
     this.viewport,
-  }) : super(
-          renderSpec: renderSpec,
-          tickProviderSpec: tickProviderSpec,
-          tickFormatterSpec: tickFormatterSpec,
-          showAxisLine: showAxisLine,
-          scaleSpec: scaleSpec,
-        );
+  });
+  /// Sets viewport for this Axis.
+  ///
+  /// If pan / zoom behaviors are set, this is the initial viewport.
+  final OrdinalViewport? viewport;
 
   @override
   void configure(Axis<String> axis, ChartContext context,
-      GraphicsFactory graphicsFactory) {
+      GraphicsFactory graphicsFactory,) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is OrdinalAxis && viewport != null) {
@@ -84,7 +78,7 @@ class BasicOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
 
   @override
   OrdinalTickProvider createTickProvider(ChartContext context) =>
-      OrdinalTickProvider();
+      const OrdinalTickProvider();
 
   @override
   List<Object?> get props => [];
@@ -93,9 +87,9 @@ class BasicOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
 /// [TickProviderSpec] that allows you to specify the ticks to be used.
 @immutable
 class StaticOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
-  final List<TickSpec<String>> tickSpecs;
 
   const StaticOrdinalTickProviderSpec(this.tickSpecs);
+  final List<TickSpec<String>> tickSpecs;
 
   @override
   StaticTickProvider<String> createTickProvider(ChartContext context) =>
@@ -110,15 +104,15 @@ class StaticOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
 @immutable
 class AutoAdjustingStaticOrdinalTickProviderSpec
     extends OrdinalTickProviderSpec {
+
+  const AutoAdjustingStaticOrdinalTickProviderSpec(
+      this.tickSpecs, this.allowedTickIncrements,);
   final List<TickSpec<String>> tickSpecs;
   final List<int> allowedTickIncrements;
 
-  const AutoAdjustingStaticOrdinalTickProviderSpec(
-      this.tickSpecs, this.allowedTickIncrements);
-
   @override
   AutoAdjustingStaticTickProvider<String> createTickProvider(
-          ChartContext context) =>
+          ChartContext context,) =>
       AutoAdjustingStaticTickProvider<String>(tickSpecs, allowedTickIncrements);
 
   @override
@@ -128,8 +122,8 @@ class AutoAdjustingStaticOrdinalTickProviderSpec
 /// [TickProviderSpec] that allows you to provide range ticks and normal ticks.
 @immutable
 class RangeOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
-  final List<TickSpec<String>> tickSpecs;
   const RangeOrdinalTickProviderSpec(this.tickSpecs);
+  final List<TickSpec<String>> tickSpecs;
 
   @override
   RangeTickProvider<String> createTickProvider(ChartContext context) =>
@@ -145,7 +139,7 @@ class BasicOrdinalTickFormatterSpec extends OrdinalTickFormatterSpec {
 
   @override
   OrdinalTickFormatter createTickFormatter(ChartContext context) =>
-      OrdinalTickFormatter();
+      const OrdinalTickFormatter();
 
   @override
   List<Object?> get props => [];
@@ -166,9 +160,9 @@ class SimpleOrdinalScaleSpec extends OrdinalScaleSpec {
 /// pixel size.
 @immutable
 class FixedPixelSpaceOrdinalScaleSpec extends OrdinalScaleSpec {
-  final double pixelSpaceBetweenBars;
 
   const FixedPixelSpaceOrdinalScaleSpec(this.pixelSpaceBetweenBars);
+  final double pixelSpaceBetweenBars;
 
   @override
   OrdinalScale createScale() => SimpleOrdinalScale()
@@ -182,9 +176,9 @@ class FixedPixelSpaceOrdinalScaleSpec extends OrdinalScaleSpec {
 /// [OrdinalScaleSpec] which allows setting bar width to be a fixed pixel size.
 @immutable
 class FixedPixelOrdinalScaleSpec extends OrdinalScaleSpec {
-  final double pixels;
 
   const FixedPixelOrdinalScaleSpec(this.pixels);
+  final double pixels;
 
   @override
   OrdinalScale createScale() => SimpleOrdinalScale()

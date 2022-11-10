@@ -18,19 +18,9 @@ import 'package:charts/core.dart';
 
 /// Day stepper.
 class DayTimeStepper extends BaseTimeStepper {
-  // TODO: Remove the 14 day increment if we add week stepper.
-  static const _defaultIncrements = [1, 2, 3, 7, 14];
-  static const _hoursInDay = 24;
-
-  final List<int> _allowedTickIncrements;
-
-  DayTimeStepper._internal(
-      DateTimeFactory dateTimeFactory, List<int> increments)
-      : _allowedTickIncrements = increments,
-        super(dateTimeFactory);
 
   factory DayTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements,}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -38,6 +28,15 @@ class DayTimeStepper extends BaseTimeStepper {
 
     return DayTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
   }
+
+  DayTimeStepper._internal(
+      super.dateTimeFactory, List<int> increments,)
+      : _allowedTickIncrements = increments;
+  // TODO: Remove the 14 day increment if we add week stepper.
+  static const _defaultIncrements = [1, 2, 3, 7, 14];
+  static const _hoursInDay = 24;
+
+  final List<int> _allowedTickIncrements;
 
   @override
   int get typicalStepSizeMs => _hoursInDay * 3600 * 1000;
@@ -61,7 +60,7 @@ class DayTimeStepper extends BaseTimeStepper {
         : time;
     // Explicitly leaving off hours and beyond to truncate to start of day.
     final stepBefore = dateTimeFactory.createDateTime(
-        dayBefore.year, dayBefore.month, dayBefore.day);
+        dayBefore.year, dayBefore.month, dayBefore.day,);
 
     return stepBefore;
   }
@@ -73,6 +72,6 @@ class DayTimeStepper extends BaseTimeStepper {
         time.add(Duration(hours: (_hoursInDay * tickIncrement) + 1));
     // Explicitly leaving off hours and beyond to truncate to start of day.
     return dateTimeFactory.createDateTime(
-        stepAfter.year, stepAfter.month, stepAfter.day);
+        stepAfter.year, stepAfter.month, stepAfter.day,);
   }
 }

@@ -20,14 +20,14 @@ import 'package:charts/core.dart';
 /// [DateTime] values are converted to millisecondsSinceEpoch and passed to the
 /// [LinearScale].
 class DateTimeScale extends MutableScale<DateTime> {
-  final DateTimeFactory dateTimeFactory;
-  final LinearScale _linearScale;
 
   DateTimeScale(this.dateTimeFactory) : _linearScale = LinearScale();
 
   DateTimeScale._copy(DateTimeScale other)
       : dateTimeFactory = other.dateTimeFactory,
         _linearScale = other._linearScale.copy();
+  final DateTimeFactory dateTimeFactory;
+  final LinearScale _linearScale;
 
   @override
   num operator [](DateTime domainValue) =>
@@ -36,7 +36,7 @@ class DateTimeScale extends MutableScale<DateTime> {
   @override
   DateTime reverse(double pixelLocation) =>
       dateTimeFactory.createDateTimeFromMilliSecondsSinceEpoch(
-          _linearScale.reverse(pixelLocation).round());
+          _linearScale.reverse(pixelLocation).round(),);
 
   @override
   void resetDomain() {
@@ -82,13 +82,13 @@ class DateTimeScale extends MutableScale<DateTime> {
         start: dateTimeFactory
             .createDateTimeFromMilliSecondsSinceEpoch(extents.min.toInt()),
         end: dateTimeFactory
-            .createDateTimeFromMilliSecondsSinceEpoch(extents.max.toInt()));
+            .createDateTimeFromMilliSecondsSinceEpoch(extents.max.toInt()),);
   }
 
   set viewportDomain(DateTimeExtents extents) {
     _linearScale.viewportDomain = NumericExtents(
         extents.start.millisecondsSinceEpoch,
-        extents.end.millisecondsSinceEpoch);
+        extents.end.millisecondsSinceEpoch,);
   }
 
   @override

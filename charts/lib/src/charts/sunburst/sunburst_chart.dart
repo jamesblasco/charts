@@ -16,15 +16,13 @@
 import 'dart:math' show Rectangle;
 
 import 'package:charts/charts/sunburst.dart';
-import 'package:charts/core.dart';
 
 export 'sunburst_arc_label_decorator.dart';
-export 'sunburst_arc_renderer_config.dart';
 export 'sunburst_arc_renderer.dart';
+export 'sunburst_arc_renderer_config.dart';
 
 class SunburstRenderChart<D> extends BaseRenderChart<D> {
-  SunburstRenderChart({LayoutConfig? layoutConfig})
-      : super(layoutConfig: layoutConfig);
+  SunburstRenderChart({super.layoutConfig});
 
   @override
   SeriesRenderer<D> makeDefaultRenderer() {
@@ -46,9 +44,7 @@ class SunburstRenderChart<D> extends BaseRenderChart<D> {
       final details = (renderer as SunburstArcRenderer<D>)
           .getExpandedDatumDetails(seriesDatum);
 
-      if (details != null) {
-        entries.add(details);
-      }
+      entries.add(details);
     }
 
     return entries;

@@ -35,15 +35,16 @@ import 'package:meta/meta.dart' show immutable;
 /// calculates values after series have been potentially removed from the list.
 @immutable
 class PercentInjector<D> extends ChartBehavior<D> {
-  final desiredGestures = Set<GestureType>();
-
-  /// The type of data total to be calculated.
-  final PercentInjectorTotalType totalType;
 
   /// Constructs a [PercentInjector].
   ///
   /// [totalType] configures the type of data total to be calculated.
   PercentInjector({this.totalType = PercentInjectorTotalType.domain});
+  @override
+  final desiredGestures = <GestureType>{};
+
+  /// The type of data total to be calculated.
+  final PercentInjectorTotalType totalType;
 
   @override
   PercentInjectorBehaviorState<D> createBehaviorState() =>

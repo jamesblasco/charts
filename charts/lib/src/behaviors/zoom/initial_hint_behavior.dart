@@ -19,14 +19,15 @@ import 'package:flutter/widgets.dart' show AnimationController, immutable;
 
 @immutable
 class InitialHintBehavior<D> extends ChartBehavior<D> {
-  final desiredGestures = Set<GestureType>();
+
+  InitialHintBehavior(
+      {this.hintDuration, this.maxHintTranslate, this.maxHintScaleFactor,});
+  @override
+  final desiredGestures = <GestureType>{};
 
   final Duration? hintDuration;
   final double? maxHintTranslate;
   final double? maxHintScaleFactor;
-
-  InitialHintBehavior(
-      {this.hintDuration, this.maxHintTranslate, this.maxHintScaleFactor});
 
   @override
   InitialHintBehaviorState<D> createBehaviorState() {
@@ -65,6 +66,7 @@ class FlutterInitialHintBehavior<D> extends InitialHintBehaviorState<D>
 
   BaseChartState? _chartState;
 
+  @override
   set chartState(BaseChartState chartState) {
     _chartState = chartState;
 
@@ -78,7 +80,7 @@ class FlutterInitialHintBehavior<D> extends InitialHintBehaviorState<D>
 
     _hintAnimator!
       ..duration = hintDuration
-      ..forward(from: 0.0);
+      ..forward(from: 0);
   }
 
   @override

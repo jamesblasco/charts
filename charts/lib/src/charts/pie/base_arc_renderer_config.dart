@@ -15,12 +15,27 @@
 
 import 'dart:math' show pi;
 
-import 'package:charts/core.dart';
 import 'package:charts/charts/pie.dart';
+import 'package:charts/core.dart';
 
 /// The base renderer config for arc renderer and sunburst arc renderer.
 abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+
+  BaseArcRendererConfig(
+      {this.customRendererId,
+      this.arcLength = 2 * pi,
+      this.arcRendererDecorators = const [],
+      this.arcRatio,
+      this.arcWidth,
+      this.layoutPaintOrder = LayoutViewPaintOrder.arc,
+      this.minHoleWidthForCenterContent = 30,
+      this.startAngle = -pi / 2,
+      this.strokeWidthPx = 2.0,
+      SymbolRenderer? symbolRenderer,})
+      : noDataColor = StyleFactory.style.noDataColor,
+        stroke = StyleFactory.style.arcStrokeColor,
+        symbolRenderer = symbolRenderer ?? const CircleSymbolRenderer();
   @override
   final String? customRendererId;
 
@@ -68,21 +83,6 @@ abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
   /// Color of the "no data" state for the chart, used when an empty series is
   /// drawn.
   final Color noDataColor;
-
-  BaseArcRendererConfig(
-      {this.customRendererId,
-      this.arcLength = 2 * pi,
-      this.arcRendererDecorators = const [],
-      this.arcRatio,
-      this.arcWidth,
-      this.layoutPaintOrder = LayoutViewPaintOrder.arc,
-      this.minHoleWidthForCenterContent = 30,
-      this.startAngle = -pi / 2,
-      this.strokeWidthPx = 2.0,
-      SymbolRenderer? symbolRenderer})
-      : noDataColor = StyleFactory.style.noDataColor,
-        stroke = StyleFactory.style.arcStrokeColor,
-        symbolRenderer = symbolRenderer ?? CircleSymbolRenderer();
 
   @override
   List<Object?> get props => [

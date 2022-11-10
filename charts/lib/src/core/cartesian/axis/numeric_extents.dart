@@ -18,8 +18,6 @@ import 'package:charts/core.dart';
 
 /// Represents the starting and ending extent of a dataset.
 class NumericExtents extends Extents<num> {
-  final num min;
-  final num max;
 
   /// Precondition: [min] <= [max].
   // TODO: When initializer list asserts are supported everywhere,
@@ -44,6 +42,8 @@ class NumericExtents extends Extents<num> {
     }
     return NumericExtents(min, max);
   }
+  final num min;
+  final num max;
 
   /// Returns the union of this and other.
   NumericExtents plus(NumericExtents other) {
@@ -87,7 +87,8 @@ class NumericExtents extends Extents<num> {
         other._containsValue(max.toDouble());
   }
 
-List<Object?> get props => [min, max];
+@override
+  List<Object?> get props => [min, max];
 
   num get width => max - min;
 

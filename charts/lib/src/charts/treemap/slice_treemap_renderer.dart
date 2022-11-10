@@ -22,7 +22,7 @@ class SliceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
       : super(
             config: config ??
                 TreeMapRendererConfig(tileType: TreeMapTileType.slice),
-            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId);
+            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,);
 
   /// Uses slicing as the tiling algorithm for this tree map.
   @override

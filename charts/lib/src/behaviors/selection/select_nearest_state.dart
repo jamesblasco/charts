@@ -51,6 +51,55 @@ import 'package:charts/core.dart';
 /// Any previous SelectNearest behavior for that selection model will be
 /// removed.
 class SelectNearestState<D> implements ChartBehaviorState<D> {
+
+  SelectNearestState(
+      {this.selectionModelType = SelectionModelType.info,
+      this.selectionMode = SelectionMode.expandToDomain,
+      this.selectAcrossAllSeriesRendererComponents = true,
+      this.selectClosestSeries = true,
+      this.eventTrigger = SelectionTrigger.hover,
+      this.maximumDomainDistancePx,
+      this.hoverEventDelay,}) {
+    // Setup the appropriate gesture listening.
+    switch (eventTrigger) {
+      case SelectionTrigger.tap:
+        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
+        break;
+      case SelectionTrigger.tapAndDrag:
+        _listener = GestureListener(
+          onTapTest: _onTapTest,
+          onTap: _onSelect,
+          onDragStart: _onSelect,
+          onDragUpdate: _onSelect,
+        );
+        break;
+      case SelectionTrigger.pressHold:
+        _listener = GestureListener(
+            onTapTest: _onTapTest,
+            onLongPress: _onSelect,
+            onDragStart: _onSelect,
+            onDragUpdate: _onSelect,
+            onDragEnd: _onDeselectAll,);
+        break;
+      case SelectionTrigger.longPressHold:
+        _listener = GestureListener(
+            onTapTest: _onTapTest,
+            onLongPress: _onLongPressSelect,
+            onDragStart: _onSelect,
+            onDragUpdate: _onSelect,
+            onDragEnd: _onDeselectAll,);
+        break;
+      case SelectionTrigger.hover:
+      default:
+        _listener = GestureListener(
+            onHover: hoverEventDelay == null
+                ? _onSelect
+                : throttle<Point<double>, bool>(_onSelect,
+                    delay: Duration(milliseconds: hoverEventDelay!),
+                    defaultReturn: false,),);
+        break;
+    }
+  }
   late GestureListener _listener;
 
   /// Type of selection model that should be updated by input events.
@@ -89,55 +138,6 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
 
   bool _delaySelect = false;
 
-  SelectNearestState(
-      {this.selectionModelType = SelectionModelType.info,
-      this.selectionMode = SelectionMode.expandToDomain,
-      this.selectAcrossAllSeriesRendererComponents = true,
-      this.selectClosestSeries = true,
-      this.eventTrigger = SelectionTrigger.hover,
-      this.maximumDomainDistancePx,
-      this.hoverEventDelay}) {
-    // Setup the appropriate gesture listening.
-    switch (eventTrigger) {
-      case SelectionTrigger.tap:
-        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
-        break;
-      case SelectionTrigger.tapAndDrag:
-        _listener = GestureListener(
-          onTapTest: _onTapTest,
-          onTap: _onSelect,
-          onDragStart: _onSelect,
-          onDragUpdate: _onSelect,
-        );
-        break;
-      case SelectionTrigger.pressHold:
-        _listener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDeselectAll);
-        break;
-      case SelectionTrigger.longPressHold:
-        _listener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onLongPressSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDeselectAll);
-        break;
-      case SelectionTrigger.hover:
-      default:
-        _listener = GestureListener(
-            onHover: hoverEventDelay == null
-                ? _onSelect
-                : throttle<Point<double>, bool>(_onSelect,
-                    delay: Duration(milliseconds: hoverEventDelay!),
-                    defaultReturn: false));
-        break;
-    }
-  }
-
   bool _onTapTest(Point<double> chartPoint) {
     // If the tap is within the drawArea, then claim the event from others.
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
@@ -156,13 +156,13 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     // If the selection is delayed (waiting for long press), then quit early.
     if (_delaySelect) return false;
 
-    var details = _chart!.getNearestDatumDetailPerSeries(
-        chartPoint, selectAcrossAllSeriesRendererComponents);
+    final details = _chart!.getNearestDatumDetailPerSeries(
+        chartPoint, selectAcrossAllSeriesRendererComponents,);
 
     final seriesList = <ImmutableSeries<D>>[];
     var seriesDatumList = <SeriesDatum<D>>[];
 
-    if (details != null && details.isNotEmpty) {
+    if (details.isNotEmpty) {
       details.sort((a, b) => a.domainDistance!.compareTo(b.domainDistance!));
 
       if (maximumDomainDistancePx == null ||
@@ -201,14 +201,14 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
   }
 
   List<SeriesDatum<D>> _extractSeriesFromNearestSelection(
-      List<DatumDetails<D>> details) {
+      List<DatumDetails<D>> details,) {
     switch (selectionMode) {
       case SelectionMode.expandToDomain:
         return _expandToDomain(details.first);
       case SelectionMode.selectOverlapping:
         return details
             .map((datumDetails) =>
-                SeriesDatum<D>(datumDetails.series!, datumDetails.datum))
+                SeriesDatum<D>(datumDetails.series!, datumDetails.datum),)
             .toList();
       case SelectionMode.single:
         return [SeriesDatum<D>(details.first.series!, details.first.datum)];
@@ -234,13 +234,13 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     ];
     final nearestDomain = nearestDetails.domain;
 
-    for (ImmutableSeries<D> series in _chart!.currentSeriesList) {
+    for (final ImmutableSeries<D> series in _chart!.currentSeriesList) {
       final domainFn = series.domainFn;
       final domainLowerBoundFn = series.domainLowerBoundFn;
       final domainUpperBoundFn = series.domainUpperBoundFn;
       // TODO: remove this explicit `bool` type when no longer
       // needed to work around https://github.com/dart-lang/language/issues/1785
-      final bool testBounds =
+      final testBounds =
           domainLowerBoundFn != null && domainUpperBoundFn != null;
 
       for (var i = 0; i < series.data.length; i++) {
@@ -262,17 +262,17 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
           if (domainLowerBound != null && domainUpperBound != null) {
             if (domain is int) {
               addDatum = (domainLowerBound as int) <= (nearestDomain as int) &&
-                  (nearestDomain as int) <= (domainUpperBound as int);
+                  nearestDomain <= (domainUpperBound as int);
             } else if (domain is double) {
               addDatum =
                   (domainLowerBound as double) <= (nearestDomain as double) &&
-                      (nearestDomain as double) <= (domainUpperBound as double);
+                      nearestDomain <= (domainUpperBound as double);
             } else if (domain is DateTime) {
               addDatum = domainLowerBound == nearestDomain ||
                   domainUpperBound == nearestDomain ||
                   ((domainLowerBound as DateTime)
                           .isBefore(nearestDomain as DateTime) &&
-                      (nearestDomain as DateTime)
+                      nearestDomain
                           .isBefore(domainUpperBound as DateTime));
             }
           }

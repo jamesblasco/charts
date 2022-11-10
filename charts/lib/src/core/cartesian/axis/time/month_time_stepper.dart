@@ -18,17 +18,9 @@ import 'package:charts/core.dart';
 
 /// Month stepper.
 class MonthTimeStepper extends BaseTimeStepper {
-  static const _defaultIncrements = [1, 2, 3, 4, 6, 12];
-
-  final List<int> _allowedTickIncrements;
-
-  MonthTimeStepper._internal(
-      DateTimeFactory dateTimeFactory, List<int> increments)
-      : _allowedTickIncrements = increments,
-        super(dateTimeFactory);
 
   factory MonthTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements,}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -36,6 +28,13 @@ class MonthTimeStepper extends BaseTimeStepper {
 
     return MonthTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
   }
+
+  MonthTimeStepper._internal(
+      super.dateTimeFactory, List<int> increments,)
+      : _allowedTickIncrements = increments;
+  static const _defaultIncrements = [1, 2, 3, 4, 6, 12];
+
+  final List<int> _allowedTickIncrements;
 
   @override
   int get typicalStepSizeMs => 30 * 24 * 3600 * 1000;

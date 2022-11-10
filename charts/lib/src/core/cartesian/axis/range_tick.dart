@@ -19,6 +19,16 @@ import 'package:charts/core.dart';
 ///
 /// [D] is the type of the value this tick is associated with.
 class RangeTick<D> extends Tick<D> {
+
+  RangeTick(
+      {required super.value,
+      required TextElement super.textElement,
+      super.locationPx,
+      super.labelOffsetPx,
+      required this.rangeStartValue,
+      required this.rangeStartLocationPx,
+      required this.rangeEndValue,
+      required this.rangeEndLocationPx,});
   /// The value that this range tick starting point represents
   final D rangeStartValue;
 
@@ -30,21 +40,6 @@ class RangeTick<D> extends Tick<D> {
 
   /// Position of the range tick ending point.
   double rangeEndLocationPx;
-
-  RangeTick(
-      {required D value,
-      required TextElement textElement,
-      double? locationPx,
-      double? labelOffsetPx,
-      required this.rangeStartValue,
-      required this.rangeStartLocationPx,
-      required this.rangeEndValue,
-      required this.rangeEndLocationPx})
-      : super(
-            value: value,
-            locationPx: locationPx,
-            textElement: textElement,
-            labelOffsetPx: labelOffsetPx);
 
   @override
   String toString() => 'RangeTick(value: $value, locationPx: $locationPx, '

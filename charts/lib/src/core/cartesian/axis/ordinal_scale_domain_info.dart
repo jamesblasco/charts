@@ -23,6 +23,8 @@ import 'package:charts/core.dart';
 ///
 /// Unique domain values are kept, so duplicates will not increase the extent.
 class OrdinalScaleDomainInfo {
+
+  OrdinalScaleDomainInfo();
   int _index = 0;
 
   /// A map of domain value and the order it was added.
@@ -30,8 +32,6 @@ class OrdinalScaleDomainInfo {
 
   /// A list of domain values kept to support [getDomainAtIndex].
   final _domainList = <String>[];
-
-  OrdinalScaleDomainInfo();
 
   OrdinalScaleDomainInfo copy() {
     return OrdinalScaleDomainInfo()

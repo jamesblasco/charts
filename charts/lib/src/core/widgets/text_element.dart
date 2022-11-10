@@ -21,6 +21,9 @@ import 'package:flutter/rendering.dart'
 
 /// Flutter implementation for text measurement and painter.
 class FlutterTextElement implements TextElement {
+
+  FlutterTextElement(this.text, {TextPaintStyle? style, this.textScaleFactor})
+      : _textStyle = style;
   static const ellipsis = '\u{2026}';
 
   @override
@@ -41,9 +44,6 @@ class FlutterTextElement implements TextElement {
   late TextMeasurement _measurement;
 
   double? _opacity;
-
-  FlutterTextElement(this.text, {TextPaintStyle? style, this.textScaleFactor})
-      : _textStyle = style;
 
   @override
   TextPaintStyle? get textStyle => _textStyle;
@@ -132,7 +132,7 @@ class FlutterTextElement implements TextElement {
   /// Create text painter and measure based on current settings
   void _refreshPainter() {
     _opacity ??= 1.0;
-    var color = (textStyle == null || textStyle!.color == null)
+    final color = (textStyle == null || textStyle!.color == null)
         ? null
         : Color.fromARGB(
             (textStyle!.color!.alpha * _opacity!).round(),
@@ -148,7 +148,7 @@ class FlutterTextElement implements TextElement {
                 color: color,
                 fontSize: textStyle?.fontSize?.toDouble(),
                 fontFamily: textStyle?.fontFamily,
-                height: textStyle?.lineHeight)))
+                height: textStyle?.lineHeight,),),)
       ..textDirection = TextDirection.ltr
       // TODO Flip once textAlign works
       ..textAlign = TextAlign.left
@@ -175,7 +175,7 @@ class FlutterTextElement implements TextElement {
     _measurement = TextMeasurement(
         horizontalSliceWidth: _textPainter.width,
         verticalSliceWidth: _textPainter.height * 0.70,
-        baseline: baseline);
+        baseline: baseline,);
 
     _painterReady = true;
   }

@@ -15,49 +15,11 @@
 
 import 'dart:collection';
 
-import 'package:meta/meta.dart';
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart';
 
 /// A tree structure that contains metadata of a rendering tree.
 class Tree<T, D> {
-  /// Unique identifier for this [tree].
-  final String id;
-
-  /// Root node of this tree.
-  final TreeNode<T> root;
-
-  /// Accessor function that returns the domain for a tree node.
-  final TypedAccessorFn<TreeNode<T>, D> domainFn;
-
-  /// Accessor function that returns the measure for a tree node.
-  final TypedAccessorFn<TreeNode<T>, num?> measureFn;
-
-  /// Accessor function that returns the rendered stroke color for a tree node.
-  final TypedAccessorFn<TreeNode<T>, Color>? colorFn;
-
-  /// Accessor function that returns the rendered fill color for a tree node.
-  /// If not provided, then [colorFn] will be used as a fallback.
-  final TypedAccessorFn<TreeNode<T>, Color>? fillColorFn;
-
-  /// Accessor function that returns the pattern color for a tree node
-  /// If not provided, then background color is used as default.
-  final TypedAccessorFn<TreeNode<T>, Color>? patternColorFn;
-
-  /// Accessor function that returns the fill pattern for a tree node.
-  final TypedAccessorFn<TreeNode<T>, FillPatternType>? fillPatternFn;
-
-  /// Accessor function that returns the stroke width in pixel for a tree node.
-  final TypedAccessorFn<TreeNode<T>, num>? strokeWidthPxFn;
-
-  /// Accessor function that returns the label for a tree node.
-  final TypedAccessorFn<TreeNode<T>, String>? labelFn;
-
-  /// Accessor function that returns the style spec for a tree node label.
-  final TypedAccessorFn<TreeNode<T>, TextStyleSpec>? labelStyleFn;
-
-  /// [attributes] stores additional key-value pairs of attributes this tree is
-  /// associated with (e.g. rendererIdKey to renderer).
-  final TreeAttributes attributes = TreeAttributes();
 
   factory Tree({
     required String id,
@@ -100,6 +62,44 @@ class Tree<T, D> {
     required this.labelFn,
     required this.labelStyleFn,
   });
+  /// Unique identifier for this [tree].
+  final String id;
+
+  /// Root node of this tree.
+  final TreeNode<T> root;
+
+  /// Accessor function that returns the domain for a tree node.
+  final TypedAccessorFn<TreeNode<T>, D> domainFn;
+
+  /// Accessor function that returns the measure for a tree node.
+  final TypedAccessorFn<TreeNode<T>, num?> measureFn;
+
+  /// Accessor function that returns the rendered stroke color for a tree node.
+  final TypedAccessorFn<TreeNode<T>, Color>? colorFn;
+
+  /// Accessor function that returns the rendered fill color for a tree node.
+  /// If not provided, then [colorFn] will be used as a fallback.
+  final TypedAccessorFn<TreeNode<T>, Color>? fillColorFn;
+
+  /// Accessor function that returns the pattern color for a tree node
+  /// If not provided, then background color is used as default.
+  final TypedAccessorFn<TreeNode<T>, Color>? patternColorFn;
+
+  /// Accessor function that returns the fill pattern for a tree node.
+  final TypedAccessorFn<TreeNode<T>, FillPatternType>? fillPatternFn;
+
+  /// Accessor function that returns the stroke width in pixel for a tree node.
+  final TypedAccessorFn<TreeNode<T>, num>? strokeWidthPxFn;
+
+  /// Accessor function that returns the label for a tree node.
+  final TypedAccessorFn<TreeNode<T>, String>? labelFn;
+
+  /// Accessor function that returns the style spec for a tree node label.
+  final TypedAccessorFn<TreeNode<T>, TextStyleSpec>? labelStyleFn;
+
+  /// [attributes] stores additional key-value pairs of attributes this tree is
+  /// associated with (e.g. rendererIdKey to renderer).
+  final TreeAttributes attributes = TreeAttributes();
 
   /// Creates a [Series] that contains all [TreeNode]s traversing from the
   /// [root] of this tree.
@@ -145,6 +145,8 @@ class Tree<T, D> {
 }
 
 class TreeNode<T> {
+
+  TreeNode(this.data);
   /// Associated data this node stores.
   final T data;
 
@@ -153,8 +155,6 @@ class TreeNode<T> {
   int _depth = 0;
 
   TreeNode<T>? parent;
-
-  TreeNode(this.data);
 
   /// Distance between this node and the root node.
   int get depth => _depth;

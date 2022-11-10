@@ -30,9 +30,9 @@ void main() {
   group('TabularLegendLayoutBuilder', () {
     test('builds horizontally', () {
       final builder = TabularLegendLayout.horizontalFirst();
-      final widgets = <Widget>[Text('1'), Text('2'), Text('3')];
+      final widgets = <Widget>[const Text('1'), const Text('2'), const Text('3')];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 1);
       expect(layout.children.first.children!.length, 3);
     });
@@ -40,9 +40,9 @@ void main() {
     test('does not build extra columns if max columns exceed widget count', () {
       final builder =
           TabularLegendLayout.horizontalFirst(desiredMaxColumns: 10);
-      final widgets = <Widget>[Text('1'), Text('2'), Text('3')];
+      final widgets = <Widget>[const Text('1'), const Text('2'), const Text('3')];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 1);
       expect(layout.children.first.children!.length, 3);
     });
@@ -53,7 +53,7 @@ void main() {
       final widgets =
           List<Widget>.generate(7, (int index) => Text(index.toString()));
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 4);
 
       expect(layout.children[0].children![0], equals(widgets[0]));
@@ -70,9 +70,9 @@ void main() {
 
     test('builds vertically', () {
       final builder = TabularLegendLayout.verticalFirst();
-      final widgets = <Widget>[Text('1'), Text('2'), Text('3')];
+      final widgets = <Widget>[const Text('1'), const Text('2'), const Text('3')];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 3);
       expect(layout.children[0].children!.length, 1);
       expect(layout.children[1].children!.length, 1);
@@ -81,9 +81,9 @@ void main() {
 
     test('does not build extra rows if max rows exceed widget count', () {
       final builder = TabularLegendLayout.verticalFirst(desiredMaxRows: 10);
-      final widgets = <Widget>[Text('1'), Text('2'), Text('3')];
+      final widgets = <Widget>[const Text('1'), const Text('2'), const Text('3')];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 3);
       expect(layout.children[0].children!.length, 1);
       expect(layout.children[1].children!.length, 1);
@@ -96,7 +96,7 @@ void main() {
       final widgets =
           List<Widget>.generate(7, (int index) => Text(index.toString()));
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 2);
 
       expect(layout.children[0].children![0], equals(widgets[0]));

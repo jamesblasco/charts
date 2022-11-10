@@ -31,7 +31,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
     implements ChartState {
   // Animation
   late AnimationController _animationController;
-  double _animationValue = 0.0;
+  double _animationValue = 0;
 
   BaseChart<D>? _oldWidget;
 
@@ -115,7 +115,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
     // Add the common chart canvas widget.
     chartWidgets.add(
-        LayoutId(id: chartContainerLayoutID, child: _buildChartContainer()));
+        LayoutId(id: chartContainerLayoutID, child: _buildChartContainer()),);
 
     // Add widget for each behavior that can build widgets
     addedCommonBehaviorsByRole.forEach((id, behavior) {
@@ -134,8 +134,8 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
     return CustomMultiChildLayout(
         delegate: WidgetLayoutDelegate(
-            chartContainerLayoutID, idAndBehaviorMap, isRTL),
-        children: chartWidgets);
+            chartContainerLayoutID, idAndBehaviorMap, isRTL,),
+        children: chartWidgets,);
   }
 
   @override

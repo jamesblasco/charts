@@ -13,13 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
 
 import 'package:charts/charts/scatter_plot.dart';
-import 'package:charts/core.dart';
 
 class ScatterPlotChart extends CartesianChart<num> {
-  ScatterPlotChart(
+  const ScatterPlotChart(
     super.seriesList, {
     super.animate,
     super.animationDuration,

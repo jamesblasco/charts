@@ -13,12 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
 
 import 'package:charts/charts.dart';
 
 class LineChart extends CartesianChart<num> {
-  LineChart(
+  const LineChart(
     super.seriesList, {
     super.animate,
     super.animationDuration,
@@ -48,13 +47,13 @@ class LineChart extends CartesianChart<num> {
         layoutConfig: layoutConfig,
         primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
         secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
-        disjointMeasureAxes: createDisjointMeasureAxes());
+        disjointMeasureAxes: createDisjointMeasureAxes(),);
   }
 
   @override
   void addDefaultInteractions(List<ChartBehavior<num>> behaviors) {
     super.addDefaultInteractions(behaviors);
 
-    behaviors.add(new LinePointHighlighter<num>());
+    behaviors.add(LinePointHighlighter<num>());
   }
 }

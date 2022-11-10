@@ -18,6 +18,22 @@ import 'package:charts/charts/treemap.dart';
 
 /// A renderer element that represents a TreeNode.
 class TreeMapRendererElement<D> {
+
+  TreeMapRendererElement({
+    Rectangle<num>? boundingRect,
+    num? area,
+    this.fillColor,
+    this.fillPattern,
+    this.patternColor,
+    this.strokeColor,
+    required this.isLeaf,
+    this.strokeWidthPx,
+    required this.index,
+    required this.series,
+    required this.domain,
+    required this.measure,
+  })  : _boundingRect = boundingRect,
+        _area = area;
   /// Bounding rectangle of this element.
   Rectangle<num> get boundingRect => _boundingRect!;
   set boundingRect(Rectangle<num> value) => _boundingRect = value;
@@ -58,28 +74,12 @@ class TreeMapRendererElement<D> {
   /// Measure of this element.
   num measure;
 
-  TreeMapRendererElement({
-    Rectangle<num>? boundingRect,
-    num? area,
-    this.fillColor,
-    this.fillPattern,
-    this.patternColor,
-    this.strokeColor,
-    required this.isLeaf,
-    this.strokeWidthPx,
-    required this.index,
-    required this.series,
-    required this.domain,
-    required this.measure,
-  })  : _boundingRect = boundingRect,
-        _area = area;
-
   /// Clones a new renderer element with the same properties.
   TreeMapRendererElement<D> clone() => TreeMapRendererElement(
         boundingRect: _boundingRect == null
             ? null
             : Rectangle.fromPoints(
-                boundingRect.topLeft, boundingRect.bottomRight),
+                boundingRect.topLeft, boundingRect.bottomRight,),
         area: area,
         fillPattern: fillPattern,
         fillColor: fillColor,
@@ -111,7 +111,7 @@ class TreeMapRendererElement<D> {
   ///
   /// Used when animation is in progress.
   void updateAnimationPercent(TreeMapRendererElement<D> previous,
-      TreeMapRendererElement<D> target, double animationPercent) {
+      TreeMapRendererElement<D> target, double animationPercent,) {
     // TODO: Implements animation based on animationPercent.
     boundingRect = target.boundingRect;
     area = target.area;
@@ -119,8 +119,7 @@ class TreeMapRendererElement<D> {
 
   @override
   String toString() =>
-      '$runtimeType' +
-      {
+      '$runtimeType${{
         'boundingRect': boundingRect,
         'area': area,
         'strokeColor': strokeColor,
@@ -132,5 +131,5 @@ class TreeMapRendererElement<D> {
         'index': index,
         'domain': domain,
         'measure': measure,
-      }.toString();
+      }}';
 }

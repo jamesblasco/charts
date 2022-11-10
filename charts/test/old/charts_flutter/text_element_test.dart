@@ -15,26 +15,24 @@
 
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart' show BuildContext;
-import 'package:mockito/mockito.dart';
 import 'package:flutter/widgets.dart' show InheritedWidget;
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:charts/src/core/widgets/graphics_factory.dart';
-import 'package:charts/behaviors.dart';
 
 // Can't use Mockito annotations with BuildContext yet? Fake it.
 class FakeBuildContext extends Fake implements BuildContext {
   @override
   T? dependOnInheritedWidgetOfExactType<T extends InheritedWidget>(
-      {Object? aspect}) {
+      {Object? aspect,}) {
     return null;
   }
 }
 
 // Gave up trying to figure out how to use mockito for now.
 class FakeGraphicsFactoryHelper extends Fake implements GraphicsFactoryHelper {
-  double textScaleFactor;
 
   FakeGraphicsFactoryHelper(this.textScaleFactor);
+  double textScaleFactor;
 
   @override
   double getTextScaleFactorOf(BuildContext context) => textScaleFactor;
@@ -43,7 +41,7 @@ class FakeGraphicsFactoryHelper extends Fake implements GraphicsFactoryHelper {
 void main() {
   test('Text element gets assigned scale factor', () {
     final context = FakeBuildContext();
-    final helper = FakeGraphicsFactoryHelper(3.0);
+    final helper = FakeGraphicsFactoryHelper(3);
     final graphicsFactory = FlutterGraphicsFactory(context, helper: helper);
 
     final textElement =

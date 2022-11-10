@@ -17,6 +17,16 @@ import 'package:charts/charts/scatter_plot.dart';
 /// Configuration for a line renderer.
 class PointRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+
+  PointRendererConfig(
+      {this.customRendererId,
+      this.layoutPaintOrder = LayoutViewPaintOrder.point,
+      this.pointRendererDecorators = const [],
+      this.radiusPx = 3.5,
+      this.boundsLineRadiusPx,
+      this.strokeWidthPx = 0.0,
+      this.symbolRenderer,
+      this.customSymbolRenderers,});
   @override
   final String? customRendererId;
 
@@ -59,16 +69,6 @@ class PointRendererConfig<D> extends LayoutViewConfig
   /// 2) boundsLineRadiusPx property defined on this renderer config.
   /// 3) Final fallback is to use the point radiusPx for the datum.
   final double? boundsLineRadiusPx;
-
-  PointRendererConfig(
-      {this.customRendererId,
-      this.layoutPaintOrder = LayoutViewPaintOrder.point,
-      this.pointRendererDecorators = const [],
-      this.radiusPx = 3.5,
-      this.boundsLineRadiusPx,
-      this.strokeWidthPx = 0.0,
-      this.symbolRenderer,
-      this.customSymbolRenderers});
 
   @override
   PointRenderer<D> build() {

@@ -19,6 +19,19 @@ import 'package:charts/charts/treemap.dart';
 /// Configuration for a [BaseTreeMapRenderer].
 class TreeMapRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+
+  TreeMapRendererConfig(
+      {this.customRendererId,
+      this.patternStrokeWidthPx = 1.0,
+      this.strokeWidthPx = 1.0,
+      this.layoutPaintOrder = LayoutViewPaintOrder.treeMap,
+      this.rectPaddingPx = _defaultRectPadding,
+      this.tileType = TreeMapTileType.squarified,
+      this.labelDecorator,
+      Color? strokeColor,
+      SymbolRenderer? symbolRenderer,})
+      : strokeColor = strokeColor ?? StyleFactory.style.black,
+        symbolRenderer = symbolRenderer ?? const RectSymbolRenderer();
   /// Default padding of a treemap rectangle.
   static const _defaultRectPadding =
       ViewMargin(topPx: 26, leftPx: 4, rightPx: 4, bottomPx: 4);
@@ -54,34 +67,21 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
   /// Decorator for optionally decorating treemap rectangle label.
   final TreeMapLabelDecorator<D>? labelDecorator;
 
-  TreeMapRendererConfig(
-      {this.customRendererId,
-      this.patternStrokeWidthPx = 1.0,
-      this.strokeWidthPx = 1.0,
-      this.layoutPaintOrder = LayoutViewPaintOrder.treeMap,
-      this.rectPaddingPx = _defaultRectPadding,
-      this.tileType = TreeMapTileType.squarified,
-      this.labelDecorator,
-      Color? strokeColor,
-      SymbolRenderer? symbolRenderer})
-      : strokeColor = strokeColor ?? StyleFactory.style.black,
-        symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
-
   @override
   BaseTreeMapRenderer<D> build() {
     switch (tileType) {
       case TreeMapTileType.dice:
         return DiceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+            config: this, rendererId: customRendererId,);
       case TreeMapTileType.slice:
         return SliceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+            config: this, rendererId: customRendererId,);
       case TreeMapTileType.sliceDice:
         return SliceDiceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+            config: this, rendererId: customRendererId,);
       default:
         return SquarifiedTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+            config: this, rendererId: customRendererId,);
     }
   }
 

@@ -15,9 +15,6 @@
 import 'package:charts/behaviors.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart' show BuildContext, hashValues, Widget;
-import 'legend.dart';
-import 'legend_entry_layout.dart';
-import 'legend_layout.dart';
 
 /// Strategy for building a legend content widget.
 abstract class LegendContentBuilder {
@@ -25,7 +22,7 @@ abstract class LegendContentBuilder {
 
   Widget build(
       BuildContext context, LegendState legendState, LegendBehaviorState legend,
-      {bool showMeasures});
+      {bool showMeasures,});
 }
 
 /// Base strategy for building a legend content widget.
@@ -46,7 +43,7 @@ abstract class BaseLegendContentBuilder extends Equatable
   @override
   Widget build(
       BuildContext context, LegendState legendState, LegendBehaviorState legend,
-      {bool showMeasures = false}) {
+      {bool showMeasures = false,}) {
     final entryWidgets = legendState.legendEntries.map((entry) {
       var isHidden = false;
       if (legend is SeriesLegendBehaviorState) {
@@ -55,7 +52,7 @@ abstract class BaseLegendContentBuilder extends Equatable
 
       return legendEntryLayout.build(
           context, entry, legend as TappableLegend, isHidden,
-          showMeasures: showMeasures);
+          showMeasures: showMeasures,);
     }).toList();
 
     return legendLayout.build(context, entryWidgets);
@@ -70,15 +67,17 @@ abstract class BaseLegendContentBuilder extends Equatable
 /// [legendLayout] custom strategy for creating legend widget from list of
 /// widgets that represent a legend entry.
 class TabularLegendContentBuilder extends BaseLegendContentBuilder {
-  final LegendEntryLayout legendEntryLayout;
-  final LegendLayout legendLayout;
 
   TabularLegendContentBuilder(
-      {LegendEntryLayout? legendEntryLayout, LegendLayout? legendLayout})
-      : this.legendEntryLayout =
+      {LegendEntryLayout? legendEntryLayout, LegendLayout? legendLayout,})
+      : legendEntryLayout =
             legendEntryLayout ?? const SimpleLegendEntryLayout(),
-        this.legendLayout =
+        legendLayout =
             legendLayout ?? TabularLegendLayout.horizontalFirst();
+  @override
+  final LegendEntryLayout legendEntryLayout;
+  @override
+  final LegendLayout legendLayout;
 
   @override
   List<Object?> get props => [legendEntryLayout, legendLayout];

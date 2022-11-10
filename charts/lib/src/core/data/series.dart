@@ -13,119 +13,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:charts/core.dart';
+
 class Series<T, D> {
-  final String id;
-  final String? displayName;
-
-  /// Overlay series provided supplemental information on a chart, but are not
-  /// considered to be primary data. They should not be selectable by user
-  /// interaction.
-  final bool overlaySeries;
-
-  final String? seriesCategory;
-
-  /// Color which represents the entire series in legends.
-  ///
-  /// If this is not provided in the original series object, it will be inferred
-  /// from the color of the first datum in the series.
-  ///
-  /// If this is provided, but no [colorFn] is provided, then it will be treated
-  /// as the color for each datum in the series.
-  ///
-  /// If neither are provided, then the chart will insert colors for each series
-  /// on the chart using a mapping function.
-  final Color? seriesColor;
-
-  final List<T> data;
-
-  /// [keyFn] defines a globally unique identifier for each datum.
-  ///
-  /// The key for each datum is used during chart animation to smoothly
-  /// transition data still in the series to its new state.
-  ///
-  /// Note: This is currently an optional function that is not fully used by all
-  /// series renderers yet.
-  final AccessorFn<String>? keyFn;
-
-  final AccessorFn<D> domainFn;
-  final AccessorFn<DomainFormatter<D>>? domainFormatterFn;
-  final AccessorFn<D?>? domainLowerBoundFn;
-  final AccessorFn<D?>? domainUpperBoundFn;
-  final AccessorFn<num?> measureFn;
-  final AccessorFn<MeasureFormatter>? measureFormatterFn;
-  final AccessorFn<num?>? measureLowerBoundFn;
-  final AccessorFn<num?>? measureUpperBoundFn;
-  final AccessorFn<num>? measureOffsetFn;
-
-  /// [areaColorFn] returns the area color for a given data value. If not
-  /// provided, then some variation of the main [colorFn] will be used (e.g.
-  /// 10% opacity).
-  ///
-  /// This color is used for supplemental information on the series, such as
-  /// confidence intervals or area skirts.
-  final AccessorFn<Color>? areaColorFn;
-
-  /// [colorFn] returns the rendered stroke color for a given data value.
-  ///
-  /// If this is not provided, then [seriesColor] will be used for every datum.
-  ///
-  /// If neither are provided, then the chart will insert colors for each series
-  /// on the chart using a mapping function.
-  final AccessorFn<Color>? colorFn;
-
-  /// [dashPatternFn] returns the dash pattern for a given data value.
-  final AccessorFn<List<int>?>? dashPatternFn;
-
-  /// [fillColorFn] returns the rendered fill color for a given data value. If
-  /// not provided, then [colorFn] will be used as a fallback.
-  final AccessorFn<Color?>? fillColorFn;
-
-  /// [patternColorFn] returns the background color of tile when a
-  /// [FillPatternType] beside `solid` is used. If not provided, then
-  /// background color is used.
-  final AccessorFn<Color>? patternColorFn;
-
-  final AccessorFn<FillPatternType>? fillPatternFn;
-  final AccessorFn<num>? radiusPxFn;
-  final AccessorFn<num?>? strokeWidthPxFn;
-  final AccessorFn<String>? labelAccessorFn;
-  final AccessorFn<TextStyleSpec>? insideLabelStyleAccessorFn;
-  final AccessorFn<TextStyleSpec>? outsideLabelStyleAccessorFn;
-
-  // TODO: should this be immutable as well? If not, should any of
-  // the non-required ones be final?
-  final SeriesAttributes attributes = SeriesAttributes();
-
-  factory Series(
-      {required String id,
-      required List<T> data,
-      required TypedAccessorFn<T, D> domainFn,
-      required TypedAccessorFn<T, num?> measureFn,
-      String? displayName,
-      Color? seriesColor,
-      TypedAccessorFn<T, Color>? areaColorFn,
-      TypedAccessorFn<T, Color>? colorFn,
-      TypedAccessorFn<T, List<int>?>? dashPatternFn,
-      TypedAccessorFn<T, DomainFormatter<D>>? domainFormatterFn,
-      TypedAccessorFn<T, D?>? domainLowerBoundFn,
-      TypedAccessorFn<T, D?>? domainUpperBoundFn,
-      TypedAccessorFn<T, Color?>? fillColorFn,
-      TypedAccessorFn<T, Color>? patternColorFn,
-      TypedAccessorFn<T, FillPatternType>? fillPatternFn,
-      TypedAccessorFn<T, String>? keyFn,
-      TypedAccessorFn<T, String>? labelAccessorFn,
-      TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
-      TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
-      TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
-      TypedAccessorFn<T, num?>? measureLowerBoundFn,
-      TypedAccessorFn<T, num?>? measureUpperBoundFn,
-      TypedAccessorFn<T, num>? measureOffsetFn,
-      bool overlaySeries = false,
-      TypedAccessorFn<T, num>? radiusPxFn,
-      String? seriesCategory,
-      TypedAccessorFn<T, num?>? strokeWidthPxFn}) {
+  factory Series({
+    required String id,
+    required List<T> data,
+    required TypedAccessorFn<T, D> domainFn,
+    required TypedAccessorFn<T, num?> measureFn,
+    String? displayName,
+    Color? seriesColor,
+    TypedAccessorFn<T, Color>? areaColorFn,
+    TypedAccessorFn<T, Color>? colorFn,
+    TypedAccessorFn<T, List<int>?>? dashPatternFn,
+    TypedAccessorFn<T, DomainFormatter<D>>? domainFormatterFn,
+    TypedAccessorFn<T, D?>? domainLowerBoundFn,
+    TypedAccessorFn<T, D?>? domainUpperBoundFn,
+    TypedAccessorFn<T, Color?>? fillColorFn,
+    TypedAccessorFn<T, Color>? patternColorFn,
+    TypedAccessorFn<T, FillPatternType>? fillPatternFn,
+    TypedAccessorFn<T, String>? keyFn,
+    TypedAccessorFn<T, String>? labelAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
+    TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
+    TypedAccessorFn<T, num?>? measureLowerBoundFn,
+    TypedAccessorFn<T, num?>? measureUpperBoundFn,
+    TypedAccessorFn<T, num>? measureOffsetFn,
+    bool overlaySeries = false,
+    TypedAccessorFn<T, num>? radiusPxFn,
+    String? seriesCategory,
+    TypedAccessorFn<T, num?>? strokeWidthPxFn,
+  }) {
     // Wrap typed accessors.
     final _domainFn = (int? index) => domainFn(data[index!], index);
     final _measureFn = (int? index) => measureFn(data[index!], index);
@@ -245,6 +166,87 @@ class Series<T, D> {
     required this.seriesColor,
     required this.strokeWidthPxFn,
   });
+  final String id;
+  final String? displayName;
+
+  /// Overlay series provided supplemental information on a chart, but are not
+  /// considered to be primary data. They should not be selectable by user
+  /// interaction.
+  final bool overlaySeries;
+
+  final String? seriesCategory;
+
+  /// Color which represents the entire series in legends.
+  ///
+  /// If this is not provided in the original series object, it will be inferred
+  /// from the color of the first datum in the series.
+  ///
+  /// If this is provided, but no [colorFn] is provided, then it will be treated
+  /// as the color for each datum in the series.
+  ///
+  /// If neither are provided, then the chart will insert colors for each series
+  /// on the chart using a mapping function.
+  final Color? seriesColor;
+
+  final List<T> data;
+
+  /// [keyFn] defines a globally unique identifier for each datum.
+  ///
+  /// The key for each datum is used during chart animation to smoothly
+  /// transition data still in the series to its new state.
+  ///
+  /// Note: This is currently an optional function that is not fully used by all
+  /// series renderers yet.
+  final AccessorFn<String>? keyFn;
+
+  final AccessorFn<D> domainFn;
+  final AccessorFn<DomainFormatter<D>>? domainFormatterFn;
+  final AccessorFn<D?>? domainLowerBoundFn;
+  final AccessorFn<D?>? domainUpperBoundFn;
+  final AccessorFn<num?> measureFn;
+  final AccessorFn<MeasureFormatter>? measureFormatterFn;
+  final AccessorFn<num?>? measureLowerBoundFn;
+  final AccessorFn<num?>? measureUpperBoundFn;
+  final AccessorFn<num>? measureOffsetFn;
+
+  /// [areaColorFn] returns the area color for a given data value. If not
+  /// provided, then some variation of the main [colorFn] will be used (e.g.
+  /// 10% opacity).
+  ///
+  /// This color is used for supplemental information on the series, such as
+  /// confidence intervals or area skirts.
+  final AccessorFn<Color>? areaColorFn;
+
+  /// [colorFn] returns the rendered stroke color for a given data value.
+  ///
+  /// If this is not provided, then [seriesColor] will be used for every datum.
+  ///
+  /// If neither are provided, then the chart will insert colors for each series
+  /// on the chart using a mapping function.
+  final AccessorFn<Color>? colorFn;
+
+  /// [dashPatternFn] returns the dash pattern for a given data value.
+  final AccessorFn<List<int>?>? dashPatternFn;
+
+  /// [fillColorFn] returns the rendered fill color for a given data value. If
+  /// not provided, then [colorFn] will be used as a fallback.
+  final AccessorFn<Color?>? fillColorFn;
+
+  /// [patternColorFn] returns the background color of tile when a
+  /// [FillPatternType] beside `solid` is used. If not provided, then
+  /// background color is used.
+  final AccessorFn<Color>? patternColorFn;
+
+  final AccessorFn<FillPatternType>? fillPatternFn;
+  final AccessorFn<num>? radiusPxFn;
+  final AccessorFn<num?>? strokeWidthPxFn;
+  final AccessorFn<String>? labelAccessorFn;
+  final AccessorFn<TextStyleSpec>? insideLabelStyleAccessorFn;
+  final AccessorFn<TextStyleSpec>? outsideLabelStyleAccessorFn;
+
+  // TODO: should this be immutable as well? If not, should any of
+  // the non-required ones be final?
+  final SeriesAttributes attributes = SeriesAttributes();
 
   void setAttribute<R>(AttributeKey<R> key, R value) {
     attributes.setAttr(key, value);
@@ -267,7 +269,7 @@ typedef AccessorFn<R> = R Function(int? index);
 typedef TypedAccessorFn<T, R> = R Function(T datum, int? index);
 
 class AttributeKey<R> extends TypedKey<R> {
-  const AttributeKey(String uniqueKey) : super(uniqueKey);
+  const AttributeKey(super.uniqueKey);
 }
 
 class SeriesAttributes extends TypedRegistry {}

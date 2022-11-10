@@ -25,7 +25,7 @@ typedef UnaryFunction<T, R> = R Function(T argument);
 /// again.
 /// [defaultReturn] is used as the return value when throttle event occurs.
 UnaryFunction<T, R> throttle<T, R>(UnaryFunction<T, R> callback,
-    {Duration delay = Duration.zero, required R defaultReturn}) {
+    {Duration delay = Duration.zero, required R defaultReturn,}) {
   Timer? timer;
   Stopwatch? stopwatch;
 

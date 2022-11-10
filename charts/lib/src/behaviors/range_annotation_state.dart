@@ -17,8 +17,8 @@ import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show pi, Point, Rectangle;
 
 import 'package:charts/charts.dart';
-import 'package:meta/meta.dart';
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart';
 
 const _defaultStrokeWidthPx = 2.0;
 
@@ -31,11 +31,34 @@ const _defaultStrokeWidthPx = 2.0;
 ///
 /// TODO: Support labels.
 class RangeAnnotationState<D> implements ChartBehaviorState<D> {
+
+  RangeAnnotationState(this.annotations,
+      {AnnotationLabelAnchor? defaultLabelAnchor,
+      AnnotationLabelDirection? defaultLabelDirection,
+      AnnotationLabelPosition? defaultLabelPosition,
+      TextStyleSpec? defaultLabelStyleSpec,
+      bool? extendAxis,
+      int? labelPadding,
+      double? defaultStrokeWidthPx,
+      int? layoutPaintOrder,})
+      : defaultColor = StyleFactory.style.rangeAnnotationColor,
+        defaultLabelAnchor = defaultLabelAnchor ?? _defaultLabelAnchor,
+        defaultLabelDirection = defaultLabelDirection ?? _defaultLabelDirection,
+        defaultLabelPosition = defaultLabelPosition ?? _defaultLabelPosition,
+        defaultLabelStyleSpec = defaultLabelStyleSpec ?? _defaultLabelStyle,
+        extendAxis = extendAxis ?? true,
+        labelPadding = labelPadding ?? _defaultLabelPadding,
+        defaultStrokeWidthPx = defaultStrokeWidthPx ?? _defaultStrokeWidthPx,
+        layoutPaintOrder =
+            layoutPaintOrder ?? LayoutViewPaintOrder.rangeAnnotation {
+    _lifecycleListener = LifecycleListener<D>(
+        onPostprocess: _updateAxisRange, onAxisConfigured: _updateViewData,);
+  }
   static const _defaultLabelAnchor = AnnotationLabelAnchor.end;
   static const _defaultLabelDirection = AnnotationLabelDirection.auto;
   static const _defaultLabelPosition = AnnotationLabelPosition.auto;
   static const _defaultLabelPadding = 5;
-  static final _defaultLabelStyle =
+  static const _defaultLabelStyle =
       TextStyleSpec(fontSize: 12, color: Colors.black);
 
   /// List of annotations to render on the chart.
@@ -91,35 +114,11 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   // in the new data.
   final _currentKeys = <String>[];
 
-  RangeAnnotationState(this.annotations,
-      {Color? defaultColor,
-      AnnotationLabelAnchor? defaultLabelAnchor,
-      AnnotationLabelDirection? defaultLabelDirection,
-      AnnotationLabelPosition? defaultLabelPosition,
-      TextStyleSpec? defaultLabelStyleSpec,
-      bool? extendAxis,
-      int? labelPadding,
-      double? defaultStrokeWidthPx,
-      int? layoutPaintOrder})
-      : defaultColor = StyleFactory.style.rangeAnnotationColor,
-        defaultLabelAnchor = defaultLabelAnchor ?? _defaultLabelAnchor,
-        defaultLabelDirection = defaultLabelDirection ?? _defaultLabelDirection,
-        defaultLabelPosition = defaultLabelPosition ?? _defaultLabelPosition,
-        defaultLabelStyleSpec = defaultLabelStyleSpec ?? _defaultLabelStyle,
-        extendAxis = extendAxis ?? true,
-        labelPadding = labelPadding ?? _defaultLabelPadding,
-        defaultStrokeWidthPx = defaultStrokeWidthPx ?? _defaultStrokeWidthPx,
-        layoutPaintOrder =
-            layoutPaintOrder ?? LayoutViewPaintOrder.rangeAnnotation {
-    _lifecycleListener = LifecycleListener<D>(
-        onPostprocess: _updateAxisRange, onAxisConfigured: _updateViewData);
-  }
-
   @override
   void attachTo(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'RangeAnnotation can only be attached to a CartesianChart<D>');
+          'RangeAnnotation can only be attached to a CartesianChart<D>',);
     }
 
     _chart = chart;
@@ -129,7 +128,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
         labelPadding: labelPadding,
         chart: _chart,
         rangeAnnotation: this,
-        layoutPaintOrder: layoutPaintOrder);
+        layoutPaintOrder: layoutPaintOrder,);
 
     chart.addView(_view);
 
@@ -234,7 +233,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
         startValue = endValue = annotation.value as T;
       } else {
         throw UnsupportedError(
-            'Unrecognized annotation type: ${annotation.runtimeType}');
+            'Unrecognized annotation type: ${annotation.runtimeType}',);
       }
 
       final annotationDatum =
@@ -259,7 +258,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
             labelPosition: labelPosition,
             labelStyleSpec: labelStyleSpec,
             strokeWidthPx: strokeWidthPx,
-          ));
+          ),);
 
         _annotationMap[key] = animatingAnnotation;
       }
@@ -296,7 +295,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
         case RangeAnnotationAxisType.measure:
           // We expect an empty axisId to get us the primary measure axis.
           updateAnnotation(
-              _chart.getMeasureAxis(axisId: annotation.axisId), annotation);
+              _chart.getMeasureAxis(axisId: annotation.axisId), annotation,);
           break;
       }
     }
@@ -317,7 +316,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   /// types for domain and measure axes, e.g. DateTime and num for a TimeSeries
   /// chart.
   _DatumAnnotation _getAnnotationDatum<T>(T startValue, T endValue,
-      Axis<T> axis, RangeAnnotationAxisType axisType) {
+      Axis<T> axis, RangeAnnotationAxisType axisType,) {
     // Remove floating point rounding errors by rounding to 2 decimal places of
     // precision. The difference in the canvas is negligible.
     final startPosition = (axis.getLocation(startValue)! * 100).round() / 100;
@@ -326,7 +325,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
     return _DatumAnnotation(
         startPosition: startPosition,
         endPosition: endPosition,
-        axisType: axisType);
+        axisType: axisType,);
   }
 
   @override
@@ -334,6 +333,17 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
 }
 
 class _RangeAnnotationLayoutView<D> extends LayoutView {
+
+  _RangeAnnotationLayoutView(
+      {required this.defaultColor,
+      required this.labelPadding,
+      required this.chart,
+      required this.rangeAnnotation,
+      required this.layoutPaintOrder,})
+      : layoutConfig = LayoutViewConfig(
+            paintOrder: layoutPaintOrder,
+            position: LayoutPosition.DrawArea,
+            positionOrder: LayoutViewPositionOrder.drawArea,);
   @override
   final LayoutViewConfig layoutConfig;
 
@@ -362,17 +372,6 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   /// order as the data was given to the chart.
   LinkedHashMap<String, _AnimatedAnnotation<D>>? _annotationMap;
 
-  _RangeAnnotationLayoutView(
-      {required this.defaultColor,
-      required this.labelPadding,
-      required this.chart,
-      required this.rangeAnnotation,
-      required this.layoutPaintOrder})
-      : layoutConfig = LayoutViewConfig(
-            paintOrder: layoutPaintOrder,
-            position: LayoutPosition.DrawArea,
-            positionOrder: LayoutViewPositionOrder.drawArea);
-
   set annotationMap(LinkedHashMap<String, _AnimatedAnnotation<D>> value) {
     _annotationMap = value;
   }
@@ -389,8 +388,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   @override
   void paint(ChartCanvas canvas, double animationPercent) {
-    final _annotationMap = this._annotationMap;
-    if (_annotationMap == null) {
+    final annotationMap = _annotationMap;
+    if (annotationMap == null) {
       return;
     }
 
@@ -398,16 +397,16 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     if (animationPercent == 1.0) {
       final keysToRemove = <String>[];
 
-      _annotationMap.forEach((String key, _AnimatedAnnotation<D> annotation) {
+      annotationMap.forEach((String key, _AnimatedAnnotation<D> annotation) {
         if (annotation.animatingOut) {
           keysToRemove.add(key);
         }
       });
 
-      keysToRemove.forEach(_annotationMap.remove);
+      keysToRemove.forEach(annotationMap.remove);
     }
 
-    _annotationMap.forEach((String key, _AnimatedAnnotation<D> annotation) {
+    annotationMap.forEach((String key, _AnimatedAnnotation<D> annotation) {
       final annotationElement =
           annotation.getCurrentAnnotation(animationPercent);
 
@@ -430,7 +429,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             dashPattern: annotationElement.dashPattern,
             points: points,
             stroke: annotationElement.color,
-            strokeWidthPx: annotationElement.strokeWidthPx);
+            strokeWidthPx: annotationElement.strokeWidthPx,);
       }
 
       // Create [TextStyle] from [TextStyleSpec] to be used by all the elements.
@@ -465,11 +464,11 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
               _getLabelMaxWidth(bounds, annotationElement, labelElement);
 
           final labelPoint = _getLabelPosition(
-              labelType, bounds, annotationElement, labelElement);
+              labelType, bounds, annotationElement, labelElement,);
 
           if (labelPoint != null) {
             canvas.drawText(labelElement, labelPoint.x, labelPoint.y,
-                rotation: rotation);
+                rotation: rotation,);
           }
         });
       }
@@ -487,7 +486,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             _drawAreaBounds.top,
             annotationElement.annotation.endPosition -
                 annotationElement.annotation.startPosition,
-            _drawAreaBounds.height);
+            _drawAreaBounds.height,);
         break;
 
       case RangeAnnotationAxisType.measure:
@@ -496,7 +495,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             annotationElement.annotation.endPosition,
             _drawAreaBounds.width,
             annotationElement.annotation.startPosition -
-                annotationElement.annotation.endPosition);
+                annotationElement.annotation.endPosition,);
         break;
     }
 
@@ -505,22 +504,22 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Calculates the bounds of the annotation.
   List<Point> _getLineAnnotationPoints(
-      _AnnotationElement<D> annotationElement) {
+      _AnnotationElement<D> annotationElement,) {
     final points = <Point>[];
 
     switch (annotationElement.annotation.axisType) {
       case RangeAnnotationAxisType.domain:
         points.add(Point<num>(
-            annotationElement.annotation.startPosition, _drawAreaBounds.top));
+            annotationElement.annotation.startPosition, _drawAreaBounds.top,),);
         points.add(Point<num>(
-            annotationElement.annotation.endPosition, _drawAreaBounds.bottom));
+            annotationElement.annotation.endPosition, _drawAreaBounds.bottom,),);
         break;
 
       case RangeAnnotationAxisType.measure:
         points.add(Point<num>(
-            _drawAreaBounds.left, annotationElement.annotation.startPosition));
+            _drawAreaBounds.left, annotationElement.annotation.startPosition,),);
         points.add(Point<num>(
-            _drawAreaBounds.right, annotationElement.annotation.endPosition));
+            _drawAreaBounds.right, annotationElement.annotation.endPosition,),);
         break;
     }
 
@@ -529,7 +528,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Measures the max label width of the annotation.
   int _getLabelMaxWidth(Rectangle<num> bounds,
-      _AnnotationElement<D> annotationElement, TextElement labelElement) {
+      _AnnotationElement<D> annotationElement, TextElement labelElement,) {
     num maxWidth = 0;
 
     final calculatedLabelPosition =
@@ -579,15 +578,15 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     switch (annotationElement.annotation.axisType) {
       case RangeAnnotationAxisType.domain:
         return _getDomainLabelPosition(
-            labelType, bounds, annotationElement, labelElement);
+            labelType, bounds, annotationElement, labelElement,);
 
       case RangeAnnotationAxisType.measure:
         return _getMeasureLabelPosition(
-            labelType, bounds, annotationElement, labelElement);
+            labelType, bounds, annotationElement, labelElement,);
     }
   }
 
@@ -596,13 +595,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     if (annotationElement.labelDirection == AnnotationLabelDirection.vertical) {
       return _getDomainLabelPositionVertical(
-          labelType, bounds, annotationElement, labelElement);
+          labelType, bounds, annotationElement, labelElement,);
     } else {
       return _getDomainLabelPositionHorizontal(
-          labelType, bounds, annotationElement, labelElement);
+          labelType, bounds, annotationElement, labelElement,);
     }
   }
 
@@ -612,7 +611,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     num labelX = 0;
     num labelY = 0;
 
@@ -704,7 +703,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     num labelX = 0;
     num labelY = 0;
 
@@ -798,13 +797,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     if (annotationElement.labelDirection == AnnotationLabelDirection.vertical) {
       return _getMeasureLabelPositionVertical(
-          labelType, bounds, annotationElement, labelElement);
+          labelType, bounds, annotationElement, labelElement,);
     } else {
       return _getMeasureLabelPositionHorizontal(
-          labelType, bounds, annotationElement, labelElement);
+          labelType, bounds, annotationElement, labelElement,);
     }
   }
 
@@ -814,7 +813,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     num labelX = 0;
     num labelY = 0;
 
@@ -911,7 +910,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       _AnnotationLabelType labelType,
       Rectangle<num> bounds,
       _AnnotationElement<D> annotationElement,
-      TextElement labelElement) {
+      TextElement labelElement,) {
     num labelX = 0;
     num labelY = 0;
 
@@ -1012,7 +1011,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   /// into an inside or outside position, depending on the size of the
   /// annotation and the chart draw area.
   AnnotationLabelPosition _resolveAutoLabelPosition(Rectangle<num> bounds,
-      _AnnotationElement<D> annotationElement, TextElement labelElement) {
+      _AnnotationElement<D> annotationElement, TextElement labelElement,) {
     var calculatedLabelPosition = annotationElement.labelPosition;
     if (calculatedLabelPosition == AnnotationLabelPosition.auto ||
         calculatedLabelPosition == AnnotationLabelPosition.margin) {
@@ -1058,7 +1057,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   // Helper function that converts [TextStyleSpec] to [TextStyle].
   TextPaintStyle _getTextStyle(
-      GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
+      GraphicsFactory graphicsFactory, TextStyleSpec labelSpec,) {
     return graphicsFactory.createTextPaint()
       ..color = labelSpec.color ?? Colors.black
       ..fontFamily = labelSpec.fontFamily
@@ -1068,9 +1067,6 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 }
 
 class _DatumAnnotation {
-  final double startPosition;
-  final double endPosition;
-  final RangeAnnotationAxisType axisType;
 
   _DatumAnnotation({
     required this.startPosition,
@@ -1079,28 +1075,18 @@ class _DatumAnnotation {
   });
 
   factory _DatumAnnotation.from(_DatumAnnotation other,
-      [double? startPosition, double? endPosition]) {
+      [double? startPosition, double? endPosition,]) {
     return _DatumAnnotation(
         startPosition: startPosition ?? other.startPosition,
         endPosition: endPosition ?? other.endPosition,
-        axisType: other.axisType);
+        axisType: other.axisType,);
   }
+  final double startPosition;
+  final double endPosition;
+  final RangeAnnotationAxisType axisType;
 }
 
 class _AnnotationElement<D> {
-  _DatumAnnotation annotation;
-  final AnnotationSegment<Object> annotationSegment;
-  Color? color;
-  final String? startLabel;
-  final String? endLabel;
-  final String? middleLabel;
-  final bool isRange;
-  final AnnotationLabelAnchor labelAnchor;
-  final AnnotationLabelDirection labelDirection;
-  final AnnotationLabelPosition labelPosition;
-  final TextStyleSpec labelStyleSpec;
-  final List<int>? dashPattern;
-  double strokeWidthPx;
 
   _AnnotationElement({
     required this.annotation,
@@ -1117,6 +1103,19 @@ class _AnnotationElement<D> {
     required this.dashPattern,
     required this.strokeWidthPx,
   });
+  _DatumAnnotation annotation;
+  final AnnotationSegment<Object> annotationSegment;
+  Color? color;
+  final String? startLabel;
+  final String? endLabel;
+  final String? middleLabel;
+  final bool isRange;
+  final AnnotationLabelAnchor labelAnchor;
+  final AnnotationLabelDirection labelDirection;
+  final AnnotationLabelPosition labelPosition;
+  final TextStyleSpec labelStyleSpec;
+  final List<int>? dashPattern;
+  double strokeWidthPx;
 
   _AnnotationElement<D> clone() {
     return _AnnotationElement<D>(
@@ -1172,6 +1171,8 @@ enum _AnnotationLabelType {
 }
 
 class _AnimatedAnnotation<D> {
+
+  _AnimatedAnnotation({required this.key});
   final String key;
 
   _AnnotationElement<D>? _previousAnnotation;
@@ -1180,8 +1181,6 @@ class _AnimatedAnnotation<D> {
 
   // Flag indicating whether this annotation is being animated out of the chart.
   bool animatingOut = false;
-
-  _AnimatedAnnotation({required this.key});
 
   /// Animates an annotation that was removed from the list out of the view.
   ///
@@ -1210,7 +1209,7 @@ class _AnimatedAnnotation<D> {
     }
 
     _currentAnnotation!.updateAnimationPercent(
-        _previousAnnotation!, _targetAnnotation, animationPercent);
+        _previousAnnotation!, _targetAnnotation, animationPercent,);
 
     return _currentAnnotation!;
   }
@@ -1219,9 +1218,9 @@ class _AnimatedAnnotation<D> {
 /// Helper class that exposes fewer private internal properties for unit tests.
 @visibleForTesting
 class RangeAnnotationTester<D> {
-  final RangeAnnotationState<D> behavior;
 
   RangeAnnotationTester(this.behavior);
+  final RangeAnnotationState<D> behavior;
 
   set graphicsFactory(GraphicsFactory value) {
     behavior._view.graphicsFactory = value;
@@ -1242,7 +1241,7 @@ class RangeAnnotationTester<D> {
       String? middleLabel,
       AnnotationLabelAnchor? labelAnchor,
       AnnotationLabelDirection? labelDirection,
-      AnnotationLabelPosition? labelPosition}) {
+      AnnotationLabelPosition? labelPosition,}) {
     for (final a in behavior._annotationMap.values) {
       final currentAnnotation = a._currentAnnotation!;
       final annotation = currentAnnotation.annotation;
@@ -1268,6 +1267,17 @@ class RangeAnnotationTester<D> {
 
 /// Base class for chart annotations.
 abstract class AnnotationSegment<D> {
+
+  AnnotationSegment(this.axisType,
+      {this.axisId,
+      this.color,
+      this.startLabel,
+      this.endLabel,
+      this.middleLabel,
+      this.labelAnchor,
+      this.labelDirection,
+      this.labelPosition,
+      this.labelStyleSpec,});
   final RangeAnnotationAxisType axisType;
   final String? axisId;
   final Color? color;
@@ -1280,23 +1290,10 @@ abstract class AnnotationSegment<D> {
   final TextStyleSpec? labelStyleSpec;
 
   String get key;
-
-  AnnotationSegment(this.axisType,
-      {this.axisId,
-      this.color,
-      this.startLabel,
-      this.endLabel,
-      this.middleLabel,
-      this.labelAnchor,
-      this.labelDirection,
-      this.labelPosition,
-      this.labelStyleSpec});
 }
 
 /// Data for a chart range annotation.
 class RangeAnnotationSegment<D> extends AnnotationSegment<D> {
-  final D startValue;
-  final D endValue;
 
   RangeAnnotationSegment(
       this.startValue, this.endValue, RangeAnnotationAxisType axisType,
@@ -1308,7 +1305,7 @@ class RangeAnnotationSegment<D> extends AnnotationSegment<D> {
       AnnotationLabelAnchor? labelAnchor,
       AnnotationLabelDirection? labelDirection,
       AnnotationLabelPosition? labelPosition,
-      TextStyleSpec? labelStyleSpec})
+      TextStyleSpec? labelStyleSpec,})
       : super(axisType,
             axisId: axisId,
             color: color,
@@ -1318,17 +1315,16 @@ class RangeAnnotationSegment<D> extends AnnotationSegment<D> {
             labelAnchor: labelAnchor,
             labelDirection: labelDirection,
             labelPosition: labelPosition,
-            labelStyleSpec: labelStyleSpec);
+            labelStyleSpec: labelStyleSpec,);
+  final D startValue;
+  final D endValue;
 
   @override
-  String get key => 'r::${axisType}::${axisId}::${startValue}::${endValue}';
+  String get key => 'r::$axisType::$axisId::$startValue::$endValue';
 }
 
 /// Data for a chart line annotation.
 class LineAnnotationSegment<D> extends AnnotationSegment<D> {
-  final D value;
-  final List<int>? dashPattern;
-  final double strokeWidthPx;
 
   LineAnnotationSegment(this.value, RangeAnnotationAxisType axisType,
       {String? axisId,
@@ -1341,7 +1337,7 @@ class LineAnnotationSegment<D> extends AnnotationSegment<D> {
       AnnotationLabelPosition? labelPosition,
       TextStyleSpec? labelStyleSpec,
       this.dashPattern,
-      this.strokeWidthPx = _defaultStrokeWidthPx})
+      this.strokeWidthPx = _defaultStrokeWidthPx,})
       : super(axisType,
             axisId: axisId,
             color: color,
@@ -1351,10 +1347,13 @@ class LineAnnotationSegment<D> extends AnnotationSegment<D> {
             labelAnchor: labelAnchor,
             labelDirection: labelDirection,
             labelPosition: labelPosition,
-            labelStyleSpec: labelStyleSpec);
+            labelStyleSpec: labelStyleSpec,);
+  final D value;
+  final List<int>? dashPattern;
+  final double strokeWidthPx;
 
   @override
-  String get key => 'l::${axisType}::${axisId}::${value}';
+  String get key => 'l::$axisType::$axisId::$value';
 }
 
 /// Axis type for an annotation.

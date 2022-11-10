@@ -13,32 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui' as ui show Gradient, Shader;
 import 'dart:math' show Point, Rectangle, max;
+import 'dart:ui' as ui show Gradient, Shader;
+
 import 'package:charts/core.dart' hide GraphLink;
 import 'package:charts/src/core/render/chart_canvas.dart';
-
 import 'package:flutter/material.dart';
-import 'canvas/circle_sector_painter.dart' show CircleSectorPainter;
-import 'canvas/line_painter.dart' show LinePainter;
-import 'canvas/pie_painter.dart' show PiePainter;
-import 'canvas/point_painter.dart' show PointPainter;
-import 'canvas/polygon_painter.dart' show PolygonPainter;
 
 class FlutterChartCanvas implements ChartCanvas {
+
+  FlutterChartCanvas(this.canvas, this.graphicsFactory);
   /// Pixels to allow to overdraw above the draw area that fades to transparent.
   static const double rect_top_gradient_pixels = 5;
 
   final Canvas canvas;
+  @override
   final GraphicsFactory graphicsFactory;
   final _paint = Paint();
-
-  FlutterChartCanvas(this.canvas, this.graphicsFactory);
 
   @override
   void drawCircleSector(Point center, double radius, double innerRadius,
       double startAngle, double endAngle,
-      {Color? fill, Color? stroke, double? strokeWidthPx}) {
+      {Color? fill, Color? stroke, double? strokeWidthPx,}) {
     CircleSectorPainter.draw(
       canvas: canvas,
       paint: _paint,
@@ -59,7 +55,7 @@ class FlutterChartCanvas implements ChartCanvas {
       Color? stroke,
       bool? roundEndCaps,
       double? strokeWidthPx,
-      List<int>? dashPattern}) {
+      List<int>? dashPattern,}) {
     LinePainter.draw(
         canvas: canvas,
         paint: _paint,
@@ -69,7 +65,7 @@ class FlutterChartCanvas implements ChartCanvas {
         stroke: stroke,
         roundEndCaps: roundEndCaps,
         strokeWidthPx: strokeWidthPx,
-        dashPattern: dashPattern);
+        dashPattern: dashPattern,);
   }
 
   @override
@@ -84,7 +80,7 @@ class FlutterChartCanvas implements ChartCanvas {
       Color? fill,
       Color? stroke,
       double? strokeWidthPx,
-      BlendMode? blendMode}) {
+      BlendMode? blendMode,}) {
     PointPainter.draw(
         canvas: canvas,
         paint: _paint,
@@ -92,7 +88,7 @@ class FlutterChartCanvas implements ChartCanvas {
         radius: radius,
         fill: fill,
         stroke: stroke,
-        strokeWidthPx: strokeWidthPx);
+        strokeWidthPx: strokeWidthPx,);
   }
 
   @override
@@ -101,7 +97,7 @@ class FlutterChartCanvas implements ChartCanvas {
       Rectangle<num>? clipBounds,
       Color? fill,
       Color? stroke,
-      double? strokeWidthPx}) {
+      double? strokeWidthPx,}) {
     PolygonPainter.draw(
         canvas: canvas,
         paint: _paint,
@@ -109,7 +105,7 @@ class FlutterChartCanvas implements ChartCanvas {
         clipBounds: clipBounds,
         fill: fill,
         stroke: stroke,
-        strokeWidthPx: strokeWidthPx);
+        strokeWidthPx: strokeWidthPx,);
   }
 
   /// Creates a bottom to top gradient that transitions [fill] to transparent.
@@ -127,25 +123,25 @@ class FlutterChartCanvas implements ChartCanvas {
       FillPatternType? pattern,
       Color? stroke,
       double? strokeWidthPx,
-      Rectangle<num>? drawAreaBounds}) {
+      Rectangle<num>? drawAreaBounds,}) {
     // TODO: remove this explicit `bool` type when no longer needed
     // to work around https://github.com/dart-lang/language/issues/1785
-    final bool drawStroke =
-        (strokeWidthPx != null && strokeWidthPx > 0.0 && stroke != null);
+    final drawStroke =
+        strokeWidthPx != null && strokeWidthPx > 0.0 && stroke != null;
 
-    final strokeWidthOffset = (drawStroke ? strokeWidthPx : 0);
+    final strokeWidthOffset = drawStroke ? strokeWidthPx : 0;
 
     // Factor out stroke width, if a stroke is enabled.
     final fillRectBounds = Rectangle<num>(
         bounds.left + strokeWidthOffset / 2,
         bounds.top + strokeWidthOffset / 2,
         bounds.width - strokeWidthOffset,
-        bounds.height - strokeWidthOffset);
+        bounds.height - strokeWidthOffset,);
 
     switch (pattern) {
       case FillPatternType.forwardHatch:
         _drawForwardHatchPattern(fillRectBounds, canvas,
-            fill: fill!, drawAreaBounds: drawAreaBounds);
+            fill: fill!, drawAreaBounds: drawAreaBounds,);
         break;
 
       case FillPatternType.solid:
@@ -158,7 +154,7 @@ class FlutterChartCanvas implements ChartCanvas {
         // if the rectangle is higher than the [drawAreaBounds] top.
         if (drawAreaBounds != null && bounds.top < drawAreaBounds.top) {
           _paint.shader = _createHintGradient(drawAreaBounds.left.toDouble(),
-              drawAreaBounds.top.toDouble(), fill);
+              drawAreaBounds.top.toDouble(), fill,);
         }
 
         canvas.drawRect(_getRect(fillRectBounds), _paint);
@@ -173,7 +169,7 @@ class FlutterChartCanvas implements ChartCanvas {
       // instead.
       _paint.shader = drawAreaBounds != null
           ? _createHintGradient(drawAreaBounds.left.toDouble(),
-              drawAreaBounds.top.toDouble(), stroke)
+              drawAreaBounds.top.toDouble(), stroke,)
           : null;
       _paint.strokeJoin = StrokeJoin.round;
       _paint.strokeWidth = strokeWidthPx;
@@ -198,7 +194,7 @@ class FlutterChartCanvas implements ChartCanvas {
       bool roundTopLeft = false,
       bool roundTopRight = false,
       bool roundBottomLeft = false,
-      bool roundBottomRight = false}) {
+      bool roundBottomRight = false,}) {
     // Use separate rect for drawing stroke
     _paint.color = fill!;
     _paint.style = PaintingStyle.fill;
@@ -209,8 +205,8 @@ class FlutterChartCanvas implements ChartCanvas {
             roundTopLeft: roundTopLeft,
             roundTopRight: roundTopRight,
             roundBottomLeft: roundBottomLeft,
-            roundBottomRight: roundBottomRight),
-        _paint);
+            roundBottomRight: roundBottomRight,),
+        _paint,);
   }
 
   @override
@@ -230,7 +226,7 @@ class FlutterChartCanvas implements ChartCanvas {
           roundTopRight: barStack.roundTopRight,
           roundBottomLeft: barStack.roundBottomLeft,
           roundBottomRight: barStack.roundBottomRight,
-        ));
+        ),);
     }
 
     // Draw each bar.
@@ -243,7 +239,7 @@ class FlutterChartCanvas implements ChartCanvas {
           pattern: segment.pattern,
           stroke: segment.stroke,
           strokeWidthPx: segment.strokeWidthPx,
-          drawAreaBounds: drawAreaBounds);
+          drawAreaBounds: drawAreaBounds,);
     }
 
     if (roundedCorners) {
@@ -253,7 +249,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawText(TextElement textElement, int offsetX, int offsetY,
-      {double rotation = 0.0}) {
+      {double rotation = 0.0,}) {
     // Must be Flutter TextElement.
     assert(textElement is FlutterTextElement);
 
@@ -273,7 +269,7 @@ class FlutterChartCanvas implements ChartCanvas {
       canvas.translate(offsetX.toDouble(), offsetY.toDouble());
       canvas.rotate(rotation);
 
-      textElement.textPainter!.paint(canvas, Offset(0.0, 0.0));
+      textElement.textPainter!.paint(canvas, const Offset(0, 0));
 
       canvas.restore();
     } else {
@@ -309,7 +305,7 @@ class FlutterChartCanvas implements ChartCanvas {
   /// Convert dart:math [Rectangle] to Flutter [Rect].
   Rect _getRect(Rectangle<num> rectangle) {
     return Rect.fromLTWH(rectangle.left.toDouble(), rectangle.top.toDouble(),
-        rectangle.width.toDouble(), rectangle.height.toDouble());
+        rectangle.width.toDouble(), rectangle.height.toDouble(),);
   }
 
   /// Convert dart:math [Rectangle] and to Flutter [RRect].
@@ -331,7 +327,7 @@ class FlutterChartCanvas implements ChartCanvas {
         topLeft: roundTopLeft ? cornerRadius : Radius.zero,
         topRight: roundTopRight ? cornerRadius : Radius.zero,
         bottomLeft: roundBottomLeft ? cornerRadius : Radius.zero,
-        bottomRight: roundBottomRight ? cornerRadius : Radius.zero);
+        bottomRight: roundBottomRight ? cornerRadius : Radius.zero,);
   }
 
   /// Draws a forward hatch pattern in the given bounds.
@@ -353,7 +349,7 @@ class FlutterChartCanvas implements ChartCanvas {
     // Apply a gradient the background if bounds exceed the draw area.
     if (drawAreaBounds != null && bounds.top < drawAreaBounds.top) {
       _paint.shader = _createHintGradient(drawAreaBounds.left.toDouble(),
-          drawAreaBounds.top.toDouble(), background);
+          drawAreaBounds.top.toDouble(), background,);
     }
 
     canvas.drawRect(_getRect(bounds), _paint);
@@ -367,7 +363,7 @@ class FlutterChartCanvas implements ChartCanvas {
     final x1 = bounds.left - fillWidthPx;
     final y0 = bounds.bottom - size - fillWidthPx;
     final y1 = bounds.bottom + fillWidthPx;
-    final offset = 8;
+    const offset = 8;
 
     final isVertical = bounds.height >= bounds.width;
 
@@ -387,10 +383,10 @@ class FlutterChartCanvas implements ChartCanvas {
     ui.Shader? lineShader;
     if (drawAreaBounds != null && bounds.top < drawAreaBounds.top) {
       lineShader = _createHintGradient(
-          drawAreaBounds.left.toDouble(), drawAreaBounds.top.toDouble(), fill);
+          drawAreaBounds.left.toDouble(), drawAreaBounds.top.toDouble(), fill,);
     }
 
-    for (int i = start; i < end; i = i + offset) {
+    for (var i = start; i < end; i = i + offset) {
       // For vertical bounds, we need to draw lines from top to bottom. For
       // bounds, we need to draw lines from left to right.
       final modifier = isVertical ? -1 * i : i;
@@ -405,7 +401,7 @@ class FlutterChartCanvas implements ChartCanvas {
           ],
           stroke: fill,
           strokeWidthPx: fillWidthPx,
-          shader: lineShader);
+          shader: lineShader,);
     }
   }
 

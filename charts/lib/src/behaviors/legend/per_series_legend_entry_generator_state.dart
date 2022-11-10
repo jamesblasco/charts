@@ -49,7 +49,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
               // TODO: Should this use series.colorFn if seriesColor is null?
               color: series.seriesColor!,
               textStyle: entryTextStyle,
-            ))
+            ),)
         .toList();
 
     // Update with measures only if showing measure on no selection.
@@ -62,7 +62,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
 
   @override
   void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList) {
+      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,) {
     if (selectionModel.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
@@ -77,7 +77,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel) {
+      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel,) {
     // Map of series ID to the total selected measure value for that series.
     final seriesAndMeasure = <String, num>{};
 
@@ -96,7 +96,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
       }
     }
 
-    for (var entry in legendEntries) {
+    for (final entry in legendEntries) {
       final seriesId = entry.series.id;
       final measureValue = seriesAndMeasure[seriesId]?.toDouble();
       final formattedValue = secondaryAxisSeriesIDs.contains(seriesId)
@@ -128,7 +128,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
   /// selection. The type of calculation is based on the [legendDefaultMeasure]
   /// value.
   void _updateFromSeriesList(
-      List<LegendEntry<D>> legendEntries, List<MutableSeries<D>> seriesList) {
+      List<LegendEntry<D>> legendEntries, List<MutableSeries<D>> seriesList,) {
     // Helper function to sum up the measure values
     num getMeasureTotal(MutableSeries<D> series) {
       var measureTotal = 0.0;
@@ -173,7 +173,7 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
               : measureFormatter!(calculatedMeasure);
     }
 
-    for (var entry in legendEntries) {
+    for (final entry in legendEntries) {
       final seriesId = entry.series.id;
 
       entry.value = seriesAndMeasure[seriesId];
@@ -193,5 +193,9 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
 
   @override
   List<Object?> get props => [measureFormatter,secondaryMeasureFormatter,legendDefaultMeasure,entryTextStyle];
+
+
+
+
 
 }

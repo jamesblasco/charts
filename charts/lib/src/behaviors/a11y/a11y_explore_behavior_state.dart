@@ -23,6 +23,25 @@ enum ExploreModeTrigger {
 
 /// Chart behavior for adding A11y information.
 abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
+
+  A11yExploreBehaviorState({
+    ExploreModeTrigger? exploreModeTrigger,
+    double? minimumWidth,
+    this.exploreModeEnabledAnnouncement,
+    this.exploreModeDisabledAnnouncement,
+  })  : exploreModeTrigger = exploreModeTrigger ?? ExploreModeTrigger.pressHold,
+        minimumWidth = minimumWidth ?? 1.0 {
+    assert(this.minimumWidth >= 1.0);
+
+    switch (this.exploreModeTrigger) {
+      case ExploreModeTrigger.pressHold:
+        _listener = GestureListener(onLongPress: _toggleExploreMode);
+        break;
+      case ExploreModeTrigger.tap:
+        _listener = GestureListener(onTap: _toggleExploreMode);
+        break;
+    }
+  }
   /// The gesture that activates explore mode. Defaults to long press.
   ///
   /// Turning on explore mode asks this [A11yExploreBehaviorState] to generate nodes within
@@ -44,36 +63,17 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
   late GestureListener _listener;
   bool _exploreModeOn = false;
 
-  A11yExploreBehaviorState({
-    ExploreModeTrigger? exploreModeTrigger,
-    double? minimumWidth,
-    this.exploreModeEnabledAnnouncement,
-    this.exploreModeDisabledAnnouncement,
-  })  : exploreModeTrigger = exploreModeTrigger ?? ExploreModeTrigger.pressHold,
-        minimumWidth = minimumWidth ?? 1.0 {
-    assert(this.minimumWidth >= 1.0);
-
-    switch (this.exploreModeTrigger) {
-      case ExploreModeTrigger.pressHold:
-        _listener = GestureListener(onLongPress: _toggleExploreMode);
-        break;
-      case ExploreModeTrigger.tap:
-        _listener = GestureListener(onTap: _toggleExploreMode);
-        break;
-    }
-  }
-
   bool _toggleExploreMode(Point<double> _) {
     if (_exploreModeOn) {
       _exploreModeOn = false;
       // Ask native platform to turn off explore mode.
       _chart!.context.disableA11yExploreMode(
-          announcement: exploreModeDisabledAnnouncement);
+          announcement: exploreModeDisabledAnnouncement,);
     } else {
       _exploreModeOn = true;
       // Ask native platform to turn on explore mode.
       _chart!.context.enableA11yExploreMode(createA11yNodes(),
-          announcement: exploreModeEnabledAnnouncement);
+          announcement: exploreModeEnabledAnnouncement,);
     }
 
     return true;

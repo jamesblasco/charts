@@ -20,21 +20,21 @@ import 'package:charts/core.dart';
 class LinearScaleFunction {
   /// Cached rangeBand width in pixels given the RangeBandConfig and the current
   /// domain & range.
-  double rangeBandPixels = 0.0;
+  double rangeBandPixels = 0;
 
   /// Cached amount in domain units to shift the input value as a part of
   /// translation.
   num domainTranslate = 0.0;
 
   /// Cached translation ratio for scale translation.
-  double scalingFactor = 1.0;
+  double scalingFactor = 1;
 
   /// Cached amount in pixel units to shift the output value as a part of
   /// translation.
-  double rangeTranslate = 0.0;
+  double rangeTranslate = 0;
 
   /// The calculated step size given the step size config.
-  double stepSizePixels = 0.0;
+  double stepSizePixels = 0;
 
   /// Translates the given domainValue to the range output.
   double operator [](num domainValue) {
@@ -53,7 +53,7 @@ class LinearScaleFunction {
       LinearScaleViewportSettings viewportSettings,
       LinearScaleDomainInfo domainInfo,
       RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig) {
+      StepSizeConfig stepSizeConfig,) {
     final rangeDiff = viewportSettings.range!.diff.toDouble();
     // Note: if you provided a nicing function that extends the domain, we won't
     // muck with the extended side.
@@ -67,18 +67,18 @@ class LinearScaleFunction {
     final reservedRangePercentOfStep =
         getStepReservationPercent(hasHalfStepAtStart, hasHalfStepAtEnd);
     _updateStepSizeAndScaleFactor(viewportSettings, domainInfo, rangeDiff,
-        reservedRangePercentOfStep, rangeBandConfig, stepSizeConfig);
+        reservedRangePercentOfStep, rangeBandConfig, stepSizeConfig,);
   }
 
   /// Returns the percentage of the step reserved from the output range due to
   /// maybe having to hold half stepSizes on the start and end of the output.
   double getStepReservationPercent(
-      bool hasHalfStepAtStart, bool hasHalfStepAtEnd) {
+      bool hasHalfStepAtStart, bool hasHalfStepAtEnd,) {
     if (!hasHalfStepAtStart && !hasHalfStepAtEnd) {
-      return 0.0;
+      return 0;
     }
     if (hasHalfStepAtStart && hasHalfStepAtEnd) {
-      return 1.0;
+      return 1;
     }
     return 0.5;
   }
@@ -86,7 +86,7 @@ class LinearScaleFunction {
   /// Updates the scale function's translate and rangeBand given the current
   /// state of the viewport.
   void updateTranslateAndRangeBand(LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo, RangeBandConfig rangeBandConfig) {
+      LinearScaleDomainInfo domainInfo, RangeBandConfig rangeBandConfig,) {
     // Assign the rangeTranslate using the current viewportSettings.translatePx
     // and diffs.
     if (domainInfo.domainDiff == 0) {
@@ -128,7 +128,7 @@ class LinearScaleFunction {
       case RangeBandType.fixedPercentOfStep:
         return stepSizePixels * rangeBandConfig.size;
       case RangeBandType.none:
-        return 0.0;
+        return 0;
     }
   }
 
@@ -143,7 +143,7 @@ class LinearScaleFunction {
       double rangeDiff,
       double reservedRangePercentOfStep,
       RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig) {
+      StepSizeConfig stepSizeConfig,) {
     final domainDiff = domainInfo.domainDiff.toDouble();
 
     // If we are going to have any rangeBands, then ensure that we account for
@@ -153,8 +153,7 @@ class LinearScaleFunction {
         case StepSizeType.autoDetect:
           final minimumDetectedDomainStep =
               domainInfo.minimumDetectedDomainStep.toDouble();
-          if (minimumDetectedDomainStep != null &&
-              minimumDetectedDomainStep.isFinite) {
+          if (minimumDetectedDomainStep.isFinite) {
             scalingFactor = viewportSettings.scalingFactor *
                 (rangeDiff /
                     (domainDiff +

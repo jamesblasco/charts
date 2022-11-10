@@ -31,7 +31,7 @@ abstract class LegendEntryGenerator<D> {
   /// [selectionModel] Selection model to query selected state.
   /// [seriesList] Processed series list.
   void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList);
+      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,);
 
   MeasureFormatter? get measureFormatter;
 

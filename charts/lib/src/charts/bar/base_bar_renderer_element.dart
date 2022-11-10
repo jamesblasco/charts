@@ -17,18 +17,6 @@ import 'package:charts/charts.dart';
 import 'package:charts/charts/bar.dart';
 
 abstract class BaseBarRendererElement {
-  int? barStackIndex;
-  Color? color;
-  num? cumulativeTotal;
-  List<int>? dashPattern;
-  Color? fillColor;
-  FillPatternType? fillPattern;
-  double? measureAxisPosition;
-  num? measureOffset;
-  num? measureOffsetPlusMeasure;
-  double? strokeWidthPx;
-  bool? measureIsNull;
-  bool? measureIsNegative;
 
   BaseBarRendererElement();
 
@@ -46,18 +34,37 @@ abstract class BaseBarRendererElement {
     measureIsNull = other.measureIsNull;
     measureIsNegative = other.measureIsNegative;
   }
+  int? barStackIndex;
+  Color? color;
+  num? cumulativeTotal;
+  List<int>? dashPattern;
+  Color? fillColor;
+  FillPatternType? fillPattern;
+  double? measureAxisPosition;
+  num? measureOffset;
+  num? measureOffsetPlusMeasure;
+  double? strokeWidthPx;
+  bool? measureIsNull;
+  bool? measureIsNegative;
 
   void updateAnimationPercent(BaseBarRendererElement previous,
-      BaseBarRendererElement target, double animationPercent) {
+      BaseBarRendererElement target, double animationPercent,) {
     color = getAnimatedColor(previous.color!, target.color!, animationPercent);
     fillColor = getAnimatedColor(
-        previous.fillColor!, target.fillColor!, animationPercent);
+        previous.fillColor!, target.fillColor!, animationPercent,);
     measureIsNull = target.measureIsNull;
     measureIsNegative = target.measureIsNegative;
   }
 }
 
 abstract class BaseAnimatedBar<D, R extends BaseBarRendererElement> {
+
+  BaseAnimatedBar({
+    required this.key,
+    required this.datum,
+    required this.series,
+    required this.domainValue,
+  });
   final String key;
   dynamic datum;
   ImmutableSeries<D> series;
@@ -70,13 +77,6 @@ abstract class BaseAnimatedBar<D, R extends BaseBarRendererElement> {
   // Flag indicating whether this bar is being animated out of the chart.
   bool animatingOut = false;
 
-  BaseAnimatedBar({
-    required this.key,
-    required this.datum,
-    required this.series,
-    required this.domainValue,
-  });
-
   /// Animates a bar that was removed from the series out of the view.
   ///
   /// This should be called in place of "setNewTarget" for bars that represent
@@ -86,7 +86,7 @@ abstract class BaseAnimatedBar<D, R extends BaseBarRendererElement> {
   /// of 0). Animates the width of the bar down to 0, centered in the middle of
   /// the original bar width.
   void animateOut() {
-    var newTarget = clone(_currentBar!);
+    final newTarget = clone(_currentBar!);
 
     animateElementToMeasureAxisPosition(newTarget);
 

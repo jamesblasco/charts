@@ -13,11 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui';
 
 import 'package:charts/core.dart';
 
 class FlutterLineStyle implements LineStyle {
+
+  FlutterLineStyle({this.strokeWidth = 0});
   @override
   Color? color;
 
@@ -26,6 +27,4 @@ class FlutterLineStyle implements LineStyle {
 
   @override
   int strokeWidth;
-
-  FlutterLineStyle({this.strokeWidth = 0});
 }

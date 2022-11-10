@@ -15,15 +15,15 @@
 
 import 'package:charts/charts/treemap.dart';
 
+export 'base_treemap_renderer.dart';
+export 'dice_treemap_renderer.dart';
+export 'slice_dice_treemap_renderer.dart';
+export 'slice_treemap_renderer.dart';
+export 'squarified_treemap_renderer.dart';
 export 'treemap_label_decorator.dart';
 export 'treemap_renderer_config.dart';
 export 'treemap_renderer_decorator.dart';
 export 'treemap_renderer_element.dart';
-export 'squarified_treemap_renderer.dart';
-export 'slice_treemap_renderer.dart';
-export 'slice_dice_treemap_renderer.dart';
-export 'base_treemap_renderer.dart';
-export 'dice_treemap_renderer.dart';
 
 class TreeMapRenderChart<D> extends BaseRenderChart<D> {
   TreeMapRenderChart({LayoutConfig? layoutConfig})
@@ -31,12 +31,12 @@ class TreeMapRenderChart<D> extends BaseRenderChart<D> {
 
   @override
   void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout}) {
+      {bool? skipAnimation, bool? skipLayout,}) {
     if (seriesList.length > 1) {
       throw ArgumentError('TreeMapChart can only render a single tree.');
     }
     super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout);
+        skipAnimation: skipAnimation, skipLayout: skipLayout,);
   }
 
   /// Squarified treemap is used as default renderer.
@@ -63,8 +63,8 @@ class TreeMapRenderChart<D> extends BaseRenderChart<D> {
               domain: series.domainFn(datumIndex),
               measure: series.measureFn(datumIndex),
               series: seriesDatum.series,
-              color: series.colorFn!(datumIndex)),
-          seriesDatum);
+              color: series.colorFn!(datumIndex),),
+          seriesDatum,);
       details.add(datumDetails);
     }
     return details;

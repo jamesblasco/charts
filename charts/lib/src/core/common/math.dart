@@ -28,7 +28,7 @@ const _defaultEpsilon = 2e-10;
 /// [epsilon] Maximum valid difference between [value] and the bounds. Defaults
 /// to 2e-10.
 bool withinBounds(num value, num lowerBound, num upperBound,
-    {double epsilon = _defaultEpsilon}) {
+    {double epsilon = _defaultEpsilon,}) {
   return value + epsilon >= lowerBound && value - epsilon <= upperBound;
 }
 
@@ -60,7 +60,7 @@ double distanceBetweenPointAndLineSegment(Vector2 p, Vector2 v, Vector2 w) {
 /// [v] Start point for the line segment.
 /// [w] End point for the line segment.
 double distanceBetweenPointAndLineSegmentSquared(
-    Vector2 p, Vector2 v, Vector2 w) {
+    Vector2 p, Vector2 v, Vector2 w,) {
   final lineLength = v.distanceToSquared(w);
 
   if (lineLength == 0) {
@@ -68,7 +68,7 @@ double distanceBetweenPointAndLineSegmentSquared(
   }
 
   var t0 = (p - v).dot(w - v) / lineLength;
-  t0 = max(0.0, min(1.0, t0));
+  t0 = max(0, min(1, t0));
 
   final projection = v + ((w - v) * t0);
 
@@ -78,14 +78,14 @@ double distanceBetweenPointAndLineSegmentSquared(
 /// A two-dimensional cartesian coordinate pair with potentially null coordinate
 /// values.
 class NullablePoint extends Equatable {
-  final double? x;
-  final double? y;
 
   /// Creates a point with the provided [x] and [y] coordinates.
   const NullablePoint(this.x, this.y);
 
   /// Creates a [NullablePoint] from a [Point].
   NullablePoint.from(Point<double>? point) : this(point?.x, point?.y);
+  final double? x;
+  final double? y;
 
   @override
   String toString() => 'NullablePoint($x, $y)';

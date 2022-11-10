@@ -31,7 +31,7 @@ abstract class SeriesRendererConfig<D> {
 }
 
 class RendererAttributeKey<R> extends TypedKey<R> {
-  const RendererAttributeKey(String uniqueKey) : super(uniqueKey);
+  const RendererAttributeKey(super.uniqueKey);
 }
 
 class RendererAttributes extends TypedRegistry {}

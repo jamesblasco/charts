@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui' as ui show Shader;
 import 'dart:math' show Point, Rectangle;
+import 'dart:ui' as ui show Shader;
+
 import 'package:flutter/material.dart';
 
 /// Draws a simple line.
@@ -40,7 +41,7 @@ class LinePainter {
       bool? roundEndCaps,
       double? strokeWidthPx,
       List<int>? dashPattern,
-      ui.Shader? shader}) {
+      ui.Shader? shader,}) {
     if (points.isEmpty) {
       return;
     }
@@ -53,7 +54,7 @@ class LinePainter {
             clipBounds.left.toDouble(),
             clipBounds.top.toDouble(),
             clipBounds.width.toDouble(),
-            clipBounds.height.toDouble()));
+            clipBounds.height.toDouble(),),);
     }
 
     paint.color = stroke!;
@@ -67,7 +68,7 @@ class LinePainter {
       final point = points.first;
       paint.style = PaintingStyle.fill;
       canvas.drawCircle(Offset(point.x.toDouble(), point.y.toDouble()),
-          strokeWidthPx ?? 0, paint);
+          strokeWidthPx ?? 0, paint,);
     } else {
       if (strokeWidthPx != null) {
         paint.strokeWidth = strokeWidthPx;
@@ -107,7 +108,7 @@ class LinePainter {
 
   /// Draws dashed lines lines between each point.
   static void _drawDashedLine(
-      Canvas canvas, Paint paint, List<Point> points, List<int> dashPattern) {
+      Canvas canvas, Paint paint, List<Point> points, List<int> dashPattern,) {
     final localDashPattern = List<int>.from(dashPattern);
 
     // If an odd number of parts are defined, repeat the pattern to get an even
@@ -125,11 +126,11 @@ class LinePainter {
 
     // Gets the next segment in the dash pattern, looping back to the
     // beginning once the end has been reached.
-    var getNextDashPatternSegment = () {
+    int getNextDashPatternSegment() {
       final dashSegment = localDashPattern[dashPatternIndex];
       dashPatternIndex = (dashPatternIndex + 1) % localDashPattern.length;
       return dashSegment;
-    };
+    }
 
     // Array of points that is used to draw a connecting path when only a
     // partial dash pattern segment can be drawn in the remaining length of a
@@ -151,7 +152,7 @@ class LinePainter {
         var d = _getOffsetDistance(previousSeriesPoint, seriesPoint);
 
         while (d > 0) {
-          final int dashSegment =
+          final dashSegment =
               remainder > 0 ? remainder : getNextDashPatternSegment();
           remainder = 0;
 
@@ -162,7 +163,7 @@ class LinePainter {
           // If the remaining distance is less than the length of the dash
           // pattern segment, then cut off the pattern segment for this portion
           // of the overall line.
-          final num distance = d < dashSegment ? d : dashSegment;
+          final distance = d < dashSegment ? d : dashSegment;
 
           // Compute a vector representing the length of dash pattern segment to
           // be drawn.

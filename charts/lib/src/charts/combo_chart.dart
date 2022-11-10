@@ -22,91 +22,63 @@ import 'package:charts/core.dart';
 /// not expose a separate DateTimeComboChart because it would just be a copy of
 /// that chart.
 class NumericComboChart extends CartesianChart<num> {
-  NumericComboChart(
-    List<Series<dynamic, num>> seriesList, {
-    bool? animate,
-    Duration? animationDuration,
-    AxisSpec? domainAxis,
-    NumericAxisSpec? primaryMeasureAxis,
-    NumericAxisSpec? secondaryMeasureAxis,
-    SeriesRendererConfig<num>? defaultRenderer,
-    List<SeriesRendererConfig<num>>? customSeriesRenderers,
-    List<ChartBehavior<num>>? behaviors,
-    List<SelectionModelConfig<num>>? selectionModels,
-    RTLSpec? rtlSpec,
-    LayoutConfig? layoutConfig,
-    bool defaultInteractions = true,
-  }) : super(
-          seriesList,
-          animate: animate,
-          animationDuration: animationDuration,
-          domainAxis: domainAxis,
-          primaryMeasureAxis: primaryMeasureAxis,
-          secondaryMeasureAxis: secondaryMeasureAxis,
-          defaultRenderer: defaultRenderer,
-          customSeriesRenderers: customSeriesRenderers,
-          behaviors: behaviors,
-          selectionModels: selectionModels,
-          rtlSpec: rtlSpec,
-          layoutConfig: layoutConfig,
-          defaultInteractions: defaultInteractions,
-        );
+  const NumericComboChart(
+    super.seriesList, {
+    super.animate,
+    super.animationDuration,
+    super.domainAxis,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.defaultRenderer,
+    super.customSeriesRenderers,
+    super.behaviors,
+    super.selectionModels,
+    super.rtlSpec,
+    super.layoutConfig,
+    super.defaultInteractions,
+  });
 
   @override
   NumericCartesianRenderChart createRenderChart(
-      BaseChartState chartState) {
+      BaseChartState chartState,) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return NumericCartesianRenderChart(
         layoutConfig: layoutConfig,
         primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis());
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),);
   }
 }
 
 /// An ordinal combo chart supports rendering each series of data with different
 /// series renderers.
 class OrdinalComboChart extends CartesianChart<String> {
-  OrdinalComboChart(
-    List<Series<dynamic, String>> seriesList, {
-    bool? animate,
-    Duration? animationDuration,
-    AxisSpec? domainAxis,
-    NumericAxisSpec? primaryMeasureAxis,
-    NumericAxisSpec? secondaryMeasureAxis,
-    SeriesRendererConfig<String>? defaultRenderer,
-    List<SeriesRendererConfig<String>>? customSeriesRenderers,
-    List<ChartBehavior<String>>? behaviors,
-    List<SelectionModelConfig<String>>? selectionModels,
-    RTLSpec? rtlSpec,
-    LayoutConfig? layoutConfig,
-    bool defaultInteractions = true,
-  }) : super(
-          seriesList,
-          animate: animate,
-          animationDuration: animationDuration,
-          domainAxis: domainAxis,
-          primaryMeasureAxis: primaryMeasureAxis,
-          secondaryMeasureAxis: secondaryMeasureAxis,
-          defaultRenderer: defaultRenderer,
-          customSeriesRenderers: customSeriesRenderers,
-          behaviors: behaviors,
-          selectionModels: selectionModels,
-          rtlSpec: rtlSpec,
-          layoutConfig: layoutConfig,
-          defaultInteractions: defaultInteractions,
-        );
+  const OrdinalComboChart(
+    super.seriesList, {
+    super.animate,
+    super.animationDuration,
+    super.domainAxis,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.defaultRenderer,
+    super.customSeriesRenderers,
+    super.behaviors,
+    super.selectionModels,
+    super.rtlSpec,
+    super.layoutConfig,
+    super.defaultInteractions,
+  });
 
   @override
   OrdinalCartesianRenderChart createRenderChart(
-      BaseChartState chartState) {
+      BaseChartState chartState,) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return OrdinalCartesianRenderChart(
         layoutConfig: layoutConfig,
         primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis());
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),);
   }
 }

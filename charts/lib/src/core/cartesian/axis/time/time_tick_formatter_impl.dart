@@ -17,9 +17,6 @@ import 'package:intl/intl.dart';
 
 /// Formatter that can format simple and transition time ticks differently.
 class TimeTickFormatterImpl implements TimeTickFormatter {
-  final DateFormat _simpleFormat;
-  final DateFormat _transitionFormat;
-  final CalendarField? transitionField;
 
   /// Create time tick formatter.
   ///
@@ -35,6 +32,9 @@ class TimeTickFormatterImpl implements TimeTickFormatter {
     this.transitionField,
   })  : _simpleFormat = dateTimeFactory.createDateFormat(simpleFormat),
         _transitionFormat = dateTimeFactory.createDateFormat(transitionFormat);
+  final DateFormat _simpleFormat;
+  final DateFormat _transitionFormat;
+  final CalendarField? transitionField;
 
   @override
   String formatFirstTick(DateTime date) => _transitionFormat.format(date);

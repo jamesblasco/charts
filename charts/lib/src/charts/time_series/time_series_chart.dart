@@ -13,19 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
 
 import 'package:charts/behaviors.dart';
 import 'package:charts/charts/line.dart';
 
 class TimeSeriesChart extends CartesianChart<DateTime> {
-  final DateTimeFactory? dateTimeFactory;
 
   /// Create a [TimeSeriesChart].
   ///
   /// [dateTimeFactory] allows specifying a factory that creates [DateTime] to
   /// be used for the time axis. If none specified, local date time is used.
-  TimeSeriesChart(
+  const TimeSeriesChart(
     super.seriesList, {
     super.animate,
     super.animationDuration,
@@ -43,6 +41,7 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
     super.flipVerticalAxis,
     super.userManagedState,
   });
+  final DateTimeFactory? dateTimeFactory;
 
   @override
   TimeSeriesRenderChart createRenderChart(BaseChartState chartState) {
@@ -67,26 +66,21 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
 }
 
 class TimeSeriesRenderChart extends CartesianRenderChart<DateTime> {
-  final DateTimeFactory dateTimeFactory;
 
   TimeSeriesRenderChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
-      this.dateTimeFactory = const LocalDateTimeFactory()})
+      {super.vertical,
+      super.layoutConfig,
+      super.primaryMeasureAxis,
+      super.secondaryMeasureAxis,
+      super.disjointMeasureAxes,
+      this.dateTimeFactory = const LocalDateTimeFactory(),})
       : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            domainAxis: DateTimeAxis(dateTimeFactory),
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
+            domainAxis: DateTimeAxis(dateTimeFactory),);
+  final DateTimeFactory dateTimeFactory;
 
   @override
   void initDomainAxis() {
-    domainAxis!.tickDrawStrategy = SmallTickRendererSpec<DateTime>()
+    domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<DateTime>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 

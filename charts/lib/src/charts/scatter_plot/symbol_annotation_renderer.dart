@@ -31,6 +31,10 @@ import 'package:charts/charts/scatter_plot.dart';
 /// Does not handle horizontal bars.
 class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     implements LayoutView {
+
+  SymbolAnnotationRenderer(
+      {String? rendererId, SymbolAnnotationRendererConfig<D>? config,})
+      : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
   late Rectangle<int> _componentBounds;
 
   @override
@@ -43,10 +47,6 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   // ignore: prefer_collection_literals, https://github.com/dart-lang/linter/issues/1649
   final _seriesInfo = LinkedHashMap<String, _SeriesInfo<D>>();
 
-  SymbolAnnotationRenderer(
-      {String? rendererId, SymbolAnnotationRendererConfig<D>? config})
-      : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
-
   //
   // Renderer methods
   //
@@ -57,13 +57,13 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
-    var localConfig = config as SymbolAnnotationRendererConfig;
+    final localConfig = config as SymbolAnnotationRendererConfig;
 
     _seriesInfo.clear();
 
     var offset = 0.0;
 
-    seriesList.forEach((series) {
+    for (final series in seriesList) {
       final seriesKey = series.id;
 
       // Default to the configured radius if none was defined by the series.
@@ -107,7 +107,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
       );
 
       offset += rowHeight;
-    });
+    }
 
     _currentHeight = offset.ceil();
 
@@ -126,7 +126,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
       num? measureLowerBoundValue,
       num? measureUpperBoundValue,
       num? measureOffsetValue,
-      ImmutableAxis<num> measureAxis) {
+      ImmutableAxis<num> measureAxis,) {
     final domainPosition = domainAxis.getLocation(domainValue);
 
     final domainLowerBoundPosition = domainLowerBoundValue != null
@@ -157,14 +157,14 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
         xUpper: domainUpperBoundPosition,
         y: measurePosition,
         yLower: measureLowerBoundPosition,
-        yUpper: measureUpperBoundPosition);
+        yUpper: measureUpperBoundPosition,);
   }
 
   @override
   void onAttach(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'SymbolAnnotationRenderer can only be attached to a CartesianChart<D>');
+          'SymbolAnnotationRenderer can only be attached to a CartesianChart<D>',);
     }
 
     _chart = chart;
@@ -195,7 +195,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
         final domainAxis = _chart.domainAxis!;
         final bounds = Rectangle<int>(
-            componentBounds.left, y.round(), componentBounds.width, 0);
+            componentBounds.left, y.round(), componentBounds.width, 0,);
         domainAxis.tickDrawStrategy!
             .drawAxisLine(canvas, domainAxis.axisOrientation!, bounds);
       });
@@ -208,10 +208,10 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
   @override
   LayoutViewConfig get layoutConfig {
-    return LayoutViewConfig(
+    return const LayoutViewConfig(
         paintOrder: LayoutViewPaintOrder.point,
         position: LayoutPosition.Bottom,
-        positionOrder: LayoutViewPositionOrder.symbolAnnotation);
+        positionOrder: LayoutViewPositionOrder.symbolAnnotation,);
   }
 
   @override
@@ -220,7 +220,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     // of the number of series rendered, even if that ends up taking all of the
     // available margin space.
     return ViewMeasuredSizes(
-        preferredWidth: maxWidth, preferredHeight: _currentHeight);
+        preferredWidth: maxWidth, preferredHeight: _currentHeight,);
   }
 
   @override
@@ -235,12 +235,12 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 }
 
 class _SeriesInfo<D> {
-  double rowHeight;
-  double rowStart;
-  double symbolCenter;
 
   _SeriesInfo(
       {required this.rowHeight,
       required this.rowStart,
-      required this.symbolCenter});
+      required this.symbolCenter,});
+  double rowHeight;
+  double rowStart;
+  double symbolCenter;
 }

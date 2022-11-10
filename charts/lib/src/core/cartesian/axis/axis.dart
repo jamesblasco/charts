@@ -76,6 +76,12 @@ abstract class ImmutableAxis<D> {
 }
 
 abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
+
+  Axis({this.tickProvider, TickFormatter<D>? tickFormatter, this.scale})
+      : _defaultScale = scale,
+        _defaultTickProvider = tickProvider,
+        _defaultTickFormatter = tickFormatter,
+        _tickFormatter = tickFormatter;
   static const primaryMeasureAxisId = 'primaryMeasureAxisId';
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
   static const _autoViewportDefault = true;
@@ -153,12 +159,6 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
 
   /// If true, a collision has occurred between ticks on this axis.
   bool hasTickCollision = false;
-
-  Axis({this.tickProvider, TickFormatter<D>? tickFormatter, this.scale})
-      : _defaultScale = scale,
-        _defaultTickProvider = tickProvider,
-        _defaultTickFormatter = tickFormatter,
-        _tickFormatter = tickFormatter;
 
   @protected
   MutableScale<D>? get mutableScale => scale;
@@ -243,7 +243,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
       final scale = this.scale!;
       final range = scale.range!;
 
-      var domainLocation = scale[domain]!.toDouble();
+      final domainLocation = scale[domain]!.toDouble();
 
       // If domain location is outside of scale range but only outside by less
       // than epsilon, correct the potential mislocation caused by floating
@@ -276,7 +276,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     _updateProvidedTicks();
     if (_componentBounds != null) {
       _updateProvidedTickWidth(
-          _componentBounds!.width, _componentBounds!.height);
+          _componentBounds!.width, _componentBounds!.height,);
     }
     _updateAxisTicks();
   }
@@ -288,9 +288,9 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     }
 
     assert(
-        graphicsFactory != null, 'Axis<D>.graphicsFactory must be set first');
+        graphicsFactory != null, 'Axis<D>.graphicsFactory must be set first',);
     assert(
-        tickDrawStrategy != null, 'Axis<D>.tickDrawStrategy must be set first');
+        tickDrawStrategy != null, 'Axis<D>.tickDrawStrategy must be set first',);
 
     // TODO: Ensure that tick providers take manually configured
     // viewport settings into account, so that we still get the right number.
@@ -302,7 +302,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
         formatterValueCache: _formatterValueCache,
         tickDrawStrategy: tickDrawStrategy!,
         orientation: axisOrientation,
-        viewportExtensionEnabled: autoViewport);
+        viewportExtensionEnabled: autoViewport,);
 
     hasTickCollision = tickDrawStrategy!
         .collides(_providedTicks, axisOrientation)
@@ -340,10 +340,10 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
         // Swap out the text element only if the settings are different.
         // This prevents a costly new TextPainter in Flutter.
         if (!TextElement.elementSettingsSame(
-            animatedTick.textElement!, tick.textElement!)) {
+            animatedTick.textElement!, tick.textElement!,)) {
           animatedTick.textElement = tick.textElement;
         }
-        var newTarget = scale[tick.value]?.toDouble();
+        final newTarget = scale[tick.value]?.toDouble();
         if (scale.isRangeValueWithinViewport(newTarget!)) {
           // Update target for all existing ticks
           animatedTick.setNewTarget(newTarget);
@@ -359,7 +359,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     }
 
     // Add new ticks
-    providedTicks.forEach((tick) {
+    for (final tick in providedTicks) {
       AxisTicks<D> animatedTick;
       if (tick is RangeTick<D>) {
         animatedTick = RangeAxisTicks<D>(tick);
@@ -372,7 +372,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
         }
         _axisTicks.add(animatedTick);
       }
-    });
+    }
 
     _axisTicks.sort();
 
@@ -398,10 +398,10 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   /// [viewportTranslatePx] will be clamped such that the axis cannot be panned
   /// beyond the bounds of the data.
   void setViewportSettings(double viewportScale, double viewportTranslatePx,
-      {int? drawAreaWidth, int? drawAreaHeight}) {
+      {int? drawAreaWidth, int? drawAreaHeight,}) {
     // Don't let the viewport be panned beyond the bounds of the data.
     viewportTranslatePx = _clampTranslatePx(viewportScale, viewportTranslatePx,
-        drawAreaWidth: drawAreaWidth, drawAreaHeight: drawAreaHeight);
+        drawAreaWidth: drawAreaWidth, drawAreaHeight: drawAreaHeight,);
 
     scale!.setViewportSettings(viewportScale, viewportTranslatePx);
   }
@@ -425,7 +425,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   /// the data.
   double _clampTranslatePx(
       double viewportScalingFactor, double viewportTranslatePx,
-      {int? drawAreaWidth, int? drawAreaHeight}) {
+      {int? drawAreaWidth, int? drawAreaHeight,}) {
     if (isVertical) {
       if (drawAreaHeight == null) {
         return viewportTranslatePx;
@@ -435,7 +435,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
           (drawAreaHeight * viewportScalingFactor) - drawAreaHeight;
 
       viewportTranslatePx =
-          max(min(viewportTranslatePx, maxPositiveTranslate), 0.0);
+          max(min(viewportTranslatePx, maxPositiveTranslate), 0);
     } else {
       if (drawAreaWidth == null) {
         return viewportTranslatePx;
@@ -445,7 +445,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
           -1.0 * ((drawAreaWidth * viewportScalingFactor) - drawAreaWidth);
 
       viewportTranslatePx =
-          min(max(viewportTranslatePx, maxNegativeTranslate), 0.0);
+          min(max(viewportTranslatePx, maxNegativeTranslate), 0);
     }
     return viewportTranslatePx;
   }
@@ -461,7 +461,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   LayoutViewConfig get layoutConfig => LayoutViewConfig(
       paintOrder: layoutPaintOrder,
       position: _layoutPosition,
-      positionOrder: LayoutViewPositionOrder.axis);
+      positionOrder: LayoutViewPositionOrder.axis,);
 
   /// Get layout position from axis orientation.
   LayoutPosition? get _layoutPosition {
@@ -504,7 +504,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
 
     return tickDrawStrategy!.measureVerticallyDrawnTicks(
         _providedTicks!, maxWidth, maxHeight,
-        collision: hasTickCollision);
+        collision: hasTickCollision,);
   }
 
   ViewMeasuredSizes _measureHorizontalAxis(int maxWidth, int maxHeight) {
@@ -513,7 +513,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
 
     return tickDrawStrategy!.measureHorizontallyDrawnTicks(
         _providedTicks!, maxWidth, maxHeight,
-        collision: hasTickCollision);
+        collision: hasTickCollision,);
   }
 
   /// Layout this component.
@@ -576,7 +576,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
           collision: hasTickCollision,
           drawAreaBounds: _drawAreaBounds!,
           isFirst: i == 0,
-          isLast: i == _axisTicks.length - 1);
+          isLast: i == _axisTicks.length - 1,);
     }
 
     if (drawAxisLine) {
@@ -641,10 +641,10 @@ class OrdinalAxis extends Axis<String> {
 
 /// Viewport to cover [dataSize] data points starting at [startingDomain] value.
 class OrdinalViewport extends Equatable {
+
+  const OrdinalViewport(this.startingDomain, this.dataSize);
   final String startingDomain;
   final int dataSize;
-
-  OrdinalViewport(this.startingDomain, this.dataSize);
 
 
 
@@ -654,9 +654,9 @@ class OrdinalViewport extends Equatable {
 
 @visibleForTesting
 class AxisTester<D> {
-  final Axis<D> _axis;
 
   AxisTester(this._axis);
+  final Axis<D> _axis;
 
   List<AxisTicks<D>> get axisTicks => _axis._axisTicks;
 

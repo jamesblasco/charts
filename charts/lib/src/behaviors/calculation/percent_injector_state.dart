@@ -35,20 +35,20 @@ const percentInjectedKey =
 /// then this behavior must be added after the [Legend] to ensure that it
 /// calculates values after series have been potentially removed from the list.
 class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
-  late final LifecycleListener<D> _lifecycleListener;
-
-  /// The type of data total to be calculated.
-  final PercentInjectorTotalType totalType;
 
   /// Constructs a [PercentInjectorBehaviorState].
   ///
   /// [totalType] configures the type of data total to be calculated.
   PercentInjectorBehaviorState(
-      {this.totalType = PercentInjectorTotalType.domain}) {
+      {this.totalType = PercentInjectorTotalType.domain,}) {
     // Set up chart draw cycle listeners.
     _lifecycleListener =
         LifecycleListener<D>(onPreprocess: _preProcess, onData: _onData);
   }
+  late final LifecycleListener<D> _lifecycleListener;
+
+  /// The type of data total to be calculated.
+  final PercentInjectorTotalType totalType;
 
   @override
   void attachTo(BaseRenderChart<D> chart) {
@@ -63,9 +63,9 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
   /// Resets the state of the behavior when new data is drawn on the chart.
   void _onData(List<MutableSeries<D>> seriesList) {
     // Reset tracking of percentage injection for new data.
-    seriesList.forEach((series) {
+    for (final series in seriesList) {
       series.setAttr(percentInjectedKey, false);
-    });
+    }
   }
 
   /// Injects percent of domain and/or series accessor functions into each
@@ -75,9 +75,9 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
   /// the [seriesList] between chart redraws.
   void _preProcess(List<MutableSeries<D>> seriesList) {
     var percentInjected = true;
-    seriesList.forEach((series) {
+    for (final series in seriesList) {
       percentInjected = percentInjected && series.getAttr(percentInjectedKey)!;
-    });
+    }
 
     if (percentInjected) {
       return;
@@ -100,7 +100,7 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
 
           for (var index = 0; index < series.data.length; index++) {
             final domain = domainFn(index);
-            var measure = rawMeasureFn(index) ?? 0.0;
+            final measure = rawMeasureFn(index) ?? 0.0;
 
             final key =
                 useSeriesCategory ? '${seriesCategory}__$domain' : '$domain';
@@ -174,7 +174,7 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
         break;
 
       case PercentInjectorTotalType.series:
-        seriesList.forEach((series) {
+        for (final series in seriesList) {
           // Replace the default measure accessor with one that computes the
           // percentage.
           series.measureFn = (int? index) =>
@@ -197,12 +197,12 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
           }
 
           series.setAttr(percentInjectedKey, true);
-        });
+        }
 
         break;
 
       default:
-        throw ArgumentError('Unsupported totalType: ${totalType}');
+        throw ArgumentError('Unsupported totalType: $totalType');
     }
   }
 

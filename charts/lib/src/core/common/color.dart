@@ -31,13 +31,13 @@ extension MaterialShades on MaterialColor {
     // generated colors. Otherwise divide the space between the top color
     // and white in half.
     final lighterColor = colorCnt < 3
-        ? this.lighter
+        ? lighter
         : _getSteppedColor(this, (colorCnt * 2) - 1, colorCnt * 2);
 
     // Divide the space between 255 and c500 evenly according to the colorCnt.
     for (var i = 1; i < colorCnt; i++) {
       colors.add(_getSteppedColor(this, i, colorCnt,
-          darker: this.darker, lighter: lighterColor));
+          darker: darker, lighter: lighterColor,),);
     }
 
     colors.add(this);
@@ -45,7 +45,7 @@ extension MaterialShades on MaterialColor {
   }
 
   Color _getSteppedColor(Color color, int index, int steps,
-      {Color? darker, Color? lighter}) {
+      {Color? darker, Color? lighter,}) {
     final fraction = index / steps;
     return Color.fromARGB(
       color.alpha + ((255 - color.alpha) * fraction).round(),

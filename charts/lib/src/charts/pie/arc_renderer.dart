@@ -14,18 +14,29 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
-import 'package:collection/collection.dart';
 import 'dart:math' show max, pi, Point;
 
-import 'package:charts/core.dart';
 import 'package:charts/charts/pie.dart';
+import 'package:collection/collection.dart';
 
 const _arcElementsKey =
     AttributeKey<List<ArcRendererElement<Object>>>('ArcRenderer.elements');
 
 class ArcRenderer<D> extends BaseArcRenderer<D> {
+
+  factory ArcRenderer({String? rendererId, ArcRendererConfig<D>? config}) {
+    return ArcRenderer._internal(
+        rendererId: rendererId ?? 'line',
+        config: config ?? ArcRendererConfig(),);
+  }
+
+  ArcRenderer._internal({required super.rendererId, required this.config})
+      : arcRendererDecorators = config.arcRendererDecorators,
+        super(config: config);
+  @override
   final ArcRendererConfig<D> config;
 
+  @override
   final List<ArcRendererDecorator<D>> arcRendererDecorators;
 
   /// Store a map of series drawn on the chart, mapped by series name.
@@ -42,34 +53,24 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
   // data.
   final _currentKeys = <String>[];
 
-  factory ArcRenderer({String? rendererId, ArcRendererConfig<D>? config}) {
-    return ArcRenderer._internal(
-        rendererId: rendererId ?? 'line',
-        config: config ?? ArcRendererConfig());
-  }
-
-  ArcRenderer._internal({required String rendererId, required this.config})
-      : arcRendererDecorators = config.arcRendererDecorators,
-        super(config: config, rendererId: rendererId);
-
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
-    seriesList.forEach((MutableSeries<D> series) {
-      var elements = <ArcRendererElement<D>>[];
+    for (final series in seriesList) {
+      final elements = <ArcRendererElement<D>>[];
 
-      var domainFn = series.domainFn;
-      var measureFn = series.measureFn;
+      final domainFn = series.domainFn;
+      final measureFn = series.measureFn;
 
       final seriesMeasureTotal = series.seriesMeasureTotal;
 
       // On the canvas, arc measurements are defined as angles from the positive
       // x axis. Start our first slice at the positive y axis instead.
       var startAngle = config.startAngle;
-      var arcLength = config.arcLength;
+      final arcLength = config.arcLength;
 
       var totalAngle = 0.0;
 
-      var measures = <num?>[];
+      final measures = <num?>[];
 
       if (series.data.isEmpty) {
         // If the series has no data, generate an empty arc element that
@@ -77,10 +78,10 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
         //
         // Use a tiny epsilon difference to ensure that the canvas renders a
         // "full" circle, in the correct direction.
-        var angle = arcLength == 2 * pi ? arcLength * .999999 : arcLength;
-        var endAngle = startAngle + angle;
+        final angle = arcLength == 2 * pi ? arcLength * .999999 : arcLength;
+        final endAngle = startAngle + angle;
 
-        var details = ArcRendererElement<D>(
+        final details = ArcRendererElement<D>(
           startAngle: startAngle,
           endAngle: endAngle,
           index: 0,
@@ -92,18 +93,18 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
       } else {
         // Otherwise, generate an arc element per datum.
         for (var arcIndex = 0; arcIndex < series.data.length; arcIndex++) {
-          var domain = domainFn(arcIndex);
-          var measure = measureFn(arcIndex);
+          final domain = domainFn(arcIndex);
+          final measure = measureFn(arcIndex);
           measures.add(measure);
           if (measure == null) {
             continue;
           }
 
           final percentOfSeries = measure / seriesMeasureTotal;
-          var angle = arcLength * percentOfSeries;
-          var endAngle = startAngle + angle;
+          final angle = arcLength * percentOfSeries;
+          final endAngle = startAngle + angle;
 
-          var details = ArcRendererElement<D>(
+          final details = ArcRendererElement<D>(
             startAngle: startAngle,
             endAngle: endAngle,
             index: arcIndex,
@@ -122,7 +123,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
       }
 
       series.setAttr(_arcElementsKey, elements);
-    });
+    }
   }
 
   @override
@@ -132,7 +133,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
     final bounds = chart!.drawAreaBounds;
 
     final center = Point<double>((bounds.left + bounds.width / 2).toDouble(),
-        (bounds.top + bounds.height / 2).toDouble());
+        (bounds.top + bounds.height / 2).toDouble(),);
 
     final radius = bounds.height < bounds.width
         ? (bounds.height / 2).toDouble()
@@ -145,14 +146,14 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
 
     final innerRadius = _calculateInnerRadius(radius);
 
-    seriesList.forEach((ImmutableSeries<D> series) {
-      var colorFn = series.colorFn;
-      var arcListKey = series.id;
+    for (final series in seriesList) {
+      final colorFn = series.colorFn;
+      final arcListKey = series.id;
 
-      var arcList =
-          _seriesArcMap.putIfAbsent(arcListKey, () => AnimatedArcList());
+      final arcList =
+          _seriesArcMap.putIfAbsent(arcListKey, AnimatedArcList.new);
 
-      var elementsList =
+      final elementsList =
           series.getAttr(_arcElementsKey) as List<ArcRendererElement<D>>;
 
       if (series.data.isEmpty) {
@@ -160,7 +161,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
         // occupy the entire chart, and use the chart style's no data color.
         final details = elementsList[0];
 
-        var arcKey = '__no_data__';
+        const arcKey = '__no_data__';
 
         // If we already have an AnimatingArc for that index, use it.
         var animatingArc =
@@ -204,7 +205,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
           final details = elementsList[arcIndex];
           final domainValue = details.domain;
 
-          var arcKey = '${series.id}__$domainValue';
+          final arcKey = '${series.id}__$domainValue';
 
           // If we already have an AnimatingArc for that index, use it.
           var animatingArc =
@@ -229,7 +230,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
                 endAngle: previousEndAngle,
                 index: arcIndex,
                 series: series,
-              ));
+              ),);
 
             arcList.arcs.add(animatingArc);
           } else {
@@ -256,7 +257,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
           animatingArc.setNewTarget(arcElement);
         }
       }
-    });
+    }
 
     // Animate out arcs that don't exist anymore.
     _seriesArcMap.forEach((String key, AnimatedArcList<D> arcList) {
@@ -309,22 +310,22 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
   /// Assigns colors to series that are missing their colorFn.
   @override
   void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette}) {
+      {required bool emptyCategoryUsesSinglePalette,}) {
     var maxMissing = 0;
 
-    seriesList.forEach((series) {
+    for (final series in seriesList) {
       if (series.colorFn == null) {
         maxMissing = max(maxMissing, series.data.length);
       }
-    });
+    }
 
     if (maxMissing > 0) {
       final colorPalettes = StyleFactory.style.getOrderedPalettes(1);
       final colorPalette = colorPalettes[0].makeShades(maxMissing);
 
-      seriesList.forEach((series) {
+      for (final series in seriesList) {
         series.colorFn ??= (index) => colorPalette[index!];
-      });
+      }
     }
   }
 
@@ -332,11 +333,11 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
   double _calculateInnerRadius(double radius) {
     // arcRatio trumps arcWidth. If neither is defined, then inner radius is 0.
     if (config.arcRatio != null) {
-      return max(radius - radius * config.arcRatio!, 0.0).toDouble();
+      return max(radius - radius * config.arcRatio!, 0).toDouble();
     } else if (config.arcWidth != null) {
-      return max(radius - config.arcWidth!, 0.0).toDouble();
+      return max(radius - config.arcWidth!, 0).toDouble();
     } else {
-      return 0.0;
+      return 0;
     }
   }
 

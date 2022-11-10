@@ -23,9 +23,11 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PanBehavior<D> extends ChartBehavior<D> {
-  final _desiredGestures = Set<GestureType>.from([
+
+  PanBehavior({this.panningCompletedCallback});
+  final _desiredGestures = <GestureType>{
     GestureType.onDrag,
-  ]);
+  };
 
   /// Optional callback that is called when panning is completed.
   ///
@@ -33,8 +35,7 @@ class PanBehavior<D> extends ChartBehavior<D> {
   /// This is because panning is only completed when the flinging stops.
   final PanningCompletedCallback? panningCompletedCallback;
 
-  PanBehavior({this.panningCompletedCallback});
-
+  @override
   Set<GestureType> get desiredGestures => _desiredGestures;
 
   @override
@@ -62,6 +63,7 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
     implements ChartStateBehavior {
   late BaseChartState _chartState;
 
+  @override
   set chartState(BaseChartState chartState) {
     _chartState = chartState;
     _flingAnimator = chartState.getAnimationController(this);
@@ -99,7 +101,7 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
   @override
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec) {
+      Point<double> localPosition, double scale, double pixelsPerSec,) {
     if (isPanning) {
       // Ignore slow drag gestures to avoid jitter.
       if (pixelsPerSec.abs() < minimumFlingVelocity) {
@@ -123,11 +125,11 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
     final flingDuration = Duration(
         milliseconds:
-            max(200, (pixelsPerSec * flingDurationMultiplier).abs().round()));
+            max(200, (pixelsPerSec * flingDurationMultiplier).abs().round()),);
 
     _flingAnimator!
       ..duration = flingDuration
-      ..forward(from: 0.0);
+      ..forward(from: 0);
     _isFlinging = true;
   }
 
@@ -145,13 +147,13 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
     final percent = _flingAnimator!.value;
     final deceleratedPercent = _decelerate(percent);
     final translation = lerpDouble(_flingAnimationInitialTranslatePx,
-        _flingAnimationTargetTranslatePx, deceleratedPercent);
+        _flingAnimationTargetTranslatePx, deceleratedPercent,);
 
     final domainAxis = chart!.domainAxis!;
 
     domainAxis.setViewportSettings(
         domainAxis.viewportScalingFactor, translation!,
-        drawAreaWidth: chart!.drawAreaBounds.width);
+        drawAreaWidth: chart!.drawAreaBounds.width,);
 
     if (percent >= 1.0) {
       stopFlingAnimation();

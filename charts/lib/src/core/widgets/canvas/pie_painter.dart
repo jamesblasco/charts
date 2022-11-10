@@ -14,10 +14,9 @@
 // limitations under the License.
 
 import 'dart:math' show cos, sin, Point;
+
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart';
-
-import 'circle_sector_painter.dart' show CircleSectorPainter;
 
 /// Draws a pie chart, with an optional hole in the center.
 class PiePainter {
@@ -27,7 +26,7 @@ class PiePainter {
     final radius = canvasPie.radius;
     final innerRadius = canvasPie.innerRadius;
 
-    for (var slice in canvasPie.slices) {
+    for (final slice in canvasPie.slices) {
       CircleSectorPainter.draw(
           canvas: canvas,
           paint: paint,
@@ -36,7 +35,7 @@ class PiePainter {
           innerRadius: innerRadius,
           startAngle: slice.startAngle,
           endAngle: slice.endAngle,
-          fill: slice.fill);
+          fill: slice.fill,);
     }
 
     // Draw stroke lines between pie slices. This is done after the slices are
@@ -50,22 +49,22 @@ class PiePainter {
 
       final path = Path();
 
-      for (var slice in canvasPie.slices) {
+      for (final slice in canvasPie.slices) {
         final innerRadiusStartPoint = Point<double>(
             innerRadius * cos(slice.startAngle) + center.x,
-            innerRadius * sin(slice.startAngle) + center.y);
+            innerRadius * sin(slice.startAngle) + center.y,);
 
         final innerRadiusEndPoint = Point<double>(
             innerRadius * cos(slice.endAngle) + center.x,
-            innerRadius * sin(slice.endAngle) + center.y);
+            innerRadius * sin(slice.endAngle) + center.y,);
 
         final radiusStartPoint = Point<double>(
             radius * cos(slice.startAngle) + center.x,
-            radius * sin(slice.startAngle) + center.y);
+            radius * sin(slice.startAngle) + center.y,);
 
         final radiusEndPoint = Point<double>(
             radius * cos(slice.endAngle) + center.x,
-            radius * sin(slice.endAngle) + center.y);
+            radius * sin(slice.endAngle) + center.y,);
 
         path.moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
 

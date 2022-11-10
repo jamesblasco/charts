@@ -233,7 +233,7 @@ class RangeBandConfig {
   ///
   /// <p>Note: renderers can detect this setting and update the percent based on
   /// the number of series in their preprocess.
-  RangeBandConfig.styleAssignedPercent([int seriesCount = 1])
+  RangeBandConfig.styleAssignedPercent()
       : type = RangeBandType.styleAssignedPercentOfStep,
         size = StyleFactory.style.rangeBandSize;
 

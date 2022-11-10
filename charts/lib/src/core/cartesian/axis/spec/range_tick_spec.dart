@@ -19,8 +19,6 @@ import 'package:charts/core.dart';
 ///
 /// Used to define a tick that is used by range tick provider.
 class RangeTickSpec<D> extends TickSpec<D> {
-  final D rangeStartValue;
-  final D rangeEndValue;
 
   /// Creates a range tick for [value].
   /// A [label] optionally labels this tick. If not set, the tick formatter
@@ -30,10 +28,12 @@ class RangeTickSpec<D> extends TickSpec<D> {
   /// A [rangeStartValue] represents value of this range tick's starting point.
   /// A [rangeEndValue] represents the value of this range tick's ending point.
   const RangeTickSpec(
-    D value, {
-    String? label,
-    TextStyleSpec? style,
+    super.value, {
+    super.label,
+    super.style,
     required this.rangeStartValue,
     required this.rangeEndValue,
-  }) : super(value, label: label, style: style);
+  });
+  final D rangeStartValue;
+  final D rangeEndValue;
 }

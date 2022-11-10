@@ -26,22 +26,22 @@ abstract class TickDrawStrategy<D> {
 
   /// Returns a [CollisionReport] indicating if there are any collisions.
   CollisionReport<D> collides(
-      List<Tick<D>>? ticks, AxisOrientation? orientation);
+      List<Tick<D>>? ticks, AxisOrientation? orientation,);
 
   /// Returns measurement of ticks drawn vertically.
   ViewMeasuredSizes measureVerticallyDrawnTicks(
       List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false});
+      {bool collision = false,});
 
   /// Returns measurement of ticks drawn horizontally.
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
       List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false});
+      {bool collision = false,});
 
   /// Updates max tick width to match fit max size.
   void updateTickWidth(List<Tick<D>> ticks, int maxWidth, int maxHeight,
       AxisOrientation orientation,
-      {bool collision = false});
+      {bool collision = false,});
 
   /// Draws tick onto [ChartCanvas].
   ///
@@ -56,8 +56,8 @@ abstract class TickDrawStrategy<D> {
       required Rectangle<int> drawAreaBounds,
       required bool isFirst,
       required bool isLast,
-      bool collision = false});
+      bool collision = false,});
 
   void drawAxisLine(ChartCanvas canvas, AxisOrientation orientation,
-      Rectangle<int> axisBounds);
+      Rectangle<int> axisBounds,);
 }

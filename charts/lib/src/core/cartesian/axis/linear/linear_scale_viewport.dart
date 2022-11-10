@@ -19,6 +19,17 @@ import 'package:charts/core.dart';
 /// Component of the LinearScale responsible for the configuration and
 /// calculations of the viewport.
 class LinearScaleViewportSettings {
+
+  LinearScaleViewportSettings();
+
+  LinearScaleViewportSettings.copy(LinearScaleViewportSettings other) {
+    range = other.range;
+    keepViewportWithinData = other.keepViewportWithinData;
+    scalingFactor = other.scalingFactor;
+    translatePx = other.translatePx;
+    _manualDomainExtent = other._manualDomainExtent;
+    _domainExtent = other._domainExtent;
+  }
   /// Output extent for the scale, typically set by the axis as the pixel
   /// output.
   ScaleOutputExtent? range;
@@ -32,10 +43,10 @@ class LinearScaleViewportSettings {
   /// User configured viewport scale as a zoom multiplier where 1.0 is
   /// 100% (default) and 2.0 is 200% zooming in making the data take up twice
   /// the space (showing half as much data in the viewport).
-  double scalingFactor = 1.0;
+  double scalingFactor = 1;
 
   /// User configured viewport translate in pixel units.
-  double translatePx = 0.0;
+  double translatePx = 0;
 
   /// The current extent of the viewport in domain units.
   NumericExtents? _domainExtent;
@@ -50,17 +61,6 @@ class LinearScaleViewportSettings {
   /// internal scaleFactor and rangeTranslate.
 
   bool _manualDomainExtent = false;
-
-  LinearScaleViewportSettings();
-
-  LinearScaleViewportSettings.copy(LinearScaleViewportSettings other) {
-    range = other.range;
-    keepViewportWithinData = other.keepViewportWithinData;
-    scalingFactor = other.scalingFactor;
-    translatePx = other.translatePx;
-    _manualDomainExtent = other._manualDomainExtent;
-    _domainExtent = other._domainExtent;
-  }
 
   /// Resets the viewport calculated fields back to their initial settings.
   void reset() {
@@ -95,14 +95,14 @@ class LinearScaleViewportSettings {
     // Make sure that the viewportSettings.scalingFactor is sane if desired.
     if (!keepViewportWithinData) {
       // Make sure we don't zoom out beyond the max domain extent.
-      scalingFactor = math.max(1.0, scalingFactor);
+      scalingFactor = math.max(1, scalingFactor);
     }
   }
 
   /// Updates the viewport's internal translate given the current domainInfo and
   /// main scalingFactor from LinearScaleFunction (not internal scalingFactor).
   void updateViewportTranslatePx(
-      LinearScaleDomainInfo domainInfo, double scaleScalingFactor) {
+      LinearScaleDomainInfo domainInfo, double scaleScalingFactor,) {
     // If we are loading from the viewport, then update the translate now that
     // the scaleFactor has been setup.
     if (_manualDomainExtent) {
@@ -113,7 +113,7 @@ class LinearScaleViewportSettings {
     // Make sure that the viewportSettings.translatePx is sane if desired.
     if (!keepViewportWithinData) {
       // Make sure we don't translate beyond the max domain extent.
-      translatePx = math.min(0.0, translatePx);
+      translatePx = math.min(0, translatePx);
       translatePx = math.max(range!.diff * (1.0 - scalingFactor), translatePx);
     }
   }
@@ -121,7 +121,7 @@ class LinearScaleViewportSettings {
   /// Calculates and stores the viewport's domainExtent if we did not load from
   /// them in the first place.
   void updateViewportDomainExtent(
-      LinearScaleDomainInfo domainInfo, double scaleScalingFactor) {
+      LinearScaleDomainInfo domainInfo, double scaleScalingFactor,) {
     // If we didn't load from the viewport extent, then update them given the
     // current scale configuration.
     if (!_manualDomainExtent) {

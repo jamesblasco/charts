@@ -29,5 +29,5 @@ abstract class TreeMapRendererDecorator<D> {
       required double animationPercent,
       bool rtl = false,
       bool renderVertically = false,
-      bool renderMultiline = false});
+      bool renderMultiline = false,});
 }

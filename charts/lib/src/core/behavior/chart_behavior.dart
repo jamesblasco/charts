@@ -17,9 +17,8 @@ import 'dart:math' show Rectangle;
 
 import 'package:charts/charts/bar.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:meta/meta.dart' show immutable;
 import 'package:flutter/widgets.dart' show BuildContext, Widget;
+import 'package:meta/meta.dart' show immutable;
 
 /// Flutter wrapper for chart behaviors.
 @immutable

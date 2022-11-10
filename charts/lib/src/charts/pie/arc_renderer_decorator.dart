@@ -15,7 +15,6 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts/core.dart';
 import 'package:charts/charts/pie.dart';
 
 /// Decorates arcs after the arcs have already been painted.
@@ -30,5 +29,5 @@ abstract class ArcRendererDecorator<D> {
       ChartCanvas canvas, GraphicsFactory graphicsFactory,
       {required Rectangle drawBounds,
       required double animationPercent,
-      bool rtl = false});
+      bool rtl = false,});
 }

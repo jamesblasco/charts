@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Point, Rectangle;
 import 'package:charts/charts/link.dart' hide GraphLink;
 import 'package:charts/src/core/render/chart_canvas.dart';
@@ -22,48 +21,47 @@ const linkElementsKey =
     AttributeKey<List<LinkRendererElement>>('LinkRenderer.elements');
 
 class LinkRenderer<D> extends BaseSeriesRenderer<D> {
-  /// Default renderer ID for the Sankey Chart
-  static const defaultRendererID = 'sankey';
-
-  // List of renderer elements to be drawn on the canvas
-  final _seriesLinkMap = LinkedHashMap<String, List<LinkRendererElement>>();
-
-  /// Link Renderer Config
-  final LinkRendererConfig<D> config;
 
   factory LinkRenderer({String? rendererId, LinkRendererConfig<D>? config}) {
     return LinkRenderer._internal(
         rendererId: rendererId ?? defaultRendererID,
-        config: config ?? LinkRendererConfig());
+        config: config ?? LinkRendererConfig(),);
   }
 
-  LinkRenderer._internal({required String rendererId, required this.config})
+  LinkRenderer._internal({required super.rendererId, required this.config})
       : super(
-            rendererId: rendererId,
             layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer);
+            symbolRenderer: config.symbolRenderer,);
+  /// Default renderer ID for the Sankey Chart
+  static const defaultRendererID = 'sankey';
+
+  // List of renderer elements to be drawn on the canvas
+  final _seriesLinkMap = <String, List<LinkRendererElement>>{};
+
+  /// Link Renderer Config
+  final LinkRendererConfig<D> config;
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
-    seriesList.forEach((MutableSeries<D> series) {
-      var elements = <LinkRendererElement>[];
+    for (final series in seriesList) {
+      final elements = <LinkRendererElement>[];
       for (var linkIndex = 0; linkIndex < series.data.length; linkIndex++) {
         final data = series.data[linkIndex] as LinkRendererElement;
-        var element =
+        final element =
             LinkRendererElement(data.link, data.orientation, data.fillColor);
         elements.add(element);
       }
       series.setAttr(linkElementsKey, elements);
-    });
+    }
   }
 
   @override
   void update(List<ImmutableSeries<D>> seriesList, bool isAnimating) {
-    seriesList.forEach((ImmutableSeries<D> series) {
-      var elementsList =
+    for (final series in seriesList) {
+      final elementsList =
           series.getAttr(linkElementsKey) as List<LinkRendererElement>;
       _seriesLinkMap.putIfAbsent(series.id, () => elementsList);
-    });
+    }
   }
 
   @override
@@ -73,16 +71,17 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
   }
 
   void _drawAllLinks(List<LinkRendererElement> links, ChartCanvas canvas) {
-    links.forEach((element) =>
-        canvas.drawLink(element.link, element.orientation, element.fillColor));
+    for (final element in links) {
+      canvas.drawLink(element.link, element.orientation, element.fillColor);
+    }
   }
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    final chartPosition = Point<double>(0, 0);
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
+    const chartPosition = Point<double>(0, 0);
     return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition));
+        chartPosition: NullablePoint.from(chartPosition),);
   }
 
   /// Datum details of nearest link.
@@ -99,9 +98,9 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
 }
 
 class LinkRendererElement {
+
+  LinkRendererElement(this.link, this.orientation, this.fillColor);
   final Link link;
   final LinkOrientation orientation;
   final Color fillColor;
-
-  LinkRendererElement(this.link, this.orientation, this.fillColor);
 }

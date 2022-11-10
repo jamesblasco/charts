@@ -17,14 +17,13 @@ import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// Strategy for building one widget from one [LegendEntry].
 abstract class LegendEntryLayout extends Equatable {
   const LegendEntryLayout();
   Widget build(BuildContext context, LegendEntry legendEntry,
       TappableLegend legend, bool isHidden,
-      {bool showMeasures});
+      {bool showMeasures,});
 }
 
 /// Builds one legend entry as a row with symbol and label from the series.
@@ -35,56 +34,56 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
   const SimpleLegendEntryLayout();
 
   Widget createSymbol(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden) {
+      TappableLegend legend, bool isHidden,) {
     // TODO: Consider allowing scaling the size for the symbol.
     // A custom symbol renderer can ignore this size and use their own.
-    final materialSymbolSize = Size(12.0, 12.0);
+    const materialSymbolSize = Size(12, 12);
 
     final entryColor = legendEntry.color;
     final color = entryColor;
 
     // Get the SymbolRendererBuilder wrapping a SymbolRenderer if needed.
-    final SymbolRendererBuilder symbolRendererBuilder =
+    final symbolRendererBuilder =
         legendEntry.symbolRenderer! is SymbolRendererBuilder
             ? legendEntry.symbolRenderer! as SymbolRendererBuilder
             : SymbolRendererCanvas(
-                legendEntry.symbolRenderer!, legendEntry.dashPattern);
+                legendEntry.symbolRenderer!, legendEntry.dashPattern,);
 
     return GestureDetector(
+        onTapUp: makeTapUpCallback(context, legendEntry, legend),
         child: symbolRendererBuilder.build(
           context,
           size: materialSymbolSize,
           color: color,
           enabled: !isHidden,
-        ),
-        onTapUp: makeTapUpCallback(context, legendEntry, legend));
+        ),);
   }
 
   Widget createLabel(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden) {
-    TextStyle style =
+      TappableLegend legend, bool isHidden,) {
+    final style =
         _convertTextStyle(isHidden, context, legendEntry.textStyle);
 
     return GestureDetector(
-        child: Text(legendEntry.label, style: style),
-        onTapUp: makeTapUpCallback(context, legendEntry, legend));
+        onTapUp: makeTapUpCallback(context, legendEntry, legend),
+        child: Text(legendEntry.label, style: style),);
   }
 
   Widget createMeasureValue(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden) {
+      TappableLegend legend, bool isHidden,) {
     return GestureDetector(
-        child: Text(legendEntry.formattedValue!),
-        onTapUp: makeTapUpCallback(context, legendEntry, legend));
+        onTapUp: makeTapUpCallback(context, legendEntry, legend),
+        child: Text(legendEntry.formattedValue!),);
   }
 
   @override
   Widget build(BuildContext context, LegendEntry legendEntry,
       TappableLegend legend, bool isHidden,
-      {bool showMeasures = false}) {
+      {bool showMeasures = false,}) {
     final rowChildren = <Widget>[];
 
     // TODO: Allow setting to configure the padding.
-    final padding = EdgeInsets.only(right: 8.0); // Material default.
+    const padding = EdgeInsets.only(right: 8); // Material default.
     final symbol = createSymbol(context, legendEntry, legend, isHidden);
     final label = createLabel(context, legendEntry, legend, isHidden);
 
@@ -105,7 +104,7 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
   }
 
   GestureTapUpCallback makeTapUpCallback(
-      BuildContext context, LegendEntry legendEntry, TappableLegend legend) {
+      BuildContext context, LegendEntry legendEntry, TappableLegend legend,) {
     return (TapUpDetails d) {
       legend.onLegendEntryTapUp(legendEntry);
     };
@@ -120,8 +119,8 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
   /// For non-specified values, override the hidden text color to use the body 1
   /// theme, but allow other properties of [Text] to be inherited.
   TextStyle _convertTextStyle(
-      bool isHidden, BuildContext context, TextStyleSpec? textStyle) {
-    Color? color = textStyle?.color != null ? textStyle!.color! : null;
+      bool isHidden, BuildContext context, TextStyleSpec? textStyle,) {
+    var color = textStyle?.color != null ? textStyle!.color! : null;
     if (isHidden) {
       // Use a default color for hidden legend entries if none is provided.
       color ??= Theme.of(context).textTheme.bodyText2!.color;
@@ -129,11 +128,10 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
     }
 
     return TextStyle(
-        inherit: true,
         fontFamily: textStyle?.fontFamily,
         fontSize: textStyle?.fontSize != null
             ? textStyle!.fontSize!.toDouble()
             : null,
-        color: color);
+        color: color,);
   }
 }

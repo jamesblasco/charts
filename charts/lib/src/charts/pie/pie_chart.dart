@@ -15,21 +15,23 @@
 
 import 'dart:math' show Rectangle;
 
+import 'package:charts/charts/pie.dart';
+
+export 'arc_label_decorator.dart';
+export 'arc_renderer.dart';
+export 'arc_renderer_config.dart';
+export 'arc_renderer_config.dart';
+export 'arc_renderer_decorator.dart';
+export 'arc_renderer_element.dart';
 export 'base_arc_renderer.dart';
 export 'base_arc_renderer_config.dart';
-export 'arc_renderer_config.dart';
-export 'arc_renderer.dart';
-export 'arc_renderer_element.dart';
 export 'widgets/pie_chart.dart';
-
-export 'arc_renderer_decorator.dart';
-export 'arc_renderer_config.dart';
-export 'arc_label_decorator.dart';
 export 'widgets/pie_chart.dart';
-import 'package:charts/charts/pie.dart';
-import 'package:charts/core.dart';
 
 class PieRenderChart<D> extends BaseRenderChart<D> {
+
+  PieRenderChart({LayoutConfig? layoutConfig})
+      : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -37,17 +39,14 @@ class PieRenderChart<D> extends BaseRenderChart<D> {
     rightSpec: MarginSpec.fromPixel(minPixel: 20),
   );
 
-  PieRenderChart({LayoutConfig? layoutConfig})
-      : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
-
   @override
   void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout}) {
+      {bool? skipAnimation, bool? skipLayout,}) {
     if (seriesList.length > 1) {
       throw ArgumentError('PieChart can only render a single series');
     }
     super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout);
+        skipAnimation: skipAnimation, skipLayout: skipLayout,);
   }
 
   @override
@@ -76,9 +75,7 @@ class PieRenderChart<D> extends BaseRenderChart<D> {
 
       final details = renderer.getExpandedDatumDetails(seriesDatum);
 
-      if (details != null) {
-        entries.add(details);
-      }
+      entries.add(details);
     }
 
     return entries;

@@ -36,7 +36,7 @@ abstract class DateTimeFactory {
       int minute = 0,
       int second = 0,
       int millisecond = 0,
-      int microsecond = 0]);
+      int microsecond = 0,]);
 
   /// Returns a [DateFormat].
   DateFormat createDateFormat(String? pattern);
@@ -48,7 +48,7 @@ class LocalDateTimeFactory implements DateTimeFactory {
 
   @override
   DateTime createDateTimeFromMilliSecondsSinceEpoch(
-      int millisecondsSinceEpoch) {
+      int millisecondsSinceEpoch,) {
     return DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
   }
 
@@ -60,9 +60,9 @@ class LocalDateTimeFactory implements DateTimeFactory {
       int minute = 0,
       int second = 0,
       int millisecond = 0,
-      int microsecond = 0]) {
+      int microsecond = 0,]) {
     return DateTime(
-        year, month, day, hour, minute, second, millisecond, microsecond);
+        year, month, day, hour, minute, second, millisecond, microsecond,);
   }
 
   /// Returns a [DateFormat].
@@ -76,9 +76,9 @@ class UTCDateTimeFactory implements DateTimeFactory {
 
   @override
   DateTime createDateTimeFromMilliSecondsSinceEpoch(
-      int millisecondsSinceEpoch) {
+      int millisecondsSinceEpoch,) {
     return DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch,
-        isUtc: true);
+        isUtc: true,);
   }
 
   @override
@@ -89,9 +89,9 @@ class UTCDateTimeFactory implements DateTimeFactory {
       int minute = 0,
       int second = 0,
       int millisecond = 0,
-      int microsecond = 0]) {
+      int microsecond = 0,]) {
     return DateTime.utc(
-        year, month, day, hour, minute, second, millisecond, microsecond);
+        year, month, day, hour, minute, second, millisecond, microsecond,);
   }
 
   /// Returns a [DateFormat].

@@ -15,9 +15,8 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
-import 'package:meta/meta.dart';
-
 import 'package:charts/core.dart';
+import 'package:meta/meta.dart';
 /// Unique identifier used to associate custom series renderers on a chart with
 /// one or more series of data.
 ///
@@ -119,12 +118,21 @@ abstract class SeriesRenderer<D> extends LayoutView {
   /// [getDetailsForSeriesDatum]. Every concrete [SeriesRenderer] needs to
   /// implement custom logic for setting location data.
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum);
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,);
 }
 
 /// Concrete base class for [SeriesRenderer]s that implements common
 /// functionality.
 abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
+
+  BaseSeriesRenderer({
+    required this.rendererId,
+    required int layoutPaintOrder,
+    this.symbolRenderer,
+  }) : layoutConfig = LayoutViewConfig(
+            paintOrder: layoutPaintOrder,
+            position: LayoutPosition.DrawArea,
+            positionOrder: LayoutViewPositionOrder.drawArea,);
   @override
   final LayoutViewConfig layoutConfig;
 
@@ -141,15 +149,6 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   @override
   GraphicsFactory? graphicsFactory;
 
-  BaseSeriesRenderer({
-    required this.rendererId,
-    required int layoutPaintOrder,
-    this.symbolRenderer,
-  }) : layoutConfig = LayoutViewConfig(
-            paintOrder: layoutPaintOrder,
-            position: LayoutPosition.DrawArea,
-            positionOrder: LayoutViewPositionOrder.drawArea);
-
   @override
   void onAttach(BaseRenderChart<D> chart) {}
 
@@ -165,7 +164,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   ///     s2 uses Red500),
   @protected
   void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette}) {
+      {required bool emptyCategoryUsesSinglePalette,}) {
     const defaultCategory = '__default__';
 
     // Count up the number of missing series per category, keeping a max across
@@ -174,7 +173,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
     var maxMissing = 0;
     var hasSpecifiedCategory = false;
 
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       // Assign the seriesColor as the color of every datum if no colorFn was
       // provided.
       if (series.colorFn == null && series.seriesColor != null) {
@@ -197,7 +196,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
         missingColorCountPerCategory[category] = missingCnt;
         maxMissing = max(maxMissing, missingCnt);
       }
-    });
+    }
 
     if (maxMissing > 0) {
       // Special handling of only series with empty categories when we want
@@ -205,7 +204,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
       if (!emptyCategoryUsesSinglePalette && !hasSpecifiedCategory) {
         final palettes = StyleFactory.style.getOrderedPalettes(maxMissing);
         var index = 0;
-        seriesList.forEach((series) {
+        for (final series in seriesList) {
           if (series.colorFn == null) {
             final color = palettes[index % palettes.length];
             index++;
@@ -223,7 +222,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
               }
             }
           }
-        });
+        }
         return;
       }
 
@@ -236,16 +235,16 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
       // the max for any category to ensure that the gradients look appropriate.
       final colorsByCategory = <String, List<Color>>{};
       var index = 0;
-      missingColorCountPerCategory.keys.forEach((String category) {
+      for (final category in missingColorCountPerCategory.keys) {
         colorsByCategory[category] =
             colorPalettes[index % colorPalettes.length].makeShades(maxMissing);
         index++;
 
         // Reset the count so we can use it to count as we set the colorFn.
         missingColorCountPerCategory[category] = 0;
-      });
+      }
 
-      seriesList.forEach((series) {
+      for (final series in seriesList) {
         if (series.colorFn == null) {
           final category = series.seriesCategory ?? defaultCategory;
 
@@ -259,17 +258,17 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
 
         // Fill color defaults to the series color if no accessor is provided.
         series.fillColorFn ??= (int? index) => series.colorFn!(index);
-      });
+      }
     } else {
-      seriesList.forEach((series) {
+      for (final series in seriesList) {
         // Fill color defaults to the series color if no accessor is provided.
         series.fillColorFn ??= (int? index) => series.colorFn!(index);
-      });
+      }
     }
 
     // Fill in any missing seriesColor values with the color of the first datum
     // in the series. Note that [Series.colorFn] should always return a color.
-    seriesList.forEach((series) {
+    for (final series in seriesList) {
       if (series.seriesColor == null) {
         try {
           series.seriesColor = series.colorFn!(0);
@@ -277,7 +276,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
           series.seriesColor = StyleFactory.style.defaultSeriesColor;
         }
       }
-    });
+    }
   }
 
   @override
@@ -378,7 +377,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
         fillColor: fillColor,
         areaColor: areaColor,
         radiusPx: radiusPx,
-        strokeWidthPx: strokeWidthPx);
+        strokeWidthPx: strokeWidthPx,);
 
     // chartPosition depends on the shape of the rendered elements, and must be
     // added by concrete [SeriesRenderer] classes.

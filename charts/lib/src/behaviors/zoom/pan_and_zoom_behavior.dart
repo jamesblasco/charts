@@ -19,10 +19,13 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PanAndZoomBehavior<D> extends ChartBehavior<D> {
-  final _desiredGestures = Set<GestureType>.from([
-    GestureType.onDrag,
-  ]);
 
+  PanAndZoomBehavior({this.panningCompletedCallback});
+  final _desiredGestures = <GestureType>{
+    GestureType.onDrag,
+  };
+
+  @override
   Set<GestureType> get desiredGestures => _desiredGestures;
 
   /// Optional callback that is called when pan / zoom is completed.
@@ -30,8 +33,6 @@ class PanAndZoomBehavior<D> extends ChartBehavior<D> {
   /// When flinging this callback is called after the fling is completed.
   /// This is because panning is only completed when the flinging stops.
   final PanningCompletedCallback? panningCompletedCallback;
-
-  PanAndZoomBehavior({this.panningCompletedCallback});
 
   @override
   PanAndZoomBehaviorState<D> createBehaviorState() {

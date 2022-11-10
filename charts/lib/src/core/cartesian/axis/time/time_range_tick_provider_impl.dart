@@ -17,10 +17,10 @@ import 'package:charts/core.dart';
 
 // Contains all the common code for the time range tick providers.
 class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
-  final int requiredMinimumTicks;
-  final TimeStepper timeStepper;
 
   TimeRangeTickProviderImpl(this.timeStepper, {this.requiredMinimumTicks = 3});
+  final int requiredMinimumTicks;
+  final TimeStepper timeStepper;
 
   @override
   bool providesSufficientTicksForRange(DateTimeExtents domainExtents) {
@@ -100,7 +100,7 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
           formatter: formatter,
           formatterValueCache: formatterValueCache,
           tickDrawStrategy: tickDrawStrategy,
-          stepSize: timeStepper.typicalStepSizeMs * tickIncrement);
+          stepSize: timeStepper.typicalStepSizeMs * tickIncrement,);
 
       // Request collision check from draw strategy.
       final collisionReport =

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/core.dart';
 import 'package:charts/charts/bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,7 +21,7 @@ void main() {
   testWidgets('selection can be set programmatically',
       (WidgetTester tester) async {
     final onTapSelection = UserManagedSelectionModel<String>.fromConfig(
-        selectedDataConfig: [SeriesDatumConfig<String>('Sales', '2016')]);
+        selectedDataConfig: [const SeriesDatumConfig<String>('Sales', '2016')],);
 
     SelectionModel<String>? currentSelectionModel;
 
@@ -57,10 +56,10 @@ void main() {
 }
 
 class TestChart extends StatefulWidget {
+
+  const TestChart(this.selectionChangedListener, this.onTapSelection);
   final SelectionModelListener<String> selectionChangedListener;
   final UserManagedSelectionModel<String> onTapSelection;
-
-  TestChart(this.selectionChangedListener, this.onTapSelection);
 
   @override
   TestChartState createState() {
@@ -69,13 +68,13 @@ class TestChart extends StatefulWidget {
 }
 
 class TestChartState extends State<TestChart> {
+
+  TestChartState(this.selectionChangedListener, this.onTapSelection);
   final SelectionModelListener<String> selectionChangedListener;
   final UserManagedSelectionModel<String> onTapSelection;
 
   final seriesList = _createSampleData();
   final myState = UserManagedState<String>();
-
-  TestChartState(this.selectionChangedListener, this.onTapSelection);
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +83,7 @@ class TestChartState extends State<TestChart> {
       userManagedState: myState,
       selectionModels: [
         SelectionModelConfig(
-            type: SelectionModelType.info,
-            changedListener: widget.selectionChangedListener)
+            changedListener: widget.selectionChangedListener,)
       ],
       // Disable animation and gesture for testing.
       animate: false, //widget.animate,
@@ -94,7 +92,7 @@ class TestChartState extends State<TestChart> {
 
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: GestureDetector(child: chart, onTap: handleOnTap),
+      child: GestureDetector(onTap: handleOnTap, child: chart),
     );
   }
 
@@ -127,8 +125,8 @@ List<Series<OrdinalSales, String>> _createSampleData() {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

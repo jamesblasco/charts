@@ -23,6 +23,42 @@ import 'package:charts/core.dart';
 /// Titles will by default be rendered as the outermost component in the chart
 /// margin.
 class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
+
+  /// Constructs a [ChartTitleBehaviorState].
+  ///
+  /// [title] contains the text for the chart title.
+  ChartTitleBehaviorState(String title,
+      {BehaviorPosition? behaviorPosition,
+      int? innerPadding,
+      int? layoutMinSize,
+      int? layoutPreferredSize,
+      int? outerPadding,
+      MaxWidthStrategy? maxWidthStrategy,
+      ChartTitleDirection? titleDirection,
+      OutsideJustification? titleOutsideJustification,
+      int? titlePadding,
+      TextStyleSpec? titleStyleSpec,
+      String? subTitle,
+      TextStyleSpec? subTitleStyleSpec,})
+      : _config = _ChartTitleConfig(
+          behaviorPosition: behaviorPosition ?? _defaultBehaviorPosition,
+          innerPadding: innerPadding ?? _defaultInnerPadding,
+          layoutMinSize: layoutMinSize,
+          layoutPreferredSize: layoutPreferredSize,
+          outerPadding: outerPadding ?? _defaultOuterPadding,
+          maxWidthStrategy: maxWidthStrategy ?? _defaultMaxWidthStrategy,
+          title: title,
+          titleDirection: titleDirection ?? _defaultTitleDirection,
+          titleOutsideJustification:
+              titleOutsideJustification ?? _defaultTitleOutsideJustification,
+          titlePadding: titlePadding ?? _defaultTitlePadding,
+          titleStyleSpec: titleStyleSpec ?? _defaultTitleStyle,
+          subTitle: subTitle,
+          subTitleStyleSpec: subTitleStyleSpec ?? _defaultSubTitleStyle,
+        ) {
+    _lifecycleListener =
+        LifecycleListener<D>(onAxisConfigured: _updateViewData);
+  }
   static const _defaultBehaviorPosition = BehaviorPosition.top;
   static const _defaultMaxWidthStrategy = MaxWidthStrategy.ellipsize;
   static const _defaultTitleDirection = ChartTitleDirection.auto;
@@ -43,42 +79,6 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   _ChartTitleLayoutView<D>? _view;
 
   late final LifecycleListener<D> _lifecycleListener;
-
-  /// Constructs a [ChartTitleBehaviorState].
-  ///
-  /// [title] contains the text for the chart title.
-  ChartTitleBehaviorState(String title,
-      {BehaviorPosition? behaviorPosition,
-      int? innerPadding,
-      int? layoutMinSize,
-      int? layoutPreferredSize,
-      int? outerPadding,
-      MaxWidthStrategy? maxWidthStrategy,
-      ChartTitleDirection? titleDirection,
-      OutsideJustification? titleOutsideJustification,
-      int? titlePadding,
-      TextStyleSpec? titleStyleSpec,
-      String? subTitle,
-      TextStyleSpec? subTitleStyleSpec})
-      : _config = _ChartTitleConfig(
-          behaviorPosition: behaviorPosition ?? _defaultBehaviorPosition,
-          innerPadding: innerPadding ?? _defaultInnerPadding,
-          layoutMinSize: layoutMinSize,
-          layoutPreferredSize: layoutPreferredSize,
-          outerPadding: outerPadding ?? _defaultOuterPadding,
-          maxWidthStrategy: maxWidthStrategy ?? _defaultMaxWidthStrategy,
-          title: title,
-          titleDirection: titleDirection ?? _defaultTitleDirection,
-          titleOutsideJustification:
-              titleOutsideJustification ?? _defaultTitleOutsideJustification,
-          titlePadding: titlePadding ?? _defaultTitlePadding,
-          titleStyleSpec: titleStyleSpec ?? _defaultTitleStyle,
-          subTitle: subTitle,
-          subTitleStyleSpec: subTitleStyleSpec ?? _defaultSubTitleStyle,
-        ) {
-    _lifecycleListener =
-        LifecycleListener<D>(onAxisConfigured: _updateViewData);
-  }
 
   /// Layout position for the title.
   BehaviorPosition get behaviorPosition => _config.behaviorPosition;
@@ -140,7 +140,7 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
       _config.titleOutsideJustification;
 
   set titleOutsideJustification(
-      OutsideJustification titleOutsideJustification) {
+      OutsideJustification titleOutsideJustification,) {
     _config.titleOutsideJustification = titleOutsideJustification;
   }
 
@@ -212,7 +212,7 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
     _view = _ChartTitleLayoutView<D>(
         layoutPaintOrder: LayoutViewPaintOrder.chartTitle,
         config: _config,
-        chart: _chart);
+        chart: _chart,);
 
     chart.addView(_view!);
     chart.addLifecycleListener(_lifecycleListener);
@@ -237,6 +237,18 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
 
 /// Layout view component for [ChartTitleBehaviorState].
 class _ChartTitleLayoutView<D> extends LayoutView {
+
+  _ChartTitleLayoutView(
+      {required int layoutPaintOrder,
+      required _ChartTitleConfig config,
+      required this.chart,})
+      : _config = config {
+    // Set inside body to resolve [_layoutPosition].
+    _layoutConfig = LayoutViewConfig(
+        paintOrder: layoutPaintOrder,
+        position: _layoutPosition,
+        positionOrder: LayoutViewPositionOrder.chartTitle,);
+  }
   late LayoutViewConfig _layoutConfig;
 
   @override
@@ -268,18 +280,6 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   /// animation frame during the paint cycle. It should never be cached during
   /// layout measurement.
   TextElement? _subTitleTextElement;
-
-  _ChartTitleLayoutView(
-      {required int layoutPaintOrder,
-      required _ChartTitleConfig config,
-      required this.chart})
-      : _config = config {
-    // Set inside body to resolve [_layoutPosition].
-    _layoutConfig = LayoutViewConfig(
-        paintOrder: layoutPaintOrder,
-        position: _layoutPosition,
-        positionOrder: LayoutViewPositionOrder.chartTitle);
-  }
 
   /// Sets the configuration for the title behavior.
   set config(_ChartTitleConfig config) {
@@ -397,7 +397,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
         minWidth: minWidth,
         minHeight: minHeight,
         preferredWidth: preferredWidth,
-        preferredHeight: preferredHeight);
+        preferredHeight: preferredHeight,);
   }
 
   @override
@@ -417,30 +417,25 @@ class _ChartTitleLayoutView<D> extends LayoutView {
     var subTitleHeight = 0.0;
 
     // First, measure the height of the title and sub-title.
-    if (_config.title != null) {
-      // Chart titles do not animate. As an optimization for Flutter, cache the
-      // [TextElement] to avoid an expensive painter layout operation on
-      // subsequent animation frames.
-      if (_titleTextElement == null) {
-        // Create [TextStyle] from [TextStyleSpec] to be used by all the
-        // elements. The [GraphicsFactory] is needed so it can't be created
-        // earlier.
-        final textStyle =
-            _getTextStyle(graphicsFactory!, _config.titleStyleSpec);
+    if (_titleTextElement == null) {
+      // Create [TextStyle] from [TextStyleSpec] to be used by all the
+      // elements. The [GraphicsFactory] is needed so it can't be created
+      // earlier.
+      final textStyle =
+          _getTextStyle(graphicsFactory!, _config.titleStyleSpec);
 
-        _titleTextElement = graphicsFactory!.createTextElement(_config.title)
-          ..maxWidthStrategy = _config.maxWidthStrategy
-          ..textStyle = textStyle;
+      _titleTextElement = graphicsFactory!.createTextElement(_config.title)
+        ..maxWidthStrategy = _config.maxWidthStrategy
+        ..textStyle = textStyle;
 
-        _titleTextElement!.maxWidth =
-            resolvedTitleDirection == ChartTitleDirection.horizontal
-                ? _componentBounds.width
-                : _componentBounds.height;
-      }
-
-      // Get the height of the title so that we can off-set both text elements.
-      titleHeight = _titleTextElement!.measurement.verticalSliceWidth;
+      _titleTextElement!.maxWidth =
+          resolvedTitleDirection == ChartTitleDirection.horizontal
+              ? _componentBounds.width
+              : _componentBounds.height;
     }
+
+    // Get the height of the title so that we can off-set both text elements.
+    titleHeight = _titleTextElement!.measurement.verticalSliceWidth;
 
     if (_config.subTitle != null) {
       // Chart titles do not animate. As an optimization for Flutter, cache the
@@ -470,23 +465,21 @@ class _ChartTitleLayoutView<D> extends LayoutView {
     }
 
     // Draw a title if the text is not empty.
-    if (_config.title != null) {
-      final labelPoint = _getLabelPosition(
-          true,
-          _componentBounds,
-          resolvedTitleDirection,
-          _titleTextElement!,
-          titleHeight,
-          subTitleHeight);
+    final labelPoint = _getLabelPosition(
+        true,
+        _componentBounds,
+        resolvedTitleDirection,
+        _titleTextElement!,
+        titleHeight,
+        subTitleHeight,);
 
-      if (labelPoint != null) {
-        final rotation = resolvedTitleDirection == ChartTitleDirection.vertical
-            ? -pi / 2
-            : 0.0;
+    if (labelPoint != null) {
+      final rotation = resolvedTitleDirection == ChartTitleDirection.vertical
+          ? -pi / 2
+          : 0.0;
 
-        canvas.drawText(_titleTextElement!, labelPoint.x, labelPoint.y,
-            rotation: rotation);
-      }
+      canvas.drawText(_titleTextElement!, labelPoint.x, labelPoint.y,
+          rotation: rotation,);
     }
 
     // Draw a sub-title if the text is not empty.
@@ -497,7 +490,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
           resolvedTitleDirection,
           _subTitleTextElement!,
           titleHeight,
-          subTitleHeight);
+          subTitleHeight,);
 
       if (labelPoint != null) {
         final rotation = resolvedTitleDirection == ChartTitleDirection.vertical
@@ -505,7 +498,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
             : 0.0;
 
         canvas.drawText(_subTitleTextElement!, labelPoint.x, labelPoint.y,
-            rotation: rotation);
+            rotation: rotation,);
       }
     }
   }
@@ -540,7 +533,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   /// Get layout position from chart title position.
   LayoutPosition get _layoutPosition {
     return layoutPosition(
-        _config.behaviorPosition, _config.titleOutsideJustification, isRtl);
+        _config.behaviorPosition, _config.titleOutsideJustification, isRtl,);
   }
 
   /// Gets the resolved location for a label element.
@@ -550,17 +543,17 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       ChartTitleDirection titleDirection,
       TextElement textElement,
       double titleHeight,
-      double subTitleHeight) {
+      double subTitleHeight,) {
     switch (_config.behaviorPosition) {
       case BehaviorPosition.bottom:
       case BehaviorPosition.top:
         return _getHorizontalLabelPosition(isPrimaryTitle, bounds,
-            titleDirection, textElement, titleHeight, subTitleHeight);
+            titleDirection, textElement, titleHeight, subTitleHeight,);
 
       case BehaviorPosition.start:
       case BehaviorPosition.end:
         return _getVerticalLabelPosition(isPrimaryTitle, bounds, titleDirection,
-            textElement, titleHeight, subTitleHeight);
+            textElement, titleHeight, subTitleHeight,);
 
       case BehaviorPosition.inside:
         return null;
@@ -574,7 +567,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       ChartTitleDirection titleDirection,
       TextElement textElement,
       double titleHeight,
-      double subTitleHeight) {
+      double subTitleHeight,) {
     var labelX = 0;
     var labelY = 0;
 
@@ -649,7 +642,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       ChartTitleDirection titleDirection,
       TextElement textElement,
       double titleHeight,
-      double subTitleHeight) {
+      double subTitleHeight,) {
     var labelX = 0;
     var labelY = 0;
 
@@ -717,7 +710,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
 
   // Helper function that converts [TextStyleSpec] to [TextStyle].
   TextPaintStyle _getTextStyle(
-      GraphicsFactory graphicsFactory, TextStyleSpec labelSpec) {
+      GraphicsFactory graphicsFactory, TextStyleSpec labelSpec,) {
     return graphicsFactory.createTextPaint()
       ..color = labelSpec.color ?? StyleFactory.style.tickColor
       ..fontFamily = labelSpec.fontFamily

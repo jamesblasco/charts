@@ -13,27 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
 import 'package:charts/charts/line.dart';
 
-export 'line_renderer_config.dart';
 export 'line_renderer.dart';
+export 'line_renderer_config.dart';
 export 'widgets/line_chart.dart';
 
 class LineRenderChart extends NumericCartesianRenderChart {
   LineRenderChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
-      : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
+      {super.vertical,
+      super.layoutConfig,
+      super.primaryMeasureAxis,
+      super.secondaryMeasureAxis,
+      super.disjointMeasureAxes,});
 
   @override
   SeriesRenderer<num> makeDefaultRenderer() {

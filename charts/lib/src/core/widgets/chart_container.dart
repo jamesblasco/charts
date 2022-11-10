@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'package:charts/charts/time_series.dart';
-import 'package:charts/core.dart' hide TextDirectionAligment;
 
 import 'package:flutter/material.dart' hide AxisDirection;
 import 'package:flutter/rendering.dart' hide AxisDirection;
@@ -22,6 +21,15 @@ import 'package:flutter/scheduler.dart';
 
 /// Widget that inflates to a [CustomPaint] that implements common [ChartContext].
 class ChartContainer<D> extends CustomPaint {
+
+  const ChartContainer(
+      {this.oldChartWidget,
+      required this.chartWidget,
+      required this.chartState,
+      required this.animationValue,
+      required this.rtl,
+      this.rtlSpec,
+      this.userManagedState,});
   final BaseChart<D> chartWidget;
   final BaseChart<D>? oldChartWidget;
   final BaseChartState<D> chartState;
@@ -30,15 +38,6 @@ class ChartContainer<D> extends CustomPaint {
   final RTLSpec? rtlSpec;
   final UserManagedState<D>? userManagedState;
 
-  ChartContainer(
-      {this.oldChartWidget,
-      required this.chartWidget,
-      required this.chartState,
-      required this.animationValue,
-      required this.rtl,
-      this.rtlSpec,
-      this.userManagedState});
-
   @override
   RenderCustomPaint createRenderObject(BuildContext context) {
     return ChartContainerRenderObject<D>()..reconfigure(this, context);
@@ -46,7 +45,7 @@ class ChartContainer<D> extends CustomPaint {
 
   @override
   void updateRenderObject(
-      BuildContext context, ChartContainerRenderObject renderObject) {
+      BuildContext context, ChartContainerRenderObject renderObject,) {
     renderObject.reconfigure(this, context);
   }
 }
@@ -69,7 +68,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _dateTimeFactory = (config.chartWidget is TimeSeriesChart)
         ? (config.chartWidget as TimeSeriesChart).dateTimeFactory
         : null;
-    _dateTimeFactory ??= LocalDateTimeFactory();
+    _dateTimeFactory ??= const LocalDateTimeFactory();
 
     if (_chart == null) {
       Performance.time('chartsCreate');
@@ -126,14 +125,14 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
   /// If user managed state is set, check each setting to see if it is different
   /// than internal chart state and only update if different.
-  _updateUserManagedState(UserManagedState<D>? newState) {
+  void _updateUserManagedState(UserManagedState<D>? newState) {
     if (newState == null) {
       return;
     }
 
     // Only override the selection model if it is different than the existing
     // selection model so update listeners are not unnecessarily triggered.
-    for (SelectionModelType type in newState.selectionModels.keys) {
+    for (final type in newState.selectionModels.keys) {
       final model = _chart!.getSelectionModel(type);
 
       final userModel =
@@ -141,7 +140,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
       if (model != userModel) {
         model.updateSelection(
-            userModel.selectedDatum, userModel.selectedSeries);
+            userModel.selectedDatum, userModel.selectedSeries,);
       }
     }
   }
@@ -226,7 +225,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   }
 
   @override
-  double get pixelsPerDp => 1.0;
+  double get pixelsPerDp => 1;
 
   @override
   bool get chartContainerIsRtl => _chartContainerIsRtl;
@@ -279,22 +278,18 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
         chart: _chart!,
         exploreMode: _exploreMode,
         a11yNodes: _a11yNodes ?? [],
-        textDirection: textDirection);
+        textDirection: textDirection,);
   }
 }
 
 class ChartContainerCustomPaint extends CustomPainter {
-  final BaseRenderChart chart;
-  final bool exploreMode;
-  final List<A11yNode> a11yNodes;
-  final TextDirection textDirection;
 
   factory ChartContainerCustomPaint(
       {ChartContainerCustomPaint? oldPainter,
       required BaseRenderChart chart,
       bool exploreMode = false,
       List<A11yNode> a11yNodes = const [],
-      TextDirection textDirection = TextDirection.ltr}) {
+      TextDirection textDirection = TextDirection.ltr,}) {
     if (oldPainter != null &&
         oldPainter.exploreMode == exploreMode &&
         oldPainter.a11yNodes == a11yNodes &&
@@ -305,7 +300,7 @@ class ChartContainerCustomPaint extends CustomPainter {
           chart: chart,
           exploreMode: exploreMode,
           a11yNodes: a11yNodes,
-          textDirection: textDirection);
+          textDirection: textDirection,);
     }
   }
 
@@ -313,7 +308,11 @@ class ChartContainerCustomPaint extends CustomPainter {
       {required this.chart,
       required this.exploreMode,
       required this.a11yNodes,
-      required this.textDirection});
+      required this.textDirection,});
+  final BaseRenderChart chart;
+  final bool exploreMode;
+  final List<A11yNode> a11yNodes;
+  final TextDirection textDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -341,18 +340,18 @@ class ChartContainerCustomPaint extends CustomPainter {
   List<CustomPainterSemantics> _buildSemantics(Size size) {
     final nodes = <CustomPainterSemantics>[];
 
-    for (A11yNode node in a11yNodes) {
+    for (final node in a11yNodes) {
       final rect = Rect.fromLTWH(
           node.boundingBox.left.toDouble(),
           node.boundingBox.top.toDouble(),
           node.boundingBox.width.toDouble(),
-          node.boundingBox.height.toDouble());
+          node.boundingBox.height.toDouble(),);
       nodes.add(CustomPainterSemantics(
           rect: rect,
           properties: SemanticsProperties(
               value: node.label,
               textDirection: textDirection,
-              onDidGainAccessibilityFocus: node.onFocus)));
+              onDidGainAccessibilityFocus: node.onFocus,),),);
     }
 
     return nodes;

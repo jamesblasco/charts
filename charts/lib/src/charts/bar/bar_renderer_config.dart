@@ -18,40 +18,30 @@ import 'package:equatable/equatable.dart';
 
 /// Configuration for a bar renderer.
 class BarRendererConfig<D> extends BaseBarRendererConfig<D> {
+
+  BarRendererConfig({
+    super.barGroupInnerPaddingPx,
+    super.customRendererId,
+    CornerStrategy? cornerStrategy,
+    super.fillPattern,
+    BarGroupingType? groupingType,
+    int super.layoutPaintOrder = LayoutViewPaintOrder.bar,
+    super.minBarLengthPx,
+    super.maxBarWidthPx,
+    super.stackedBarPaddingPx,
+    super.strokeWidthPx,
+    this.barRendererDecorator,
+    super.symbolRenderer,
+    super.weightPattern,
+  })  : cornerStrategy = cornerStrategy ?? const ConstCornerStrategy(2),
+        super(
+          groupingType: groupingType ?? BarGroupingType.grouped,
+        );
   /// Strategy for determining the corner radius of a bar.
   final CornerStrategy cornerStrategy;
 
   /// Decorator for optionally decorating painted bars.
   final BarRendererDecorator<D>? barRendererDecorator;
-
-  BarRendererConfig({
-    int barGroupInnerPaddingPx = 2,
-    String? customRendererId,
-    CornerStrategy? cornerStrategy,
-    FillPatternType? fillPattern,
-    BarGroupingType? groupingType,
-    int layoutPaintOrder = LayoutViewPaintOrder.bar,
-    int minBarLengthPx = 0,
-    int? maxBarWidthPx,
-    int stackedBarPaddingPx = 1,
-    double strokeWidthPx = 0.0,
-    this.barRendererDecorator,
-    SymbolRenderer? symbolRenderer,
-    List<int>? weightPattern,
-  })  : cornerStrategy = cornerStrategy ?? const ConstCornerStrategy(2),
-        super(
-          barGroupInnerPaddingPx: barGroupInnerPaddingPx,
-          customRendererId: customRendererId,
-          groupingType: groupingType ?? BarGroupingType.grouped,
-          layoutPaintOrder: layoutPaintOrder,
-          minBarLengthPx: minBarLengthPx,
-          maxBarWidthPx: maxBarWidthPx,
-          fillPattern: fillPattern,
-          stackedBarPaddingPx: stackedBarPaddingPx,
-          strokeWidthPx: strokeWidthPx,
-          symbolRenderer: symbolRenderer,
-          weightPattern: weightPattern,
-        );
 
   @override
   BarRenderer<D> build() {
@@ -71,9 +61,9 @@ abstract class CornerStrategy extends Equatable {
 
 /// Strategy for constant corner radius.
 class ConstCornerStrategy extends CornerStrategy {
-  final int radius;
 
   const ConstCornerStrategy(this.radius);
+  final int radius;
 
   @override
   int getRadius(_) => radius;
@@ -88,6 +78,10 @@ class ConstCornerStrategy extends CornerStrategy {
 
   @override
   List<Object?> get props => [radius];
+
+
+
+
 }
 
 /// Strategy for no corner radius.

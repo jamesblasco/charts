@@ -15,13 +15,18 @@
 
 import 'dart:math' show atan2, cos, sin, pi, Point, Rectangle;
 import 'package:charts/charts/pie.dart';
-import 'package:charts/core.dart';
 import 'package:flutter/foundation.dart';
 
 const _arcElementsKey =
     AttributeKey<List<ArcRendererElement<Object>>>('ArcRenderer.elements');
 
 abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
+
+  BaseArcRenderer({required this.config, required super.rendererId})
+      : arcRendererDecorators = config.arcRendererDecorators,
+        super(
+            layoutPaintOrder: config.layoutPaintOrder,
+            symbolRenderer: config.symbolRenderer,);
   // Constant used in the calculation of [centerContentBounds], calculated
   // once to save runtime cost.
   static final _cosPIOver4 = cos(pi / 4);
@@ -32,13 +37,6 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
   @protected
   BaseRenderChart<D>? chart;
-
-  BaseArcRenderer({required this.config, required String rendererId})
-      : arcRendererDecorators = config.arcRendererDecorators,
-        super(
-            rendererId: rendererId,
-            layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer);
 
   @override
   void onAttach(BaseRenderChart<D> chart) {
@@ -62,8 +60,8 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
   /// the chart.
   Rectangle<int> get centerContentBounds {
     // Grab the first arcList from the animated set.
-    var arcLists = getArcLists();
-    var arcList = arcLists.isNotEmpty ? arcLists.first : null;
+    final arcLists = getArcLists();
+    final arcList = arcLists.isNotEmpty ? arcLists.first : null;
 
     // No card should be visible if the hole in the chart is too small.
     if (arcList == null ||
@@ -71,7 +69,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       // Return default bounds of 0 size.
       final bounds = chart!.drawAreaBounds;
       return Rectangle<int>((bounds.left + bounds.width / 2).round(),
-          (bounds.top + bounds.height / 2).round(), 0, 0);
+          (bounds.top + bounds.height / 2).round(), 0, 0,);
     }
 
     // Fix the height and width of the center content div to the maximum box
@@ -79,7 +77,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
     final width = (_cosPIOver4 * arcList.innerRadius!).floor();
 
     return Rectangle<int>((arcList.center!.x - width).round(),
-        (arcList.center!.y - width).round(), width * 2, width * 2);
+        (arcList.center!.y - width).round(), width * 2, width * 2,);
   }
 
   /// Returns an expanded [DatumDetails] object that contains location data.
@@ -100,7 +98,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         measure: measure,
         series: series,
         color: color,
-        chartPosition: NullablePoint.from(chartPosition));
+        chartPosition: NullablePoint.from(chartPosition),);
   }
 
   /// Returns the List of AnimatedArcList associated with the renderer. The Pie
@@ -124,7 +122,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       return chartPosition;
     }
 
-    for (var arcList in arcLists) {
+    for (final arcList in arcLists) {
       for (final arc in arcList.arcs) {
         if (arc.key == key) {
           // Now that we have found the matching arc, calculate the center
@@ -138,7 +136,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
           chartPosition = Point<double>(
               centerPointRadius * cos(centerAngle) + arcList.center!.x,
-              centerPointRadius * sin(centerAngle) + arcList.center!.y);
+              centerPointRadius * sin(centerAngle) + arcList.center!.y,);
 
           break;
         }
@@ -151,8 +149,8 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
   @override
   void paint(ChartCanvas canvas, double animationPercent) {
     final arcLists = getArcLists();
-    var arcListToElementsList = <AnimatedArcList<D>,ArcRendererElementList<D>>{};
-    for (var arcList in arcLists) {
+    final arcListToElementsList = <AnimatedArcList<D>,ArcRendererElementList<D>>{};
+    for (final arcList in arcLists) {
       final elementsList = ArcRendererElementList<D>(
         arcs: <ArcRendererElement<D>>[],
         center: arcList.center!,
@@ -179,15 +177,15 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
           graphicsFactory!,
           drawBounds: drawBounds!,
           animationPercent: animationPercent,
-          rtl: isRtl);
+          rtl: isRtl,);
     });
 
-    for (var arcList in arcLists) {
+    for (final arcList in arcLists) {
       final circleSectors = <CanvasPieSlice>[];
 
       arcList.arcs
           .map<ArcRendererElement<D>>((AnimatedArc<D> animatingArc) =>
-              animatingArc.getCurrentArc(animationPercent))
+              animatingArc.getCurrentArc(animationPercent),)
           .forEach((arc) {
         circleSectors
             .add(CanvasPieSlice(arc.startAngle, arc.endAngle, fill: arc.color));
@@ -198,7 +196,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       // Draw the arcs.
       canvas.drawPie(CanvasPie(
           circleSectors, arcList.center!, arcList.radius!, arcList.innerRadius!,
-          stroke: arcList.stroke, strokeWidthPx: arcList.strokeWidthPx ?? 0));
+          stroke: arcList.stroke, strokeWidthPx: arcList.strokeWidthPx ?? 0,),);
     }
 
     // Decorate the arcs with decorators that should appear above the main
@@ -214,7 +212,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
           graphicsFactory!,
           drawBounds: drawBounds!,
           animationPercent: animationPercent,
-          rtl: isRtl);
+          rtl: isRtl,);
     });
   }
 
@@ -235,7 +233,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
     final arcLists = getArcLists();
 
-    for (var arcList in arcLists) {
+    for (final arcList in arcLists) {
       if (arcList.series!.overlaySeries) {
         return nearest;
       }
@@ -263,7 +261,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         chartPointAngle = 2 * pi + chartPointAngle;
       }
 
-      arcList.arcs.forEach((AnimatedArc<D> arc) {
+      for (final arc in arcList.arcs) {
         if (innerRadius <= distance &&
             distance <= radius &&
             arc.currentArcStartAngle! <= chartPointAngle &&
@@ -272,11 +270,11 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
             series: arcList.series,
             datum: arc.datum,
             domain: arc.domain,
-            domainDistance: 0.0,
-            measureDistance: 0.0,
-          ));
+            domainDistance: 0,
+            measureDistance: 0,
+          ),);
         }
-      });
+      }
     }
 
     return nearest;
@@ -284,11 +282,11 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
     final chartPosition =
         _getChartPosition(details.series!.id, details.domain.toString());
 
     return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition));
+        chartPosition: NullablePoint.from(chartPosition),);
   }
 }

@@ -17,13 +17,13 @@ import 'package:charts/core.dart';
 import 'package:flutter/material.dart' hide TextStyle;
 
 class FlutterGraphicsFactory implements GraphicsFactory {
-  final double textScaleFactor;
-  final DefaultTextStyle defaultTextStyle;
 
   FlutterGraphicsFactory(BuildContext context,
-      {GraphicsFactoryHelper helper = const GraphicsFactoryHelper()})
+      {GraphicsFactoryHelper helper = const GraphicsFactoryHelper(),})
       : textScaleFactor = helper.getTextScaleFactorOf(context),
         defaultTextStyle = DefaultTextStyle.of(context);
+  final double textScaleFactor;
+  final DefaultTextStyle defaultTextStyle;
 
   /// Returns a [TextPaintStyle] object.
   @override

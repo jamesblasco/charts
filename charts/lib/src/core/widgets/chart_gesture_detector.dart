@@ -28,7 +28,7 @@ import 'package:flutter/material.dart'
         TapUpDetails;
 
 // From https://docs.flutter.io/flutter/gestures/kLongPressTimeout-constant.html
-const Duration _kLongPressTimeout = const Duration(milliseconds: 500);
+const Duration _kLongPressTimeout = Duration(milliseconds: 500);
 
 class ChartGestureDetector {
   bool _listeningForLongPress = false;
@@ -39,10 +39,10 @@ class ChartGestureDetector {
   Point<double>? _lastTapPoint;
   double? _lastScale;
 
-  late _ContainerResolver _containerResolver;
+  late ChartContainerRenderObject Function() _containerResolver;
 
   GestureDetector makeWidget(BuildContext context, ChartContainer<dynamic> chartContainer,
-      Set<GestureType> desiredGestures) {
+      Set<GestureType> desiredGestures,) {
     _containerResolver = () {
       final renderObject = context.findRenderObject()!;
 
@@ -60,12 +60,12 @@ class ChartGestureDetector {
     _listeningForLongPress = desiredGestures.contains(GestureType.onLongPress);
 
     return GestureDetector(
-      child: chartContainer,
       onTapDown: wantTapDown ? onTapDown : null,
       onTapUp: wantTap ? onTapUp : null,
       onScaleStart: wantDrag ? onScaleStart : null,
       onScaleUpdate: wantDrag ? onScaleUpdate : null,
       onScaleEnd: wantDrag ? onScaleEnd : null,
+      child: chartContainer,
     );
   }
 
@@ -134,4 +134,3 @@ class ChartGestureDetector {
 }
 
 // Exposed for testing.
-typedef ChartContainerRenderObject _ContainerResolver();

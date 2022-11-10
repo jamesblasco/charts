@@ -27,13 +27,10 @@ abstract class CartesianRenderer<D> extends SeriesRenderer<D> {
 abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
     implements CartesianRenderer<D> {
   BaseCartesianRenderer({
-    required String rendererId,
-    required int layoutPaintOrder,
-    SymbolRenderer? symbolRenderer,
-  }) : super(
-            rendererId: rendererId,
-            layoutPaintOrder: layoutPaintOrder,
-            symbolRenderer: symbolRenderer);
+    required super.rendererId,
+    required super.layoutPaintOrder,
+    super.symbolRenderer,
+  });
 
   @protected
   late CartesianRenderChart<D> chart;
@@ -54,9 +51,9 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   @override
   void configureDomainAxes(List<MutableSeries<D>> seriesList) {
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       if (series.data.isEmpty) {
-        return;
+        continue;
       }
 
       final domainAxis = series.getAttr(domainAxisKey);
@@ -65,7 +62,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       final domainUpperBoundFn = series.domainUpperBoundFn;
 
       if (domainAxis == null) {
-        return;
+        continue;
       }
 
       if (renderingVertically) {
@@ -97,26 +94,26 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
           }
         }
       }
-    });
+    }
   }
 
   @override
   void configureMeasureAxes(List<MutableSeries<D>> seriesList) {
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       if (series.data.isEmpty) {
-        return;
+        continue;
       }
 
       final domainAxis = series.getAttr(domainAxisKey) as Axis<D>?;
       final domainFn = series.domainFn;
 
       if (domainAxis == null) {
-        return;
+        continue;
       }
 
       final measureAxis = series.getAttr(measureAxisKey) as Axis<num>?;
       if (measureAxis == null) {
-        return;
+        continue;
       }
 
       // Only add the measure values for datum who's domain is within the
@@ -127,7 +124,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
           findNearestViewportEnd(domainAxis, domainFn, series.data);
 
       addMeasureValuesFor(series, measureAxis, startIndex, endIndex);
-    });
+    }
   }
 
   void addMeasureValuesFor(
@@ -160,7 +157,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   @visibleForTesting
   int findNearestViewportStart(
-      Axis<D> domainAxis, AccessorFn<D> domainFn, List<Object?> data) {
+      Axis<D> domainAxis, AccessorFn<D> domainFn, List<Object?> data,) {
     assert(data.isNotEmpty);
 
     // Quick optimization for full viewport (likely).
@@ -176,9 +173,9 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
       final searchIndex = ((end - start) / 2).floor() + start;
       final prevIndex = searchIndex - 1;
 
-      var comparisonValue =
+      final comparisonValue =
           domainAxis.compareDomainValueToViewport(domainFn(searchIndex));
-      var prevComparisonValue =
+      final prevComparisonValue =
           domainAxis.compareDomainValueToViewport(domainFn(prevIndex));
 
       // Found start?
@@ -214,7 +211,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   @visibleForTesting
   int findNearestViewportEnd(
-      Axis<D> domainAxis, AccessorFn<D> domainFn, List<Object?> data) {
+      Axis<D> domainAxis, AccessorFn<D> domainFn, List<Object?> data,) {
     assert(data.isNotEmpty);
 
     var start = 1;

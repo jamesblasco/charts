@@ -17,10 +17,15 @@ import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 
 class FlutterTextStyle extends Equatable implements TextPaintStyle {
+  @override
   int? fontSize;
+  @override
   String? fontFamily;
+  @override
   Color? color;
+  @override
   double? lineHeight;
+  @override
   String? fontWeight;
 
   @override

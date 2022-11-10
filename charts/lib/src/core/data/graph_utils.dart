@@ -13,14 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'graph.dart';
-import 'series.dart' show TypedAccessorFn;
+import 'package:charts/src/core/data/graph.dart';
+import 'package:charts/src/core/data/series.dart' show TypedAccessorFn;
 
 const graphCycleErrorMsg = 'The given graph contains a cycle.';
 
 /// If the node accessor is not null return a function to act on a graph [Node].
 TypedAccessorFn<Node<N, L>, R>? actOnNodeData<N, L, R>(
-    TypedAccessorFn<N, R>? f) {
+    TypedAccessorFn<N, R>? f,) {
   return f == null
       ? null
       : (Node<N, L> node, int? index) => f(node.data, index);
@@ -28,7 +28,7 @@ TypedAccessorFn<Node<N, L>, R>? actOnNodeData<N, L, R>(
 
 /// If the node accessor is not null return a function to act on a graph [GraphLink].
 TypedAccessorFn<GraphLink<N, L>, R>? actOnLinkData<N, L, R>(
-    TypedAccessorFn<L, R>? f) {
+    TypedAccessorFn<L, R>? f,) {
   return f == null
       ? null
       : (GraphLink<N, L> link, int? index) => f(link.data, index);
@@ -36,7 +36,7 @@ TypedAccessorFn<GraphLink<N, L>, R>? actOnLinkData<N, L, R>(
 
 /// Add an incoming or outgoing link to a [Node].
 Node<N, L> addLinkToNode<N, L>(Node<N, L> node, GraphLink<N, L> link,
-    {required bool isIncomingLink}) {
+    {required bool isIncomingLink,}) {
   if (isIncomingLink) {
     node.incomingLinks.add(link);
   } else {
@@ -48,8 +48,8 @@ Node<N, L> addLinkToNode<N, L>(Node<N, L> node, GraphLink<N, L> link,
 
 /// Construct a new [Node] with the added [GraphLink].
 Node<N, L> addLinkToAbsentNode<N, L>(GraphLink<N, L> link,
-    {required bool isIncomingLink}) {
-  Node<N, L> node = isIncomingLink ? link.target : link.source;
+    {required bool isIncomingLink,}) {
+  final node = isIncomingLink ? link.target : link.source;
 
   return addLinkToNode(node, link, isIncomingLink: isIncomingLink);
 }

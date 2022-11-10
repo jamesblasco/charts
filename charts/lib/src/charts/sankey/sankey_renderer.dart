@@ -16,28 +16,26 @@
 import 'dart:math' show Point, Rectangle;
 import 'package:charts/charts/sankey.dart';
 
-import 'sankey_renderer_config.dart';
 
 /// Sankey Renderer for the Sankey Chart using Graph data structure
 class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
+
+  factory SankeyRenderer(
+      {String? rendererId, SankeyRendererConfig<D>? config,}) {
+    return SankeyRenderer._internal(
+        rendererId: rendererId ?? defaultRendererID,
+        config: config ?? SankeyRendererConfig(),);
+  }
+
+  SankeyRenderer._internal({required super.rendererId, required this.config})
+      : super(
+            layoutPaintOrder: config.layoutPaintOrder,
+            symbolRenderer: config.symbolRenderer,);
   /// Default renderer ID for the Sankey Chart
   static const defaultRendererID = 'sankey';
 
   /// Sankey Renderer Config
   final SankeyRendererConfig<D> config;
-
-  factory SankeyRenderer(
-      {String? rendererId, SankeyRendererConfig<D>? config}) {
-    return SankeyRenderer._internal(
-        rendererId: rendererId ?? defaultRendererID,
-        config: config ?? SankeyRendererConfig());
-  }
-
-  SankeyRenderer._internal({required String rendererId, required this.config})
-      : super(
-            rendererId: rendererId,
-            layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer);
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
@@ -56,10 +54,10 @@ class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    final chartPosition = Point<double>(0, 0);
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
+    const chartPosition = Point<double>(0, 0);
     return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition));
+        chartPosition: NullablePoint.from(chartPosition),);
   }
 
   /// Datum details of nearest links or nodes in the sankey chart.

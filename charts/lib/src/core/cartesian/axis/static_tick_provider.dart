@@ -59,7 +59,7 @@ class StaticTickProvider<D> extends TickProvider<D> {
     if (!allTicksHaveLabels) {
       formattedValues = formatter.format(
           tickSpec.map((spec) => spec.value).toList(), formatterValueCache,
-          stepSize: scale.domainStepSize);
+          stepSize: scale.domainStepSize,);
     }
 
     for (var i = 0; i < tickSpec.length; i += tickIncrement) {
@@ -71,7 +71,7 @@ class StaticTickProvider<D> extends TickProvider<D> {
             value: spec.value,
             textElement: graphicsFactory
                 .createTextElement(spec.label ?? formattedValues[i]),
-            locationPx: scale[spec.value]?.toDouble());
+            locationPx: scale[spec.value]?.toDouble(),);
         final style = spec.style;
         if (style != null) {
           tick.textElement!.textStyle = graphicsFactory.createTextPaint()

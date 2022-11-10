@@ -18,7 +18,6 @@ import 'package:charts/core.dart';
 
 /// A range of ordinals.
 class OrdinalExtents extends Extents<String> {
-  final List<String> _range;
 
   /// The extents representing the ordinal values in [range].
   ///
@@ -34,6 +33,7 @@ class OrdinalExtents extends Extents<String> {
   }
 
   factory OrdinalExtents.all(List<String> range) => OrdinalExtents(range);
+  final List<String> _range;
 
   bool get isEmpty => _range.isEmpty;
 

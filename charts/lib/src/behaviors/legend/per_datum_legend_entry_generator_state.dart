@@ -48,7 +48,7 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
           color: series.colorFn!(i),
           datum: series.data[i],
           datumIndex: i,
-          textStyle: entryTextStyle));
+          textStyle: entryTextStyle,),);
     }
 
     // Update with measures only if showing measure on no selection.
@@ -61,7 +61,7 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
 
   @override
   void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList) {
+      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,) {
     if (selectionModel.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
@@ -76,12 +76,12 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel) {
+      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel,) {
     // Given that each legend entry only has one datum associated with it, any
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
         entry.value = measure!.toDouble();
@@ -111,7 +111,7 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
         entry.value = measure!.toDouble();

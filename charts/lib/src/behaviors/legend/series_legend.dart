@@ -16,60 +16,10 @@
 import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
 /// Series legend behavior for charts.
 @immutable
 class SeriesLegend<D> extends ChartBehavior<D> {
-  static const defaultBehaviorPosition = BehaviorPosition.top;
-  static const defaultOutsideJustification = OutsideJustification.startDrawArea;
-  static const defaultInsideJustification = InsideJustification.topStart;
-
-  final desiredGestures = Set<GestureType>();
-
-  final SelectionModelType? selectionModelType;
-
-  /// Builder for creating custom legend content.
-  final LegendContentBuilder contentBuilder;
-
-  /// Position of the legend relative to the chart.
-  final BehaviorPosition position;
-
-  /// Justification of the legend relative to the chart
-  final OutsideJustification outsideJustification;
-  final InsideJustification insideJustification;
-
-  /// Whether or not the legend should show measures.
-  ///
-  /// By default this is false, measures are not shown. When set to true, the
-  /// default behavior is to show measure only if there is selected data.
-  /// Please set [legendDefaultMeasure] to something other than none to enable
-  /// showing measures when there is no selection.
-  ///
-  /// This flag is used by the [contentBuilder], so a custom content builder
-  /// has to choose if it wants to use this flag.
-  final bool showMeasures;
-
-  /// Option to show measures when selection is null.
-  ///
-  /// By default this is set to none, so no measures are shown when there is
-  /// no selection.
-  final LegendDefaultMeasure? legendDefaultMeasure;
-
-  /// Formatter for measure value(s) if the measures are shown on the legend.
-  final MeasureFormatter? measureFormatter;
-
-  /// Formatter for secondary measure value(s) if the measures are shown on the
-  /// legend and the series uses the secondary axis.
-  final MeasureFormatter? secondaryMeasureFormatter;
-
-  /// Styles for legend entry label text.
-  final TextStyleSpec? entryTextStyle;
-
-  static const defaultCellPadding = const EdgeInsets.all(8.0);
-
-  final List<String>? defaultHiddenSeries;
 
   /// Create a tabular layout legend.
   ///
@@ -134,14 +84,14 @@ class SeriesLegend<D> extends ChartBehavior<D> {
 
     // Set the tabular layout settings to match the position if it is not
     // specified.
-    horizontalFirst ??= (position == BehaviorPosition.top ||
+    horizontalFirst ??= position == BehaviorPosition.top ||
         position == BehaviorPosition.bottom ||
-        position == BehaviorPosition.inside);
+        position == BehaviorPosition.inside;
     final layoutBuilder = horizontalFirst
         ? TabularLegendLayout.horizontalFirst(
-            desiredMaxColumns: desiredMaxColumns, cellPadding: cellPadding)
+            desiredMaxColumns: desiredMaxColumns, cellPadding: cellPadding,)
         : TabularLegendLayout.verticalFirst(
-            desiredMaxRows: desiredMaxRows, cellPadding: cellPadding);
+            desiredMaxRows: desiredMaxRows, cellPadding: cellPadding,);
 
     return SeriesLegend._internal(
         contentBuilder:
@@ -155,7 +105,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
         legendDefaultMeasure: legendDefaultMeasure ?? LegendDefaultMeasure.none,
         measureFormatter: measureFormatter,
         secondaryMeasureFormatter: secondaryMeasureFormatter,
-        entryTextStyle: entryTextStyle);
+        entryTextStyle: entryTextStyle,);
   }
 
   /// Create a legend with custom layout.
@@ -233,6 +183,55 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     this.secondaryMeasureFormatter,
     this.entryTextStyle,
   });
+  static const defaultBehaviorPosition = BehaviorPosition.top;
+  static const defaultOutsideJustification = OutsideJustification.startDrawArea;
+  static const defaultInsideJustification = InsideJustification.topStart;
+
+  @override
+  final desiredGestures = <GestureType>{};
+
+  final SelectionModelType? selectionModelType;
+
+  /// Builder for creating custom legend content.
+  final LegendContentBuilder contentBuilder;
+
+  /// Position of the legend relative to the chart.
+  final BehaviorPosition position;
+
+  /// Justification of the legend relative to the chart
+  final OutsideJustification outsideJustification;
+  final InsideJustification insideJustification;
+
+  /// Whether or not the legend should show measures.
+  ///
+  /// By default this is false, measures are not shown. When set to true, the
+  /// default behavior is to show measure only if there is selected data.
+  /// Please set [legendDefaultMeasure] to something other than none to enable
+  /// showing measures when there is no selection.
+  ///
+  /// This flag is used by the [contentBuilder], so a custom content builder
+  /// has to choose if it wants to use this flag.
+  final bool showMeasures;
+
+  /// Option to show measures when selection is null.
+  ///
+  /// By default this is set to none, so no measures are shown when there is
+  /// no selection.
+  final LegendDefaultMeasure? legendDefaultMeasure;
+
+  /// Formatter for measure value(s) if the measures are shown on the legend.
+  final MeasureFormatter? measureFormatter;
+
+  /// Formatter for secondary measure value(s) if the measures are shown on the
+  /// legend and the series uses the secondary axis.
+  final MeasureFormatter? secondaryMeasureFormatter;
+
+  /// Styles for legend entry label text.
+  final TextStyleSpec? entryTextStyle;
+
+  static const defaultCellPadding = EdgeInsets.all(8);
+
+  final List<String>? defaultHiddenSeries;
 
   @override
   SeriesLegendBehaviorState<D> createBehaviorState() =>
@@ -267,7 +266,6 @@ class SeriesLegend<D> extends ChartBehavior<D> {
 /// Flutter specific wrapper on the common Legend for building content.
 class _FlutterSeriesLegend<D> extends SeriesLegendBehaviorState<D>
     implements BuildableBehavior, TappableLegend {
-  SeriesLegend config;
 
   _FlutterSeriesLegend(this.config)
       : super(
@@ -279,6 +277,7 @@ class _FlutterSeriesLegend<D> extends SeriesLegendBehaviorState<D>
     super.defaultHiddenSeries = config.defaultHiddenSeries;
     super.entryTextStyle = config.entryTextStyle;
   }
+  SeriesLegend config;
 
   @override
   void updateLegend() {
@@ -336,6 +335,6 @@ class _FlutterSeriesLegend<D> extends SeriesLegendBehaviorState<D>
     }
 
     // Redraw the chart to actually hide hidden series.
-    chart.redraw(skipLayout: true, skipAnimation: false);
+    chart.redraw(skipLayout: true);
   }
 }

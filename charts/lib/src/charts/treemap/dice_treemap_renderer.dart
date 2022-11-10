@@ -20,7 +20,7 @@ class DiceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
       : super(
             config:
                 config ?? TreeMapRendererConfig(tileType: TreeMapTileType.dice),
-            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId);
+            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,);
 
   /// Uses dicing as the tiling algorithm for this tree map.
   @override

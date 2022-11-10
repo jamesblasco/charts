@@ -140,10 +140,9 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// [minTickCount] The min tick count must be greater than 1.
   void setTickCount(int maxTickCount, int minTickCount) {
     // Don't allow a single tick, it doesn't make sense. so tickCount > 1
-    if (maxTickCount != null && maxTickCount > 1) {
+    if (maxTickCount > 1) {
       _desiredMaxTickCount = maxTickCount;
-      if (minTickCount != null &&
-          minTickCount > 1 &&
+      if (minTickCount > 1 &&
           minTickCount <= _desiredMaxTickCount!) {
         _desiredMinTickCount = minTickCount;
       } else {
@@ -169,7 +168,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   ///
   /// [steps] allowed step sizes in the [1, 10) range.
   set allowedSteps(List<double> steps) {
-    assert(steps != null && steps.isNotEmpty);
+    assert(steps.isNotEmpty);
     steps.sort();
 
     final stepSet = Set.of(steps);
@@ -216,7 +215,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
         formatter: formatter,
         formatterValueCache: formatterValueCache,
         tickDrawStrategy: tickDrawStrategy,
-        stepSize: stepInfo.stepSize);
+        stepSize: stepInfo.stepSize,);
   }
 
   @override
@@ -255,7 +254,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
     final axisUnitsLow = dataToAxisUnitConverter.convert(_low);
 
     _updateTickCounts(
-        high: axisUnitsHigh, low: axisUnitsLow, rangeWidth: scale.rangeWidth);
+        high: axisUnitsHigh, low: axisUnitsLow, rangeWidth: scale.rangeWidth,);
 
     // Only create a copy of the scale if [viewportExtensionEnabled].
     final mutableScale =
@@ -293,7 +292,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
             formatter: formatter,
             formatterValueCache: formatterValueCache,
             tickDrawStrategy: tickDrawStrategy,
-            stepSize: stepInfo.stepSize);
+            stepSize: stepInfo.stepSize,);
 
         // Request collision check from draw strategy.
         final collisionReport =
@@ -372,7 +371,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
     // If the range contains zero, ensure that zero is a tick.
     if (high >= 0 && low <= 0) {
       // determine the ratio of regions that are above the zero axis.
-      final posRegionRatio = high > 0 ? min(1.0, high / (high - low)) : 0.0;
+      final posRegionRatio = high > 0 ? min(1, high / (high - low)) : 0.0;
       var positiveRegionCount = (regionCount * posRegionRatio).ceil();
       var negativeRegionCount = regionCount - positiveRegionCount;
       // Ensure that negative regions are not excluded, unless there are no
@@ -392,7 +391,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
           !(low < 0 &&
               high > 0 &&
               (negativeRegionCount == 0 || positiveRegionCount == 0)),
-          'Numeric tick provider cannot generate ${tickCount} '
+          'Numeric tick provider cannot generate $tickCount '
           'ticks when the axis range contains both positive and negative '
           'values. A minimum of three ticks are required to include zero.');
 
@@ -450,7 +449,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
       }
     }
 
-    return _TickStepInfo(1.0, low.floorToDouble());
+    return _TickStepInfo(1, low.floorToDouble());
   }
 
   List<double> _getTickValues(_TickStepInfo steps, int tickCount) {
@@ -459,7 +458,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
       for (int i = 0; i < tickCount; i++)
         dataToAxisUnitConverter
             .invert(
-                _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)))
+                _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)),)
             .toDouble(),
     ];
   }
@@ -506,7 +505,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// [number] of 0.63 returns 1
   static double _getEnclosingPowerOfTen(num number) {
     if (number == 0) {
-      return 1.0;
+      return 1;
     }
 
     return pow(10, (log10e * log(number.abs())).ceil()).toDouble() *
@@ -516,7 +515,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// Returns the step numerically less than the number by step increments.
   static double _getStepLessThan(double number, double stepSize) {
     if (number == 0.0 || stepSize == 0.0) {
-      return 0.0;
+      return 0;
     }
     return (stepSize > 0.0
             ? (number / stepSize).floor()
@@ -555,8 +554,8 @@ class NumericTickProvider extends BaseTickProvider<num> {
 }
 
 class _TickStepInfo {
-  double stepSize;
-  double tickStart;
 
   _TickStepInfo(this.stepSize, this.tickStart);
+  double stepSize;
+  double tickStart;
 }

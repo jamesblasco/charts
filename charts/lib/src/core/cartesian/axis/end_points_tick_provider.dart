@@ -15,7 +15,6 @@
 
 import 'package:charts/core.dart';
 
-
 /// Tick provider that provides ticks at the two end points of the axis range.
 class EndPointsTickProvider<D> extends BaseTickProvider<D> {
   @override
@@ -40,21 +39,30 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
       final start = _getStartValue(tickHint, scale);
       final end = _getEndValue(tickHint, scale);
 
-      final labels = formatter.format([start, end], formatterValueCache,
-          stepSize: scale.domainStepSize);
+      final labels = formatter.format(
+        [start, end],
+        formatterValueCache,
+        stepSize: scale.domainStepSize,
+      );
 
       if (start != null) {
-        ticks.add(Tick(
+        ticks.add(
+          Tick(
             value: start,
             textElement: graphicsFactory.createTextElement(labels[0]),
-            locationPx: scale[start]?.toDouble()));
+            locationPx: scale[start]?.toDouble(),
+          ),
+        );
       }
 
       if (end != null) {
-        ticks.add(Tick(
+        ticks.add(
+          Tick(
             value: end,
             textElement: graphicsFactory.createTextElement(labels[1]),
-            locationPx: scale[end]?.toDouble()));
+            locationPx: scale[end]?.toDouble(),
+          ),
+        );
       }
 
       // Allow draw strategy to decorate the ticks.
@@ -65,7 +73,7 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
   }
 
   /// Get the start value from the scale.
-  D _getStartValue(TickHint<D>? tickHint, MutableScale<D> scale) {
+  D _getStartValue(TickHint<D>? tickHint, MutableScale<D> mutableScale) {
     Object? start;
 
     if (tickHint != null) {
@@ -73,13 +81,14 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
     } else {
       // Upcast to allow type promotion.
       // See https://github.com/dart-lang/sdk/issues/34018.
-      Object _scale = scale;
-      if (_scale is NumericScale) {
-        start = _scale.viewportDomain.min;
-      } else if (_scale is DateTimeScale) {
-        start = _scale.viewportDomain.start;
-      } else if (_scale is OrdinalScale) {
-        start = _scale.domain.first;
+      // ignore: unnecessary_cast
+      final scale = mutableScale as Scale;
+      if (scale is NumericScale) {
+        start = scale.viewportDomain.min;
+      } else if (scale is DateTimeScale) {
+        start = scale.viewportDomain.start;
+      } else if (scale is OrdinalScale) {
+        start = scale.domain.first;
       } else {
         throw UnsupportedError('Unrecognized scale: {scale.runtimeType}');
       }
@@ -89,7 +98,7 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
   }
 
   /// Get the end value from the scale.
-  D _getEndValue(TickHint<D>? tickHint, MutableScale<D> scale) {
+  D _getEndValue(TickHint<D>? tickHint, MutableScale<D> mutableScale) {
     Object? end;
 
     if (tickHint != null) {
@@ -97,13 +106,14 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
     } else {
       // Upcast to allow type promotion.
       // See https://github.com/dart-lang/sdk/issues/34018.
-      Object _scale = scale;
-      if (_scale is NumericScale) {
-        end = _scale.viewportDomain.max;
-      } else if (_scale is DateTimeScale) {
-        end = _scale.viewportDomain.end;
-      } else if (_scale is OrdinalScale) {
-        end = _scale.domain.last;
+      // ignore: unnecessary_cast
+      final scale = mutableScale as Scale;
+      if (scale is NumericScale) {
+        end = scale.viewportDomain.max;
+      } else if (scale is DateTimeScale) {
+        end = scale.viewportDomain.end;
+      } else if (scale is OrdinalScale) {
+        end = scale.domain.last;
       } else {
         throw UnsupportedError('Unrecognized scale: {scale.runtimeType}');
       }
@@ -111,7 +121,7 @@ class EndPointsTickProvider<D> extends BaseTickProvider<D> {
 
     return end as D;
   }
-  
+
   @override
   List<Object?> get props => [];
 }

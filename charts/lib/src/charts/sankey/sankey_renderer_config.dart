@@ -22,7 +22,7 @@ class SankeyRendererConfig<D> extends LayoutViewConfig
     this.customRendererId,
     this.layoutPaintOrder = LayoutViewPaintOrder.sankey,
     SymbolRenderer? symbolRenderer,
-  }) : symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
+  }) : symbolRenderer = symbolRenderer ?? const RectSymbolRenderer();
   @override
   final String? customRendererId;
 

@@ -17,8 +17,8 @@ import 'dart:math' show Rectangle;
 
 import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
-import 'package:meta/meta.dart' show protected;
 import 'package:intl/intl.dart';
+import 'package:meta/meta.dart' show protected;
 
 /// Legend behavior for charts.
 ///
@@ -28,6 +28,19 @@ import 'package:intl/intl.dart';
 /// Flutter, using widgets).
 abstract class LegendBehaviorState<D>
     implements ChartBehaviorState<D>, LayoutView {
+
+  LegendBehaviorState({
+    required this.selectionModelType,
+    required this.legendEntryGenerator,
+    TextStyleSpec? entryTextStyle,
+  }) {
+    _lifecycleListener = LifecycleListener(
+        onPostprocess: _postProcess, onPreprocess: _preProcess, onData: onData,);
+    legendEntryGenerator.entryTextStyle = entryTextStyle;
+
+    // Calling the setter will automatically use a non-null default value.
+    showOverlaySeries = null;
+  }
   final SelectionModelType selectionModelType;
   final legendState = LegendState<D>();
   final LegendEntryGenerator<D> legendEntryGenerator;
@@ -80,19 +93,6 @@ abstract class LegendBehaviorState<D>
   @protected
   String defaultLegendMeasureFormatter(num? value) {
     return (value == null) ? '' : _decimalPattern.format(value);
-  }
-
-  LegendBehaviorState({
-    required this.selectionModelType,
-    required this.legendEntryGenerator,
-    TextStyleSpec? entryTextStyle,
-  }) {
-    _lifecycleListener = LifecycleListener(
-        onPostprocess: _postProcess, onPreprocess: _preProcess, onData: onData);
-    legendEntryGenerator.entryTextStyle = entryTextStyle;
-
-    // Calling the setter will automatically use a non-null default value.
-    showOverlaySeries = null;
   }
 
   /// Text style of the legend entry text.
@@ -151,20 +151,20 @@ abstract class LegendBehaviorState<D>
     // Also update legend entries if the series list has changed.
     if (legendState._selectionModel != selectionModel ||
         _postProcessSeriesList != seriesList) {
-      final _customEntryOrder = this._customEntryOrder;
-      if (_customEntryOrder != null) {
+      final customEntryOrder = _customEntryOrder;
+      if (customEntryOrder != null) {
         _currentSeriesList.sort((a, b) {
-          final a_index = _customEntryOrder.indexOf(a.id);
-          final b_index = _customEntryOrder.indexOf(b.id);
-          if (a_index == -1) {
-            if (a_index == b_index) {
+          final aIndex = customEntryOrder.indexOf(a.id);
+          final bIndex = customEntryOrder.indexOf(b.id);
+          if (aIndex == -1) {
+            if (aIndex == bIndex) {
               return a.displayName!.compareTo(b.displayName!);
             }
             return 1;
-          } else if (b_index == -1) {
+          } else if (bIndex == -1) {
             return -1;
           }
-          return a_index.compareTo(b_index);
+          return aIndex.compareTo(bIndex);
         });
       }
 
@@ -191,7 +191,7 @@ abstract class LegendBehaviorState<D>
   /// notifies the native platform.
   void _updateLegendEntries({List<MutableSeries<D>>? seriesList}) {
     legendEntryGenerator.updateLegendEntries(legendState._legendEntries,
-        legendState._selectionModel!, seriesList ?? chart.currentSeriesList);
+        legendState._selectionModel!, seriesList ?? chart.currentSeriesList,);
 
     updateLegend();
   }
@@ -235,7 +235,7 @@ abstract class LegendBehaviorState<D>
     return LayoutViewConfig(
         position: _layoutPosition,
         positionOrder: LayoutViewPositionOrder.legend,
-        paintOrder: LayoutViewPaintOrder.legend);
+        paintOrder: LayoutViewPaintOrder.legend,);
   }
 
   /// Get layout position from legend position.
@@ -247,7 +247,7 @@ abstract class LegendBehaviorState<D>
   ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
     // Native child classes should override this method to return real
     // measurements.
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+    return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
   }
 
   @override
@@ -285,18 +285,10 @@ class LegendState<D> {
 ///
 /// If a percent is specified, it takes precedence over a flat pixel value.
 class LegendCellPadding {
-  final double? bottomPct;
-  final double? bottomPx;
-  final double? leftPct;
-  final double? leftPx;
-  final double? rightPct;
-  final double? rightPx;
-  final double? topPct;
-  final double? topPx;
 
   /// Creates padding in percents from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPct(
-      this.leftPct, this.topPct, this.rightPct, this.bottomPct)
+      this.leftPct, this.topPct, this.rightPct, this.bottomPct,)
       : leftPx = null,
         topPx = null,
         rightPx = null,
@@ -304,7 +296,7 @@ class LegendCellPadding {
 
   /// Creates padding in pixels from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPx(
-      this.leftPx, this.topPx, this.rightPx, this.bottomPx)
+      this.leftPx, this.topPx, this.rightPx, this.bottomPx,)
       : leftPct = null,
         topPct = null,
         rightPct = null,
@@ -312,7 +304,7 @@ class LegendCellPadding {
 
   /// Creates padding in percents from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPct(
-      this.topPct, this.rightPct, this.bottomPct, this.leftPct)
+      this.topPct, this.rightPct, this.bottomPct, this.leftPct,)
       : topPx = null,
         rightPx = null,
         bottomPx = null,
@@ -320,7 +312,7 @@ class LegendCellPadding {
 
   /// Creates padding in pixels from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPx(
-      this.topPx, this.rightPx, this.bottomPx, this.leftPx)
+      this.topPx, this.rightPx, this.bottomPx, this.leftPx,)
       : topPct = null,
         rightPct = null,
         bottomPct = null,
@@ -349,6 +341,14 @@ class LegendCellPadding {
   /// ```
   const LegendCellPadding.allPx(double value)
       : this.fromLTRBPx(value, value, value, value);
+  final double? bottomPct;
+  final double? bottomPx;
+  final double? leftPct;
+  final double? leftPx;
+  final double? rightPct;
+  final double? rightPx;
+  final double? topPct;
+  final double? topPx;
 
   double bottom(num height) =>
       bottomPct != null ? bottomPct! * height : bottomPx!;

@@ -218,9 +218,8 @@ void main() {
           throwsArgumentError);
     });
 
-    test('throws argument error if formatters is null or empty', () {
-      expect(() => DateTimeTickFormatter.withFormatters(null),
-          throwsArgumentError);
+    test('throws argument error if formatters is  empty', () {
+     
       expect(
           () => DateTimeTickFormatter.withFormatters({}), throwsArgumentError);
     });
