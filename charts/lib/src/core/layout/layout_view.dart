@@ -21,19 +21,19 @@ import 'package:flutter/foundation.dart';
 
 /// Position of a [LayoutView].
 enum LayoutPosition {
-  Bottom,
-  FullBottom,
+  bottom,
+  fullBottom,
 
-  Top,
-  FullTop,
+  top,
+  fullTop,
 
-  Left,
-  FullLeft,
+  left,
+  fullLeft,
 
-  Right,
-  FullRight,
+  right,
+  fullRight,
 
-  DrawArea,
+  drawArea,
 }
 
 /// Standard layout paint orders for all internal components.
@@ -81,12 +81,12 @@ class LayoutViewPositionOrder {
 
 /// A configuration for margin (empty space) around a layout child view.
 class ViewMargin {
-
   const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
       : topPx = topPx ?? 0,
         bottomPx = bottomPx ?? 0,
         rightPx = rightPx ?? 0,
         leftPx = leftPx ?? 0;
+
   /// A [ViewMargin] with all zero px.
   static const empty = ViewMargin(topPx: 0, bottomPx: 0, rightPx: 0, leftPx: 0);
 
@@ -105,7 +105,6 @@ class ViewMargin {
 /// Configuration of a [LayoutView].
 @immutable
 class LayoutViewConfig extends Equatable {
-
   /// Creates new [LayoutParams].
   ///
   /// [paintOrder] the order that this component will be drawn.
@@ -118,6 +117,7 @@ class LayoutViewConfig extends Equatable {
     this.positionOrder,
     ViewMargin? viewMargin,
   }) : viewMargin = viewMargin ?? ViewMargin.empty;
+
   /// Unique identifier for the [LayoutView].
   final String? id;
 
@@ -144,10 +144,10 @@ class LayoutViewConfig extends Equatable {
 
   /// Returns true if it is a full position.
   bool get isFullPosition =>
-      position == LayoutPosition.FullBottom ||
-      position == LayoutPosition.FullTop ||
-      position == LayoutPosition.FullRight ||
-      position == LayoutPosition.FullLeft;
+      position == LayoutPosition.fullBottom ||
+      position == LayoutPosition.fullTop ||
+      position == LayoutPosition.fullRight ||
+      position == LayoutPosition.fullLeft;
 
   LayoutViewConfig copyWith({
     String? id,
@@ -179,23 +179,27 @@ class LayoutViewConfig extends Equatable {
 ///
 /// The measurement is tight to the component, without adding [ComponentBuffer].
 class ViewMeasuredSizes {
-
   /// Create a new [ViewSizes].
   ///
   /// [preferredWidth] the component's preferred width.
   /// [preferredHeight] the component's preferred width.
   /// [minWidth] the component's minimum width. If not set, default to 0.
   /// [minHeight] the component's minimum height. If not set, default to 0.
-  const ViewMeasuredSizes(
-      {required this.preferredWidth,
-      required this.preferredHeight,
-      int? minWidth,
-      int? minHeight,})
-      : minWidth = minWidth ?? 0,
+  const ViewMeasuredSizes({
+    required this.preferredWidth,
+    required this.preferredHeight,
+    int? minWidth,
+    int? minHeight,
+  })  : minWidth = minWidth ?? 0,
         minHeight = minHeight ?? 0;
+
   /// All zeroes component size.
   static const zero = ViewMeasuredSizes(
-      preferredWidth: 0, preferredHeight: 0, minWidth: 0, minHeight: 0,);
+    preferredWidth: 0,
+    preferredHeight: 0,
+    minWidth: 0,
+    minHeight: 0,
+  );
 
   final int preferredWidth;
   final int preferredHeight;
@@ -238,24 +242,27 @@ abstract class LayoutView {
 /// Translates a component's [BehaviorPosition] and [OutsideJustification] into
 /// a [LayoutPosition] that a [LayoutManager] can use to place components on the
 /// chart.
-LayoutPosition layoutPosition(BehaviorPosition behaviorPosition,
-    OutsideJustification outsideJustification, bool isRtl,) {
+LayoutPosition layoutPosition(
+  BehaviorPosition behaviorPosition,
+  OutsideJustification outsideJustification,
+  bool isRtl,
+) {
   LayoutPosition position;
   switch (behaviorPosition) {
     case BehaviorPosition.bottom:
-      position = LayoutPosition.Bottom;
+      position = LayoutPosition.bottom;
       break;
     case BehaviorPosition.end:
-      position = isRtl ? LayoutPosition.Left : LayoutPosition.Right;
+      position = isRtl ? LayoutPosition.left : LayoutPosition.right;
       break;
     case BehaviorPosition.inside:
-      position = LayoutPosition.DrawArea;
+      position = LayoutPosition.drawArea;
       break;
     case BehaviorPosition.start:
-      position = isRtl ? LayoutPosition.Right : LayoutPosition.Left;
+      position = isRtl ? LayoutPosition.right : LayoutPosition.left;
       break;
     case BehaviorPosition.top:
-      position = LayoutPosition.Top;
+      position = LayoutPosition.top;
       break;
   }
 
@@ -265,17 +272,17 @@ LayoutPosition layoutPosition(BehaviorPosition behaviorPosition,
       outsideJustification == OutsideJustification.middle ||
       outsideJustification == OutsideJustification.end) {
     switch (position) {
-      case LayoutPosition.Bottom:
-        position = LayoutPosition.FullBottom;
+      case LayoutPosition.bottom:
+        position = LayoutPosition.fullBottom;
         break;
-      case LayoutPosition.Left:
-        position = LayoutPosition.FullLeft;
+      case LayoutPosition.left:
+        position = LayoutPosition.fullLeft;
         break;
-      case LayoutPosition.Top:
-        position = LayoutPosition.FullTop;
+      case LayoutPosition.top:
+        position = LayoutPosition.fullTop;
         break;
-      case LayoutPosition.Right:
-        position = LayoutPosition.FullRight;
+      case LayoutPosition.right:
+        position = LayoutPosition.fullRight;
         break;
 
       // Ignore other positions, like DrawArea.

@@ -28,14 +28,16 @@ import 'package:meta/meta.dart' show protected;
 /// Flutter, using widgets).
 abstract class LegendBehaviorState<D>
     implements ChartBehaviorState<D>, LayoutView {
-
   LegendBehaviorState({
     required this.selectionModelType,
     required this.legendEntryGenerator,
-    TextStyleSpec? entryTextStyle,
+    TextStyle? entryTextStyle,
   }) {
     _lifecycleListener = LifecycleListener(
-        onPostprocess: _postProcess, onPreprocess: _preProcess, onData: onData,);
+      onPostprocess: _postProcess,
+      onPreprocess: _preProcess,
+      onData: onData,
+    );
     legendEntryGenerator.entryTextStyle = entryTextStyle;
 
     // Calling the setter will automatically use a non-null default value.
@@ -65,7 +67,7 @@ abstract class LegendBehaviorState<D>
   LegendCellPadding? legendPadding;
 
   /// Text style of the legend title text.
-  TextStyleSpec? titleTextStyle;
+  TextStyle? titleTextStyle;
 
   /// Configures the behavior of the legend when the user taps/clicks on an
   /// entry. Defaults to no behavior.
@@ -96,9 +98,9 @@ abstract class LegendBehaviorState<D>
   }
 
   /// Text style of the legend entry text.
-  TextStyleSpec? get entryTextStyle => legendEntryGenerator.entryTextStyle;
+  TextStyle? get entryTextStyle => legendEntryGenerator.entryTextStyle;
 
-  set entryTextStyle(TextStyleSpec? entryTextStyle) {
+  set entryTextStyle(TextStyle? entryTextStyle) {
     legendEntryGenerator.entryTextStyle = entryTextStyle;
   }
 
@@ -190,8 +192,11 @@ abstract class LegendBehaviorState<D>
   /// Internally update legend entries, before calling [updateLegend] that
   /// notifies the native platform.
   void _updateLegendEntries({List<MutableSeries<D>>? seriesList}) {
-    legendEntryGenerator.updateLegendEntries(legendState._legendEntries,
-        legendState._selectionModel!, seriesList ?? chart.currentSeriesList,);
+    legendEntryGenerator.updateLegendEntries(
+      legendState._legendEntries,
+      legendState._selectionModel!,
+      seriesList ?? chart.currentSeriesList,
+    );
 
     updateLegend();
   }
@@ -233,9 +238,10 @@ abstract class LegendBehaviorState<D>
   @override
   LayoutViewConfig get layoutConfig {
     return LayoutViewConfig(
-        position: _layoutPosition,
-        positionOrder: LayoutViewPositionOrder.legend,
-        paintOrder: LayoutViewPaintOrder.legend,);
+      position: _layoutPosition,
+      positionOrder: LayoutViewPositionOrder.legend,
+      paintOrder: LayoutViewPaintOrder.legend,
+    );
   }
 
   /// Get layout position from legend position.
@@ -285,35 +291,46 @@ class LegendState<D> {
 ///
 /// If a percent is specified, it takes precedence over a flat pixel value.
 class LegendCellPadding {
-
   /// Creates padding in percents from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPct(
-      this.leftPct, this.topPct, this.rightPct, this.bottomPct,)
-      : leftPx = null,
+    this.leftPct,
+    this.topPct,
+    this.rightPct,
+    this.bottomPct,
+  )   : leftPx = null,
         topPx = null,
         rightPx = null,
         bottomPx = null;
 
   /// Creates padding in pixels from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPx(
-      this.leftPx, this.topPx, this.rightPx, this.bottomPx,)
-      : leftPct = null,
+    this.leftPx,
+    this.topPx,
+    this.rightPx,
+    this.bottomPx,
+  )   : leftPct = null,
         topPct = null,
         rightPct = null,
         bottomPct = null;
 
   /// Creates padding in percents from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPct(
-      this.topPct, this.rightPct, this.bottomPct, this.leftPct,)
-      : topPx = null,
+    this.topPct,
+    this.rightPct,
+    this.bottomPct,
+    this.leftPct,
+  )   : topPx = null,
         rightPx = null,
         bottomPx = null,
         leftPx = null;
 
   /// Creates padding in pixels from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPx(
-      this.topPx, this.rightPx, this.bottomPx, this.leftPx,)
-      : topPct = null,
+    this.topPx,
+    this.rightPx,
+    this.bottomPx,
+    this.leftPx,
+  )   : topPct = null,
         rightPct = null,
         bottomPct = null,
         leftPct = null;

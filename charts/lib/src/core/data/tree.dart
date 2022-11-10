@@ -20,7 +20,6 @@ import 'package:meta/meta.dart';
 
 /// A tree structure that contains metadata of a rendering tree.
 class Tree<T, D> {
-
   factory Tree({
     required String id,
     required TreeNode<T> root,
@@ -32,7 +31,7 @@ class Tree<T, D> {
     TypedAccessorFn<T, FillPatternType>? fillPatternFn,
     TypedAccessorFn<T, num>? strokeWidthPxFn,
     TypedAccessorFn<T, String>? labelFn,
-    TypedAccessorFn<T, TextStyleSpec>? labelStyleFn,
+    TypedAccessorFn<T, TextStyle>? labelStyleFn,
   }) {
     return Tree._(
       id: id,
@@ -45,7 +44,7 @@ class Tree<T, D> {
       patternColorFn: _castFrom<T, Color>(patternColorFn),
       strokeWidthPxFn: _castFrom<T, num>(strokeWidthPxFn),
       labelFn: _castFrom<T, String>(labelFn),
-      labelStyleFn: _castFrom<T, TextStyleSpec>(labelStyleFn),
+      labelStyleFn: _castFrom<T, TextStyle>(labelStyleFn),
     );
   }
 
@@ -62,6 +61,7 @@ class Tree<T, D> {
     required this.labelFn,
     required this.labelStyleFn,
   });
+
   /// Unique identifier for this [tree].
   final String id;
 
@@ -95,7 +95,7 @@ class Tree<T, D> {
   final TypedAccessorFn<TreeNode<T>, String>? labelFn;
 
   /// Accessor function that returns the style spec for a tree node label.
-  final TypedAccessorFn<TreeNode<T>, TextStyleSpec>? labelStyleFn;
+  final TypedAccessorFn<TreeNode<T>, TextStyle>? labelStyleFn;
 
   /// [attributes] stores additional key-value pairs of attributes this tree is
   /// associated with (e.g. rendererIdKey to renderer).
@@ -145,8 +145,8 @@ class Tree<T, D> {
 }
 
 class TreeNode<T> {
-
   TreeNode(this.data);
+
   /// Associated data this node stores.
   final T data;
 

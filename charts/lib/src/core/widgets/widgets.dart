@@ -11,10 +11,10 @@ export 'chart_gesture_detector.dart';
 export 'chart_state.dart';
 export 'find_render_object.dart';
 export 'graphics_factory.dart';
-export 'line_style.dart';
+
 export 'selection_model_config.dart';
 export 'symbol_renderer.dart';
 export 'text_element.dart';
-export 'text_style.dart';
+
 export 'user_managed_state.dart';
 export 'widget_layout_delegate.dart';

@@ -16,16 +16,17 @@
 import 'package:charts/src/core/cartesian/axis/tick.dart' show Tick;
 
 class AxisTicks<D> extends Tick<D> implements Comparable<AxisTicks<D>> {
-
   AxisTicks(Tick<D> tick)
       : // Set the initial target for a new animated tick.
         _markedForRemoval = false,
         _targetLocation = tick.locationPx,
         super(
-            value: tick.value,
-            textElement: tick.textElement,
-            locationPx: tick.locationPx,
-            labelOffsetPx: tick.labelOffsetPx,);
+          value: tick.value,
+          textElement: tick.textElement,
+          locationPx: tick.locationPx,
+          labelOffsetPx: tick.labelOffsetPx,
+        );
+
   /// This tick is being animated out.
   bool _markedForRemoval;
 
@@ -100,9 +101,11 @@ class AxisTicks<D> extends Tick<D> implements Comparable<AxisTicks<D>> {
   /// From lerpDouble in dart:ui which is Flutter only.
   double? _lerpDouble(double? a, double? b, double t) {
     if (a == null && b == null) return null;
-    a ??= 0.0;
-    b ??= 0.0;
-    return a + (b - a) * t;
+    var aValue = a;
+     var bValue = b;
+    aValue ??= 0.0;
+    bValue ??= 0.0;
+    return aValue + (bValue - aValue) * t;
   }
 
   @override

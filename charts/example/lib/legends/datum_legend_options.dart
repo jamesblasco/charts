@@ -98,7 +98,7 @@ class DatumLegendOptions extends StatelessWidget {
           // This defines the padding around each legend entry.
           cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
           // Render the legend entry text with custom styles.
-          entryTextStyle: charts.TextStyleSpec(
+          entryTextStyle: charts.TextStyle(
               color: Colors.purple, fontFamily: 'Georgia', fontSize: 11),
         )
       ],

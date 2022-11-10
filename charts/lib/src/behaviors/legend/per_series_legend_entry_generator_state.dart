@@ -22,9 +22,10 @@ import 'package:equatable/equatable.dart';
 /// A strategy for generating a list of [LegendEntry] per series drawn.
 ///
 /// [D] the domain class type for the datum.
-class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryGenerator<D> {
+class PerSeriesLegendEntryGenerator<D> extends Equatable
+    implements LegendEntryGenerator<D> {
   @override
-  TextStyleSpec? entryTextStyle;
+  TextStyle? entryTextStyle;
 
   @override
   MeasureFormatter? measureFormatter;
@@ -43,13 +44,15 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
   List<LegendEntry<D>> getLegendEntries(List<MutableSeries<D>> seriesList) {
     final legendEntries = seriesList
         .where((series) => showOverlaySeries || !series.overlaySeries)
-        .map((series) => LegendEntry<D>(
-              series,
-              series.displayName!,
-              // TODO: Should this use series.colorFn if seriesColor is null?
-              color: series.seriesColor!,
-              textStyle: entryTextStyle,
-            ),)
+        .map(
+          (series) => LegendEntry<D>(
+            series,
+            series.displayName!,
+            // TODO: Should this use series.colorFn if seriesColor is null?
+            color: series.seriesColor!,
+            textStyle: entryTextStyle,
+          ),
+        )
         .toList();
 
     // Update with measures only if showing measure on no selection.
@@ -61,8 +64,11 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
   }
 
   @override
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,) {
+  void updateLegendEntries(
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+    List<MutableSeries<D>> seriesList,
+  ) {
     if (selectionModel.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
@@ -77,7 +83,9 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel,) {
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+  ) {
     // Map of series ID to the total selected measure value for that series.
     final seriesAndMeasure = <String, num>{};
 
@@ -128,7 +136,9 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
   /// selection. The type of calculation is based on the [legendDefaultMeasure]
   /// value.
   void _updateFromSeriesList(
-      List<LegendEntry<D>> legendEntries, List<MutableSeries<D>> seriesList,) {
+    List<LegendEntry<D>> legendEntries,
+    List<MutableSeries<D>> seriesList,
+  ) {
     // Helper function to sum up the measure values
     num getMeasureTotal(MutableSeries<D> series) {
       var measureTotal = 0.0;
@@ -192,10 +202,10 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable implements LegendEntryG
   }
 
   @override
-  List<Object?> get props => [measureFormatter,secondaryMeasureFormatter,legendDefaultMeasure,entryTextStyle];
-
-
-
-
-
+  List<Object?> get props => [
+        measureFormatter,
+        secondaryMeasureFormatter,
+        legendDefaultMeasure,
+        entryTextStyle
+      ];
 }

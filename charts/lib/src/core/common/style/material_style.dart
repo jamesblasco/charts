@@ -33,20 +33,18 @@ class MaterialStyle implements Style {
 
   @override
   LineStyle createAxisLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec,) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? Colors.grey
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
+    GraphicsFactory graphicsFactory,
+    LineStyle? spec,
+  ) {
+    return const LineStyle(color: Colors.grey).merge(spec);
   }
 
   @override
   LineStyle createTickLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec,) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? Colors.grey
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
+    GraphicsFactory graphicsFactory,
+    LineStyle? spec,
+  ) {
+    return const LineStyle(color: Colors.grey).merge(spec);
   }
 
   @override
@@ -57,11 +55,10 @@ class MaterialStyle implements Style {
 
   @override
   LineStyle createGridlineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec,) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? Colors.grey.shade300
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
+    GraphicsFactory graphicsFactory,
+    LineStyle? spec,
+  ) {
+    return LineStyle(color: Colors.grey.shade300).merge(spec);
   }
 
   @override

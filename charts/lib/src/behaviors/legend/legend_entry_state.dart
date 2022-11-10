@@ -18,19 +18,20 @@ import 'package:charts/core.dart';
 
 /// The most basic possible legend entry - just a display name and positioning.
 class LegendEntryBase {
-
-  LegendEntryBase(this.label,
-      {this.textStyle,
-      this.rowNumber,
-      this.columnNumber,
-      this.rowCount,
-      this.columnCount,
-      this.inFirstRow,
-      this.inFirstColumn,
-      this.inLastRow,
-      this.inLastColumn,});
+  LegendEntryBase(
+    this.label, {
+    this.textStyle,
+    this.rowNumber,
+    this.columnNumber,
+    this.rowCount,
+    this.columnCount,
+    this.inFirstRow,
+    this.inFirstColumn,
+    this.inLastRow,
+    this.inLastColumn,
+  });
   final String label;
-  final TextStyleSpec? textStyle;
+  final TextStyle? textStyle;
 
   /// Zero based index for the row where this legend appears in the legend.
   int? rowNumber;
@@ -60,7 +61,6 @@ class LegendEntryBase {
 /// When the legend groups by category it will create additional legend entries
 /// that track styling and grouping on a per category basis.
 class LegendCategory<D> extends LegendEntryBase {
-
   LegendCategory(
     super.label,
     this.entries, {
@@ -74,6 +74,7 @@ class LegendCategory<D> extends LegendEntryBase {
     super.inLastRow,
     super.inLastColumn,
   });
+
   /// The list of entries that should be displayed within this category.
   final List<LegendEntry<D>>? entries;
 }
@@ -83,7 +84,6 @@ class LegendCategory<D> extends LegendEntryBase {
 /// [T] the datum class type for the series passed in.
 /// [D] the domain class type for the datum.
 class LegendEntry<D> extends LegendEntryBase {
-
   // TODO: Forward the default formatters from series and allow for
   // native legends to provide separate formatters.
 
@@ -97,7 +97,7 @@ class LegendEntry<D> extends LegendEntryBase {
     this.selectedDataIndexes,
     this.color,
     this.isSelected = false,
-    TextStyleSpec? textStyle,
+    TextStyle? textStyle,
     int? rowNumber,
     int? columnNumber,
     int? rowCount,
@@ -106,16 +106,18 @@ class LegendEntry<D> extends LegendEntryBase {
     bool? inFirstColumn,
     bool? inLastRow,
     bool? inLastColumn,
-  }) : super(label,
-            textStyle: textStyle,
-            rowNumber: rowNumber,
-            columnNumber: columnNumber,
-            rowCount: rowCount,
-            columnCount: columnCount,
-            inFirstRow: inFirstRow,
-            inFirstColumn: inFirstColumn,
-            inLastRow: inLastRow,
-            inLastColumn: inLastColumn,);
+  }) : super(
+          label,
+          textStyle: textStyle,
+          rowNumber: rowNumber,
+          columnNumber: columnNumber,
+          rowCount: rowCount,
+          columnCount: columnCount,
+          inFirstRow: inFirstRow,
+          inFirstColumn: inFirstColumn,
+          inLastRow: inLastRow,
+          inLastColumn: inLastColumn,
+        );
   final ImmutableSeries<D> series;
   final dynamic datum;
   final int? datumIndex;

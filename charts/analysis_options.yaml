@@ -3,3 +3,7 @@ include: package:very_good_analysis/analysis_options.3.1.0.yaml
 linter:
   rules:
     public_member_api_docs: false
+    cascade_invocations: false
+    prefer_asserts_with_message: false
+    flutter_style_todos: false
+    comment_references: false

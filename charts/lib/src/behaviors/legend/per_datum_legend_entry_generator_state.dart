@@ -23,7 +23,7 @@ import 'package:equatable/equatable.dart';
 class PerDatumLegendEntryGenerator<D> extends Equatable
     implements LegendEntryGenerator<D> {
   @override
-  TextStyleSpec? entryTextStyle;
+  TextStyle? entryTextStyle;
 
   @override
   MeasureFormatter? measureFormatter;
@@ -44,11 +44,16 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
 
     final series = seriesList[0];
     for (var i = 0; i < series.data.length; i++) {
-      legendEntries.add(LegendEntry<D>(series, series.domainFn(i).toString(),
+      legendEntries.add(
+        LegendEntry<D>(
+          series,
+          series.domainFn(i).toString(),
           color: series.colorFn!(i),
           datum: series.data[i],
           datumIndex: i,
-          textStyle: entryTextStyle,),);
+          textStyle: entryTextStyle,
+        ),
+      );
     }
 
     // Update with measures only if showing measure on no selection.
@@ -60,8 +65,11 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
   }
 
   @override
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,) {
+  void updateLegendEntries(
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+    List<MutableSeries<D>> seriesList,
+  ) {
     if (selectionModel.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
@@ -76,7 +84,9 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel,) {
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+  ) {
     // Given that each legend entry only has one datum associated with it, any
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.

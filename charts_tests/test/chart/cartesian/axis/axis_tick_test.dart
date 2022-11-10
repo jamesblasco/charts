@@ -28,7 +28,7 @@ class FakeTextElement implements TextElement {
   TextMeasurement measurement;
 
   @override
-  TextPaintStyle textStyle;
+  TextStyle textStyle;
 
   @override
   int maxWidth;

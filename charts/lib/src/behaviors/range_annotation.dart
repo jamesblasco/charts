@@ -25,17 +25,17 @@ import 'package:flutter/material.dart';
 /// range.
 @immutable
 class RangeAnnotation<D> extends ChartBehavior<D> {
-
-  RangeAnnotation(this.annotations,
-      {Color? defaultColor,
-      this.defaultLabelAnchor,
-      this.defaultLabelDirection,
-      this.defaultLabelPosition,
-      this.defaultLabelStyleSpec,
-      this.extendAxis,
-      this.labelPadding,
-      this.layoutPaintOrder,})
-      : defaultColor = defaultColor ?? Colors.grey.shade100;
+  RangeAnnotation(
+    this.annotations, {
+    Color? defaultColor,
+    this.defaultLabelAnchor,
+    this.defaultLabelDirection,
+    this.defaultLabelPosition,
+    this.defaultLabelStyleSpec,
+    this.extendAxis,
+    this.labelPadding,
+    this.layoutPaintOrder,
+  }) : defaultColor = defaultColor ?? Colors.grey.shade100;
   @override
   final desiredGestures = <GestureType>{};
 
@@ -52,7 +52,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   final AnnotationLabelPosition? defaultLabelPosition;
 
   /// Configures the style of label text.
-  final TextStyleSpec? defaultLabelStyleSpec;
+  final TextStyle? defaultLabelStyleSpec;
 
   /// Default color for annotations.
   final Color? defaultColor;
@@ -70,16 +70,16 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   final int? layoutPaintOrder;
 
   @override
-  RangeAnnotationState<D> createBehaviorState() =>
-      RangeAnnotationState<D>(annotations,
-          
-          defaultLabelAnchor: defaultLabelAnchor,
-          defaultLabelDirection: defaultLabelDirection,
-          defaultLabelPosition: defaultLabelPosition,
-          defaultLabelStyleSpec: defaultLabelStyleSpec,
-          extendAxis: extendAxis,
-          labelPadding: labelPadding,
-          layoutPaintOrder: layoutPaintOrder,);
+  RangeAnnotationState<D> createBehaviorState() => RangeAnnotationState<D>(
+        annotations,
+        defaultLabelAnchor: defaultLabelAnchor,
+        defaultLabelDirection: defaultLabelDirection,
+        defaultLabelPosition: defaultLabelPosition,
+        defaultLabelStyleSpec: defaultLabelStyleSpec,
+        extendAxis: extendAxis,
+        labelPadding: labelPadding,
+        layoutPaintOrder: layoutPaintOrder,
+      );
 
   @override
   void updateBehaviorState(ChartBehaviorState commonBehavior) {}

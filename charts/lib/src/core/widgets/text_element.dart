@@ -21,8 +21,7 @@ import 'package:flutter/rendering.dart'
 
 /// Flutter implementation for text measurement and painter.
 class FlutterTextElement implements TextElement {
-
-  FlutterTextElement(this.text, {TextPaintStyle? style, this.textScaleFactor})
+  FlutterTextElement(this.text, {TextStyle? style, this.textScaleFactor})
       : _textStyle = style;
   static const ellipsis = '\u{2026}';
 
@@ -32,9 +31,8 @@ class FlutterTextElement implements TextElement {
   final double? textScaleFactor;
 
   var _painterReady = false;
-  TextPaintStyle? _textStyle;
-  TextDirectionAligment _textDirection =
-      TextDirectionAligment.ltr;
+  TextStyle? _textStyle;
+  TextDirectionAligment _textDirection = TextDirectionAligment.ltr;
 
   int? _maxWidth;
   MaxWidthStrategy? _maxWidthStrategy;
@@ -46,10 +44,10 @@ class FlutterTextElement implements TextElement {
   double? _opacity;
 
   @override
-  TextPaintStyle? get textStyle => _textStyle;
+  TextStyle? get textStyle => _textStyle;
 
   @override
-  set textStyle(TextPaintStyle? value) {
+  set textStyle(TextStyle? value) {
     if (_textStyle == value) {
       return;
     }
@@ -93,6 +91,8 @@ class FlutterTextElement implements TextElement {
     _painterReady = false;
   }
 
+  double? get opacity => _opacity;
+
   @override
   set opacity(double? opacity) {
     if (opacity != _opacity) {
@@ -132,31 +132,19 @@ class FlutterTextElement implements TextElement {
   /// Create text painter and measure based on current settings
   void _refreshPainter() {
     _opacity ??= 1.0;
-    final color = (textStyle == null || textStyle!.color == null)
-        ? null
-        : Color.fromARGB(
-            (textStyle!.color!.alpha * _opacity!).round(),
-            textStyle!.color!.red,
-            textStyle!.color!.green,
-            textStyle!.color!.blue,
-          );
+    final effectiveTextStyle =
+        textStyle?.copyWith(color: textStyle?.color?.withOpacity(opacity!));
 
     _textPainter = TextPainter(
-        text: TextSpan(
-            text: text,
-            style: TextStyle(
-                color: color,
-                fontSize: textStyle?.fontSize?.toDouble(),
-                fontFamily: textStyle?.fontFamily,
-                height: textStyle?.lineHeight,),),)
+      text: TextSpan(text: text, style: effectiveTextStyle),
+    )
       ..textDirection = TextDirection.ltr
       // TODO Flip once textAlign works
       ..textAlign = TextAlign.left
       // ..textAlign = _textDirection == TextDirection.rtl ?
       //     TextAlign.right : TextAlign.left
-      ..ellipsis = maxWidthStrategy == MaxWidthStrategy.ellipsize
-          ? ellipsis
-          : null;
+      ..ellipsis =
+          maxWidthStrategy == MaxWidthStrategy.ellipsize ? ellipsis : null;
 
     if (textScaleFactor != null) {
       _textPainter.textScaleFactor = textScaleFactor!;
@@ -173,9 +161,10 @@ class FlutterTextElement implements TextElement {
     // difficult to shift the text around to get it to visually line up
     // vertically with other components.
     _measurement = TextMeasurement(
-        horizontalSliceWidth: _textPainter.width,
-        verticalSliceWidth: _textPainter.height * 0.70,
-        baseline: baseline,);
+      horizontalSliceWidth: _textPainter.width,
+      verticalSliceWidth: _textPainter.height * 0.70,
+      baseline: baseline,
+    );
 
     _painterReady = true;
   }

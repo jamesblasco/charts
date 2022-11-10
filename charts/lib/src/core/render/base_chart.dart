@@ -171,8 +171,8 @@ abstract class BaseRenderChart<D> {
   bool removeLifecycleListener(LifecycleListener<D> listener) =>
       _lifecycleListeners.remove(listener);
 
-  /// Returns MutableSelectionModel for the given type. Lazy creates one upon first
-  /// request.
+  /// Returns MutableSelectionModel for the given type. Lazy creates one upon 
+  /// first request.
   MutableSelectionModel<D> getSelectionModel(SelectionModelType type) {
     return _selectionModels.putIfAbsent(type, MutableSelectionModel<D>.new);
   }

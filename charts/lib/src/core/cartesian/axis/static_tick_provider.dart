@@ -17,8 +17,8 @@ import 'package:charts/core.dart';
 
 /// A strategy that uses the ticks provided and only assigns positioning.
 ///
-/// The [TextPaintStyle] is not overridden during [TickDrawStrategy.decorateTicks].
-/// If the [TickSpec] style is null, then the default [TextPaintStyle] is used.
+/// The [TextStyle] is not overridden during [TickDrawStrategy.decorateTicks].
+/// If the [TickSpec] style is null, then the default [TextStyle] is used.
 ///
 /// Optionally the [tickIncrement] can be provided in which case every Nth tick
 /// is selected.
@@ -58,8 +58,10 @@ class StaticTickProvider<D> extends TickProvider<D> {
     late List<String> formattedValues;
     if (!allTicksHaveLabels) {
       formattedValues = formatter.format(
-          tickSpec.map((spec) => spec.value).toList(), formatterValueCache,
-          stepSize: scale.domainStepSize,);
+        tickSpec.map((spec) => spec.value).toList(),
+        formatterValueCache,
+        stepSize: scale.domainStepSize,
+      );
     }
 
     for (var i = 0; i < tickSpec.length; i += tickIncrement) {
@@ -68,17 +70,14 @@ class StaticTickProvider<D> extends TickProvider<D> {
       // extend the axis for OrdinalScale.
       if (scale.compareDomainValueToViewport(spec.value) == 0) {
         final tick = Tick<D>(
-            value: spec.value,
-            textElement: graphicsFactory
-                .createTextElement(spec.label ?? formattedValues[i]),
-            locationPx: scale[spec.value]?.toDouble(),);
+          value: spec.value,
+          textElement: graphicsFactory
+              .createTextElement(spec.label ?? formattedValues[i]),
+          locationPx: scale[spec.value]?.toDouble(),
+        );
         final style = spec.style;
         if (style != null) {
-          tick.textElement!.textStyle = graphicsFactory.createTextPaint()
-            ..fontFamily = style.fontFamily
-            ..fontSize = style.fontSize
-            ..color = style.color
-            ..lineHeight = style.lineHeight;
+          tick.textElement!.textStyle = style;
         }
         ticks.add(tick);
       }

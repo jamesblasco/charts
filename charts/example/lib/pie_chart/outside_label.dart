@@ -79,8 +79,8 @@ class PieOutsideLabelChart extends StatelessWidget {
         //
         // Example configuring different styles for inside/outside:
         //       charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: charts.TextStyleSpec(...),
-        //          outsideLabelStyleSpec: charts.TextStyleSpec(...)),
+        //          insideLabelStyleSpec: charts.TextStyle(...),
+        //          outsideLabelStyleSpec: charts.TextStyle(...)),
         defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
           charts.ArcLabelDecorator(
               labelPosition: charts.ArcLabelPosition.outside)

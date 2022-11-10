@@ -26,40 +26,40 @@ import 'package:meta/meta.dart' show immutable, protected;
 /// position of a label positioned outside collides with the previously drawn
 /// label (on the same side of the chart), then that label will be skipped.
 class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
-
-  ArcLabelDecorator(
-      {TextStyleSpec? insideLabelStyleSpec,
-      TextStyleSpec? outsideLabelStyleSpec,
-      ArcLabelLeaderLineStyleSpec? leaderLineStyleSpec,
-      this.labelPosition = _defaultLabelPosition,
-      this.labelPadding = _defaultLabelPadding,
-      this.showLeaderLines = _defaultShowLeaderLines,})
-      : insideLabelStyleSpec = insideLabelStyleSpec ?? _defaultInsideLabelStyle,
+  ArcLabelDecorator({
+    TextStyle? insideLabelStyleSpec,
+    TextStyle? outsideLabelStyleSpec,
+    ArcLabelLeaderLineStyle? leaderLineStyle,
+    this.labelPosition = _defaultLabelPosition,
+    this.labelPadding = _defaultLabelPadding,
+    this.showLeaderLines = _defaultShowLeaderLines,
+  })  : insideLabelStyleSpec = insideLabelStyleSpec ?? _defaultInsideLabelStyle,
         outsideLabelStyleSpec =
             outsideLabelStyleSpec ?? _defaultOutsideLabelStyle,
-        leaderLineStyleSpec = leaderLineStyleSpec ?? _defaultLeaderLineStyle;
+        leaderLineStyle = leaderLineStyle ?? _defaultLeaderLineStyle;
   // Default configuration
   static const _defaultLabelPosition = ArcLabelPosition.auto;
   static const _defaultLabelPadding = 5;
   static const _defaultInsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Colors.white);
+      TextStyle(fontSize: 12, color: Colors.white);
   static const _defaultOutsideLabelStyle =
-      TextStyleSpec(fontSize: 12, color: Colors.black);
-  static final _defaultLeaderLineStyle = ArcLabelLeaderLineStyleSpec(
-      length: 20,
-      thickness: 1,
-      color: StyleFactory.style.arcLabelOutsideLeaderLine,);
+      TextStyle(fontSize: 12, color: Colors.black);
+  static final _defaultLeaderLineStyle = ArcLabelLeaderLineStyle(
+    length: 20,
+    thickness: 1,
+    color: StyleFactory.style.arcLabelOutsideLeaderLine,
+  );
   static const _defaultShowLeaderLines = true;
 
-  /// Configures [TextStyleSpec] for labels placed inside the arcs.
-  final TextStyleSpec insideLabelStyleSpec;
+  /// Configures [TextStyle] for labels placed inside the arcs.
+  final TextStyle insideLabelStyleSpec;
 
-  /// Configures [TextStyleSpec] for labels placed outside the arcs.
-  final TextStyleSpec outsideLabelStyleSpec;
+  /// Configures [TextStyle] for labels placed outside the arcs.
+  final TextStyle outsideLabelStyleSpec;
 
-  /// Configures [ArcLabelLeaderLineStyleSpec] for leader lines for labels
+  /// Configures [ArcLabelLeaderLineStyle] for leader lines for labels
   /// placed outside the arcs.
-  final ArcLabelLeaderLineStyleSpec leaderLineStyleSpec;
+  final ArcLabelLeaderLineStyle leaderLineStyle;
 
   /// Configures where to place the label relative to the arcs.
   final ArcLabelPosition labelPosition;
@@ -79,17 +79,20 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   bool? _previousLabelLeftOfChart;
 
   @override
-  void decorate(List<ArcRendererElementList<D>> arcElementsList,
-      ChartCanvas canvas, GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false,}) {
+  void decorate(
+    List<ArcRendererElementList<D>> arcElementsList,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+  }) {
     // Only decorate the arcs when animation is at 100%.
     if (animationPercent != 1.0) {
       return;
     }
 
-    // Create [TextStyle] from [TextStyleSpec] to be used by all the elements.
+    // Create [TextStyle] from [TextStyle] to be used by all the elements.
     // The [GraphicsFactory] is needed so it can't be created earlier.
     final insideLabelStyle =
         _getTextStyle(graphicsFactory, insideLabelStyleSpec);
@@ -110,15 +113,17 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         // If there are custom styles, use that instead of the default or the
         // style defined for the entire decorator.
         final datumInsideLabelStyle = _getDatumStyle(
-            element.series.insideLabelStyleAccessorFn,
-            datumIndex,
-            graphicsFactory,
-            defaultStyle: insideLabelStyle,);
+          element.series.insideLabelStyleAccessorFn,
+          datumIndex,
+          graphicsFactory,
+          defaultStyle: insideLabelStyle,
+        );
         final datumOutsideLabelStyle = _getDatumStyle(
-            element.series.outsideLabelStyleAccessorFn,
-            datumIndex,
-            graphicsFactory,
-            defaultStyle: outsideLabelStyle,);
+          element.series.outsideLabelStyleAccessorFn,
+          datumIndex,
+          graphicsFactory,
+          defaultStyle: outsideLabelStyle,
+        );
 
         // Skip calculation and drawing for this element if no label.
         if (label == null || label.isEmpty) {
@@ -133,8 +138,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
             ((arcElements.radius - arcElements.innerRadius) / 2);
 
         final outerPoint = Point<double>(
-            arcElements.center.x + arcElements.radius * cos(centerAngle),
-            arcElements.center.y + arcElements.radius * sin(centerAngle),);
+          arcElements.center.x + arcElements.radius * cos(centerAngle),
+          arcElements.center.y + arcElements.radius * sin(centerAngle),
+        );
 
         final bounds =
             Rectangle<double>.fromPoints(arcElements.center, outerPoint);
@@ -142,13 +148,11 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         // Get space available inside and outside the arc.
         final totalPadding = labelPadding * 2;
         final insideArcWidth = min(
-                (((arcAngle * 180 / pi) / 360) * (2 * pi * centerRadius))
-                    .round(),
-                (arcElements.radius - arcElements.innerRadius) - labelPadding,)
-            .round();
+          (((arcAngle * 180 / pi) / 360) * (2 * pi * centerRadius)).round(),
+          (arcElements.radius - arcElements.innerRadius) - labelPadding,
+        ).round();
 
-        final leaderLineLength =
-            showLeaderLines ? leaderLineStyleSpec.length : 0;
+        final leaderLineLength = showLeaderLines ? leaderLineStyle.length : 0;
 
         final outsideArcWidth = ((drawBounds.width / 2) -
                 bounds.width -
@@ -161,12 +165,13 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
           ..maxWidthStrategy = MaxWidthStrategy.ellipsize;
 
         final calculatedLabelPosition = calculateLabelPosition(
-            labelElement,
-            datumInsideLabelStyle,
-            insideArcWidth,
-            outsideArcWidth,
-            element,
-            labelPosition,);
+          labelElement,
+          datumInsideLabelStyle,
+          insideArcWidth,
+          outsideArcWidth,
+          element,
+          labelPosition,
+        );
 
         // Set the max width and text style.
         if (calculatedLabelPosition == ArcLabelPosition.inside) {
@@ -186,7 +191,12 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
             _drawInsideLabel(canvas, arcElements, labelElement, centerAngle);
           } else {
             final l = _drawOutsideLabel(
-                canvas, drawBounds, arcElements, labelElement, centerAngle,);
+              canvas,
+              drawBounds,
+              arcElements,
+              labelElement,
+              centerAngle,
+            );
 
             if (l != null) {
               updateCollisionDetectionParams(l);
@@ -199,12 +209,13 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
   @protected
   ArcLabelPosition calculateLabelPosition(
-      TextElement labelElement,
-      TextPaintStyle labelStyle,
-      int insideArcWidth,
-      int outsideArcWidth,
-      ArcRendererElement arcRendererelement,
-      ArcLabelPosition labelPosition,) {
+    TextElement labelElement,
+    TextStyle labelStyle,
+    int insideArcWidth,
+    int outsideArcWidth,
+    ArcRendererElement arcRendererelement,
+    ArcLabelPosition labelPosition,
+  ) {
     if (labelPosition == ArcLabelPosition.auto) {
       // For auto, first try to fit the text inside the arc.
       labelElement.textStyle = labelStyle;
@@ -222,20 +233,24 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
     }
   }
 
-  /// Helper function that converts [TextStyleSpec] to [TextPaintStyle].
-  TextPaintStyle _getTextStyle(
-      GraphicsFactory graphicsFactory, TextStyleSpec labelSpec,) {
-    return graphicsFactory.createTextPaint()
-      ..color = labelSpec.color ?? Colors.black
-      ..fontFamily = labelSpec.fontFamily
-      ..fontSize = labelSpec.fontSize ?? 12
-      ..lineHeight = labelSpec.lineHeight;
+  /// Helper function that converts [TextStyle] to [TextStyle].
+  TextStyle _getTextStyle(
+    GraphicsFactory graphicsFactory,
+    TextStyle labelSpec,
+  ) {
+    return graphicsFactory
+        .createTextPaint()
+        .copyWith(color: Colors.black, fontSize: 12)
+        .merge(labelSpec);
   }
 
   /// Helper function to get datum specific style
-  TextPaintStyle _getDatumStyle(AccessorFn<TextStyleSpec>? labelFn,
-      int? datumIndex, GraphicsFactory graphicsFactory,
-      {required TextPaintStyle defaultStyle,}) {
+  TextStyle _getDatumStyle(
+    AccessorFn<TextStyle>? labelFn,
+    int? datumIndex,
+    GraphicsFactory graphicsFactory, {
+    required TextStyle defaultStyle,
+  }) {
     final styleSpec = (labelFn != null) ? labelFn(datumIndex) : null;
     return (styleSpec != null)
         ? _getTextStyle(graphicsFactory, styleSpec)
@@ -244,10 +259,11 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
   /// Draws a label inside of an arc.
   void _drawInsideLabel(
-      ChartCanvas canvas,
-      ArcRendererElementList<D> arcElements,
-      TextElement labelElement,
-      double centerAngle,) {
+    ChartCanvas canvas,
+    ArcRendererElementList<D> arcElements,
+    TextElement labelElement,
+    double centerAngle,
+  ) {
     // Center the label inside the arc.
     final labelRadius = arcElements.innerRadius +
         (arcElements.radius - arcElements.innerRadius) / 2;
@@ -273,20 +289,22 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   }
 
   double getLabelRadius(ArcRendererElementList<D> arcElements) =>
-      arcElements.radius + leaderLineStyleSpec.length / 2;
+      arcElements.radius + leaderLineStyle.length / 2;
 
   /// Draws a label outside of an arc.
   List<Object>? _drawOutsideLabel(
-      ChartCanvas canvas,
-      Rectangle drawBounds,
-      ArcRendererElementList<D> arcElements,
-      TextElement labelElement,
-      double centerAngle,) {
+    ChartCanvas canvas,
+    Rectangle drawBounds,
+    ArcRendererElementList<D> arcElements,
+    TextElement labelElement,
+    double centerAngle,
+  ) {
     final labelRadius = getLabelRadius(arcElements);
 
     final labelPoint = Point<double>(
-        arcElements.center.x + labelRadius * cos(centerAngle),
-        arcElements.center.y + labelRadius * sin(centerAngle),);
+      arcElements.center.x + labelRadius * cos(centerAngle),
+      arcElements.center.y + labelRadius * sin(centerAngle),
+    );
 
     // Use the label's chart quandrant to determine whether it's rendered to the
     // right or left.
@@ -307,14 +325,24 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         : TextDirectionAligment.ltr;
 
     // Skip this label if it collides with the previously drawn label.
-    if (detectOutsideLabelCollision(labelY, labelLeftOfChart,
-        _previousOutsideLabelY, _previousLabelLeftOfChart,)) {
+    if (detectOutsideLabelCollision(
+      labelY,
+      labelLeftOfChart,
+      _previousOutsideLabelY,
+      _previousLabelLeftOfChart,
+    )) {
       return null;
     }
 
     if (showLeaderLines) {
-      final tailX = _drawLeaderLine(canvas, labelLeftOfChart, labelPoint,
-          arcElements.radius, arcElements.center, centerAngle,);
+      final tailX = _drawLeaderLine(
+        canvas,
+        labelLeftOfChart,
+        labelPoint,
+        arcElements.radius,
+        arcElements.center,
+        centerAngle,
+      );
 
       // Shift the label horizontally by the length of the leader line.
       labelX = (labelX + tailX).round();
@@ -330,8 +358,12 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
   /// Detects whether the current outside label collides with the previous label.
   @protected
-  bool detectOutsideLabelCollision(num labelY, bool labelLeftOfChart,
-      num? previousOutsideLabelY, bool? previousLabelLeftOfChart,) {
+  bool detectOutsideLabelCollision(
+    num labelY,
+    bool labelLeftOfChart,
+    num? previousOutsideLabelY,
+    bool? previousLabelLeftOfChart,
+  ) {
     var collides = false;
 
     // Given that labels are vertically centered, we can assume they will
@@ -356,30 +388,33 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
   /// Draws a leader line for the current arc.
   double _drawLeaderLine(
-      ChartCanvas canvas,
-      bool labelLeftOfChart,
-      Point<double> labelPoint,
-      double radius,
-      Point<double> arcCenterPoint,
-      double centerAngle,) {
-    final tailX = (labelLeftOfChart ? -1 : 1) * leaderLineStyleSpec.length;
+    ChartCanvas canvas,
+    bool labelLeftOfChart,
+    Point<double> labelPoint,
+    double radius,
+    Point<double> arcCenterPoint,
+    double centerAngle,
+  ) {
+    final tailX = (labelLeftOfChart ? -1 : 1) * leaderLineStyle.length;
 
     final leaderLineTailPoint =
         Point<double>(labelPoint.x + tailX, labelPoint.y);
 
-    final centerRadius = radius - leaderLineStyleSpec.length / 2;
+    final centerRadius = radius - leaderLineStyle.length / 2;
     final leaderLineStartPoint = Point<double>(
-        arcCenterPoint.x + centerRadius * cos(centerAngle),
-        arcCenterPoint.y + centerRadius * sin(centerAngle),);
+      arcCenterPoint.x + centerRadius * cos(centerAngle),
+      arcCenterPoint.y + centerRadius * sin(centerAngle),
+    );
 
     canvas.drawLine(
-        points: [
-          leaderLineStartPoint,
-          labelPoint,
-          leaderLineTailPoint,
-        ],
-        stroke: leaderLineStyleSpec.color,
-        strokeWidthPx: leaderLineStyleSpec.thickness,);
+      points: [
+        leaderLineStartPoint,
+        labelPoint,
+        leaderLineTailPoint,
+      ],
+      stroke: leaderLineStyle.color,
+      strokeWidthPx: leaderLineStyle.thickness,
+    );
 
     return tailX;
   }
@@ -401,8 +436,8 @@ enum ArcLabelPosition {
 
 /// Style configuration for leader lines.
 @immutable
-class ArcLabelLeaderLineStyleSpec extends Equatable {
-  const ArcLabelLeaderLineStyleSpec({
+class ArcLabelLeaderLineStyle extends Equatable {
+  const ArcLabelLeaderLineStyle({
     required this.color,
     required this.length,
     required this.thickness,

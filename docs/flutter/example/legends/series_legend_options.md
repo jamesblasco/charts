@@ -59,7 +59,7 @@ class LegendOptions extends StatelessWidget {
           // This defines the padding around each legend entry.
           cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
           // Render the legend entry text with custom styles.
-          entryTextStyle: charts.TextStyleSpec(
+          entryTextStyle: charts.TextStyle(
               color: charts.Color(r: 127, g: 63, b: 191),
               fontFamily: 'Georgia',
               fontSize: 11),

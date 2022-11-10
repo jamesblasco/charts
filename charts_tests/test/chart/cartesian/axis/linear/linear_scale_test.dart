@@ -15,7 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import 'package:charts/charts.dart';
-import 'package:charts/charts.dart';
 import 'package:test/test.dart';
 
 const EPSILON = 0.001;

@@ -27,7 +27,7 @@ abstract class ChartBehavior<D> extends Equatable {
 
   ChartBehaviorState<D> createBehaviorState();
 
-  void updateBehaviorState(ChartBehaviorState<D> behaviorState);
+  void updateBehaviorState(ChartBehaviorState<D> behaviorState) {}
 
   String get role;
 }

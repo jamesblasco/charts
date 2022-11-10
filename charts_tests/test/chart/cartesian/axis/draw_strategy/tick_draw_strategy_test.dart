@@ -28,8 +28,8 @@ class MockContext extends Mock implements ChartContext {}
 class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
   BaseTickDrawStrategyImpl(
       ChartContext chartContext, GraphicsFactory graphicsFactory,
-      {TextStyleSpec labelStyleSpec,
-      LineStyleSpec axisLineStyleSpec,
+      {TextStyle labelStyleSpec,
+      LineStyle axisLineStyle,
       TickLabelAnchor labelAnchor,
       TickLabelJustification labelJustification,
       int labelOffsetFromAxisPx,
@@ -41,7 +41,7 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
       int labelCollisionRotation})
       : super(chartContext, graphicsFactory,
             labelStyleSpec: labelStyleSpec,
-            axisLineStyleSpec: axisLineStyleSpec,
+            axisLineStyle: axisLineStyle,
             labelAnchor: labelAnchor,
             labelJustification: labelJustification,
             labelOffsetFromAxisPx: labelOffsetFromAxisPx,
@@ -98,7 +98,7 @@ class FakeTextElement implements TextElement {
   final TextMeasurement measurement;
 
   @override
-  var textStyle = MockTextPaintStyle();
+  var textStyle = TextStyle();
 
   @override
   int maxWidth;
@@ -123,9 +123,7 @@ class FakeTextElement implements TextElement {
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
-class MockLineStyle extends Mock implements LineStyle {}
 
-class MockTextPaintStyle extends Mock implements TextPaintStyle {}
 
 class MockChartCanvas extends Mock implements ChartCanvas {}
 
@@ -148,8 +146,8 @@ void main() {
 
   setUpAll(() {
     graphicsFactory = MockGraphicsFactory();
-    when(graphicsFactory.createLinePaint()).thenReturn(MockLineStyle());
-    when(graphicsFactory.createTextPaint()).thenReturn(MockTextPaintStyle());
+    when(graphicsFactory.createLinePaint()).thenReturn(LineStyle());
+    when(graphicsFactory.createTextPaint()).thenReturn(TextStyle());
 
     chartContext = MockContext();
     when(chartContext.chartContainerIsRtl).thenReturn(false);

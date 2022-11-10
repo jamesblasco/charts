@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 /// Series legend behavior for charts.
 @immutable
 class SeriesLegend<D> extends ChartBehavior<D> {
-
   /// Create a tabular layout legend.
   ///
   /// By default, the legend is place above the chart and horizontally aligned
@@ -74,7 +73,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
-    TextStyleSpec? entryTextStyle,
+    TextStyle? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -89,23 +88,27 @@ class SeriesLegend<D> extends ChartBehavior<D> {
         position == BehaviorPosition.inside;
     final layoutBuilder = horizontalFirst
         ? TabularLegendLayout.horizontalFirst(
-            desiredMaxColumns: desiredMaxColumns, cellPadding: cellPadding,)
+            desiredMaxColumns: desiredMaxColumns,
+            cellPadding: cellPadding,
+          )
         : TabularLegendLayout.verticalFirst(
-            desiredMaxRows: desiredMaxRows, cellPadding: cellPadding,);
+            desiredMaxRows: desiredMaxRows,
+            cellPadding: cellPadding,
+          );
 
     return SeriesLegend._internal(
-        contentBuilder:
-            TabularLegendContentBuilder(legendLayout: layoutBuilder),
-        selectionModelType: SelectionModelType.info,
-        position: position,
-        outsideJustification: outsideJustification,
-        insideJustification: insideJustification,
-        defaultHiddenSeries: defaultHiddenSeries,
-        showMeasures: showMeasures ?? false,
-        legendDefaultMeasure: legendDefaultMeasure ?? LegendDefaultMeasure.none,
-        measureFormatter: measureFormatter,
-        secondaryMeasureFormatter: secondaryMeasureFormatter,
-        entryTextStyle: entryTextStyle,);
+      contentBuilder: TabularLegendContentBuilder(legendLayout: layoutBuilder),
+      selectionModelType: SelectionModelType.info,
+      position: position,
+      outsideJustification: outsideJustification,
+      insideJustification: insideJustification,
+      defaultHiddenSeries: defaultHiddenSeries,
+      showMeasures: showMeasures ?? false,
+      legendDefaultMeasure: legendDefaultMeasure ?? LegendDefaultMeasure.none,
+      measureFormatter: measureFormatter,
+      secondaryMeasureFormatter: secondaryMeasureFormatter,
+      entryTextStyle: entryTextStyle,
+    );
   }
 
   /// Create a legend with custom layout.
@@ -148,7 +151,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
-    TextStyleSpec? entryTextStyle,
+    TextStyle? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -227,7 +230,7 @@ class SeriesLegend<D> extends ChartBehavior<D> {
   final MeasureFormatter? secondaryMeasureFormatter;
 
   /// Styles for legend entry label text.
-  final TextStyleSpec? entryTextStyle;
+  final TextStyle? entryTextStyle;
 
   static const defaultCellPadding = EdgeInsets.all(8);
 
@@ -266,7 +269,6 @@ class SeriesLegend<D> extends ChartBehavior<D> {
 /// Flutter specific wrapper on the common Legend for building content.
 class _FlutterSeriesLegend<D> extends SeriesLegendBehaviorState<D>
     implements BuildableBehavior, TappableLegend {
-
   _FlutterSeriesLegend(this.config)
       : super(
           selectionModelType: config.selectionModelType,

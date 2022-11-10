@@ -17,18 +17,18 @@ import 'package:charts/core.dart';
 import 'package:flutter/material.dart' hide TextStyle;
 
 class FlutterGraphicsFactory implements GraphicsFactory {
-
-  FlutterGraphicsFactory(BuildContext context,
-      {GraphicsFactoryHelper helper = const GraphicsFactoryHelper(),})
-      : textScaleFactor = helper.getTextScaleFactorOf(context),
+  FlutterGraphicsFactory(
+    BuildContext context, {
+    GraphicsFactoryHelper helper = const GraphicsFactoryHelper(),
+  })  : textScaleFactor = helper.getTextScaleFactorOf(context),
         defaultTextStyle = DefaultTextStyle.of(context);
   final double textScaleFactor;
   final DefaultTextStyle defaultTextStyle;
 
-  /// Returns a [TextPaintStyle] object.
+  /// Returns a [TextStyle] object.
   @override
-  TextPaintStyle createTextPaint() =>
-      FlutterTextStyle()..fontFamily = defaultTextStyle.style.fontFamily;
+  TextStyle createTextPaint() =>
+      TextStyle(fontFamily: defaultTextStyle.style.fontFamily);
 
   /// Returns a text element from [text].
   @override
@@ -38,7 +38,7 @@ class FlutterGraphicsFactory implements GraphicsFactory {
   }
 
   @override
-  LineStyle createLinePaint() => FlutterLineStyle();
+  LineStyle createLinePaint() => const LineStyle(color: Colors.black);
 }
 
 /// Wraps the MediaQuery function to allow for testing.

@@ -1,5 +1,5 @@
 export 'dart:ui' show Color;
-
+export 'package:flutter/material.dart' show TextStyle;
 export 'a11y/a11y.dart';
 export 'behavior/chart_behavior.dart';
 export 'behavior/chart_behavior_state.dart';

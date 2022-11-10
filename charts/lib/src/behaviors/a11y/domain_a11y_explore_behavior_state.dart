@@ -20,7 +20,8 @@ import 'package:charts/core.dart';
 
 /// Returns a string for a11y vocalization from a list of series datum.
 typedef VocalizationCallback<D> = String Function(
-    List<SeriesDatum<D>> seriesDatums,);
+  List<SeriesDatum<D>> seriesDatums,
+);
 
 /// A simple vocalization that returns the domain value to string.
 String domainVocalization<D>(List<SeriesDatum<D>> seriesDatums) {
@@ -33,14 +34,13 @@ String domainVocalization<D>(List<SeriesDatum<D>> seriesDatums) {
 
 /// Behavior that generates semantic nodes for each domain.
 class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
-
-  DomainA11yExploreBehaviorState(
-      {VocalizationCallback<D>? vocalizationCallback,
-      super.exploreModeTrigger,
-      super.minimumWidth,
-      super.exploreModeEnabledAnnouncement,
-      super.exploreModeDisabledAnnouncement,})
-      : _vocalizationCallback = vocalizationCallback ?? domainVocalization {
+  DomainA11yExploreBehaviorState({
+    VocalizationCallback<D>? vocalizationCallback,
+    super.exploreModeTrigger,
+    super.minimumWidth,
+    super.exploreModeEnabledAnnouncement,
+    super.exploreModeDisabledAnnouncement,
+  }) : _vocalizationCallback = vocalizationCallback ?? domainVocalization {
     _lifecycleListener = LifecycleListener<D>(onPostprocess: _updateSeriesList);
   }
   final VocalizationCallback<D> _vocalizationCallback;
@@ -71,7 +71,8 @@ class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
       final a11yDescription = _vocalizationCallback(seriesDatums);
 
       final firstSeries = seriesDatums.first.series;
-      final domainAxis = firstSeries.getAttr(domainAxisKey) as ImmutableAxis<D>;
+      final domainAxis =
+          firstSeries.getAttr(domainAxisKey)! as ImmutableAxis<D>;
       final location = domainAxis.getLocation(domain)!;
 
       /// If the step size is smaller than the minimum width, use minimum.
@@ -79,13 +80,17 @@ class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
           ? domainAxis.stepSize
           : minimumWidth;
 
-      nodes.add(_DomainA11yNode(a11yDescription,
+      nodes.add(
+        _DomainA11yNode(
+          a11yDescription,
           location: location,
           stepSize: stepSize,
           chartDrawBounds: _chart.drawAreaBounds,
           isRtl: _chart.context.isRtl,
           renderVertically: _chart.vertical,
-          onFocus: () => selectionModel.updateSelection(seriesDatums, []),),);
+          onFocus: () => selectionModel.updateSelection(seriesDatums, []),
+        ),
+      );
     });
 
     // The screen reader navigates the nodes based on the order it is returned.
@@ -125,14 +130,15 @@ class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
 
 /// A11yNode with domain specific information.
 class _DomainA11yNode extends A11yNode implements Comparable<_DomainA11yNode> {
-
-  factory _DomainA11yNode(String label,
-      {required double location,
-      required double stepSize,
-      required Rectangle<int> chartDrawBounds,
-      required bool isRtl,
-      required bool renderVertically,
-      OnFocus? onFocus,}) {
+  factory _DomainA11yNode(
+    String label, {
+    required double location,
+    required double stepSize,
+    required Rectangle<int> chartDrawBounds,
+    required bool isRtl,
+    required bool renderVertically,
+    OnFocus? onFocus,
+  }) {
     Rectangle<int> boundingBox;
     if (renderVertically) {
       final left = (location - stepSize / 2).round();
@@ -148,18 +154,24 @@ class _DomainA11yNode extends A11yNode implements Comparable<_DomainA11yNode> {
       boundingBox = Rectangle(left, top, width, height);
     }
 
-    return _DomainA11yNode._internal(label, boundingBox,
-        location: location,
-        isRtl: isRtl,
-        renderVertically: renderVertically,
-        onFocus: onFocus,);
+    return _DomainA11yNode._internal(
+      label,
+      boundingBox,
+      location: location,
+      isRtl: isRtl,
+      renderVertically: renderVertically,
+      onFocus: onFocus,
+    );
   }
 
-  _DomainA11yNode._internal(super.label, super.boundingBox,
-      {required this.location,
-      required this.isRtl,
-      required this.renderVertically,
-      super.onFocus,});
+  _DomainA11yNode._internal(
+    super.label,
+    super.boundingBox, {
+    required this.location,
+    required this.isRtl,
+    required this.renderVertically,
+    super.onFocus,
+  });
   // Save location, RTL, and is render vertically for sorting
   final double location;
   final bool isRtl;

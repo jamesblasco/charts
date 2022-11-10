@@ -44,8 +44,8 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
   }
   /// The gesture that activates explore mode. Defaults to long press.
   ///
-  /// Turning on explore mode asks this [A11yExploreBehaviorState] to generate nodes within
-  /// this chart.
+  /// Turning on explore mode asks this [A11yExploreBehaviorState] to generate 
+  /// nodes within this chart.
   final ExploreModeTrigger exploreModeTrigger;
 
   /// Minimum width of the bounding box for the a11y focus.
@@ -59,7 +59,7 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
   /// Optionally notify the OS when explore mode is disabled.
   final String? exploreModeDisabledAnnouncement;
 
-  BaseRenderChart<D>? _chart;
+  late BaseRenderChart<D>? _chart;
   late GestureListener _listener;
   bool _exploreModeOn = false;
 

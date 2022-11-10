@@ -84,24 +84,24 @@ class CustomFontSizeAndColor extends StatelessWidget {
           renderSpec: charts.SmallTickRendererSpec(
 
               // Tick and Label styling here.
-              labelStyle: charts.TextStyleSpec(
+              labelStyle: charts.TextStyle(
                   fontSize: 18, // size in Pts.
                   color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: charts.LineStyleSpec(color: Colors.black))),
+              lineStyle: charts.LineStyle(color: Colors.black))),
 
       /// Assign a custom style for the measure axis.
       primaryMeasureAxis: charts.NumericAxisSpec(
           renderSpec: charts.GridlineRendererSpec(
 
               // Tick and Label styling here.
-              labelStyle: charts.TextStyleSpec(
+              labelStyle: charts.TextStyle(
                   fontSize: 18, // size in Pts.
                   color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: charts.LineStyleSpec(color: Colors.black))),
+              lineStyle: charts.LineStyle(color: Colors.black))),
     );
   }
 

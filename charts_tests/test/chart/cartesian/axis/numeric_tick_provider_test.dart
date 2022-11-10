@@ -60,23 +60,21 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
       bool collision = false}) {}
 }
 
-/// A fake [GraphicsFactory] that returns [MockTextPaintStyle] and [MockTextElement].
+/// A fake [GraphicsFactory] that returns [MockTextStyle] and [MockTextElement].
 class FakeGraphicsFactory extends GraphicsFactory {
   @override
-  TextPaintStyle createTextPaint() => MockTextPaintStyle();
+  TextStyle createTextPaint() => TextStyle();
 
   @override
   TextElement createTextElement(String text) => MockTextElement();
 
   @override
-  LineStyle createLinePaint() => MockLinePaint();
+  LineStyle createLinePaint() => LineStyle();
 }
-
-class MockTextPaintStyle extends Mock implements TextPaintStyle {}
 
 class MockTextElement extends Mock implements TextElement {}
 
-class MockLinePaint extends Mock implements LineStyle {}
+
 
 class MockChartContext extends Mock implements ChartContext {}
 

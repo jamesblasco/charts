@@ -18,7 +18,6 @@ import 'dart:math';
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show immutable;
 
-
 @immutable
 class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
   const GridlineRendererSpec({
@@ -39,21 +38,26 @@ class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicsFactory,) =>
-      GridlineTickDrawStrategy<D>(context, graphicsFactory,
-          tickLengthPx: tickLengthPx,
-          lineStyleSpec: lineStyle,
-          labelStyleSpec: labelStyle,
-          axisLineStyleSpec: axisLineStyle,
-          labelAnchor: labelAnchor,
-          labelJustification: labelJustification,
-          labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-          labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-          labelOffsetFromTickPx: labelOffsetFromTickPx,
-          labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-          minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-          labelRotation: labelRotation,
-          labelCollisionRotation: labelCollisionRotation,);
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) =>
+      GridlineTickDrawStrategy<D>(
+        context,
+        graphicsFactory,
+        tickLengthPx: tickLengthPx,
+        lineStyle: lineStyle,
+        labelStyleSpec: labelStyle,
+        axisLineStyle: axisLineStyle,
+        labelAnchor: labelAnchor,
+        labelJustification: labelJustification,
+        labelOffsetFromAxisPx: labelOffsetFromAxisPx,
+        labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
+        labelOffsetFromTickPx: labelOffsetFromTickPx,
+        labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
+        minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
+        labelRotation: labelRotation,
+        labelCollisionRotation: labelCollisionRotation,
+      );
 
   @override
   // ignore: hash_and_equals
@@ -67,14 +71,13 @@ class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
 ///
 /// Extends [BaseTickDrawStrategy].
 class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
-
   GridlineTickDrawStrategy(
     super.chartContext,
     super.graphicsFactory, {
     int? tickLengthPx,
-    LineStyleSpec? lineStyleSpec,
+    LineStyle? lineStyle,
     super.labelStyleSpec,
-    LineStyleSpec? axisLineStyleSpec,
+    LineStyle? axisLineStyle,
     super.labelAnchor,
     super.labelJustification,
     super.labelOffsetFromAxisPx,
@@ -85,9 +88,11 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     super.labelRotation,
     super.labelCollisionRotation,
   })  : tickLength = tickLengthPx ?? 0,
-        lineStyle = StyleFactory.style
-            .createGridlineStyle(graphicsFactory, lineStyleSpec),
-        super(axisLineStyleSpec: axisLineStyleSpec ?? lineStyleSpec,);
+        lineStyle =
+            StyleFactory.style.createGridlineStyle(graphicsFactory, lineStyle),
+        super(
+          axisLineStyle: axisLineStyle ?? lineStyle,
+        );
   int tickLength;
   LineStyle lineStyle;
 
@@ -147,12 +152,15 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       strokeWidthPx: lineStyle.strokeWidth.toDouble(),
     );
 
-    drawLabel(canvas, tick,
-        orientation: orientation,
-        axisBounds: axisBounds,
-        drawAreaBounds: drawAreaBounds,
-        isFirst: isFirst,
-        isLast: isLast,
-        collision: collision,);
+    drawLabel(
+      canvas,
+      tick,
+      orientation: orientation,
+      axisBounds: axisBounds,
+      drawAreaBounds: drawAreaBounds,
+      isFirst: isFirst,
+      isLast: isLast,
+      collision: collision,
+    );
   }
 }

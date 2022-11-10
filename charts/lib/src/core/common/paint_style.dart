@@ -17,5 +17,5 @@ import 'package:charts/core.dart';
 
 /// Style properties of a paintable object.
 abstract class PaintStyle {
-  Color? color;
+  Color? get color;
 }

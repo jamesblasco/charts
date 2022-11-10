@@ -85,8 +85,8 @@ class DonutAutoLabelChart extends StatelessWidget {
         //
         // Example configuring different styles for inside/outside:
         //       charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: charts.TextStyleSpec(...),
-        //          outsideLabelStyleSpec: charts.TextStyleSpec(...)),
+        //          insideLabelStyleSpec: charts.TextStyle(...),
+        //          outsideLabelStyleSpec: charts.TextStyle(...)),
         defaultRenderer: charts.ArcRendererConfig(
             arcWidth: 60, arcRendererDecorators: [charts.ArcLabelDecorator()]));
   }

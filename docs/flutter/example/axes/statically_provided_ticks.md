@@ -47,7 +47,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
           // Optional label for this tick, defaults to domain value if not set.
           label: 'Year 2014',
           // The styling for this tick.
-          style: new charts.TextStyleSpec(
+          style: new charts.TextStyle(
               color: new charts.Color(r: 0x4C, g: 0xAF, b: 0x50))),
       // If no text style is specified - the style from renderSpec will be used
       // if one is specified.

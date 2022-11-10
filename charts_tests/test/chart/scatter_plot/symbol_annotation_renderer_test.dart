@@ -16,7 +16,6 @@
 // limitations under the License.
 
 import 'package:charts/charts.dart';
-import 'package:charts/charts.dart';
 
 import 'package:test/test.dart';
 

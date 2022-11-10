@@ -30,8 +30,11 @@ abstract class LegendEntryGenerator<D> {
   /// [legendEntries] Existing legend entries to update.
   /// [selectionModel] Selection model to query selected state.
   /// [seriesList] Processed series list.
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList,);
+  void updateLegendEntries(
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+    List<MutableSeries<D>> seriesList,
+  );
 
   MeasureFormatter? get measureFormatter;
 
@@ -45,9 +48,9 @@ abstract class LegendEntryGenerator<D> {
 
   set legendDefaultMeasure(LegendDefaultMeasure noSelectionMeasure);
 
-  TextStyleSpec? get entryTextStyle;
+  TextStyle? get entryTextStyle;
 
-  set entryTextStyle(TextStyleSpec? entryTextStyle);
+  set entryTextStyle(TextStyle? entryTextStyle);
 
   bool get showOverlaySeries;
 

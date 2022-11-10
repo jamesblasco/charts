@@ -14,11 +14,71 @@
 // limitations under the License.
 
 import 'package:charts/core.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class LineStyle extends PaintStyle {
-  List<int>? get dashPattern;
-  set dashPattern(List<int>? dashPattern);
+const String _kDefaultDebugLabel = 'unknown';
 
-  int get strokeWidth;
-  set strokeWidth(int strokeWidth);
+class LineStyle extends Equatable implements PaintStyle {
+  const LineStyle({
+    this.dashPattern,
+    this.strokeWidth = 1,
+    this.color,
+    this.inherit = true,
+    this.debugLabel,
+  });
+
+  final List<int>? dashPattern;
+
+  final double strokeWidth;
+
+  @override
+  final Color? color;
+
+  final String? debugLabel;
+
+  final bool inherit;
+
+  @override
+  List<Object?> get props => [strokeWidth, color, dashPattern];
+
+  LineStyle copyWith({
+    List<int>? dashPattern,
+    double? strokeWidth,
+    Color? color,
+    String? debugLabel,
+    bool? inherit,
+  }) {
+    return LineStyle(
+      dashPattern: dashPattern ?? this.dashPattern,
+      strokeWidth: strokeWidth ?? this.strokeWidth,
+      color: color ?? this.color,
+      debugLabel: debugLabel ?? this.debugLabel,
+      inherit: inherit ?? this.inherit,
+    );
+  }
+
+  LineStyle merge(LineStyle? other) {
+    if (other == null) {
+      return this;
+    }
+    if (!other.inherit) {
+      return other;
+    }
+
+    String? mergedDebugLabel;
+    assert(() {
+      if (other.debugLabel != null || debugLabel != null) {
+        mergedDebugLabel =
+            '(${debugLabel ?? _kDefaultDebugLabel}).merge(${other.debugLabel ?? _kDefaultDebugLabel})';
+      }
+      return true;
+    }());
+
+    return copyWith(
+      color: other.color,
+      strokeWidth: other.strokeWidth,
+      dashPattern: other.dashPattern,
+      debugLabel: mergedDebugLabel,
+    );
+  }
 }

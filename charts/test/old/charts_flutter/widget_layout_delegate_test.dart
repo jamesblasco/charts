@@ -137,7 +137,6 @@ void main() {
     testWidgets('Position top - start draw area justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.top;
-      const outsideJustification = common.OutsideJustification.startDrawArea;
       const drawAreaBounds = Rectangle<int>(25, 50, 150, 50);
 
       // Behavior takes up 50 height, so 50 height remains for the chart.
@@ -173,7 +172,7 @@ void main() {
       // Behavior takes up 50 height, so 50 height remains for the chart.
       const expectedChartSize = Size(200, 50);
       // Behavior is positioned on the bottom, so the chart is offset by 0.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Behavior is aligned to draw area and offset to the bottom.
       const expectedBehaviorOffset = Offset(100, 50);
 
@@ -198,7 +197,6 @@ void main() {
     testWidgets('Position start - start draw area justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
-      const outsideJustification = common.OutsideJustification.startDrawArea;
       const drawAreaBounds = Rectangle<int>(75, 25, 150, 50);
 
       // Behavior takes up 50 width, so 150 width remains for the chart.
@@ -236,7 +234,7 @@ void main() {
       const expectedChartSize = Size(150, 100);
       // Behavior is positioned at the right (left) since this is NOT a RTL
       // so no offset for the chart.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Behavior is aligned to draw area and offset to the right of the
       // chart.
       const expectedBehaviorOffset = Offset(150, 25);
@@ -269,7 +267,7 @@ void main() {
       // Behavior is positioned on the top, so the chart is offset by 50.
       const expectedChartOffset = Offset(0, 50);
       // Behavior is aligned to the start, so no offset
-      const expectedBehaviorOffset = Offset(0, 0);
+      const expectedBehaviorOffset = Offset.zero;
 
       await tester.pumpWidget(
         createWidget(
@@ -332,7 +330,7 @@ void main() {
       // so the chart is offset to the right by the behavior width of 50.
       const expectedChartOffset = Offset(50, 0);
       // No offset because it is start justified.
-      const expectedBehaviorOffset = Offset(0, 0);
+      const expectedBehaviorOffset = Offset.zero;
 
       await tester.pumpWidget(
         createWidget(
@@ -386,15 +384,14 @@ void main() {
     testWidgets('Position inside - top start justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
-      const insideJustification = common.InsideJustification.topStart;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
 
       // Behavior is layered on top, chart uses the full size.
       const expectedChartSize = Size(200, 100);
       // No offset since chart takes up full size.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Top start justified, no offset
-      const expectedBehaviorOffset = Offset(0, 0);
+      const expectedBehaviorOffset = Offset.zero;
 
       await tester.pumpWidget(
         createWidget(
@@ -422,7 +419,7 @@ void main() {
       // Behavior is layered on top, chart uses the full size.
       const expectedChartSize = Size(200, 100);
       // No offset since chart takes up full size.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Offset to the top end
       const expectedBehaviorOffset = Offset(150, 0);
 
@@ -447,7 +444,6 @@ void main() {
     testWidgets('RTL - Position top - start draw area justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.top;
-      const outsideJustification = common.OutsideJustification.startDrawArea;
       const drawAreaBounds = Rectangle<int>(0, 50, 175, 50);
 
       // Behavior takes up 50 height, so 50 height remains for the chart.
@@ -484,7 +480,7 @@ void main() {
       // Behavior takes up 50 height, so 50 height remains for the chart.
       const expectedChartSize = Size(200, 50);
       // Behavior is positioned on the bottom, so the chart is offset by 0.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Behavior is aligned to end draw area (left) and offset to the bottom.
       const expectedBehaviorOffset = Offset(0, 50);
 
@@ -510,13 +506,12 @@ void main() {
     testWidgets('RTL - Position start - start draw area justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
-      const outsideJustification = common.OutsideJustification.startDrawArea;
       const drawAreaBounds = Rectangle<int>(0, 25, 125, 75);
 
       // Behavior takes up 50 width, so 150 width remains for the chart.
       const expectedChartSize = Size(150, 100);
       // Chart is on the left, so no offset.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Behavior is positioned at the start (right) and start draw area.
       const expectedBehaviorOffset = Offset(150, 25);
 
@@ -613,7 +608,7 @@ void main() {
       // Behavior is positioned on the top, so the chart is offset by 50.
       const expectedChartOffset = Offset(0, 50);
       // Behavior is aligned to the end, no offset.
-      const expectedBehaviorOffset = Offset(0, 0);
+      const expectedBehaviorOffset = Offset.zero;
 
       await tester.pumpWidget(
         createWidget(
@@ -644,7 +639,7 @@ void main() {
       const expectedChartSize = Size(150, 100);
       // Behavior is positioned at the right since this is RTL so the chart is
       // has no offset.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // No offset because it is start justified.
       const expectedBehaviorOffset = Offset(150, 0);
 
@@ -677,7 +672,7 @@ void main() {
       const expectedChartSize = Size(150, 100);
       // Behavior is positioned at the right since this is RTL so the chart is
       // has no offset.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // End justified, total height minus behavior height
       const expectedBehaviorOffset = Offset(150, 50);
 
@@ -703,13 +698,12 @@ void main() {
     testWidgets('RTL - Position inside - top start justified',
         (WidgetTester tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
-      const insideJustification = common.InsideJustification.topStart;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
 
       // Behavior is layered on top, chart uses the full size.
       const expectedChartSize = Size(200, 100);
       // No offset since chart takes up full size.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // Offset to the right
       const expectedBehaviorOffset = Offset(150, 0);
 
@@ -740,9 +734,9 @@ void main() {
       // Behavior is layered on top, chart uses the full size.
       const expectedChartSize = Size(200, 100);
       // No offset since chart takes up full size.
-      const expectedChartOffset = Offset(0, 0);
+      const expectedChartOffset = Offset.zero;
       // No offset, since end is to the left.
-      const expectedBehaviorOffset = Offset(0, 0);
+      const expectedBehaviorOffset = Offset.zero;
 
       await tester.pumpWidget(
         createWidget(

@@ -15,17 +15,3 @@
 
 import 'package:charts/src/core/common/paint_style.dart' show PaintStyle;
 
-/// Paint properties of a text.
-abstract class TextPaintStyle extends PaintStyle {
-  int? get fontSize;
-  set fontSize(int? value);
-
-  String? get fontFamily;
-  set fontFamily(String? fontFamily);
-
-  double? get lineHeight;
-  set lineHeight(double? value);
-
-  String? get fontWeight;
-  set fontWeight(String? value);
-}

@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/common/text_measurement.dart' show TextMeasurement;
-import 'package:charts/src/core/common/text_style.dart' show TextPaintStyle;
+import 'package:charts/charts.dart';
+
 
 /// Interface for accessing text measurement and painter.
 abstract class TextElement {
-  /// The [TextPaintStyle] of this [TextElement].
-  TextPaintStyle? get textStyle;
+  /// The [TextStyle] of this [TextElement].
+  TextStyle? get textStyle;
 
-  set textStyle(TextPaintStyle? value);
+  set textStyle(TextStyle? value);
 
   /// The max width of this [TextElement] during measure and layout.
   ///

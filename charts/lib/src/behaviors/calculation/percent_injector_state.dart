@@ -35,12 +35,12 @@ const percentInjectedKey =
 /// then this behavior must be added after the [Legend] to ensure that it
 /// calculates values after series have been potentially removed from the list.
 class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
-
   /// Constructs a [PercentInjectorBehaviorState].
   ///
   /// [totalType] configures the type of data total to be calculated.
-  PercentInjectorBehaviorState(
-      {this.totalType = PercentInjectorTotalType.domain,}) {
+  PercentInjectorBehaviorState({
+    this.totalType = PercentInjectorTotalType.domain,
+  }) {
     // Set up chart draw cycle listeners.
     _lifecycleListener =
         LifecycleListener<D>(onPreprocess: _preProcess, onData: _onData);
@@ -200,9 +200,6 @@ class PercentInjectorBehaviorState<D> implements ChartBehaviorState<D> {
         }
 
         break;
-
-      default:
-        throw ArgumentError('Unsupported totalType: $totalType');
     }
   }
 

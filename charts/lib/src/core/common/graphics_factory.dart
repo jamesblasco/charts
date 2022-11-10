@@ -13,16 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/common/line_style.dart' show LineStyle;
-import 'package:charts/src/core/common/text_element.dart' show TextElement;
-import 'package:charts/src/core/common/text_style.dart' show TextPaintStyle;
+import 'package:charts/charts.dart';
 
 /// Interface to native platform graphics functions.
 abstract class GraphicsFactory {
   LineStyle createLinePaint();
 
-  /// Returns a [TextPaintStyle] object.
-  TextPaintStyle createTextPaint();
+  /// Returns a [TextStyle] object.
+  TextStyle createTextPaint();
 
   /// Returns a text element from [text].
   TextElement createTextElement(String text);

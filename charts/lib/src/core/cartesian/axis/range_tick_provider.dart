@@ -54,8 +54,10 @@ class RangeTickProvider<D> extends TickProvider<D> {
     List<String>? formattedValues;
     if (!allTicksHaveLabels) {
       formattedValues = formatter.format(
-          tickSpec.map((spec) => spec.value).toList(), formatterValueCache,
-          stepSize: scale.domainStepSize,);
+        tickSpec.map((spec) => spec.value).toList(),
+        formatterValueCache,
+        stepSize: scale.domainStepSize,
+      );
     }
 
     for (var i = 0; i < tickSpec.length; i++) {
@@ -99,11 +101,7 @@ class RangeTickProvider<D> extends TickProvider<D> {
       if (tick != null) {
         final style = spec.style;
         if (style != null) {
-          tick.textElement!.textStyle = graphicsFactory.createTextPaint()
-            ..fontFamily = style.fontFamily
-            ..fontSize = style.fontSize
-            ..color = style.color
-            ..lineHeight = style.lineHeight;
+          tick.textElement!.textStyle = style;
         }
         ticks.add(tick);
       }

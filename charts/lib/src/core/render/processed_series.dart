@@ -16,9 +16,8 @@
 import 'package:charts/core.dart';
 
 class MutableSeries<D> extends ImmutableSeries<D> {
-
- // Axis<num>? measureAxis;
- // Axis<D>? domainAxis;
+  // Axis<num>? measureAxis;
+  // Axis<D>? domainAxis;
 
   MutableSeries(Series<dynamic, D> series)
       : id = series.id,
@@ -99,9 +98,9 @@ class MutableSeries<D> extends ImmutableSeries<D> {
         outsideLabelStyleAccessorFn = other.outsideLabelStyleAccessorFn,
         radiusPxFn = other.radiusPxFn,
         strokeWidthPxFn = other.strokeWidthPxFn
-      //  measureAxis = other.measureAxis,
-       // domainAxis = other.domainAxis 
-      {
+  //  measureAxis = other.measureAxis,
+  // domainAxis = other.domainAxis
+  {
     _attrs.mergeFrom(other._attrs);
   }
   @override
@@ -194,10 +193,10 @@ class MutableSeries<D> extends ImmutableSeries<D> {
   AccessorFn<String>? labelAccessorFn;
 
   @override
-  AccessorFn<TextStyleSpec>? insideLabelStyleAccessorFn;
+  AccessorFn<TextStyle>? insideLabelStyleAccessorFn;
 
   @override
-  AccessorFn<TextStyleSpec>? outsideLabelStyleAccessorFn;
+  AccessorFn<TextStyle>? outsideLabelStyleAccessorFn;
 
   final _attrs = SeriesAttributes();
 
@@ -213,8 +212,6 @@ class MutableSeries<D> extends ImmutableSeries<D> {
 
   @override
   int get hashCode => data.hashCode * 31 + id.hashCode;
-
-  
 }
 
 abstract class ImmutableSeries<D> {
@@ -296,8 +293,8 @@ abstract class ImmutableSeries<D> {
 
   AccessorFn<String>? get labelAccessorFn;
 
-  AccessorFn<TextStyleSpec>? insideLabelStyleAccessorFn;
-  AccessorFn<TextStyleSpec>? outsideLabelStyleAccessorFn;
+  AccessorFn<TextStyle>? insideLabelStyleAccessorFn;
+  AccessorFn<TextStyle>? outsideLabelStyleAccessorFn;
 
   AccessorFn<num?>? get radiusPxFn;
 

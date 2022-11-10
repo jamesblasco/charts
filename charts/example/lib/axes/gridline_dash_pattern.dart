@@ -80,7 +80,7 @@ class GridlineDashPattern extends StatelessWidget {
         /// Customize the gridlines to use a dash pattern.
         primaryMeasureAxis: charts.NumericAxisSpec(
             renderSpec: charts.GridlineRendererSpec(
-                lineStyle: charts.LineStyleSpec(
+                lineStyle: charts.LineStyle(
           dashPattern: [4, 4],
         ))));
   }

@@ -21,9 +21,13 @@ import 'package:flutter/material.dart';
 /// Strategy for building one widget from one [LegendEntry].
 abstract class LegendEntryLayout extends Equatable {
   const LegendEntryLayout();
-  Widget build(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden,
-      {bool showMeasures,});
+  Widget build(
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+    bool isHidden, {
+    bool showMeasures,
+  });
 }
 
 /// Builds one legend entry as a row with symbol and label from the series.
@@ -33,8 +37,12 @@ abstract class LegendEntryLayout extends Equatable {
 class SimpleLegendEntryLayout extends LegendEntryLayout {
   const SimpleLegendEntryLayout();
 
-  Widget createSymbol(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden,) {
+  Widget createSymbol(
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+    bool isHidden,
+  ) {
     // TODO: Consider allowing scaling the size for the symbol.
     // A custom symbol renderer can ignore this size and use their own.
     const materialSymbolSize = Size(12, 12);
@@ -47,39 +55,55 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
         legendEntry.symbolRenderer! is SymbolRendererBuilder
             ? legendEntry.symbolRenderer! as SymbolRendererBuilder
             : SymbolRendererCanvas(
-                legendEntry.symbolRenderer!, legendEntry.dashPattern,);
+                legendEntry.symbolRenderer!,
+                legendEntry.dashPattern,
+              );
 
     return GestureDetector(
-        onTapUp: makeTapUpCallback(context, legendEntry, legend),
-        child: symbolRendererBuilder.build(
-          context,
-          size: materialSymbolSize,
-          color: color,
-          enabled: !isHidden,
-        ),);
+      onTapUp: makeTapUpCallback(context, legendEntry, legend),
+      child: symbolRendererBuilder.build(
+        context,
+        size: materialSymbolSize,
+        color: color,
+        enabled: !isHidden,
+      ),
+    );
   }
 
-  Widget createLabel(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden,) {
-    final style =
-        _convertTextStyle(isHidden, context, legendEntry.textStyle);
+  Widget createLabel(
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+    bool isHidden,
+  ) {
+    final style = _convertTextStyle(isHidden, context, legendEntry.textStyle);
 
     return GestureDetector(
-        onTapUp: makeTapUpCallback(context, legendEntry, legend),
-        child: Text(legendEntry.label, style: style),);
+      onTapUp: makeTapUpCallback(context, legendEntry, legend),
+      child: Text(legendEntry.label, style: style),
+    );
   }
 
-  Widget createMeasureValue(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden,) {
+  Widget createMeasureValue(
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+    bool isHidden,
+  ) {
     return GestureDetector(
-        onTapUp: makeTapUpCallback(context, legendEntry, legend),
-        child: Text(legendEntry.formattedValue!),);
+      onTapUp: makeTapUpCallback(context, legendEntry, legend),
+      child: Text(legendEntry.formattedValue!),
+    );
   }
 
   @override
-  Widget build(BuildContext context, LegendEntry legendEntry,
-      TappableLegend legend, bool isHidden,
-      {bool showMeasures = false,}) {
+  Widget build(
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+    bool isHidden, {
+    bool showMeasures = false,
+  }) {
     final rowChildren = <Widget>[];
 
     // TODO: Allow setting to configure the padding.
@@ -104,7 +128,10 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
   }
 
   GestureTapUpCallback makeTapUpCallback(
-      BuildContext context, LegendEntry legendEntry, TappableLegend legend,) {
+    BuildContext context,
+    LegendEntry legendEntry,
+    TappableLegend legend,
+  ) {
     return (TapUpDetails d) {
       legend.onLegendEntryTapUp(legendEntry);
     };
@@ -119,7 +146,10 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
   /// For non-specified values, override the hidden text color to use the body 1
   /// theme, but allow other properties of [Text] to be inherited.
   TextStyle _convertTextStyle(
-      bool isHidden, BuildContext context, TextStyleSpec? textStyle,) {
+    bool isHidden,
+    BuildContext context,
+    TextStyle? textStyle,
+  ) {
     var color = textStyle?.color != null ? textStyle!.color! : null;
     if (isHidden) {
       // Use a default color for hidden legend entries if none is provided.
@@ -128,10 +158,10 @@ class SimpleLegendEntryLayout extends LegendEntryLayout {
     }
 
     return TextStyle(
-        fontFamily: textStyle?.fontFamily,
-        fontSize: textStyle?.fontSize != null
-            ? textStyle!.fontSize!.toDouble()
-            : null,
-        color: color,);
+      fontFamily: textStyle?.fontFamily,
+      fontSize:
+          textStyle?.fontSize != null ? textStyle!.fontSize!.toDouble() : null,
+      color: color,
+    );
   }
 }

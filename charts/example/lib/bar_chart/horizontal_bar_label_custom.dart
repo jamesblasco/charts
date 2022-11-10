@@ -67,12 +67,12 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         insideLabelStyleAccessorFn: (OrdinalSales sales, _) {
           final color =
               (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
-          return charts.TextStyleSpec(color: color);
+          return charts.TextStyle(color: color);
         },
         outsideLabelStyleAccessorFn: (OrdinalSales sales, _) {
           final color =
               (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
-          return charts.TextStyleSpec(color: color);
+          return charts.TextStyle(color: color);
         },
       ),
     ];
@@ -115,12 +115,12 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         insideLabelStyleAccessorFn: (OrdinalSales sales, _) {
           final color =
               (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
-          return charts.TextStyleSpec(color: color);
+          return charts.TextStyle(color: color);
         },
         outsideLabelStyleAccessorFn: (OrdinalSales sales, _) {
           final color =
               (sales.year == '2014') ? Colors.red : Colors.yellow.darker;
-          return charts.TextStyleSpec(color: color);
+          return charts.TextStyle(color: color);
         },
       ),
     ];

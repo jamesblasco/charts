@@ -20,7 +20,6 @@ import 'package:meta/meta.dart' show immutable;
 
 @immutable
 class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
-
   const SmallTickRendererSpec({
     super.labelStyle,
     this.lineStyle,
@@ -36,19 +35,21 @@ class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
     super.labelRotation,
     super.labelCollisionRotation,
   });
-  final LineStyleSpec? lineStyle;
+  final LineStyle? lineStyle;
   final int? tickLengthPx;
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicsFactory,) =>
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) =>
       SmallTickDrawStrategy<D>(
         context,
         graphicsFactory,
         tickLengthPx: tickLengthPx,
-        lineStyleSpec: lineStyle,
+        lineStyle: lineStyle,
         labelStyleSpec: labelStyle,
-        axisLineStyleSpec: axisLineStyle,
+        axisLineStyle: axisLineStyle,
         labelAnchor: labelAnchor,
         labelJustification: labelJustification,
         labelOffsetFromAxisPx: labelOffsetFromAxisPx,
@@ -66,39 +67,42 @@ class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
 
 /// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
 class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
-
   SmallTickDrawStrategy(
-      super.chartContext, super.graphicsFactory,
-      {int? tickLengthPx,
-      LineStyleSpec? lineStyleSpec,
-      super.labelStyleSpec,
-      LineStyleSpec? axisLineStyleSpec,
-      super.labelAnchor,
-      super.labelJustification,
-      super.labelOffsetFromAxisPx,
-      super.labelCollisionOffsetFromAxisPx,
-      super.labelOffsetFromTickPx,
-      super.labelCollisionOffsetFromTickPx,
-      super.minimumPaddingBetweenLabelsPx,
-      super.labelRotation,
-      super.labelCollisionRotation,})
-      : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
-        lineStyle = StyleFactory.style
-            .createTickLineStyle(graphicsFactory, lineStyleSpec),
+    super.chartContext,
+    super.graphicsFactory, {
+    int? tickLengthPx,
+    LineStyle? lineStyle,
+    super.labelStyleSpec,
+    LineStyle? axisLineStyle,
+    super.labelAnchor,
+    super.labelJustification,
+    super.labelOffsetFromAxisPx,
+    super.labelCollisionOffsetFromAxisPx,
+    super.labelOffsetFromTickPx,
+    super.labelCollisionOffsetFromTickPx,
+    super.minimumPaddingBetweenLabelsPx,
+    super.labelRotation,
+    super.labelCollisionRotation,
+  })  : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
+        lineStyle =
+            StyleFactory.style.createTickLineStyle(graphicsFactory, lineStyle),
         super(
-          axisLineStyleSpec: axisLineStyleSpec ?? lineStyleSpec,
+          axisLineStyle: lineStyle?.merge(axisLineStyle) ?? axisLineStyle,
         );
   int tickLength;
   LineStyle lineStyle;
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {required AxisOrientation orientation,
-      required Rectangle<int> axisBounds,
-      required Rectangle<int> drawAreaBounds,
-      required bool isFirst,
-      required bool isLast,
-      bool collision = false,}) {
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
+    bool collision = false,
+  }) {
     final tickPositions = calculateTickPositions(
       tick,
       orientation,
@@ -117,13 +121,16 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       strokeWidthPx: lineStyle.strokeWidth.toDouble(),
     );
 
-    drawLabel(canvas, tick,
-        orientation: orientation,
-        axisBounds: axisBounds,
-        drawAreaBounds: drawAreaBounds,
-        isFirst: isFirst,
-        isLast: isLast,
-        collision: collision,);
+    drawLabel(
+      canvas,
+      tick,
+      orientation: orientation,
+      axisBounds: axisBounds,
+      drawAreaBounds: drawAreaBounds,
+      isFirst: isFirst,
+      isLast: isLast,
+      collision: collision,
+    );
   }
 
   List<Point<num>> calculateTickPositions(

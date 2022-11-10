@@ -18,39 +18,22 @@
 import 'dart:math' show pi, Point, Rectangle;
 import 'package:charts/charts.dart';
 
+
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 class MockCanvas extends Mock implements ChartCanvas {}
 
-/// A fake [GraphicsFactory] that returns [FakeTextPaintStyle] and [FakeTextElement].
+/// A fake [GraphicsFactory] that returns [FakeTextStyle] and [FakeTextElement].
 class FakeGraphicsFactory extends GraphicsFactory {
   @override
-  TextPaintStyle createTextPaint() => FakeTextPaintStyle();
+  TextStyle createTextPaint() => TextStyle();
 
   @override
   TextElement createTextElement(String text) => FakeTextElement(text);
 
   @override
-  LineStyle createLinePaint() => MockLinePaint();
-}
-
-/// Stores [TextPaintStyle] properties for test to verify.
-class FakeTextPaintStyle implements TextPaintStyle {
-  @override
-  Color color;
-
-  @override
-  int fontSize;
-
-  @override
-  String fontFamily;
-
-  @override
-  double lineHeight;
-
-  @override
-  String fontWeight;
+  LineStyle createLinePaint() => LineStyle();
 }
 
 /// Fake [TextElement] which returns text length as [horizontalSliceWidth].
@@ -61,7 +44,7 @@ class FakeTextElement implements TextElement {
   final String text;
 
   @override
-  TextPaintStyle textStyle;
+  TextStyle textStyle;
 
   @override
   int maxWidth;
@@ -82,7 +65,7 @@ class FakeTextElement implements TextElement {
       baseline: textStyle.fontSize.toDouble());
 }
 
-class MockLinePaint extends Mock implements LineStyle {}
+
 
 class FakeArcRendererElement extends ArcRendererElement<String> {
   final _series = MockImmutableSeries<String>();
@@ -154,7 +137,7 @@ void main() {
       expect(
           captured[4],
           equals(60 -
-              decorator.leaderLineStyleSpec.length -
+              decorator.leaderLineStyle.length -
               decorator.labelPadding * 3));
       expect(captured[5],
           equals(100 - decorator.outsideLabelStyleSpec.fontSize ~/ 2));
@@ -177,7 +160,7 @@ void main() {
 
       final decorator = ArcLabelDecorator(
           labelPosition: ArcLabelPosition.inside,
-          insideLabelStyleSpec: TextStyleSpec(fontSize: 10));
+          insideLabelStyleSpec: TextStyle(fontSize: 10));
 
       decorator.decorate([arcElements], canvas, graphicsFactory,
           drawBounds: drawBounds, animationPercent: 1.0);
@@ -209,7 +192,7 @@ void main() {
 
       final decorator = ArcLabelDecorator(
           labelPosition: ArcLabelPosition.outside,
-          outsideLabelStyleSpec: TextStyleSpec(fontSize: 10));
+          outsideLabelStyleSpec: TextStyle(fontSize: 10));
 
       decorator.decorate([arcElements], canvas, graphicsFactory,
           drawBounds: drawBounds, animationPercent: 1.0);
@@ -222,7 +205,7 @@ void main() {
       expect(
           captured[1],
           equals(140 +
-              decorator.leaderLineStyleSpec.length +
+              decorator.leaderLineStyle.length +
               decorator.labelPadding * 3));
       expect(captured[2],
           equals(100 - decorator.outsideLabelStyleSpec.fontSize ~/ 2));
@@ -252,9 +235,9 @@ void main() {
       final outsideColor = Colors.white;
       final decorator = ArcLabelDecorator(
           labelPadding: 0,
-          insideLabelStyleSpec: TextStyleSpec(
+          insideLabelStyleSpec: TextStyle(
               fontSize: 10, fontFamily: 'insideFont', color: insideColor),
-          outsideLabelStyleSpec: TextStyleSpec(
+          outsideLabelStyleSpec: TextStyle(
               fontSize: 8, fontFamily: 'outsideFont', color: outsideColor));
 
       decorator.decorate([arcElements], canvas, graphicsFactory,
@@ -281,7 +264,7 @@ void main() {
       expect(
           captured[4],
           equals(50 -
-              decorator.leaderLineStyleSpec.length -
+              decorator.leaderLineStyle.length -
               decorator.labelPadding * 3));
       expect(captured[5],
           equals(100 - decorator.outsideLabelStyleSpec.fontSize ~/ 2));

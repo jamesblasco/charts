@@ -40,8 +40,8 @@ class VerticalBarLabelChart extends StatelessWidget {
       // Set a bar label decorator.
       // Example configuring different styles for inside/outside:
       //       barRendererDecorator: new charts.BarLabelDecorator(
-      //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-      //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+      //          insideLabelStyleSpec: new charts.TextStyle(...),
+      //          outsideLabelStyleSpec: new charts.TextStyle(...)),
       barRendererDecorator: new charts.BarLabelDecorator<String>(),
       domainAxis: new charts.OrdinalAxisSpec(),
     );

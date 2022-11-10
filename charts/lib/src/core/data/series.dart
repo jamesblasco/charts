@@ -36,8 +36,8 @@ class Series<T, D> {
     TypedAccessorFn<T, FillPatternType>? fillPatternFn,
     TypedAccessorFn<T, String>? keyFn,
     TypedAccessorFn<T, String>? labelAccessorFn,
-    TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
-    TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
+    TypedAccessorFn<T, TextStyle>? insideLabelStyleAccessorFn,
+    TypedAccessorFn<T, TextStyle>? outsideLabelStyleAccessorFn,
     TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
     TypedAccessorFn<T, num?>? measureLowerBoundFn,
     TypedAccessorFn<T, num?>? measureUpperBoundFn,
@@ -241,8 +241,8 @@ class Series<T, D> {
   final AccessorFn<num>? radiusPxFn;
   final AccessorFn<num?>? strokeWidthPxFn;
   final AccessorFn<String>? labelAccessorFn;
-  final AccessorFn<TextStyleSpec>? insideLabelStyleAccessorFn;
-  final AccessorFn<TextStyleSpec>? outsideLabelStyleAccessorFn;
+  final AccessorFn<TextStyle>? insideLabelStyleAccessorFn;
+  final AccessorFn<TextStyle>? outsideLabelStyleAccessorFn;
 
   // TODO: should this be immutable as well? If not, should any of
   // the non-required ones be final?

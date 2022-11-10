@@ -17,6 +17,7 @@ import 'dart:math' show Point, Rectangle, max;
 
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart';
+
 /// Unique identifier used to associate custom series renderers on a chart with
 /// one or more series of data.
 ///
@@ -118,21 +119,23 @@ abstract class SeriesRenderer<D> extends LayoutView {
   /// [getDetailsForSeriesDatum]. Every concrete [SeriesRenderer] needs to
   /// implement custom logic for setting location data.
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum,);
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  );
 }
 
 /// Concrete base class for [SeriesRenderer]s that implements common
 /// functionality.
 abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
-
   BaseSeriesRenderer({
     required this.rendererId,
     required int layoutPaintOrder,
     this.symbolRenderer,
   }) : layoutConfig = LayoutViewConfig(
-            paintOrder: layoutPaintOrder,
-            position: LayoutPosition.DrawArea,
-            positionOrder: LayoutViewPositionOrder.drawArea,);
+          paintOrder: layoutPaintOrder,
+          position: LayoutPosition.drawArea,
+          positionOrder: LayoutViewPositionOrder.drawArea,
+        );
   @override
   final LayoutViewConfig layoutConfig;
 
@@ -163,8 +166,10 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   ///     Setting it to false used different palettes (ie: s1 uses Blue500,
   ///     s2 uses Red500),
   @protected
-  void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette,}) {
+  void assignMissingColors(
+    Iterable<MutableSeries<D>> seriesList, {
+    required bool emptyCategoryUsesSinglePalette,
+  }) {
     const defaultCategory = '__default__';
 
     // Count up the number of missing series per category, keeping a max across
@@ -360,24 +365,25 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
     strokeWidthPx = strokeWidthPx?.toDouble();
 
     final details = DatumDetails<D>(
-        datum: seriesDatum.datum,
-        index: seriesDatum.index,
-        domain: domainValue,
-        domainLowerBound: domainLowerBoundValue,
-        domainUpperBound: domainUpperBoundValue,
-        measure: measureValue,
-        measureLowerBound: measureLowerBoundValue,
-        measureUpperBound: measureUpperBoundValue,
-        measureOffset: measureOffsetValue,
-        rawMeasure: rawMeasureValue,
-        rawMeasureLowerBound: rawMeasureLowerBoundValue,
-        rawMeasureUpperBound: rawMeasureUpperBoundValue,
-        series: series,
-        color: color,
-        fillColor: fillColor,
-        areaColor: areaColor,
-        radiusPx: radiusPx,
-        strokeWidthPx: strokeWidthPx,);
+      datum: seriesDatum.datum,
+      index: seriesDatum.index,
+      domain: domainValue,
+      domainLowerBound: domainLowerBoundValue,
+      domainUpperBound: domainUpperBoundValue,
+      measure: measureValue,
+      measureLowerBound: measureLowerBoundValue,
+      measureUpperBound: measureUpperBoundValue,
+      measureOffset: measureOffsetValue,
+      rawMeasure: rawMeasureValue,
+      rawMeasureLowerBound: rawMeasureLowerBoundValue,
+      rawMeasureUpperBound: rawMeasureUpperBoundValue,
+      series: series,
+      color: color,
+      fillColor: fillColor,
+      areaColor: areaColor,
+      radiusPx: radiusPx,
+      strokeWidthPx: strokeWidthPx,
+    );
 
     // chartPosition depends on the shape of the rendered elements, and must be
     // added by concrete [SeriesRenderer] classes.

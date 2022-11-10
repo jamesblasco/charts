@@ -23,7 +23,6 @@ import 'package:flutter/material.dart';
 /// series rendered on the chart.
 @immutable
 class DatumLegend<D> extends ChartBehavior<D> {
-
   /// Create a tabular layout legend.
   ///
   /// By default, the legend is place above the chart and horizontally aligned
@@ -73,7 +72,7 @@ class DatumLegend<D> extends ChartBehavior<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
-    TextStyleSpec? entryTextStyle,
+    TextStyle? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -88,22 +87,26 @@ class DatumLegend<D> extends ChartBehavior<D> {
         position == BehaviorPosition.inside;
     final layoutBuilder = horizontalFirst
         ? TabularLegendLayout.horizontalFirst(
-            desiredMaxColumns: desiredMaxColumns, cellPadding: cellPadding,)
+            desiredMaxColumns: desiredMaxColumns,
+            cellPadding: cellPadding,
+          )
         : TabularLegendLayout.verticalFirst(
-            desiredMaxRows: desiredMaxRows, cellPadding: cellPadding,);
+            desiredMaxRows: desiredMaxRows,
+            cellPadding: cellPadding,
+          );
 
     return DatumLegend._internal(
-        contentBuilder:
-            TabularLegendContentBuilder(legendLayout: layoutBuilder),
-        selectionModelType: SelectionModelType.info,
-        position: position,
-        outsideJustification: outsideJustification,
-        insideJustification: insideJustification,
-        showMeasures: showMeasures ?? false,
-        legendDefaultMeasure: legendDefaultMeasure ?? LegendDefaultMeasure.none,
-        measureFormatter: measureFormatter,
-        secondaryMeasureFormatter: secondaryMeasureFormatter,
-        entryTextStyle: entryTextStyle,);
+      contentBuilder: TabularLegendContentBuilder(legendLayout: layoutBuilder),
+      selectionModelType: SelectionModelType.info,
+      position: position,
+      outsideJustification: outsideJustification,
+      insideJustification: insideJustification,
+      showMeasures: showMeasures ?? false,
+      legendDefaultMeasure: legendDefaultMeasure ?? LegendDefaultMeasure.none,
+      measureFormatter: measureFormatter,
+      secondaryMeasureFormatter: secondaryMeasureFormatter,
+      entryTextStyle: entryTextStyle,
+    );
   }
 
   /// Create a legend with custom layout.
@@ -142,7 +145,7 @@ class DatumLegend<D> extends ChartBehavior<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     MeasureFormatter? measureFormatter,
     MeasureFormatter? secondaryMeasureFormatter,
-    TextStyleSpec? entryTextStyle,
+    TextStyle? entryTextStyle,
   }) {
     // Set defaults if empty.
     position ??= defaultBehaviorPosition;
@@ -219,7 +222,7 @@ class DatumLegend<D> extends ChartBehavior<D> {
   final MeasureFormatter? secondaryMeasureFormatter;
 
   /// Styles for legend entry label text.
-  final TextStyleSpec? entryTextStyle;
+  final TextStyle? entryTextStyle;
 
   static const defaultCellPadding = EdgeInsets.all(8);
 
@@ -269,13 +272,11 @@ class DatumLegend<D> extends ChartBehavior<D> {
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }
 
 /// Flutter specific wrapper on the common Legend for building content.
 class _FlutterDatumLegend<D> extends DatumLegendBehaviorState<D>
     implements BuildableBehavior, TappableLegend {
-
   _FlutterDatumLegend(this.config)
       : super(
           selectionModelType: config.selectionModelType,

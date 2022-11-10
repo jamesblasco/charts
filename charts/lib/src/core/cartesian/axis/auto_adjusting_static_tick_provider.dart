@@ -21,11 +21,14 @@ import 'package:charts/core.dart';
 /// [allowedTickIncrements] such that ticks do not collide. If no such increment
 /// exists, ticks for the first step increment are returned;
 ///
-/// The [TextPaintStyle] is not overridden during [TickDrawStrategy.decorateTicks].
-/// If the [TickSpec] style is null, then the default [TextPaintStyle] is used.
+/// The [TextStyle] is not overridden during
+/// [TickDrawStrategy.decorateTicks].
+/// If the [TickSpec] style is null, then the default [TextStyle] is used.
 class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
-
-  const AutoAdjustingStaticTickProvider(this.tickSpec, this.allowedTickIncrements);
+  const AutoAdjustingStaticTickProvider(
+    this.tickSpec,
+    this.allowedTickIncrements,
+  );
   final List<TickSpec<D>> tickSpec;
   final List<int> allowedTickIncrements;
 
@@ -46,15 +49,16 @@ class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
       final staticTickProvider =
           StaticTickProvider(tickSpec, tickIncrement: tickIncrement);
       final ticks = staticTickProvider.getTicks(
-          context: context,
-          graphicsFactory: graphicsFactory,
-          scale: scale,
-          formatter: formatter,
-          formatterValueCache: formatterValueCache,
-          tickDrawStrategy: tickDrawStrategy,
-          orientation: orientation,
-          viewportExtensionEnabled: viewportExtensionEnabled,
-          tickHint: tickHint,);
+        context: context,
+        graphicsFactory: graphicsFactory,
+        scale: scale,
+        formatter: formatter,
+        formatterValueCache: formatterValueCache,
+        tickDrawStrategy: tickDrawStrategy,
+        orientation: orientation,
+        viewportExtensionEnabled: viewportExtensionEnabled,
+        tickHint: tickHint,
+      );
       if (ticksForTheFirstIncrement.isEmpty) {
         ticksForTheFirstIncrement = ticks;
       }

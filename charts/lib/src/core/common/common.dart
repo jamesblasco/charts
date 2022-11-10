@@ -3,7 +3,6 @@ export 'date_time_factory.dart';
 export 'gesture_listener.dart';
 export 'graphics_factory.dart';
 export 'line_style.dart';
-export 'line_style_spec.dart';
 export 'material_palette.dart';
 export 'material_palette.dart';
 export 'math.dart';

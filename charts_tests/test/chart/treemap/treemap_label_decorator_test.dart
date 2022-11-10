@@ -24,34 +24,16 @@ import 'package:test/test.dart';
 
 class MockCanvas extends Mock implements ChartCanvas {}
 
-/// A fake [GraphicsFactory] that returns [FakeTextPaintStyle] and [FakeTextElement].
+/// A fake [GraphicsFactory] that returns [FakeTextStyle] and [FakeTextElement].
 class FakeGraphicsFactory extends GraphicsFactory {
   @override
-  TextPaintStyle createTextPaint() => FakeTextPaintStyle();
+  TextStyle createTextPaint() => TextStyle();
 
   @override
   TextElement createTextElement(String text) => FakeTextElement(text);
 
   @override
-  LineStyle createLinePaint() => MockLinePaint();
-}
-
-/// Stores [TextPaintStyle] properties for test to verify.
-class FakeTextPaintStyle implements TextPaintStyle {
-  @override
-  Color color;
-
-  @override
-  int fontSize;
-
-  @override
-  String fontFamily;
-
-  @override
-  String fontWeight;
-
-  @override
-  double lineHeight;
+  LineStyle createLinePaint() => LineStyle();
 }
 
 /// Fake [TextElement] which returns text length as [horizontalSliceWidth].
@@ -82,7 +64,7 @@ class FakeTextElement implements TextElement {
   }
 
   @override
-  TextPaintStyle textStyle;
+  TextStyle textStyle;
 
   @override
   int maxWidth;
@@ -108,7 +90,6 @@ class FakeTextElement implements TextElement {
   }
 }
 
-class MockLinePaint extends Mock implements LineStyle {}
 
 class FakeTreeMapRendererElement extends TreeMapRendererElement<String> {
   final _series = MockImmutableSeries<String>();

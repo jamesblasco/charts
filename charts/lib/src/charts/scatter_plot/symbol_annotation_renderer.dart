@@ -31,10 +31,10 @@ import 'package:charts/charts/scatter_plot.dart';
 /// Does not handle horizontal bars.
 class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     implements LayoutView {
-
-  SymbolAnnotationRenderer(
-      {String? rendererId, SymbolAnnotationRendererConfig<D>? config,})
-      : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
+  SymbolAnnotationRenderer({
+    String? rendererId,
+    SymbolAnnotationRendererConfig<D>? config,
+  }) : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
   late Rectangle<int> _componentBounds;
 
   @override
@@ -116,17 +116,18 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
   @override
   DatumPoint<D> getPoint(
-      Object? datum,
-      D? domainValue,
-      D? domainLowerBoundValue,
-      D? domainUpperBoundValue,
-      ImmutableSeries<D> series,
-      ImmutableAxis<D> domainAxis,
-      num? measureValue,
-      num? measureLowerBoundValue,
-      num? measureUpperBoundValue,
-      num? measureOffsetValue,
-      ImmutableAxis<num> measureAxis,) {
+    Object? datum,
+    D? domainValue,
+    D? domainLowerBoundValue,
+    D? domainUpperBoundValue,
+    ImmutableSeries<D> series,
+    ImmutableAxis<D> domainAxis,
+    num? measureValue,
+    num? measureLowerBoundValue,
+    num? measureUpperBoundValue,
+    num? measureOffsetValue,
+    ImmutableAxis<num> measureAxis,
+  ) {
     final domainPosition = domainAxis.getLocation(domainValue);
 
     final domainLowerBoundPosition = domainLowerBoundValue != null
@@ -149,22 +150,24 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
         domainUpperBoundPosition != null ? measurePosition : null;
 
     return DatumPoint<D>(
-        datum: datum,
-        domain: domainValue,
-        series: series,
-        x: domainPosition,
-        xLower: domainLowerBoundPosition,
-        xUpper: domainUpperBoundPosition,
-        y: measurePosition,
-        yLower: measureLowerBoundPosition,
-        yUpper: measureUpperBoundPosition,);
+      datum: datum,
+      domain: domainValue,
+      series: series,
+      x: domainPosition,
+      xLower: domainLowerBoundPosition,
+      xUpper: domainUpperBoundPosition,
+      y: measurePosition,
+      yLower: measureLowerBoundPosition,
+      yUpper: measureUpperBoundPosition,
+    );
   }
 
   @override
   void onAttach(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'SymbolAnnotationRenderer can only be attached to a CartesianChart<D>',);
+        'SymbolAnnotationRenderer can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -195,7 +198,11 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
         final domainAxis = _chart.domainAxis!;
         final bounds = Rectangle<int>(
-            componentBounds.left, y.round(), componentBounds.width, 0,);
+          componentBounds.left,
+          y.round(),
+          componentBounds.width,
+          0,
+        );
         domainAxis.tickDrawStrategy!
             .drawAxisLine(canvas, domainAxis.axisOrientation!, bounds);
       });
@@ -209,9 +216,10 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   @override
   LayoutViewConfig get layoutConfig {
     return const LayoutViewConfig(
-        paintOrder: LayoutViewPaintOrder.point,
-        position: LayoutPosition.Bottom,
-        positionOrder: LayoutViewPositionOrder.symbolAnnotation,);
+      paintOrder: LayoutViewPaintOrder.point,
+      position: LayoutPosition.bottom,
+      positionOrder: LayoutViewPositionOrder.symbolAnnotation,
+    );
   }
 
   @override
@@ -220,7 +228,9 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     // of the number of series rendered, even if that ends up taking all of the
     // available margin space.
     return ViewMeasuredSizes(
-        preferredWidth: maxWidth, preferredHeight: _currentHeight,);
+      preferredWidth: maxWidth,
+      preferredHeight: _currentHeight,
+    );
   }
 
   @override
@@ -235,11 +245,11 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 }
 
 class _SeriesInfo<D> {
-
-  _SeriesInfo(
-      {required this.rowHeight,
-      required this.rowStart,
-      required this.symbolCenter,});
+  _SeriesInfo({
+    required this.rowHeight,
+    required this.rowStart,
+    required this.symbolCenter,
+  });
   double rowHeight;
   double rowStart;
   double symbolCenter;

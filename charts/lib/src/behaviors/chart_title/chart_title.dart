@@ -20,7 +20,6 @@ import 'package:meta/meta.dart' show immutable;
 /// Chart behavior that adds a ChartTitle widget to a chart.
 @immutable
 class ChartTitle<D> extends ChartBehavior<D> {
-
   /// Constructs a [ChartTitle].
   ///
   /// [title] primary text for the title.
@@ -103,7 +102,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
   final int? titlePadding;
 
   /// Style of the [title] text.
-  final TextStyleSpec? titleStyleSpec;
+  final TextStyle? titleStyleSpec;
 
   /// Secondary text for the sub-title.
   ///
@@ -112,7 +111,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
   final String? subTitle;
 
   /// Style of the [subTitle] text.
-  final TextStyleSpec? subTitleStyleSpec;
+  final TextStyle? subTitleStyleSpec;
 
   /// Space between the "inside" of the chart, and the title behavior itself.
   ///
@@ -136,19 +135,21 @@ class ChartTitle<D> extends ChartBehavior<D> {
 
   @override
   ChartTitleBehaviorState<D> createBehaviorState() =>
-      ChartTitleBehaviorState<D>(title,
-          behaviorPosition: behaviorPosition,
-          innerPadding: innerPadding,
-          layoutMinSize: layoutMinSize,
-          layoutPreferredSize: layoutPreferredSize,
-          outerPadding: outerPadding,
-          maxWidthStrategy: maxWidthStrategy,
-          titleDirection: titleDirection,
-          titleOutsideJustification: titleOutsideJustification,
-          titlePadding: titlePadding,
-          titleStyleSpec: titleStyleSpec,
-          subTitle: subTitle,
-          subTitleStyleSpec: subTitleStyleSpec,);
+      ChartTitleBehaviorState<D>(
+        title,
+        behaviorPosition: behaviorPosition,
+        innerPadding: innerPadding,
+        layoutMinSize: layoutMinSize,
+        layoutPreferredSize: layoutPreferredSize,
+        outerPadding: outerPadding,
+        maxWidthStrategy: maxWidthStrategy,
+        titleDirection: titleDirection,
+        titleOutsideJustification: titleOutsideJustification,
+        titlePadding: titlePadding,
+        titleStyleSpec: titleStyleSpec,
+        subTitle: subTitle,
+        subTitleStyleSpec: subTitleStyleSpec,
+      );
 
   @override
   void updateBehaviorState(ChartBehaviorState commonBehavior) {}

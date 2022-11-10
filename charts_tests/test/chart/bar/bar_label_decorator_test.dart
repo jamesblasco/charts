@@ -23,34 +23,16 @@ import 'package:test/test.dart';
 
 class MockCanvas extends Mock implements ChartCanvas {}
 
-/// A fake [GraphicsFactory] that returns [FakeTextPaintStyle] and [FakeTextElement].
+/// A fake [GraphicsFactory] that returns [FakeTextStyle] and [FakeTextElement].
 class FakeGraphicsFactory extends GraphicsFactory {
   @override
-  TextPaintStyle createTextPaint() => FakeTextPaintStyle();
+  TextStyle createTextPaint() => TextStyle();
 
   @override
   TextElement createTextElement(String text) => FakeTextElement(text);
 
   @override
-  LineStyle createLinePaint() => MockLinePaint();
-}
-
-/// Stores [TextPaintStyle] properties for test to verify.
-class FakeTextPaintStyle implements TextPaintStyle {
-  @override
-  Color color;
-
-  @override
-  int fontSize;
-
-  @override
-  String fontFamily;
-
-  @override
-  double lineHeight;
-
-  @override
-  String fontWeight;
+  LineStyle createLinePaint() => LineStyle();
 }
 
 /// Fake [TextElement] which returns text length as [horizontalSliceWidth].
@@ -61,7 +43,7 @@ class FakeTextElement implements TextElement {
   final String text;
 
   @override
-  TextPaintStyle textStyle;
+  TextStyle textStyle;
 
   @override
   int maxWidth;
@@ -83,7 +65,7 @@ class FakeTextElement implements TextElement {
       baseline: textStyle.fontSize.toDouble());
 }
 
-class MockLinePaint extends Mock implements LineStyle {}
+
 
 class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final _series = MockImmutableSeries<String>();
@@ -220,7 +202,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.inside,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -245,7 +227,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.outside,
               labelPadding: 0, // Turn off label padding for testing.
-              outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              outsideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -271,7 +253,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.outside,
               labelPadding: 0, // Turn off label padding for testing.
-              outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              outsideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -311,9 +293,9 @@ void main() {
       final outsideColor = Colors.white;
       final decorator = BarLabelDecorator<String>(
           labelPadding: 0,
-          insideLabelStyleSpec: TextStyleSpec(
+          insideLabelStyleSpec: TextStyle(
               fontSize: 10, fontFamily: 'insideFont', color: insideColor),
-          outsideLabelStyleSpec: TextStyleSpec(
+          outsideLabelStyleSpec: TextStyle(
               fontSize: 8, fontFamily: 'outsideFont', color: outsideColor));
 
       decorator.decorate(barElements, canvas, graphicsFactory,
@@ -387,7 +369,7 @@ void main() {
                 labelPosition: BarLabelPosition.outside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -416,7 +398,7 @@ void main() {
                 labelPosition: BarLabelPosition.outside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -443,7 +425,7 @@ void main() {
                 labelPosition: BarLabelPosition.inside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -471,7 +453,7 @@ void main() {
                 labelPosition: BarLabelPosition.inside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -543,7 +525,7 @@ void main() {
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: smallDrawBounds,
               animationPercent: 1.0,
@@ -569,7 +551,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.inside,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -598,7 +580,7 @@ void main() {
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: smallDrawBounds,
               animationPercent: 1.0,
@@ -616,7 +598,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.outside,
               labelPadding: 0, // Turn off label padding for testing.
-              outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              outsideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -646,9 +628,9 @@ void main() {
       final outsideColor = Colors.white;
       final decorator = BarLabelDecorator<String>(
           labelPadding: 0,
-          insideLabelStyleSpec: TextStyleSpec(
+          insideLabelStyleSpec: TextStyle(
               fontSize: 10, fontFamily: 'insideFont', color: insideColor),
-          outsideLabelStyleSpec: TextStyleSpec(
+          outsideLabelStyleSpec: TextStyle(
               fontSize: 8, fontFamily: 'outsideFont', color: outsideColor));
 
       decorator.decorate(barElements, canvas, graphicsFactory,
@@ -687,7 +669,7 @@ void main() {
               labelAnchor: BarLabelAnchor.end,
               labelPosition: BarLabelPosition.inside,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -712,7 +694,7 @@ void main() {
               labelAnchor: BarLabelAnchor.start,
               labelPosition: BarLabelPosition.inside,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -738,7 +720,7 @@ void main() {
               labelAnchor: BarLabelAnchor.end,
               labelPosition: BarLabelPosition.inside,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -763,7 +745,7 @@ void main() {
       BarLabelDecorator<String>(
               labelPosition: BarLabelPosition.right,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -788,7 +770,7 @@ void main() {
               labelPosition: BarLabelPosition.right,
               labelVerticalPosition: BarLabelVerticalPosition.top,
               labelPadding: 0, // Turn off label padding for testing.
-              insideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+              insideLabelStyleSpec: TextStyle(fontSize: 10))
           .decorate(barElements, canvas, graphicsFactory,
               drawBounds: drawBounds,
               animationPercent: 1.0,
@@ -864,7 +846,7 @@ void main() {
                 labelPosition: BarLabelPosition.outside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -892,7 +874,7 @@ void main() {
                 labelPosition: BarLabelPosition.outside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -919,7 +901,7 @@ void main() {
                 labelPosition: BarLabelPosition.inside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,
@@ -947,7 +929,7 @@ void main() {
                 labelPosition: BarLabelPosition.inside,
                 labelPlacement: BarLabelPlacement.opposeAxisBaseline,
                 labelPadding: 0, // Turn off label padding for testing.
-                outsideLabelStyleSpec: TextStyleSpec(fontSize: 10))
+                outsideLabelStyleSpec: TextStyle(fontSize: 10))
             .decorate(barElements, canvas, graphicsFactory,
                 drawBounds: drawBounds,
                 animationPercent: 1.0,

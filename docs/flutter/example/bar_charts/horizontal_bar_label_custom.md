@@ -63,13 +63,13 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
           final color = (sales.year == '2014')
               ? Colors.red
               : Colors.yellow.darker;
-          return new charts.TextStyleSpec(color: color);
+          return new charts.TextStyle(color: color);
         },
         outsideLabelStyleAccessorFn: (OrdinalSales sales, _) {
           final color = (sales.year == '2014')
               ? Colors.red
               : Colors.yellow.darker;
-          return new charts.TextStyleSpec(color: color);
+          return new charts.TextStyle(color: color);
         },
       ),
     ];

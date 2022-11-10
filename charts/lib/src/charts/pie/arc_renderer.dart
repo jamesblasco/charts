@@ -23,11 +23,11 @@ const _arcElementsKey =
     AttributeKey<List<ArcRendererElement<Object>>>('ArcRenderer.elements');
 
 class ArcRenderer<D> extends BaseArcRenderer<D> {
-
   factory ArcRenderer({String? rendererId, ArcRendererConfig<D>? config}) {
     return ArcRenderer._internal(
-        rendererId: rendererId ?? 'line',
-        config: config ?? ArcRendererConfig(),);
+      rendererId: rendererId ?? 'line',
+      config: config ?? ArcRendererConfig(),
+    );
   }
 
   ArcRenderer._internal({required super.rendererId, required this.config})
@@ -132,12 +132,13 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
 
     final bounds = chart!.drawAreaBounds;
 
-    final center = Point<double>((bounds.left + bounds.width / 2).toDouble(),
-        (bounds.top + bounds.height / 2).toDouble(),);
+    final center = Point<double>(
+      bounds.left + bounds.width / 2,
+      bounds.top + bounds.height / 2,
+    );
 
-    final radius = bounds.height < bounds.width
-        ? (bounds.height / 2).toDouble()
-        : (bounds.width / 2).toDouble();
+    final radius =
+        bounds.height < bounds.width ? bounds.height / 2 : bounds.width / 2;
 
     if (config.arcRatio != null &&
         (config.arcRatio! < 0 || config.arcRatio! > 1)) {
@@ -224,13 +225,15 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
           // from 0.
           if (animatingArc == null) {
             animatingArc = AnimatedArc<D>(arcKey, datum, domainValue)
-              ..setNewTarget(ArcRendererElement<D>(
-                color: colorFn!(arcIndex),
-                startAngle: previousEndAngle,
-                endAngle: previousEndAngle,
-                index: arcIndex,
-                series: series,
-              ),);
+              ..setNewTarget(
+                ArcRendererElement<D>(
+                  color: colorFn!(arcIndex),
+                  startAngle: previousEndAngle,
+                  endAngle: previousEndAngle,
+                  index: arcIndex,
+                  series: series,
+                ),
+              );
 
             arcList.arcs.add(animatingArc);
           } else {
@@ -309,8 +312,10 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
 
   /// Assigns colors to series that are missing their colorFn.
   @override
-  void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette,}) {
+  void assignMissingColors(
+    Iterable<MutableSeries<D>> seriesList, {
+    required bool emptyCategoryUsesSinglePalette,
+  }) {
     var maxMissing = 0;
 
     for (final series in seriesList) {
