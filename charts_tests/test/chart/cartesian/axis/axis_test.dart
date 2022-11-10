@@ -20,6 +20,7 @@ import 'dart:math';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 class MockTickDrawStrategy extends Mock implements TickDrawStrategy<num> {}
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {

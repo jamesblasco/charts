@@ -21,6 +21,7 @@ import 'package:meta/meta.dart' show required;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 class MockContext extends Mock implements ChartContext {}
 
 /// Implementation of [BaseTickDrawStrategy] that does nothing on draw.

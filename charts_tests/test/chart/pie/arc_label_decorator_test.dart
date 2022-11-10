@@ -18,7 +18,6 @@
 import 'dart:math' show pi, Point, Rectangle;
 import 'package:charts/charts.dart';
 
-
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

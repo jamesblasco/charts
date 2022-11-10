@@ -17,6 +17,7 @@
 
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 const EPSILON = 0.001;
 
 typedef IsTransitionFunction = bool Function(
@@ -219,7 +220,6 @@ void main() {
     });
 
     test('throws argument error if formatters is  empty', () {
-     
       expect(
           () => DateTimeTickFormatter.withFormatters({}), throwsArgumentError);
     });

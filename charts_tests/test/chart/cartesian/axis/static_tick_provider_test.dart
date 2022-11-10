@@ -36,9 +36,8 @@ class FakeNumericTickFormatter extends TickFormatter<num> {
 
     return tickValues.map((value) => value.toString()).toList();
   }
-  
-  @override
 
+  @override
   List<Object> get props => throw UnimplementedError();
 }
 

@@ -19,6 +19,7 @@ import 'dart:math' show Point;
 
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 void main() {
   ProxyGestureListener _proxy;
   Point<double> _point;

@@ -18,6 +18,7 @@
 import 'package:test/test.dart';
 import 'simple_date_time_factory.dart' show SimpleDateTimeFactory;
 import 'package:charts/charts.dart';
+
 const EPSILON = 0.001;
 
 void main() {

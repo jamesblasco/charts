@@ -17,6 +17,7 @@
 
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 void main() {
   MutableSelectionModel<String> _selectionModel;
 

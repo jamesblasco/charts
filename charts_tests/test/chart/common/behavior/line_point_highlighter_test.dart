@@ -165,8 +165,8 @@ void main() {
   group('LinePointHighlighter', () {
     test('highlights the selected points', () {
       // Setup
-      final behavior =
-          LinePointHighlighterState(selectionModelType: SelectionModelType.info);
+      final behavior = LinePointHighlighterState(
+          selectionModelType: SelectionModelType.info);
       final tester = LinePointHighlighterTester(behavior);
       behavior.attachTo(_chart);
       _setupSelection([
@@ -206,8 +206,8 @@ void main() {
 
     test('listens to other selection models', () {
       // Setup
-      final behavior =
-          LinePointHighlighterState(selectionModelType: SelectionModelType.action);
+      final behavior = LinePointHighlighterState(
+          selectionModelType: SelectionModelType.action);
       when(_chart.getSelectionModel(SelectionModelType.action))
           .thenReturn(_selectionModel);
 
@@ -221,8 +221,8 @@ void main() {
 
     test('leaves everything alone with no selection', () {
       // Setup
-      final behavior =
-          LinePointHighlighterState(selectionModelType: SelectionModelType.info);
+      final behavior = LinePointHighlighterState(
+          selectionModelType: SelectionModelType.info);
       final tester = LinePointHighlighterTester(behavior);
       behavior.attachTo(_chart);
       _setupSelection([]);
@@ -246,8 +246,8 @@ void main() {
 
     test('cleans up', () {
       // Setup
-      final behavior =
-          LinePointHighlighterState(selectionModelType: SelectionModelType.info);
+      final behavior = LinePointHighlighterState(
+          selectionModelType: SelectionModelType.info);
       behavior.attachTo(_chart);
       _setupSelection([
         SeriesDatum(_series1, _s1D2),

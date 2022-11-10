@@ -17,6 +17,7 @@
 
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:charts/charts.dart';
+
 /// Returns DateTime for testing.
 class SimpleDateTimeFactory implements DateTimeFactory {
   const SimpleDateTimeFactory();

@@ -87,9 +87,6 @@ void main() {
     });
 
     test('hash code works correctly', () {
-      
-     
-
       expect(dateTimeTickSpec, equals(dateTimeTickSpec));
     });
   });

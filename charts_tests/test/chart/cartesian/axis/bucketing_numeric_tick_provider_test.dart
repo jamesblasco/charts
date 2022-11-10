@@ -21,6 +21,7 @@ import 'package:meta/meta.dart' show required;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 class MockNumericScale extends Mock implements NumericScale {}
 
 /// A fake draw strategy that reports collision and alternate ticks

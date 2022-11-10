@@ -17,6 +17,7 @@
 
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 /// Fake [TextElement] for testing.
 class FakeTextElement implements TextElement {
   @override

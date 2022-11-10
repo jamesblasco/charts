@@ -18,6 +18,7 @@
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
+
 void main() {
   const String tickLabel = '-tick-';
   final DateTime testDate1 = DateTime.utc(1984, 11, 11);
