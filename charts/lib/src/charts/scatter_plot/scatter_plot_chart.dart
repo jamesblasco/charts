@@ -33,13 +33,14 @@ export 'widgets/scatter_plot_chart.dart';
 /// Scatter plots render grid lines along both the domain and measure axes by
 /// default.
 class ScatterPlotRenderChart extends NumericCartesianRenderChart {
+  ScatterPlotRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  });
 
-  ScatterPlotRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,});
   /// Select data by relative Cartesian distance. Scatter plots draw potentially
   /// overlapping data in an arbitrary (x, y) space, and do not consider the
   /// domain axis to be more or  less important for data selection than the

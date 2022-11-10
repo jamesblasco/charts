@@ -15,7 +15,6 @@
 
 import 'package:charts/core.dart';
 
-
 /// Scale used to convert numeric domain input units to output range units.
 ///
 /// The input represents a continuous numeric domain which maps to a given range

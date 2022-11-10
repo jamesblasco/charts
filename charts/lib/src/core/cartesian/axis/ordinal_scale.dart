@@ -15,7 +15,6 @@
 
 import 'package:charts/core.dart';
 
-
 abstract class OrdinalScale extends MutableScale<String> {
   /// The current domain collection with all added unique values.
   OrdinalScaleDomainInfo get domain;

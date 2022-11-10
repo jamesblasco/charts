@@ -19,7 +19,6 @@ import 'package:charts/core.dart';
 ///
 /// Used to define a tick that is used by range tick provider.
 class RangeTickSpec<D> extends TickSpec<D> {
-
   /// Creates a range tick for [value].
   /// A [label] optionally labels this tick. If not set, the tick formatter
   /// formatter of the axis is used.

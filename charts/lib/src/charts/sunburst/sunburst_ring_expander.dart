@@ -18,16 +18,17 @@ import 'package:charts/charts/sunburst.dart';
 /// Expands the initially displayed outer ring to show subset of data in one
 /// final ring.
 class SunburstRingExpanderState<D> implements ChartBehaviorState<D> {
-
-  SunburstRingExpanderState(
-      [this.selectionModelType = SelectionModelType.action,]);
+  SunburstRingExpanderState([
+    this.selectionModelType = SelectionModelType.action,
+  ]);
   final SelectionModelType selectionModelType;
 
   late SunburstRenderChart<D> _chart;
 
   void _selectionChanged(SelectionModel<D> selectionModel) {
     if (selectionModel.selectedDatum.isNotEmpty) {
-      _chart.expandNode(selectionModel.selectedDatum.first.datum as TreeNode<D>);
+      _chart
+          .expandNode(selectionModel.selectedDatum.first.datum as TreeNode<D>);
       _chart.redraw(skipLayout: true, skipAnimation: true);
     }
   }
@@ -36,7 +37,8 @@ class SunburstRingExpanderState<D> implements ChartBehaviorState<D> {
   void attachTo(BaseRenderChart<D> chart) {
     if (chart is! SunburstRenderChart) {
       throw ArgumentError(
-          'SunburstRingExpander can only be attached to a Sunburst chart',);
+        'SunburstRingExpander can only be attached to a Sunburst chart',
+      );
     }
     _chart = chart as SunburstRenderChart<D>;
     chart

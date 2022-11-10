@@ -19,8 +19,8 @@ typedef OnFocus = void Function();
 
 /// Container for accessibility data.
 class A11yNode {
-
   A11yNode(this.label, this.boundingBox, {this.onFocus});
+
   /// The bounding box for this node.
   final Rectangle<int> boundingBox;
 

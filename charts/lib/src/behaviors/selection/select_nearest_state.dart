@@ -51,15 +51,15 @@ import 'package:charts/core.dart';
 /// Any previous SelectNearest behavior for that selection model will be
 /// removed.
 class SelectNearestState<D> implements ChartBehaviorState<D> {
-
-  SelectNearestState(
-      {this.selectionModelType = SelectionModelType.info,
-      this.selectionMode = SelectionMode.expandToDomain,
-      this.selectAcrossAllSeriesRendererComponents = true,
-      this.selectClosestSeries = true,
-      this.eventTrigger = SelectionTrigger.hover,
-      this.maximumDomainDistancePx,
-      this.hoverEventDelay,}) {
+  SelectNearestState({
+    this.selectionModelType = SelectionModelType.info,
+    this.selectionMode = SelectionMode.expandToDomain,
+    this.selectAcrossAllSeriesRendererComponents = true,
+    this.selectClosestSeries = true,
+    this.eventTrigger = SelectionTrigger.hover,
+    this.maximumDomainDistancePx,
+    this.hoverEventDelay,
+  }) {
     // Setup the appropriate gesture listening.
     switch (eventTrigger) {
       case SelectionTrigger.tap:
@@ -75,28 +75,33 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         break;
       case SelectionTrigger.pressHold:
         _listener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDeselectAll,);
+          onTapTest: _onTapTest,
+          onLongPress: _onSelect,
+          onDragStart: _onSelect,
+          onDragUpdate: _onSelect,
+          onDragEnd: _onDeselectAll,
+        );
         break;
       case SelectionTrigger.longPressHold:
         _listener = GestureListener(
-            onTapTest: _onTapTest,
-            onLongPress: _onLongPressSelect,
-            onDragStart: _onSelect,
-            onDragUpdate: _onSelect,
-            onDragEnd: _onDeselectAll,);
+          onTapTest: _onTapTest,
+          onLongPress: _onLongPressSelect,
+          onDragStart: _onSelect,
+          onDragUpdate: _onSelect,
+          onDragEnd: _onDeselectAll,
+        );
         break;
       case SelectionTrigger.hover:
       default:
         _listener = GestureListener(
-            onHover: hoverEventDelay == null
-                ? _onSelect
-                : throttle<Point<double>, bool>(_onSelect,
-                    delay: Duration(milliseconds: hoverEventDelay!),
-                    defaultReturn: false,),);
+          onHover: hoverEventDelay == null
+              ? _onSelect
+              : throttle<Point<double>, bool>(
+                  _onSelect,
+                  delay: Duration(milliseconds: hoverEventDelay!),
+                  defaultReturn: false,
+                ),
+        );
         break;
     }
   }
@@ -157,7 +162,9 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     if (_delaySelect) return false;
 
     final details = _chart!.getNearestDatumDetailPerSeries(
-        chartPoint, selectAcrossAllSeriesRendererComponents,);
+      chartPoint,
+      selectAcrossAllSeriesRendererComponents,
+    );
 
     final seriesList = <ImmutableSeries<D>>[];
     var seriesDatumList = <SeriesDatum<D>>[];
@@ -201,14 +208,17 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
   }
 
   List<SeriesDatum<D>> _extractSeriesFromNearestSelection(
-      List<DatumDetails<D>> details,) {
+    List<DatumDetails<D>> details,
+  ) {
     switch (selectionMode) {
       case SelectionMode.expandToDomain:
         return _expandToDomain(details.first);
       case SelectionMode.selectOverlapping:
         return details
-            .map((datumDetails) =>
-                SeriesDatum<D>(datumDetails.series!, datumDetails.datum),)
+            .map(
+              (datumDetails) =>
+                  SeriesDatum<D>(datumDetails.series!, datumDetails.datum),
+            )
             .toList();
       case SelectionMode.single:
         return [SeriesDatum<D>(details.first.series!, details.first.datum)];
@@ -272,8 +282,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
                   domainUpperBound == nearestDomain ||
                   ((domainLowerBound as DateTime)
                           .isBefore(nearestDomain as DateTime) &&
-                      nearestDomain
-                          .isBefore(domainUpperBound as DateTime));
+                      nearestDomain.isBefore(domainUpperBound as DateTime));
             }
           }
 

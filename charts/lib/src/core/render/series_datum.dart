@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/render/processed_series.dart' show ImmutableSeries;
+import 'package:charts/src/core/render/processed_series.dart'
+    show ImmutableSeries;
 import 'package:equatable/equatable.dart';
 
 /// Stores datum and the series the datum originated.

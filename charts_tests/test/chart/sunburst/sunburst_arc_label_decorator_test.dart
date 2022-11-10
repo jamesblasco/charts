@@ -63,7 +63,6 @@ class FakeTextElement implements TextElement {
       baseline: textStyle.fontSize.toDouble());
 }
 
-
 class FakeArcRendererElement extends SunburstArcRendererElement<String> {
   final _series = MockImmutableSeries<String>();
   final AccessorFn<String> labelAccessor;

@@ -22,7 +22,6 @@ import 'package:charts/charts/bar.dart';
 /// metrics.
 class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     _BarTargetLineRendererElement, _AnimatedBarTargetLine<D>> {
-
   factory BarTargetLineRenderer({
     BarTargetLineRendererConfig<D>? config,
     String? rendererId,
@@ -30,7 +29,9 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     config ??= BarTargetLineRendererConfig<D>();
     rendererId ??= 'barTargetLine';
     return BarTargetLineRenderer._internal(
-        config: config, rendererId: rendererId,);
+      config: config,
+      rendererId: rendererId,
+    );
   }
 
   BarTargetLineRenderer._internal({
@@ -38,13 +39,15 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     required super.rendererId,
   })  : _barGroupInnerPaddingPx = config.barGroupInnerPaddingPx,
         super(
-            layoutPaintOrder:
-                config.layoutPaintOrder ?? LayoutViewPaintOrder.barTargetLine,);
+          layoutPaintOrder:
+              config.layoutPaintOrder ?? LayoutViewPaintOrder.barTargetLine,
+        );
+
   /// If we are grouped, use this spacing between the bars in a group.
   final int _barGroupInnerPaddingPx;
 
   /// Standard color for all bar target lines.
-  final _color = const Color.fromARGB(153, 0,  0,  0);
+  final _color = const Color.fromARGB(153, 0, 0, 0);
 
   @override
   void configureSeries(List<MutableSeries<D>> seriesList) {
@@ -66,7 +69,9 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) {
     final series = details.series!;
 
     final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
@@ -79,28 +84,32 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     final numBarGroups = series.getAttr(barGroupCountKey)!;
 
     final points = _getTargetLinePoints(
-        details.domain,
-        domainAxis,
-        domainAxis.rangeBand.round(),
-        config.maxBarWidthPx,
-        details.measure,
-        details.measureOffset!,
-        measureAxis,
-        barGroupIndex,
-        previousBarGroupWeight,
-        barGroupWeight,
-        allBarGroupWeights,
-        numBarGroups,);
+      details.domain,
+      domainAxis,
+      domainAxis.rangeBand.round(),
+      config.maxBarWidthPx,
+      details.measure,
+      details.measureOffset!,
+      measureAxis,
+      barGroupIndex,
+      previousBarGroupWeight,
+      barGroupWeight,
+      allBarGroupWeights,
+      numBarGroups,
+    );
 
     NullablePoint chartPosition;
 
     if (renderingVertically) {
       chartPosition = NullablePoint(
-          (points[0].x + (points[1].x - points[0].x) / 2).toDouble(),
-          points[0].y.toDouble(),);
+        (points[0].x + (points[1].x - points[0].x) / 2).toDouble(),
+        points[0].y.toDouble(),
+      );
     } else {
-      chartPosition = NullablePoint(points[0].x.toDouble(),
-          (points[0].y + (points[1].y - points[0].y) / 2).toDouble(),);
+      chartPosition = NullablePoint(
+        points[0].x.toDouble(),
+        (points[0].y + (points[1].y - points[0].y) / 2).toDouble(),
+      );
     }
 
     return DatumDetails.from(details, chartPosition: chartPosition);
@@ -110,39 +119,45 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   _BarTargetLineRendererElement getBaseDetails(dynamic datum, int index) {
     final localConfig = config as BarTargetLineRendererConfig<D>;
     return _BarTargetLineRendererElement(
-        roundEndCaps: localConfig.roundEndCaps,);
+      roundEndCaps: localConfig.roundEndCaps,
+    );
   }
 
   /// Generates an [_AnimatedBarTargetLine] to represent the previous and
   /// current state of one bar target line on the chart.
   @override
-  _AnimatedBarTargetLine<D> makeAnimatedBar(
-      {required String key,
-      required ImmutableSeries<D> series,
-      dynamic datum,
-      Color? color,
-      List<int>? dashPattern,
-      required _BarTargetLineRendererElement details,
-      D? domainValue,
-      required ImmutableAxis<D> domainAxis,
-      required int domainWidth,
-      num? measureValue,
-      required num measureOffsetValue,
-      required ImmutableAxis<num> measureAxis,
-      double? measureAxisPosition,
-      Color? fillColor,
-      FillPatternType? fillPattern,
-      required int barGroupIndex,
-      double? previousBarGroupWeight,
-      double? barGroupWeight,
-      List<double>? allBarGroupWeights,
-      required int numBarGroups,
-      double? strokeWidthPx,
-      bool? measureIsNull,
-      bool? measureIsNegative,}) {
+  _AnimatedBarTargetLine<D> makeAnimatedBar({
+    required String key,
+    required ImmutableSeries<D> series,
+    dynamic datum,
+    Color? color,
+    List<int>? dashPattern,
+    required _BarTargetLineRendererElement details,
+    D? domainValue,
+    required ImmutableAxis<D> domainAxis,
+    required int domainWidth,
+    num? measureValue,
+    required num measureOffsetValue,
+    required ImmutableAxis<num> measureAxis,
+    double? measureAxisPosition,
+    Color? fillColor,
+    FillPatternType? fillPattern,
+    required int barGroupIndex,
+    double? previousBarGroupWeight,
+    double? barGroupWeight,
+    List<double>? allBarGroupWeights,
+    required int numBarGroups,
+    double? strokeWidthPx,
+    bool? measureIsNull,
+    bool? measureIsNegative,
+  }) {
     return _AnimatedBarTargetLine(
-        key: key, datum: datum, series: series, domainValue: domainValue,)
-      ..setNewTarget(makeBarRendererElement(
+      key: key,
+      datum: datum,
+      series: series,
+      domainValue: domainValue,
+    )..setNewTarget(
+        makeBarRendererElement(
           color: color,
           details: details,
           dashPattern: dashPattern,
@@ -162,33 +177,36 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           allBarGroupWeights: allBarGroupWeights,
           numBarGroups: numBarGroups,
           measureIsNull: measureIsNull,
-          measureIsNegative: measureIsNegative,),);
+          measureIsNegative: measureIsNegative,
+        ),
+      );
   }
 
   /// Generates a [_BarTargetLineRendererElement] to represent the rendering
   /// data for one bar target line on the chart.
   @override
-  _BarTargetLineRendererElement makeBarRendererElement(
-      {Color? color,
-      List<int>? dashPattern,
-      required _BarTargetLineRendererElement details,
-      D? domainValue,
-      required ImmutableAxis<D> domainAxis,
-      required int domainWidth,
-      num? measureValue,
-      required num measureOffsetValue,
-      required ImmutableAxis<num> measureAxis,
-      double? measureAxisPosition,
-      Color? fillColor,
-      FillPatternType? fillPattern,
-      double? strokeWidthPx,
-      required int barGroupIndex,
-      double? previousBarGroupWeight,
-      double? barGroupWeight,
-      List<double>? allBarGroupWeights,
-      required int numBarGroups,
-      bool? measureIsNull,
-      bool? measureIsNegative,}) {
+  _BarTargetLineRendererElement makeBarRendererElement({
+    Color? color,
+    List<int>? dashPattern,
+    required _BarTargetLineRendererElement details,
+    D? domainValue,
+    required ImmutableAxis<D> domainAxis,
+    required int domainWidth,
+    num? measureValue,
+    required num measureOffsetValue,
+    required ImmutableAxis<num> measureAxis,
+    double? measureAxisPosition,
+    Color? fillColor,
+    FillPatternType? fillPattern,
+    double? strokeWidthPx,
+    required int barGroupIndex,
+    double? previousBarGroupWeight,
+    double? barGroupWeight,
+    List<double>? allBarGroupWeights,
+    required int numBarGroups,
+    bool? measureIsNull,
+    bool? measureIsNegative,
+  }) {
     return _BarTargetLineRendererElement(roundEndCaps: details.roundEndCaps)
       ..color = color
       ..dashPattern = dashPattern
@@ -199,18 +217,19 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       ..measureIsNull = measureIsNull
       ..measureIsNegative = measureIsNegative
       ..points = _getTargetLinePoints(
-          domainValue,
-          domainAxis,
-          domainWidth,
-          config.maxBarWidthPx,
-          measureValue,
-          measureOffsetValue,
-          measureAxis,
-          barGroupIndex,
-          previousBarGroupWeight,
-          barGroupWeight,
-          allBarGroupWeights,
-          numBarGroups,);
+        domainValue,
+        domainAxis,
+        domainWidth,
+        config.maxBarWidthPx,
+        measureValue,
+        measureOffsetValue,
+        measureAxis,
+        barGroupIndex,
+        previousBarGroupWeight,
+        barGroupWeight,
+        allBarGroupWeights,
+        numBarGroups,
+      );
   }
 
   @override
@@ -223,29 +242,31 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       // TODO: Combine common line attributes into
       // GraphicsFactory.lineStyle or similar.
       canvas.drawLine(
-          clipBounds: drawBounds,
-          points: bar.points,
-          stroke: bar.color,
-          roundEndCaps: bar.roundEndCaps,
-          strokeWidthPx: bar.strokeWidthPx,
-          dashPattern: bar.dashPattern,);
+        clipBounds: drawBounds,
+        points: bar.points,
+        stroke: bar.color,
+        roundEndCaps: bar.roundEndCaps,
+        strokeWidthPx: bar.strokeWidthPx,
+        dashPattern: bar.dashPattern,
+      );
     }
   }
 
   /// Generates a set of points that describe a bar target line.
   List<Point<int>> _getTargetLinePoints(
-      D? domainValue,
-      ImmutableAxis<D> domainAxis,
-      int domainWidth,
-      int? maxBarWidthPx,
-      num? measureValue,
-      num measureOffsetValue,
-      ImmutableAxis<num> measureAxis,
-      int barGroupIndex,
-      double? previousBarGroupWeight,
-      double? barGroupWeight,
-      List<double>? allBarGroupWeights,
-      int numBarGroups,) {
+    D? domainValue,
+    ImmutableAxis<D> domainAxis,
+    int domainWidth,
+    int? maxBarWidthPx,
+    num? measureValue,
+    num measureOffsetValue,
+    ImmutableAxis<num> measureAxis,
+    int barGroupIndex,
+    double? previousBarGroupWeight,
+    double? barGroupWeight,
+    List<double>? allBarGroupWeights,
+    int numBarGroups,
+  ) {
     // If no weights were passed in, default to equal weight per bar.
     if (barGroupWeight == null) {
       barGroupWeight = 1 / numBarGroups;
@@ -349,7 +370,6 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 }
 
 class _BarTargetLineRendererElement extends BaseBarRendererElement {
-
   _BarTargetLineRendererElement({required this.roundEndCaps});
 
   _BarTargetLineRendererElement.clone(_BarTargetLineRendererElement super.other)
@@ -361,8 +381,11 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
   bool roundEndCaps;
 
   @override
-  void updateAnimationPercent(BaseBarRendererElement previous,
-      BaseBarRendererElement target, double animationPercent,) {
+  void updateAnimationPercent(
+    BaseBarRendererElement previous,
+    BaseBarRendererElement target,
+    double animationPercent,
+  ) {
     final localPrevious = previous as _BarTargetLineRendererElement;
     final localTarget = target as _BarTargetLineRendererElement;
 
@@ -416,11 +439,12 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
 
 class _AnimatedBarTargetLine<D>
     extends BaseAnimatedBar<D, _BarTargetLineRendererElement> {
-  _AnimatedBarTargetLine(
-      {required super.key,
-      required super.datum,
-      required super.series,
-      required super.domainValue,});
+  _AnimatedBarTargetLine({
+    required super.key,
+    required super.datum,
+    required super.series,
+    required super.domainValue,
+  });
 
   @override
   void animateElementToMeasureAxisPosition(BaseBarRendererElement target) {
@@ -431,7 +455,8 @@ class _AnimatedBarTargetLine<D>
       final targetPoint = localTarget.points[index];
 
       newPoints.add(
-          Point<int>(targetPoint.x, localTarget.measureAxisPosition!.round()),);
+        Point<int>(targetPoint.x, localTarget.measureAxisPosition!.round()),
+      );
     }
     localTarget.points = newPoints;
   }

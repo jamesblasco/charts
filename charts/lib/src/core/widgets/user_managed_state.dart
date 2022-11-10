@@ -42,7 +42,6 @@ class UserManagedState<D> {
 /// The configuration is converted to a selection model after the series data
 /// has been processed.
 class UserManagedSelectionModel<D> {
-
   /// Creates a [UserManagedSelectionModel] that holds [SelectionModel].
   ///
   /// [selectedSeriesConfig] and [selectedDataConfig] is set to null because the
@@ -54,10 +53,10 @@ class UserManagedSelectionModel<D> {
 
   /// Creates a [UserManagedSelectionModel] with configuration that is converted
   /// to a [SelectionModel] when [getModel] provides a processed series list.
-  UserManagedSelectionModel.fromConfig(
-      {List<String>? selectedSeriesConfig,
-      List<SeriesDatumConfig<D>>? selectedDataConfig,})
-      : selectedSeriesConfig = selectedSeriesConfig,
+  UserManagedSelectionModel.fromConfig({
+    List<String>? selectedSeriesConfig,
+    List<SeriesDatumConfig<D>>? selectedDataConfig,
+  })  : selectedSeriesConfig = selectedSeriesConfig,
         selectedDataConfig = selectedDataConfig;
   final List<String>? selectedSeriesConfig;
   final List<SeriesDatumConfig<D>>? selectedDataConfig;
@@ -67,7 +66,10 @@ class UserManagedSelectionModel<D> {
   /// configuration and the processed [seriesList] passed in.
   SelectionModel<D> getModel(List<ImmutableSeries<D>> seriesList) {
     _model ??= SelectionModel<D>.fromConfig(
-        selectedDataConfig, selectedSeriesConfig, seriesList,);
+      selectedDataConfig,
+      selectedSeriesConfig,
+      seriesList,
+    );
 
     return _model!;
   }

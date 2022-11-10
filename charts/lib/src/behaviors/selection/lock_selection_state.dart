@@ -30,7 +30,6 @@ import 'package:charts/core.dart';
 /// Any previous LockSelection behavior for that selection model will be
 /// removed.
 class LockSelectionState<D> implements ChartBehaviorState<D> {
-
   LockSelectionState({this.selectionModelType = SelectionModelType.info}) {
     // Setup the appropriate gesture listening.
     switch (eventTrigger) {

@@ -21,7 +21,6 @@ import 'package:charts/core.dart';
 /// This is typically used for treemap charts to highlight nodes.
 /// For bars and pies, prefers to use [DomainHighlighter] for UX consistency.
 class DomainOutlinerState<D> implements ChartBehaviorState<D> {
-
   DomainOutlinerState({
     this.selectionType = SelectionModelType.info,
     double? defaultStrokePx,

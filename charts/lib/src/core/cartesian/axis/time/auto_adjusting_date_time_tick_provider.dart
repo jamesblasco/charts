@@ -27,15 +27,15 @@ import 'package:charts/core.dart';
 /// Once a tick provider is chosen the selection of ticks is done by the child
 /// tick provider.
 class AutoAdjustingDateTimeTickProvider extends TickProvider<DateTime> {
-
   AutoAdjustingDateTimeTickProvider._internal(
-      List<TimeRangeTickProvider> tickProviders,)
-      : assert(tickProviders.isNotEmpty),
+    List<TimeRangeTickProvider> tickProviders,
+  )   : assert(tickProviders.isNotEmpty),
         _potentialTickProviders = tickProviders;
 
   /// Creates a default [AutoAdjustingDateTimeTickProvider] for day and time.
   factory AutoAdjustingDateTimeTickProvider.createDefault(
-      DateTimeFactory dateTimeFactory,) {
+    DateTimeFactory dateTimeFactory,
+  ) {
     return AutoAdjustingDateTimeTickProvider._internal([
       createYearTickProvider(dateTimeFactory),
       createMonthTickProvider(dateTimeFactory),
@@ -47,7 +47,8 @@ class AutoAdjustingDateTimeTickProvider extends TickProvider<DateTime> {
 
   /// Creates a default [AutoAdjustingDateTimeTickProvider] for day only.
   factory AutoAdjustingDateTimeTickProvider.createWithoutTime(
-      DateTimeFactory dateTimeFactory,) {
+    DateTimeFactory dateTimeFactory,
+  ) {
     return AutoAdjustingDateTimeTickProvider._internal([
       createYearTickProvider(dateTimeFactory),
       createMonthTickProvider(dateTimeFactory),
@@ -60,13 +61,15 @@ class AutoAdjustingDateTimeTickProvider extends TickProvider<DateTime> {
   /// [potentialTickProviders] must have at least one [TimeRangeTickProvider]
   /// and this list of tick providers are used in the order they are provided.
   factory AutoAdjustingDateTimeTickProvider.createWith(
-      List<TimeRangeTickProvider> potentialTickProviders,) {
+    List<TimeRangeTickProvider> potentialTickProviders,
+  ) {
     if (potentialTickProviders.isEmpty) {
       throw ArgumentError('At least one TimeRangeTickProvider is required');
     }
 
     return AutoAdjustingDateTimeTickProvider._internal(potentialTickProviders);
   }
+
   /// List of tick providers to be selected from.
   final List<TimeRangeTickProvider> _potentialTickProviders;
 
@@ -140,23 +143,28 @@ class AutoAdjustingDateTimeTickProvider extends TickProvider<DateTime> {
   }
 
   static TimeRangeTickProvider createYearTickProvider(
-          DateTimeFactory dateTimeFactory,) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(YearTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createMonthTickProvider(
-          DateTimeFactory dateTimeFactory,) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(MonthTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createDayTickProvider(
-          DateTimeFactory dateTimeFactory,) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(DayTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createHourTickProvider(
-          DateTimeFactory dateTimeFactory,) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(HourTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createMinuteTickProvider(
-          DateTimeFactory dateTimeFactory,) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(MinuteTimeStepper(dateTimeFactory));
 
   @override

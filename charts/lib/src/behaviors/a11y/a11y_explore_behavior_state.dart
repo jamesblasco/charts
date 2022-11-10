@@ -15,6 +15,7 @@
 
 import 'dart:math' show Point;
 import 'package:charts/core.dart';
+
 /// The gesture to use for triggering explore mode.
 enum ExploreModeTrigger {
   pressHold,
@@ -23,7 +24,6 @@ enum ExploreModeTrigger {
 
 /// Chart behavior for adding A11y information.
 abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
-
   A11yExploreBehaviorState({
     ExploreModeTrigger? exploreModeTrigger,
     double? minimumWidth,
@@ -42,9 +42,10 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
         break;
     }
   }
+
   /// The gesture that activates explore mode. Defaults to long press.
   ///
-  /// Turning on explore mode asks this [A11yExploreBehaviorState] to generate 
+  /// Turning on explore mode asks this [A11yExploreBehaviorState] to generate
   /// nodes within this chart.
   final ExploreModeTrigger exploreModeTrigger;
 
@@ -68,12 +69,15 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
       _exploreModeOn = false;
       // Ask native platform to turn off explore mode.
       _chart!.context.disableA11yExploreMode(
-          announcement: exploreModeDisabledAnnouncement,);
+        announcement: exploreModeDisabledAnnouncement,
+      );
     } else {
       _exploreModeOn = true;
       // Ask native platform to turn on explore mode.
-      _chart!.context.enableA11yExploreMode(createA11yNodes(),
-          announcement: exploreModeEnabledAnnouncement,);
+      _chart!.context.enableA11yExploreMode(
+        createA11yNodes(),
+        announcement: exploreModeEnabledAnnouncement,
+      );
     }
 
     return true;

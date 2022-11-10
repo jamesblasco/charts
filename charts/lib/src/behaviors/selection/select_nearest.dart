@@ -42,32 +42,34 @@ import 'package:meta/meta.dart' show immutable;
 /// removed.
 @immutable
 class SelectNearest<D> extends ChartBehavior<D> {
-
-  factory SelectNearest(
-      {SelectionModelType selectionModelType = SelectionModelType.info,
-      SelectionMode selectionMode = SelectionMode.expandToDomain,
-      bool selectAcrossAllDrawAreaComponents = false,
-      bool selectClosestSeries = true,
-      SelectionTrigger eventTrigger = SelectionTrigger.tap,
-      int? maximumDomainDistancePx,}) {
+  factory SelectNearest({
+    SelectionModelType selectionModelType = SelectionModelType.info,
+    SelectionMode selectionMode = SelectionMode.expandToDomain,
+    bool selectAcrossAllDrawAreaComponents = false,
+    bool selectClosestSeries = true,
+    SelectionTrigger eventTrigger = SelectionTrigger.tap,
+    int? maximumDomainDistancePx,
+  }) {
     return SelectNearest._internal(
-        selectionModelType: selectionModelType,
-        selectionMode: selectionMode,
-        selectAcrossAllDrawAreaComponents: selectAcrossAllDrawAreaComponents,
-        selectClosestSeries: selectClosestSeries,
-        eventTrigger: eventTrigger,
-        desiredGestures: SelectNearest._getDesiredGestures(eventTrigger),
-        maximumDomainDistancePx: maximumDomainDistancePx,);
+      selectionModelType: selectionModelType,
+      selectionMode: selectionMode,
+      selectAcrossAllDrawAreaComponents: selectAcrossAllDrawAreaComponents,
+      selectClosestSeries: selectClosestSeries,
+      eventTrigger: eventTrigger,
+      desiredGestures: SelectNearest._getDesiredGestures(eventTrigger),
+      maximumDomainDistancePx: maximumDomainDistancePx,
+    );
   }
 
-  SelectNearest._internal(
-      {required this.selectionModelType,
-      this.selectionMode = SelectionMode.expandToDomain,
-      this.selectAcrossAllDrawAreaComponents = false,
-      this.selectClosestSeries = true,
-      required this.eventTrigger,
-      required this.desiredGestures,
-      this.maximumDomainDistancePx,});
+  SelectNearest._internal({
+    required this.selectionModelType,
+    this.selectionMode = SelectionMode.expandToDomain,
+    this.selectAcrossAllDrawAreaComponents = false,
+    this.selectClosestSeries = true,
+    required this.eventTrigger,
+    required this.desiredGestures,
+    this.maximumDomainDistancePx,
+  });
   @override
   final Set<GestureType> desiredGestures;
 
@@ -107,11 +109,12 @@ class SelectNearest<D> extends ChartBehavior<D> {
   @override
   SelectNearestState<D> createBehaviorState() {
     return SelectNearestState<D>(
-        selectionModelType: selectionModelType,
-        eventTrigger: eventTrigger,
-        selectionMode: selectionMode,
-        selectClosestSeries: selectClosestSeries,
-        maximumDomainDistancePx: maximumDomainDistancePx,);
+      selectionModelType: selectionModelType,
+      eventTrigger: eventTrigger,
+      selectionMode: selectionMode,
+      selectClosestSeries: selectClosestSeries,
+      maximumDomainDistancePx: maximumDomainDistancePx,
+    );
   }
 
   @override

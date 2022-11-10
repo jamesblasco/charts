@@ -16,14 +16,12 @@
 import 'dart:collection' show HashMap;
 import 'package:charts/core.dart';
 
-
 /// A domain processor for [OrdinalScale].
 ///
 /// [D] domain class type of the values being tracked.
 ///
 /// Unique domain values are kept, so duplicates will not increase the extent.
 class OrdinalScaleDomainInfo {
-
   OrdinalScaleDomainInfo();
   int _index = 0;
 

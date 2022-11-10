@@ -18,7 +18,6 @@ import 'package:charts/core.dart';
 
 /// A range of ordinals.
 class OrdinalExtents extends Extents<String> {
-
   /// The extents representing the ordinal values in [range].
   ///
   /// The elements of [range] must all be unique.

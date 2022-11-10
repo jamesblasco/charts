@@ -52,15 +52,16 @@ class Slider<D> extends ChartBehavior<D> {
   /// [layoutPaintOrder] configures the order in which the behavior should be
   /// painted. This value should be relative to LayoutPaintViewOrder.slider.
   /// (e.g. LayoutViewPaintOrder.slider + 1).
-  factory Slider(
-      {SelectionTrigger? eventTrigger,
-      SymbolRenderer? handleRenderer,
-      dynamic? initialDomainValue,
-      String? roleId,
-      SliderListenerCallback? onChangeCallback,
-      bool snapToDatum = false,
-      SliderStyle? style,
-      int layoutPaintOrder = LayoutViewPaintOrder.slider,}) {
+  factory Slider({
+    SelectionTrigger? eventTrigger,
+    SymbolRenderer? handleRenderer,
+    dynamic? initialDomainValue,
+    String? roleId,
+    SliderListenerCallback? onChangeCallback,
+    bool snapToDatum = false,
+    SliderStyle? style,
+    int layoutPaintOrder = LayoutViewPaintOrder.slider,
+  }) {
     eventTrigger ??= SelectionTrigger.tapAndDrag;
     handleRenderer ??= const RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.

@@ -26,7 +26,6 @@ import 'package:charts/core.dart';
 ///
 /// TODO: Implement tap to hide individual data in the series.
 class DatumLegendBehaviorState<D> extends LegendBehaviorState<D> {
-
   DatumLegendBehaviorState({
     SelectionModelType? selectionModelType,
     LegendEntryGenerator<D>? legendEntryGenerator,
@@ -36,15 +35,17 @@ class DatumLegendBehaviorState<D> extends LegendBehaviorState<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     super.entryTextStyle,
   }) : super(
-            selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                legendEntryGenerator ?? PerDatumLegendEntryGenerator(),) {
+          selectionModelType: selectionModelType ?? SelectionModelType.info,
+          legendEntryGenerator:
+              legendEntryGenerator ?? PerDatumLegendEntryGenerator(),
+        ) {
     // Calling the setters will automatically use non-null default values.
     this.showMeasures = showMeasures;
     this.legendDefaultMeasure = legendDefaultMeasure;
     this.measureFormatter = measureFormatter;
     this.secondaryMeasureFormatter = secondaryMeasureFormatter;
   }
+
   /// Whether or not the series legend should show measures on datum selection.
   late bool _showMeasures;
 

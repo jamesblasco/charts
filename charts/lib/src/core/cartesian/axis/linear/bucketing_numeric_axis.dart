@@ -36,8 +36,8 @@ import 'package:charts/core.dart';
 ///
 /// This axis will format numbers as percents by default.
 class BucketingNumericAxis extends NumericAxis {
-
   BucketingNumericAxis() : super(tickProvider: BucketingNumericTickProvider());
+
   /// All values smaller than the threshold will be bucketed into the same
   /// position in the reserved space on the axis.
   num? _threshold;

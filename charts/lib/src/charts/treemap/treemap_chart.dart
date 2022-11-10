@@ -30,13 +30,19 @@ class TreeMapRenderChart<D> extends BaseRenderChart<D> {
       : super(layoutConfig: layoutConfig ?? LayoutConfig());
 
   @override
-  void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout,}) {
+  void drawInternal(
+    List<MutableSeries<D>> seriesList, {
+    bool? skipAnimation,
+    bool? skipLayout,
+  }) {
     if (seriesList.length > 1) {
       throw ArgumentError('TreeMapChart can only render a single tree.');
     }
-    super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout,);
+    super.drawInternal(
+      seriesList,
+      skipAnimation: skipAnimation,
+      skipLayout: skipLayout,
+    );
   }
 
   /// Squarified treemap is used as default renderer.
@@ -58,13 +64,15 @@ class TreeMapRenderChart<D> extends BaseRenderChart<D> {
       final renderer = getSeriesRenderer(series.getAttr(rendererIdKey));
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
-          DatumDetails(
-              datum: seriesDatum.datum,
-              domain: series.domainFn(datumIndex),
-              measure: series.measureFn(datumIndex),
-              series: seriesDatum.series,
-              color: series.colorFn!(datumIndex),),
-          seriesDatum,);
+        DatumDetails(
+          datum: seriesDatum.datum,
+          domain: series.domainFn(datumIndex),
+          measure: series.measureFn(datumIndex),
+          series: seriesDatum.series,
+          color: series.colorFn!(datumIndex),
+        ),
+        seriesDatum,
+      );
       details.add(datumDetails);
     }
     return details;

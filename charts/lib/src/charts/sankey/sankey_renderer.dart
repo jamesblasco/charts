@@ -16,21 +16,24 @@
 import 'dart:math' show Point, Rectangle;
 import 'package:charts/charts/sankey.dart';
 
-
 /// Sankey Renderer for the Sankey Chart using Graph data structure
 class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
-
-  factory SankeyRenderer(
-      {String? rendererId, SankeyRendererConfig<D>? config,}) {
+  factory SankeyRenderer({
+    String? rendererId,
+    SankeyRendererConfig<D>? config,
+  }) {
     return SankeyRenderer._internal(
-        rendererId: rendererId ?? defaultRendererID,
-        config: config ?? SankeyRendererConfig(),);
+      rendererId: rendererId ?? defaultRendererID,
+      config: config ?? SankeyRendererConfig(),
+    );
   }
 
   SankeyRenderer._internal({required super.rendererId, required this.config})
       : super(
-            layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer,);
+          layoutPaintOrder: config.layoutPaintOrder,
+          symbolRenderer: config.symbolRenderer,
+        );
+
   /// Default renderer ID for the Sankey Chart
   static const defaultRendererID = 'sankey';
 
@@ -54,10 +57,14 @@ class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) {
     const chartPosition = Point<double>(0, 0);
-    return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition),);
+    return DatumDetails.from(
+      details,
+      chartPosition: NullablePoint.from(chartPosition),
+    );
   }
 
   /// Datum details of nearest links or nodes in the sankey chart.

@@ -19,7 +19,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PanAndZoomBehavior<D> extends ChartBehavior<D> {
-
   PanAndZoomBehavior({this.panningCompletedCallback});
   final _desiredGestures = <GestureType>{
     GestureType.onDrag,

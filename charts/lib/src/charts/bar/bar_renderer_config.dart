@@ -18,7 +18,6 @@ import 'package:equatable/equatable.dart';
 
 /// Configuration for a bar renderer.
 class BarRendererConfig<D> extends BaseBarRendererConfig<D> {
-
   BarRendererConfig({
     super.barGroupInnerPaddingPx,
     super.customRendererId,
@@ -37,6 +36,7 @@ class BarRendererConfig<D> extends BaseBarRendererConfig<D> {
         super(
           groupingType: groupingType ?? BarGroupingType.grouped,
         );
+
   /// Strategy for determining the corner radius of a bar.
   final CornerStrategy cornerStrategy;
 
@@ -61,7 +61,6 @@ abstract class CornerStrategy extends Equatable {
 
 /// Strategy for constant corner radius.
 class ConstCornerStrategy extends CornerStrategy {
-
   const ConstCornerStrategy(this.radius);
   final int radius;
 
@@ -78,14 +77,9 @@ class ConstCornerStrategy extends CornerStrategy {
 
   @override
   List<Object?> get props => [radius];
-
-
-
-
 }
 
 /// Strategy for no corner radius.
 class NoCornerStrategy extends ConstCornerStrategy {
   const NoCornerStrategy() : super(0);
-
 }

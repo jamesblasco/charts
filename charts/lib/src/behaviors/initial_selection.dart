@@ -20,12 +20,12 @@ import 'package:meta/meta.dart' show immutable;
 /// Chart behavior that sets the initial selection for a [selectionModelType].
 @immutable
 class InitialSelection<D> extends ChartBehavior<D> {
-
-  InitialSelection(
-      {this.selectionModelType = SelectionModelType.info,
-      this.selectedSeriesConfig,
-      this.selectedDataConfig,
-      this.shouldPreserveSelectionOnDraw = false,});
+  InitialSelection({
+    this.selectionModelType = SelectionModelType.info,
+    this.selectedSeriesConfig,
+    this.selectedDataConfig,
+    this.shouldPreserveSelectionOnDraw = false,
+  });
   @override
   final desiredGestures = <GestureType>{};
 
@@ -36,10 +36,11 @@ class InitialSelection<D> extends ChartBehavior<D> {
 
   @override
   InitialSelectionState<D> createBehaviorState() => InitialSelectionState<D>(
-      selectionModelType: selectionModelType,
-      selectedDataConfig: selectedDataConfig,
-      selectedSeriesConfig: selectedSeriesConfig,
-      shouldPreserveSelectionOnDraw: shouldPreserveSelectionOnDraw,);
+        selectionModelType: selectionModelType,
+        selectedDataConfig: selectedDataConfig,
+        selectedSeriesConfig: selectedSeriesConfig,
+        shouldPreserveSelectionOnDraw: shouldPreserveSelectionOnDraw,
+      );
 
   @override
   void updateBehaviorState(ChartBehaviorState commonBehavior) {}

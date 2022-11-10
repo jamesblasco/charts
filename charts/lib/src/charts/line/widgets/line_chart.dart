@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import 'package:charts/charts.dart';
 
 class LineChart extends CartesianChart<num> {
@@ -44,10 +43,11 @@ class LineChart extends CartesianChart<num> {
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return LineRenderChart(
-        layoutConfig: layoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
-        disjointMeasureAxes: createDisjointMeasureAxes(),);
+      layoutConfig: layoutConfig,
+      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+      disjointMeasureAxes: createDisjointMeasureAxes(),
+    );
   }
 
   @override

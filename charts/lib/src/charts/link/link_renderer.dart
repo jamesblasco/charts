@@ -21,17 +21,19 @@ const linkElementsKey =
     AttributeKey<List<LinkRendererElement>>('LinkRenderer.elements');
 
 class LinkRenderer<D> extends BaseSeriesRenderer<D> {
-
   factory LinkRenderer({String? rendererId, LinkRendererConfig<D>? config}) {
     return LinkRenderer._internal(
-        rendererId: rendererId ?? defaultRendererID,
-        config: config ?? LinkRendererConfig(),);
+      rendererId: rendererId ?? defaultRendererID,
+      config: config ?? LinkRendererConfig(),
+    );
   }
 
   LinkRenderer._internal({required super.rendererId, required this.config})
       : super(
-            layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer,);
+          layoutPaintOrder: config.layoutPaintOrder,
+          symbolRenderer: config.symbolRenderer,
+        );
+
   /// Default renderer ID for the Sankey Chart
   static const defaultRendererID = 'sankey';
 
@@ -78,10 +80,14 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) {
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) {
     const chartPosition = Point<double>(0, 0);
-    return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition),);
+    return DatumDetails.from(
+      details,
+      chartPosition: NullablePoint.from(chartPosition),
+    );
   }
 
   /// Datum details of nearest link.
@@ -98,7 +104,6 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
 }
 
 class LinkRendererElement {
-
   LinkRendererElement(this.link, this.orientation, this.fillColor);
   final Link link;
   final LinkOrientation orientation;

@@ -18,15 +18,15 @@ import 'package:intl/intl.dart';
 
 /// Hour specific tick formatter which will format noon differently.
 class HourTickFormatter extends TimeTickFormatterImpl {
-
-  HourTickFormatter(
-      {required DateTimeFactory dateTimeFactory,
-      required super.simpleFormat,
-      required super.transitionFormat,
-      required String? noonFormat,})
-      : super(
-            dateTimeFactory: dateTimeFactory,
-            transitionField: CalendarField.date,) {
+  HourTickFormatter({
+    required DateTimeFactory dateTimeFactory,
+    required super.simpleFormat,
+    required super.transitionFormat,
+    required String? noonFormat,
+  }) : super(
+          dateTimeFactory: dateTimeFactory,
+          transitionField: CalendarField.date,
+        ) {
     _noonFormat = dateTimeFactory.createDateFormat(noonFormat);
   }
   late final DateFormat _noonFormat;

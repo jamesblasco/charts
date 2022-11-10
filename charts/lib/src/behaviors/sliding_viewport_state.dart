@@ -15,8 +15,6 @@
 
 import 'package:charts/core.dart';
 
-
-
 /// Chart behavior that centers the viewport on the selected domain.
 ///
 /// It is used in combination with SelectNearest to update the selection model
@@ -24,7 +22,6 @@ import 'package:charts/core.dart';
 ///
 /// This behavior can only be used on [CartesianRenderChart].
 class SlidingViewportState<D> implements ChartBehaviorState<D> {
-
   SlidingViewportState([this.selectionModelType = SelectionModelType.info]);
   final SelectionModelType selectionModelType;
 
@@ -47,7 +44,9 @@ class SlidingViewportState<D> implements ChartBehaviorState<D> {
     final translatePx =
         domainAxis.viewportTranslatePx + (viewportCenter - domainLocation);
     domainAxis.setViewportSettings(
-        domainAxis.viewportScalingFactor, translatePx,);
+      domainAxis.viewportScalingFactor,
+      translatePx,
+    );
 
     _chart.redraw();
   }

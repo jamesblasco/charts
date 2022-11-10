@@ -19,12 +19,13 @@ import 'package:charts/core.dart';
 ///
 /// [D] is the type of the value this tick is associated with.
 class Tick<D> {
+  Tick({
+    required this.value,
+    required this.textElement,
+    this.locationPx,
+    this.labelOffsetPx,
+  });
 
-  Tick(
-      {required this.value,
-      required this.textElement,
-      this.locationPx,
-      this.labelOffsetPx,});
   /// The value that this tick represents
   final D value;
 

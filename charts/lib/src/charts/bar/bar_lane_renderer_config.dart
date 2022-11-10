@@ -17,7 +17,6 @@ import 'package:charts/charts/bar.dart';
 
 /// Configuration for a bar lane renderer.
 class BarLaneRendererConfig extends BarRendererConfig<String> {
-
   BarLaneRendererConfig({
     super.customRendererId,
     super.cornerStrategy,
@@ -40,6 +39,7 @@ class BarLaneRendererConfig extends BarRendererConfig<String> {
         super(
           groupingType: groupingType ?? BarGroupingType.grouped,
         );
+
   /// The color of background bars.
   final Color backgroundBarColor;
 
@@ -65,8 +65,10 @@ class BarLaneRendererConfig extends BarRendererConfig<String> {
   }
 
   @override
-
-  List<Object?> get props => [backgroundBarColor,emptyLaneLabel,mergeEmptyLanes ,renderNegativeLanes];
-
-
+  List<Object?> get props => [
+        backgroundBarColor,
+        emptyLaneLabel,
+        mergeEmptyLanes,
+        renderNegativeLanes
+      ];
 }

@@ -16,10 +16,8 @@
 import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
 
-
 /// Behavior that generates semantic nodes for each domain.
 class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
-
   factory DomainA11yExploreBehavior({
     VocalizationCallback? vocalizationCallback,
     ExploreModeTrigger? exploreModeTrigger,
@@ -49,13 +47,15 @@ class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
     );
   }
 
-  DomainA11yExploreBehavior._internal(
-      {this.vocalizationCallback,
-      this.exploreModeTrigger,
-      required this.desiredGestures,
-      this.minimumWidth,
-      this.exploreModeEnabledAnnouncement,
-      this.exploreModeDisabledAnnouncement,});
+  DomainA11yExploreBehavior._internal({
+    this.vocalizationCallback,
+    this.exploreModeTrigger,
+    required this.desiredGestures,
+    this.minimumWidth,
+    this.exploreModeEnabledAnnouncement,
+    this.exploreModeDisabledAnnouncement,
+  });
+
   /// Returns a string for a11y vocalization from a list of series datum.
   final VocalizationCallback? vocalizationCallback;
 
@@ -82,11 +82,12 @@ class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
   @override
   DomainA11yExploreBehaviorState<D> createBehaviorState() {
     return DomainA11yExploreBehaviorState<D>(
-        vocalizationCallback: vocalizationCallback,
-        exploreModeTrigger: exploreModeTrigger,
-        minimumWidth: minimumWidth,
-        exploreModeEnabledAnnouncement: exploreModeEnabledAnnouncement,
-        exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement,);
+      vocalizationCallback: vocalizationCallback,
+      exploreModeTrigger: exploreModeTrigger,
+      minimumWidth: minimumWidth,
+      exploreModeEnabledAnnouncement: exploreModeEnabledAnnouncement,
+      exploreModeDisabledAnnouncement: exploreModeDisabledAnnouncement,
+    );
   }
 
   @override

@@ -15,12 +15,12 @@
 
 /// A measurement result for rendering text.
 class TextMeasurement {
-
   TextMeasurement({
     required this.horizontalSliceWidth,
     required this.verticalSliceWidth,
     this.baseline,
   });
+
   /// Rendered width of the text.
   final double horizontalSliceWidth;
 

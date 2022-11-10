@@ -19,9 +19,11 @@ import 'package:flutter/widgets.dart' show AnimationController, immutable;
 
 @immutable
 class InitialHintBehavior<D> extends ChartBehavior<D> {
-
-  InitialHintBehavior(
-      {this.hintDuration, this.maxHintTranslate, this.maxHintScaleFactor,});
+  InitialHintBehavior({
+    this.hintDuration,
+    this.maxHintTranslate,
+    this.maxHintScaleFactor,
+  });
   @override
   final desiredGestures = <GestureType>{};
 

@@ -18,7 +18,6 @@
 import 'dart:math' show pi, Point, Rectangle;
 import 'package:charts/charts.dart';
 
-
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -64,8 +63,6 @@ class FakeTextElement implements TextElement {
       verticalSliceWidth: textStyle.fontSize.toDouble(),
       baseline: textStyle.fontSize.toDouble());
 }
-
-
 
 class FakeArcRendererElement extends ArcRendererElement<String> {
   final _series = MockImmutableSeries<String>();

@@ -19,14 +19,15 @@ import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show protected;
 
 class NumericCartesianRenderChart extends CartesianRenderChart<num> {
-  NumericCartesianRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,})
-      : super(
-            domainAxis: NumericAxis(),);
+  NumericCartesianRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  }) : super(
+          domainAxis: NumericAxis(),
+        );
 
   @protected
   @override
@@ -37,14 +38,15 @@ class NumericCartesianRenderChart extends CartesianRenderChart<num> {
 }
 
 class OrdinalCartesianRenderChart extends CartesianRenderChart<String> {
-  OrdinalCartesianRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,})
-      : super(
-            domainAxis: OrdinalAxis(),);
+  OrdinalCartesianRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  }) : super(
+          domainAxis: OrdinalAxis(),
+        );
 
   @protected
   @override
@@ -55,15 +57,14 @@ class OrdinalCartesianRenderChart extends CartesianRenderChart<String> {
 }
 
 abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
-
-  CartesianRenderChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      Axis<D>? domainAxis,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,})
-      : vertical = vertical ?? true,
+  CartesianRenderChart({
+    bool? vertical,
+    LayoutConfig? layoutConfig,
+    Axis<D>? domainAxis,
+    NumericAxis? primaryMeasureAxis,
+    NumericAxis? secondaryMeasureAxis,
+    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
+  })  : vertical = vertical ?? true,
         // [domainAxis] will be set to the new axis in [configurationChanged].
         _newDomainAxis = domainAxis,
         _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
@@ -145,7 +146,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
     _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
       axis.context = context;
-      axis.tickDrawStrategy = NoneDrawStrategy<num>( graphicsFactory);
+      axis.tickDrawStrategy = NoneDrawStrategy<num>(graphicsFactory);
     });
   }
 
@@ -214,7 +215,10 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
           .createDrawStrategy(context, graphicsFactory!);
 
       _primaryMeasureAxisSpec?.configure(
-          _primaryMeasureAxis, context, graphicsFactory!,);
+        _primaryMeasureAxis,
+        context,
+        graphicsFactory!,
+      );
       addView(_primaryMeasureAxis);
     }
 
@@ -230,7 +234,10 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
           .createDrawStrategy(context, graphicsFactory!);
 
       _secondaryMeasureAxisSpec?.configure(
-          _secondaryMeasureAxis, context, graphicsFactory!,);
+        _secondaryMeasureAxis,
+        context,
+        graphicsFactory!,
+      );
       addView(_secondaryMeasureAxis);
     }
 
@@ -246,10 +253,12 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
       _disjointMeasureAxesSpec?.forEach((axisId, axisSpec) {
         _disjointMeasureAxes[axisId] = axisSpec.createAxis();
         _disjointMeasureAxes[axisId]!.tickDrawStrategy =
-            NoneDrawStrategy<num>(
-               graphicsFactory!);
+            NoneDrawStrategy<num>(graphicsFactory!);
         axisSpec.configure(
-            _disjointMeasureAxes[axisId]!, context, graphicsFactory!,);
+          _disjointMeasureAxes[axisId]!,
+          context,
+          graphicsFactory!,
+        );
         addView(_disjointMeasureAxes[axisId]!);
       });
     }
@@ -304,7 +313,8 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   /// A [LinkedHashMap] is used to ensure consistent ordering when painting the
   /// axes.
   set disjointMeasureAxisSpecs(
-      LinkedHashMap<String, NumericAxisSpec>? axisSpecs,) {
+    LinkedHashMap<String, NumericAxisSpec>? axisSpecs,
+  ) {
     _newDisjointMeasureAxesSpec = axisSpecs;
   }
 
@@ -316,8 +326,10 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
     // Setup the Axes
     s.setAttr(domainAxisKey, domainAxis);
-    s.setAttr(measureAxisKey,
-        getMeasureAxis(axisId: series.getAttribute(measureAxisIdKey)),);
+    s.setAttr(
+      measureAxisKey,
+      getMeasureAxis(axisId: series.getAttribute(measureAxisIdKey)),
+    );
 
     return s;
   }
@@ -330,7 +342,8 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
   @override
   Map<String, List<MutableSeries<D>>> preprocessSeries(
-      List<MutableSeries<D>> seriesList,) {
+    List<MutableSeries<D>> seriesList,
+  ) {
     final rendererToSeriesList = super.preprocessSeries(seriesList);
     _useSecondaryMeasureAxis = false;
     // Check if primary or secondary measure axis is being used.
@@ -479,18 +492,20 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
       final renderer = getSeriesRenderer(series.getAttr(rendererIdKey));
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
-          DatumDetails(
-              datum: datum,
-              domain: domain,
-              domainFormatter: domainFormatterFn?.call(datumIndex),
-              index: datumIndex,
-              measure: measure,
-              measureFormatter: measureFormatterFn?.call(datumIndex),
-              measureOffset: measureOffset,
-              rawMeasure: rawMeasure,
-              series: series,
-              color: color,),
-          seriesDatum,);
+        DatumDetails(
+          datum: datum,
+          domain: domain,
+          domainFormatter: domainFormatterFn?.call(datumIndex),
+          index: datumIndex,
+          measure: measure,
+          measureFormatter: measureFormatterFn?.call(datumIndex),
+          measureOffset: measureOffset,
+          rawMeasure: rawMeasure,
+          series: series,
+          color: color,
+        ),
+        seriesDatum,
+      );
 
       entries.add(datumDetails);
     });

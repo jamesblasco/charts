@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/cartesian/axis/numeric_extents.dart' show NumericExtents;
+import 'package:charts/src/core/cartesian/axis/numeric_extents.dart'
+    show NumericExtents;
 
 /// Encapsulation of all the domain processing logic for the [LinearScale].
 class LinearScaleDomainInfo {
-
   LinearScaleDomainInfo();
 
   LinearScaleDomainInfo.copy(LinearScaleDomainInfo other) {
@@ -29,6 +29,7 @@ class LinearScaleDomainInfo {
     _previouslyAddedDomain = other._previouslyAddedDomain;
     _minimumDetectedDomainStep = other._minimumDetectedDomainStep;
   }
+
   /// User (or axis) overridden extent in domain units.
   NumericExtents? domainOverride;
 

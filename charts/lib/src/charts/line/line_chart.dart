@@ -20,12 +20,13 @@ export 'line_renderer_config.dart';
 export 'widgets/line_chart.dart';
 
 class LineRenderChart extends NumericCartesianRenderChart {
-  LineRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,});
+  LineRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  });
 
   @override
   SeriesRenderer<num> makeDefaultRenderer() {

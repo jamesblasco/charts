@@ -17,7 +17,6 @@ import 'package:intl/intl.dart';
 
 /// Formatter that can format simple and transition time ticks differently.
 class TimeTickFormatterImpl implements TimeTickFormatter {
-
   /// Create time tick formatter.
   ///
   /// [dateTimeFactory] factory to use to generate the [DateFormat].

@@ -22,7 +22,6 @@ import 'dart:math' show Point;
 /// Each gesture returns true if the event is consumed or false if it should
 /// continue to alert other listeners.
 class GestureListener {
-
   GestureListener({
     GestureSinglePointCallback? onTapTest,
     GestureCancelCallback? onTapCancel,
@@ -109,6 +108,11 @@ typedef GestureSinglePointCallback = bool Function(Point<double> localPosition);
 
 typedef GestureDragStartCallback = bool Function(Point<double> localPosition);
 typedef GestureDragUpdateCallback = bool Function(
-    Point<double> localPosition, double scale,);
+  Point<double> localPosition,
+  double scale,
+);
 typedef GestureDragEndCallback = bool Function(
-    Point<double> localPosition, double scale, double pixelsPerSec,);
+  Point<double> localPosition,
+  double scale,
+  double pixelsPerSec,
+);

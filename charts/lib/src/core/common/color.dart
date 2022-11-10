@@ -36,16 +36,28 @@ extension MaterialShades on MaterialColor {
 
     // Divide the space between 255 and c500 evenly according to the colorCnt.
     for (var i = 1; i < colorCnt; i++) {
-      colors.add(_getSteppedColor(this, i, colorCnt,
-          darker: darker, lighter: lighterColor,),);
+      colors.add(
+        _getSteppedColor(
+          this,
+          i,
+          colorCnt,
+          darker: darker,
+          lighter: lighterColor,
+        ),
+      );
     }
 
     colors.add(this);
     return colors;
   }
 
-  Color _getSteppedColor(Color color, int index, int steps,
-      {Color? darker, Color? lighter,}) {
+  Color _getSteppedColor(
+    Color color,
+    int index,
+    int steps, {
+    Color? darker,
+    Color? lighter,
+  }) {
     final fraction = index / steps;
     return Color.fromARGB(
       color.alpha + ((255 - color.alpha) * fraction).round(),

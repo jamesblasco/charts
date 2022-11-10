@@ -17,29 +17,38 @@ import 'package:meta/meta.dart';
 
 /// Directed acyclic graph with Sankey diagram related data.
 class SankeyGraph<N, L, D> extends Graph<N, L, D> {
-
-  factory SankeyGraph(
-      {required String id,
-      required List<N> nodes,
-      required List<L> links,
-      required TypedAccessorFn<N, D> nodeDomainFn,
-      required TypedAccessorFn<L, D> linkDomainFn,
-      required TypedAccessorFn<L, N> sourceFn,
-      required TypedAccessorFn<L, N> targetFn,
-      required TypedAccessorFn<N, num?> nodeMeasureFn,
-      required TypedAccessorFn<L, num?> linkMeasureFn,
-      TypedAccessorFn<N, Color>? nodeColorFn,
-      TypedAccessorFn<N, Color>? nodeFillColorFn,
-      TypedAccessorFn<N, FillPatternType>? nodeFillPatternFn,
-      TypedAccessorFn<N, num>? nodeStrokeWidthPxFn,
-      TypedAccessorFn<L, Color>? linkFillColorFn,
-      TypedAccessorFn<L, num>? secondaryLinkMeasureFn,}) {
+  factory SankeyGraph({
+    required String id,
+    required List<N> nodes,
+    required List<L> links,
+    required TypedAccessorFn<N, D> nodeDomainFn,
+    required TypedAccessorFn<L, D> linkDomainFn,
+    required TypedAccessorFn<L, N> sourceFn,
+    required TypedAccessorFn<L, N> targetFn,
+    required TypedAccessorFn<N, num?> nodeMeasureFn,
+    required TypedAccessorFn<L, num?> linkMeasureFn,
+    TypedAccessorFn<N, Color>? nodeColorFn,
+    TypedAccessorFn<N, Color>? nodeFillColorFn,
+    TypedAccessorFn<N, FillPatternType>? nodeFillPatternFn,
+    TypedAccessorFn<N, num>? nodeStrokeWidthPxFn,
+    TypedAccessorFn<L, Color>? linkFillColorFn,
+    TypedAccessorFn<L, num>? secondaryLinkMeasureFn,
+  }) {
     return SankeyGraph._(
       id: id,
       nodes: _convertSankeyNodes<N, L, D>(
-          nodes, links, sourceFn, targetFn, nodeDomainFn,),
+        nodes,
+        links,
+        sourceFn,
+        targetFn,
+        nodeDomainFn,
+      ),
       links: _convertSankeyLinks<N, L>(
-          links, sourceFn, targetFn, secondaryLinkMeasureFn,),
+        links,
+        sourceFn,
+        targetFn,
+        secondaryLinkMeasureFn,
+      ),
       nodeDomainFn: actOnNodeData<N, L, D>(nodeDomainFn)!,
       linkDomainFn: actOnLinkData<N, L, D>(linkDomainFn)!,
       nodeMeasureFn: actOnNodeData<N, L, num?>(nodeMeasureFn)!,
@@ -67,8 +76,9 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
     super.nodeStrokeWidthPxFn,
     super.linkFillColorFn,
   }) : super.base(
-            nodes: nodes,
-            links: links,);
+          nodes: nodes,
+          links: links,
+        );
   @override
   final List<SankeyNode<N, L>> nodes;
 
@@ -77,29 +87,41 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
 }
 
 /// Return a list of links from the Sankey link data type
-List<SankeyLink<N, L>> _convertSankeyLinks<N, L>(List<L> links,
-    TypedAccessorFn<L, N> sourceFn, TypedAccessorFn<L, N> targetFn,
-    [TypedAccessorFn<L, num>? secondaryLinkMeasureFn,]) {
+List<SankeyLink<N, L>> _convertSankeyLinks<N, L>(
+  List<L> links,
+  TypedAccessorFn<L, N> sourceFn,
+  TypedAccessorFn<L, N> targetFn, [
+  TypedAccessorFn<L, num>? secondaryLinkMeasureFn,
+]) {
   final graphLinks = <SankeyLink<N, L>>[];
   for (final link in links) {
     final sourceNode = sourceFn(link, indexNotRelevant);
     final targetNode = targetFn(link, indexNotRelevant);
     final secondaryLinkMeasure = accessorIfExists<L, num>(
-        secondaryLinkMeasureFn, link, indexNotRelevant,);
-    graphLinks.add(SankeyLink(
-        SankeyNode(sourceNode), SankeyNode(targetNode), link,
-        secondaryLinkMeasure: secondaryLinkMeasure,),);
+      secondaryLinkMeasureFn,
+      link,
+      indexNotRelevant,
+    );
+    graphLinks.add(
+      SankeyLink(
+        SankeyNode(sourceNode),
+        SankeyNode(targetNode),
+        link,
+        secondaryLinkMeasure: secondaryLinkMeasure,
+      ),
+    );
   }
   return graphLinks;
 }
 
 /// Return a list of nodes from the Sankey node data type
 List<SankeyNode<N, L>> _convertSankeyNodes<N, L, D>(
-    List<N> nodes,
-    List<L> links,
-    TypedAccessorFn<L, N> sourceFn,
-    TypedAccessorFn<L, N> targetFn,
-    TypedAccessorFn<N, D> nodeDomainFn,) {
+  List<N> nodes,
+  List<L> links,
+  TypedAccessorFn<L, N> sourceFn,
+  TypedAccessorFn<L, N> targetFn,
+  TypedAccessorFn<N, D> nodeDomainFn,
+) {
   final graphNodes = <SankeyNode<N, L>>[];
   final graphLinks = _convertSankeyLinks(links, sourceFn, targetFn);
   final nodeClassDomainFn = actOnNodeData<N, L, D>(nodeDomainFn)!;
@@ -107,17 +129,22 @@ List<SankeyNode<N, L>> _convertSankeyNodes<N, L, D>(
 
   for (final node in nodes) {
     nodeMap.putIfAbsent(
-        nodeDomainFn(node, indexNotRelevant), () => SankeyNode(node),);
+      nodeDomainFn(node, indexNotRelevant),
+      () => SankeyNode(node),
+    );
   }
 
   for (final link in graphLinks) {
-    nodeMap.update(nodeClassDomainFn(link.target, indexNotRelevant),
-        (node) => _addLinkToSankeyNode(node, link, isIncomingLink: true),
-        ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: true),);
-    nodeMap.update(nodeClassDomainFn(link.source, indexNotRelevant),
-        (node) => _addLinkToSankeyNode(node, link, isIncomingLink: false),
-        ifAbsent: () =>
-            _addLinkToAbsentSankeyNode(link, isIncomingLink: false),);
+    nodeMap.update(
+      nodeClassDomainFn(link.target, indexNotRelevant),
+      (node) => _addLinkToSankeyNode(node, link, isIncomingLink: true),
+      ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: true),
+    );
+    nodeMap.update(
+      nodeClassDomainFn(link.source, indexNotRelevant),
+      (node) => _addLinkToSankeyNode(node, link, isIncomingLink: false),
+      ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: false),
+    );
   }
 
   nodeMap.forEach((domainId, node) => graphNodes.add(node));
@@ -127,9 +154,10 @@ List<SankeyNode<N, L>> _convertSankeyNodes<N, L, D>(
 /// Returns a list of nodes sorted topologically for a directed acyclic graph.
 @visibleForTesting
 List<Node<N, L>> topologicalNodeSort<N, L, D>(
-    List<Node<N, L>> givenNodes,
-    TypedAccessorFn<Node<N, L>, D> nodeDomainFn,
-    TypedAccessorFn<GraphLink<N, L>, D> linkDomainFn,) {
+  List<Node<N, L>> givenNodes,
+  TypedAccessorFn<Node<N, L>, D> nodeDomainFn,
+  TypedAccessorFn<GraphLink<N, L>, D> linkDomainFn,
+) {
   final nodeMap = <D, Node<N, L>>{};
   final givenNodeMap = <D, Node<N, L>>{};
   final sortedNodes = <Node<N, L>>[];
@@ -138,9 +166,13 @@ List<Node<N, L>> topologicalNodeSort<N, L, D>(
 
   for (var i = 0; i < nodes.length; i++) {
     nodeMap.putIfAbsent(
-        nodeDomainFn(nodes[i], indexNotRelevant), () => nodes[i],);
+      nodeDomainFn(nodes[i], indexNotRelevant),
+      () => nodes[i],
+    );
     givenNodeMap.putIfAbsent(
-        nodeDomainFn(givenNodes[i], indexNotRelevant), () => givenNodes[i],);
+      nodeDomainFn(givenNodes[i], indexNotRelevant),
+      () => givenNodes[i],
+    );
     if (nodes[i].incomingLinks.isEmpty) {
       sourceNodes.add(nodes[i]);
     }
@@ -149,25 +181,31 @@ List<Node<N, L>> topologicalNodeSort<N, L, D>(
   while (sourceNodes.isNotEmpty) {
     final source = sourceNodes.removeLast();
     sortedNodes.add(
-        givenNodeMap[nodeDomainFn(source, indexNotRelevant)] as Node<N, L>,);
+      givenNodeMap[nodeDomainFn(source, indexNotRelevant)] as Node<N, L>,
+    );
     while (source.outgoingLinks.isNotEmpty) {
       final toRemove = source.outgoingLinks.removeLast();
       nodeMap[nodeDomainFn(toRemove.target, indexNotRelevant)]
           ?.incomingLinks
-          .removeWhere((link) =>
-              linkDomainFn(link, indexNotRelevant) ==
-              linkDomainFn(toRemove, indexNotRelevant),);
+          .removeWhere(
+            (link) =>
+                linkDomainFn(link, indexNotRelevant) ==
+                linkDomainFn(toRemove, indexNotRelevant),
+          );
       if (nodeMap[nodeDomainFn(toRemove.target, indexNotRelevant)]!
           .incomingLinks
           .isEmpty) {
-        sourceNodes.add(nodeMap[nodeDomainFn(toRemove.target, indexNotRelevant)]
-            as Node<N, L>,);
+        sourceNodes.add(
+          nodeMap[nodeDomainFn(toRemove.target, indexNotRelevant)]
+              as Node<N, L>,
+        );
       }
     }
   }
 
-  if (nodeMap.values.any((node) =>
-      node.incomingLinks.isNotEmpty || node.outgoingLinks.isNotEmpty,)) {
+  if (nodeMap.values.any(
+    (node) => node.incomingLinks.isNotEmpty || node.outgoingLinks.isNotEmpty,
+  )) {
     throw UnsupportedError(graphCycleErrorMsg);
   }
 
@@ -179,14 +217,18 @@ List<Node<N, L>> _cloneNodeList<N, L>(List<Node<N, L>> nodeList) {
 }
 
 SankeyNode<N, L> _addLinkToSankeyNode<N, L>(
-    SankeyNode<N, L> node, SankeyLink<N, L> link,
-    {required bool isIncomingLink,}) {
+  SankeyNode<N, L> node,
+  SankeyLink<N, L> link, {
+  required bool isIncomingLink,
+}) {
   return addLinkToNode(node, link, isIncomingLink: isIncomingLink)
       as SankeyNode<N, L>;
 }
 
-SankeyNode<N, L> _addLinkToAbsentSankeyNode<N, L>(SankeyLink<N, L> link,
-    {required bool isIncomingLink,}) {
+SankeyNode<N, L> _addLinkToAbsentSankeyNode<N, L>(
+  SankeyLink<N, L> link, {
+  required bool isIncomingLink,
+}) {
   return addLinkToAbsentNode(link, isIncomingLink: isIncomingLink)
       as SankeyNode<N, L>;
 }
@@ -196,13 +238,15 @@ SankeyNode<N, L> _addLinkToAbsentSankeyNode<N, L>(SankeyLink<N, L> link,
 /// We store the Sankey specific column, and the depth and height given that a
 /// [SankeyGraph] is directed and acyclic. These cannot be stored on a [Series].
 class SankeyNode<N, L> extends Node<N, L> {
+  SankeyNode(
+    super.data, {
+    List<SankeyLink<N, L>>? super.incomingLinks,
+    List<SankeyLink<N, L>>? super.outgoingLinks,
+    this.depth,
+    this.height,
+    this.column,
+  });
 
-  SankeyNode(super.data,
-      {List<SankeyLink<N, L>>? super.incomingLinks,
-      List<SankeyLink<N, L>>? super.outgoingLinks,
-      this.depth,
-      this.height,
-      this.column,});
   /// Number of links from node to nearest root.
   ///
   /// Calculated from graph structure.
@@ -226,9 +270,13 @@ class SankeyNode<N, L> extends Node<N, L> {
 /// We store the optional Sankey exclusive secondary link measure on the
 /// [SankeyLink] for variable links since it cannot be stored on a [Series].
 class SankeyLink<N, L> extends GraphLink<N, L> {
+  SankeyLink(
+    SankeyNode<N, L> super.source,
+    SankeyNode<N, L> super.target,
+    super.data, {
+    this.secondaryLinkMeasure,
+  });
 
-  SankeyLink(SankeyNode<N, L> super.source, SankeyNode<N, L> super.target, super.data,
-      {this.secondaryLinkMeasure,});
   /// Measure of a link at the target node if the link has variable value.
   ///
   /// Standard series measure will be the source value.

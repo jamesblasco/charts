@@ -71,8 +71,7 @@ class OrdinalTickFormatter extends SimpleTickFormatterBase<String> {
 ///
 /// The default format is [NumberFormat.decimalPattern].
 class NumericTickFormatter extends SimpleTickFormatterBase<num> {
-
-   /// Construct a a new [NumericTickFormatter].
+  /// Construct a a new [NumericTickFormatter].
   ///
   /// [formatter] optionally specify a formatter to be used. Defaults to using
   /// [NumberFormat.decimalPattern] if none is specified.
@@ -84,15 +83,14 @@ class NumericTickFormatter extends SimpleTickFormatterBase<num> {
   /// Constructs a new formatter that uses [NumberFormat.compactCurrency].
   factory NumericTickFormatter.compactSimpleCurrency() {
     return NumericTickFormatter._internal(
-        _getFormatter(NumberFormat.compactCurrency()),);
+      _getFormatter(NumberFormat.compactCurrency()),
+    );
   }
 
   /// Constructs a new [NumericTickFormatter] that formats using [numberFormat].
   factory NumericTickFormatter.fromNumberFormat(NumberFormat numberFormat) {
     return NumericTickFormatter._internal(_getFormatter(numberFormat));
   }
-
- 
 
   const NumericTickFormatter._internal(this.formatter);
   final MeasureFormatter formatter;

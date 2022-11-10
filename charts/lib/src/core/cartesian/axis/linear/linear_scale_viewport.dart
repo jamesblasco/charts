@@ -19,7 +19,6 @@ import 'package:charts/core.dart';
 /// Component of the LinearScale responsible for the configuration and
 /// calculations of the viewport.
 class LinearScaleViewportSettings {
-
   LinearScaleViewportSettings();
 
   LinearScaleViewportSettings.copy(LinearScaleViewportSettings other) {
@@ -30,6 +29,7 @@ class LinearScaleViewportSettings {
     _manualDomainExtent = other._manualDomainExtent;
     _domainExtent = other._domainExtent;
   }
+
   /// Output extent for the scale, typically set by the axis as the pixel
   /// output.
   ScaleOutputExtent? range;
@@ -102,7 +102,9 @@ class LinearScaleViewportSettings {
   /// Updates the viewport's internal translate given the current domainInfo and
   /// main scalingFactor from LinearScaleFunction (not internal scalingFactor).
   void updateViewportTranslatePx(
-      LinearScaleDomainInfo domainInfo, double scaleScalingFactor,) {
+    LinearScaleDomainInfo domainInfo,
+    double scaleScalingFactor,
+  ) {
     // If we are loading from the viewport, then update the translate now that
     // the scaleFactor has been setup.
     if (_manualDomainExtent) {
@@ -121,7 +123,9 @@ class LinearScaleViewportSettings {
   /// Calculates and stores the viewport's domainExtent if we did not load from
   /// them in the first place.
   void updateViewportDomainExtent(
-      LinearScaleDomainInfo domainInfo, double scaleScalingFactor,) {
+    LinearScaleDomainInfo domainInfo,
+    double scaleScalingFactor,
+  ) {
     // If we didn't load from the viewport extent, then update them given the
     // current scale configuration.
     if (!_manualDomainExtent) {

@@ -18,29 +18,37 @@ import 'package:charts/core.dart';
 
 import 'package:flutter/widgets.dart';
 
-
 /// Flutter widget responsible for painting a common SymbolRenderer from the
 /// chart.
 ///
 /// If you want to customize the symbol, then use [CustomSymbolRenderer].
 class SymbolRendererCanvas implements SymbolRendererBuilder {
-
   SymbolRendererCanvas(this.commonSymbolRenderer, this.dashPattern);
   final SymbolRenderer commonSymbolRenderer;
   final List<int>? dashPattern;
 
   @override
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled = true,}) {
+  Widget build(
+    BuildContext context, {
+    Color? color,
+    required Size size,
+    bool enabled = true,
+  }) {
     if (color != null && !enabled) {
       color = color.withOpacity(0.26);
     }
 
     return SizedBox.fromSize(
-        size: size,
-        child: CustomPaint(
-            painter: _SymbolCustomPaint(
-                context, commonSymbolRenderer, color, dashPattern,),),);
+      size: size,
+      child: CustomPaint(
+        painter: _SymbolCustomPaint(
+          context,
+          commonSymbolRenderer,
+          color,
+          dashPattern,
+        ),
+      ),
+    );
   }
 }
 
@@ -56,16 +64,23 @@ abstract class CustomSymbolRenderer extends SymbolRenderer
   /// Must override this method to build the custom Widget with the given color
   /// as
   @override
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled = true,});
+  Widget build(
+    BuildContext context, {
+    Color? color,
+    required Size size,
+    bool enabled = true,
+  });
 
   @override
-  void paint(ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      Color? fillColor,
-      FillPatternType? fillPattern,
-      Color? strokeColor,
-      double? strokeWidthPx,}) {
+  void paint(
+    ChartCanvas canvas,
+    Rectangle<num> bounds, {
+    List<int>? dashPattern,
+    Color? fillColor,
+    FillPatternType? fillPattern,
+    Color? strokeColor,
+    double? strokeWidthPx,
+  }) {
     // Intentionally ignored (never called).
   }
 
@@ -78,16 +93,23 @@ abstract class CustomSymbolRenderer extends SymbolRenderer
 /// Common interface for [CustomSymbolRenderer] & [SymbolRendererCanvas] for
 /// convenience for [LegendEntryLayout].
 abstract class SymbolRendererBuilder {
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled,});
+  Widget build(
+    BuildContext context, {
+    Color? color,
+    required Size size,
+    bool enabled,
+  });
 }
 
 /// The Widget which fulfills the guts of [SymbolRendererCanvas] actually
 /// painting the symbol to a canvas using [CustomPainter].
 class _SymbolCustomPaint extends CustomPainter {
-
   _SymbolCustomPaint(
-      this.context, this.symbolRenderer, this.color, this.dashPattern,);
+    this.context,
+    this.symbolRenderer,
+    this.color,
+    this.dashPattern,
+  );
   final BuildContext context;
   final SymbolRenderer symbolRenderer;
   final Color? color;
@@ -99,10 +121,12 @@ class _SymbolCustomPaint extends CustomPainter {
         Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
     final commonColor = color;
     symbolRenderer.paint(
-        FlutterChartCanvas(canvas, FlutterGraphicsFactory(context)), bounds,
-        fillColor: commonColor,
-        strokeColor: commonColor,
-        dashPattern: dashPattern,);
+      FlutterChartCanvas(canvas, FlutterGraphicsFactory(context)),
+      bounds,
+      fillColor: commonColor,
+      strokeColor: commonColor,
+      dashPattern: dashPattern,
+    );
   }
 
   @override

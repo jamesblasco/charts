@@ -142,8 +142,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
     // Don't allow a single tick, it doesn't make sense. so tickCount > 1
     if (maxTickCount > 1) {
       _desiredMaxTickCount = maxTickCount;
-      if (minTickCount > 1 &&
-          minTickCount <= _desiredMaxTickCount!) {
+      if (minTickCount > 1 && minTickCount <= _desiredMaxTickCount!) {
         _desiredMinTickCount = minTickCount;
       } else {
         _desiredMinTickCount = 2;
@@ -208,14 +207,16 @@ class NumericTickProvider extends BaseTickProvider<num> {
     final tickValues = _getTickValues(stepInfo, tickHint.tickCount);
 
     // Create ticks from domain values.
-    return createTicks(tickValues,
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: formatterValueCache,
-        tickDrawStrategy: tickDrawStrategy,
-        stepSize: stepInfo.stepSize,);
+    return createTicks(
+      tickValues,
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: formatterValueCache,
+      tickDrawStrategy: tickDrawStrategy,
+      stepSize: stepInfo.stepSize,
+    );
   }
 
   @override
@@ -254,7 +255,10 @@ class NumericTickProvider extends BaseTickProvider<num> {
     final axisUnitsLow = dataToAxisUnitConverter.convert(_low);
 
     _updateTickCounts(
-        high: axisUnitsHigh, low: axisUnitsLow, rangeWidth: scale.rangeWidth,);
+      high: axisUnitsHigh,
+      low: axisUnitsLow,
+      rangeWidth: scale.rangeWidth,
+    );
 
     // Only create a copy of the scale if [viewportExtensionEnabled].
     final mutableScale =
@@ -285,14 +289,16 @@ class NumericTickProvider extends BaseTickProvider<num> {
         }
 
         // Create ticks from domain values.
-        final preferredTicks = createTicks(tickValues,
-            context: context,
-            graphicsFactory: graphicsFactory,
-            scale: mutableScale ?? scale,
-            formatter: formatter,
-            formatterValueCache: formatterValueCache,
-            tickDrawStrategy: tickDrawStrategy,
-            stepSize: stepInfo.stepSize,);
+        final preferredTicks = createTicks(
+          tickValues,
+          context: context,
+          graphicsFactory: graphicsFactory,
+          scale: mutableScale ?? scale,
+          formatter: formatter,
+          formatterValueCache: formatterValueCache,
+          tickDrawStrategy: tickDrawStrategy,
+          stepSize: stepInfo.stepSize,
+        );
 
         // Request collision check from draw strategy.
         final collisionReport =
@@ -458,7 +464,8 @@ class NumericTickProvider extends BaseTickProvider<num> {
       for (int i = 0; i < tickCount; i++)
         dataToAxisUnitConverter
             .invert(
-                _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)),)
+              _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)),
+            )
             .toDouble(),
     ];
   }
@@ -554,7 +561,6 @@ class NumericTickProvider extends BaseTickProvider<num> {
 }
 
 class _TickStepInfo {
-
   _TickStepInfo(this.stepSize, this.tickStart);
   double stepSize;
   double tickStart;

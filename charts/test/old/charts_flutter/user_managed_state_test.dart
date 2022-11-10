@@ -21,7 +21,8 @@ void main() {
   testWidgets('selection can be set programmatically',
       (WidgetTester tester) async {
     final onTapSelection = UserManagedSelectionModel<String>.fromConfig(
-        selectedDataConfig: [const SeriesDatumConfig<String>('Sales', '2016')],);
+      selectedDataConfig: [const SeriesDatumConfig<String>('Sales', '2016')],
+    );
 
     SelectionModel<String>? currentSelectionModel;
 
@@ -56,7 +57,6 @@ void main() {
 }
 
 class TestChart extends StatefulWidget {
-
   const TestChart(this.selectionChangedListener, this.onTapSelection);
   final SelectionModelListener<String> selectionChangedListener;
   final UserManagedSelectionModel<String> onTapSelection;
@@ -68,7 +68,6 @@ class TestChart extends StatefulWidget {
 }
 
 class TestChartState extends State<TestChart> {
-
   TestChartState(this.selectionChangedListener, this.onTapSelection);
   final SelectionModelListener<String> selectionChangedListener;
   final UserManagedSelectionModel<String> onTapSelection;
@@ -83,7 +82,8 @@ class TestChartState extends State<TestChart> {
       userManagedState: myState,
       selectionModels: [
         SelectionModelConfig(
-            changedListener: widget.selectionChangedListener,)
+          changedListener: widget.selectionChangedListener,
+        )
       ],
       // Disable animation and gesture for testing.
       animate: false, //widget.animate,
@@ -125,7 +125,6 @@ List<Series<OrdinalSales, String>> _createSampleData() {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

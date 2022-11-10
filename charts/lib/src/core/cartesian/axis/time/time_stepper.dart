@@ -15,7 +15,6 @@
 
 import 'package:charts/core.dart';
 
-
 /// Represents the step/tick information for the given time range.
 abstract class TimeStepper {
   /// Get new bounding extents to the ticks that would contain the given

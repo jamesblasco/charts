@@ -19,7 +19,6 @@ import 'package:meta/meta.dart' show immutable;
 
 @immutable
 class AxisSpec<D> extends Equatable {
-
   const AxisSpec({
     this.renderSpec,
     this.tickProviderSpec,
@@ -51,7 +50,10 @@ class AxisSpec<D> extends Equatable {
   final ScaleSpec<D>? scaleSpec;
 
   void configure(
-      Axis<D> axis, ChartContext context, GraphicsFactory graphicsFactory,) {
+    Axis<D> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     axis.resetDefaultConfiguration();
 
     if (showAxisLine != null) {
@@ -112,7 +114,9 @@ abstract class RenderSpec<D> extends Equatable {
   const RenderSpec();
 
   TickDrawStrategy<D> createDrawStrategy(
-      ChartContext context, GraphicsFactory graphicFactory,);
+    ChartContext context,
+    GraphicsFactory graphicFactory,
+  );
 }
 
 enum TickLabelAnchor {

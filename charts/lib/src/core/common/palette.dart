@@ -15,13 +15,10 @@
 
 import 'package:charts/core.dart';
 
-
 /// A color palette.
 abstract class Palette {
   const Palette();
 
   /// The default shade.
   Color get shadeDefault;
-
- 
 }

@@ -29,14 +29,15 @@ class PolygonPainter {
   /// to stroke-dasharray in SVG path elements. An odd number of values in the
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
-  static void draw(
-      {required Canvas canvas,
-      required Paint paint,
-      required List<Point> points,
-      Rectangle<num>? clipBounds,
-      Color? fill,
-      Color? stroke,
-      double? strokeWidthPx,}) {
+  static void draw({
+    required Canvas canvas,
+    required Paint paint,
+    required List<Point> points,
+    Rectangle<num>? clipBounds,
+    Color? fill,
+    Color? stroke,
+    double? strokeWidthPx,
+  }) {
     if (points.isEmpty) {
       return;
     }
@@ -45,11 +46,14 @@ class PolygonPainter {
     if (clipBounds != null) {
       canvas
         ..save()
-        ..clipRect(Rect.fromLTWH(
+        ..clipRect(
+          Rect.fromLTWH(
             clipBounds.left.toDouble(),
             clipBounds.top.toDouble(),
             clipBounds.width.toDouble(),
-            clipBounds.height.toDouble(),),);
+            clipBounds.height.toDouble(),
+          ),
+        );
     }
 
     final strokeColor = stroke;
@@ -63,8 +67,11 @@ class PolygonPainter {
         paint.color = fillColor;
       }
       paint.style = PaintingStyle.fill;
-      canvas.drawCircle(Offset(point.x.toDouble(), point.y.toDouble()),
-          strokeWidthPx!, paint,);
+      canvas.drawCircle(
+        Offset(point.x.toDouble(), point.y.toDouble()),
+        strokeWidthPx!,
+        paint,
+      );
     } else {
       if (strokeColor != null && strokeWidthPx != null) {
         paint.strokeWidth = strokeWidthPx;

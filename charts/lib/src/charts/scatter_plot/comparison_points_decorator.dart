@@ -24,9 +24,9 @@ import 'package:flutter/foundation.dart';
 /// The line will connect the point (domainLowerBound, measureLowerBound) to the
 /// point  (domainUpperBound, measureUpperBound).
 class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
-
   ComparisonPointsDecorator({PointSymbolRenderer? symbolRenderer})
       : symbolRenderer = symbolRenderer ?? CylinderSymbolRenderer();
+
   /// Renderer used to draw the points. Defaults to a line with circular end
   /// caps.
   final PointSymbolRenderer symbolRenderer;
@@ -36,11 +36,14 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   final bool renderAbove = false;
 
   @override
-  void decorate(PointRendererElement<D> pointElement, ChartCanvas canvas,
-      GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false,}) {
+  void decorate(
+    PointRendererElement<D> pointElement,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+  }) {
     final points = computeBoundedPointsForElement(pointElement, drawBounds);
 
     if (points == null) {
@@ -49,8 +52,14 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     final color = pointElement.color!.lighter;
 
-    symbolRenderer.paint(canvas, points[0], pointElement.boundsLineRadiusPx,
-        fillColor: color, strokeColor: color, p2: points[1],);
+    symbolRenderer.paint(
+      canvas,
+      points[0],
+      pointElement.boundsLineRadiusPx,
+      fillColor: color,
+      strokeColor: color,
+      p2: points[1],
+    );
   }
 
   /// Computes end points for the [pointElement]'s lower and upper data bounds.
@@ -63,7 +72,9 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   /// the line connecting them is located entirely outside of [drawBounds].
   @protected
   List<Point<double>>? computeBoundedPointsForElement(
-      PointRendererElement<D> pointElement, Rectangle drawBounds,) {
+    PointRendererElement<D> pointElement,
+    Rectangle drawBounds,
+  ) {
     // All bounds points must be defined for a valid comparison point to be
     // drawn.
     final point = pointElement.point!;
@@ -115,7 +126,10 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   /// This method assumes that we have already verified that the [line]
   /// intercepts the [bounds] somewhere.
   Point<double>? _clampPointAlongLineToBoundingBox(
-      Point<double> p1, _Line line, Rectangle<num> bounds,) {
+    Point<double> p1,
+    _Line line,
+    Rectangle<num> bounds,
+  ) {
     // The top and bottom edges of the bounds box describe two horizontal lines,
     // with equations y = bounds.top and y = bounds.bottom. We can pass these
     // into a standard line interception method to find our point.
@@ -159,7 +173,6 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
 /// Describes a simple line with the equation y = slope * x + yIntercept.
 class _Line {
-
   _Line(this.slope, this.yIntercept, [this.xIntercept]);
 
   /// Creates a line with end points [p1] and [p2].
@@ -182,6 +195,7 @@ class _Line {
   factory _Line.fromVertical(num xIntercept) {
     return _Line(null, null, xIntercept.toDouble());
   }
+
   /// Slope of the line.
   double? slope;
 
@@ -212,14 +226,18 @@ class _Line {
     // y.
     if (other.vertical) {
       return Point<double>(
-          other.xIntercept!, slope! * other.xIntercept! + yIntercept!,);
+        other.xIntercept!,
+        slope! * other.xIntercept! + yIntercept!,
+      );
     }
 
     // If this line is a vertical line (has undefined slope), then we can just
     // plug its xIntercept value into the line equation as x and solve for y.
     if (vertical) {
       return Point<double>(
-          xIntercept!, other.slope! * xIntercept! + other.yIntercept!,);
+        xIntercept!,
+        other.slope! * xIntercept! + other.yIntercept!,
+      );
     }
 
     // Now that we know that we have intersecting, non-vertical lines, compute

@@ -26,16 +26,16 @@ import 'package:meta/meta.dart';
 /// and expand selection out to the domain value.
 @immutable
 class LinePointHighlighter<D> extends ChartBehavior<D> {
-
-  LinePointHighlighter(
-      {this.selectionModelType,
-      this.defaultRadiusPx,
-      this.radiusPaddingPx,
-      this.showHorizontalFollowLine,
-      this.showVerticalFollowLine,
-      this.dashPattern,
-      this.drawFollowLinesAcrossChart,
-      this.symbolRenderer,});
+  LinePointHighlighter({
+    this.selectionModelType,
+    this.defaultRadiusPx,
+    this.radiusPaddingPx,
+    this.showHorizontalFollowLine,
+    this.showVerticalFollowLine,
+    this.dashPattern,
+    this.drawFollowLinesAcrossChart,
+    this.symbolRenderer,
+  });
   @override
   final desiredGestures = <GestureType>{};
 

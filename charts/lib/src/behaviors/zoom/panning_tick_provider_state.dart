@@ -30,7 +30,6 @@ enum PanningTickProviderMode {
 /// zoom in/out, return ticks calculated with locked step size during panning,
 /// or just pass through to the existing tick provider.
 class PanningTickProvider<D> extends TickProvider<D> {
-
   PanningTickProvider(this.tickProvider);
   final TickProvider<D> tickProvider;
 

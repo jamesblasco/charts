@@ -15,7 +15,6 @@
 
 import 'package:charts/charts.dart';
 
-
 /// Interface for accessing text measurement and painter.
 abstract class TextElement {
   /// The [TextStyle] of this [TextElement].

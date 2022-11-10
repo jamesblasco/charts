@@ -20,14 +20,15 @@ import 'package:flutter/material.dart';
 ///
 /// TODO: Support for more shapes than circles?
 class PointPainter {
-  static void draw(
-      {required Canvas canvas,
-      required Paint paint,
-      required Point point,
-      required double radius,
-      Color? fill,
-      Color? stroke,
-      double? strokeWidthPx,}) {
+  static void draw({
+    required Canvas canvas,
+    required Paint paint,
+    required Point point,
+    required double radius,
+    Color? fill,
+    Color? stroke,
+    double? strokeWidthPx,
+  }) {
     if (point == null) {
       return;
     }
@@ -37,7 +38,10 @@ class PointPainter {
       paint.style = PaintingStyle.fill;
 
       canvas.drawCircle(
-          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint,);
+        Offset(point.x.toDouble(), point.y.toDouble()),
+        radius,
+        paint,
+      );
     }
 
     // [Canvas.drawCircle] does not support drawing a circle with both a fill
@@ -49,7 +53,10 @@ class PointPainter {
       paint.style = PaintingStyle.stroke;
 
       canvas.drawCircle(
-          Offset(point.x.toDouble(), point.y.toDouble()), radius, paint,);
+        Offset(point.x.toDouble(), point.y.toDouble()),
+        radius,
+        paint,
+      );
     }
   }
 }

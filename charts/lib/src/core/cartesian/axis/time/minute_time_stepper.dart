@@ -15,24 +15,27 @@
 
 import 'package:charts/core.dart';
 
-
 /// Minute stepper where ticks generated aligns with the hour.
 class MinuteTimeStepper extends BaseTimeStepper {
-
-  factory MinuteTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements,}) {
+  factory MinuteTimeStepper(
+    DateTimeFactory dateTimeFactory, {
+    List<int>? allowedTickIncrements,
+  }) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
-    assert(allowedTickIncrements
-        .every((increment) => increment >= 1 && increment <= 60),);
+    assert(
+      allowedTickIncrements
+          .every((increment) => increment >= 1 && increment <= 60),
+    );
 
     return MinuteTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
   }
 
   MinuteTimeStepper._internal(
-      super.dateTimeFactory, List<int> increments,)
-      : _allowedTickIncrements = increments;
+    super.dateTimeFactory,
+    List<int> increments,
+  ) : _allowedTickIncrements = increments;
   static const _defaultIncrements = [5, 10, 15, 20, 30];
   static const _millisecondsInMinute = 60 * 1000;
 
@@ -61,7 +64,8 @@ class MinuteTimeStepper extends BaseTimeStepper {
     final rewindMinutes = minRemainder == 0 ? 0 : tickIncrement - minRemainder;
 
     final stepBefore = dateTimeFactory.createDateTimeFromMilliSecondsSinceEpoch(
-        time.millisecondsSinceEpoch - rewindMinutes * _millisecondsInMinute,);
+      time.millisecondsSinceEpoch - rewindMinutes * _millisecondsInMinute,
+    );
 
     return stepBefore;
   }

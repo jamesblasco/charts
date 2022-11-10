@@ -21,8 +21,11 @@ abstract class LegendContentBuilder {
   const LegendContentBuilder();
 
   Widget build(
-      BuildContext context, LegendState legendState, LegendBehaviorState legend,
-      {bool showMeasures,});
+    BuildContext context,
+    LegendState legendState,
+    LegendBehaviorState legend, {
+    bool showMeasures,
+  });
 }
 
 /// Base strategy for building a legend content widget.
@@ -42,8 +45,11 @@ abstract class BaseLegendContentBuilder extends Equatable
 
   @override
   Widget build(
-      BuildContext context, LegendState legendState, LegendBehaviorState legend,
-      {bool showMeasures = false,}) {
+    BuildContext context,
+    LegendState legendState,
+    LegendBehaviorState legend, {
+    bool showMeasures = false,
+  }) {
     final entryWidgets = legendState.legendEntries.map((entry) {
       var isHidden = false;
       if (legend is SeriesLegendBehaviorState) {
@@ -51,8 +57,12 @@ abstract class BaseLegendContentBuilder extends Equatable
       }
 
       return legendEntryLayout.build(
-          context, entry, legend as TappableLegend, isHidden,
-          showMeasures: showMeasures,);
+        context,
+        entry,
+        legend as TappableLegend,
+        isHidden,
+        showMeasures: showMeasures,
+      );
     }).toList();
 
     return legendLayout.build(context, entryWidgets);
@@ -67,13 +77,12 @@ abstract class BaseLegendContentBuilder extends Equatable
 /// [legendLayout] custom strategy for creating legend widget from list of
 /// widgets that represent a legend entry.
 class TabularLegendContentBuilder extends BaseLegendContentBuilder {
-
-  TabularLegendContentBuilder(
-      {LegendEntryLayout? legendEntryLayout, LegendLayout? legendLayout,})
-      : legendEntryLayout =
+  TabularLegendContentBuilder({
+    LegendEntryLayout? legendEntryLayout,
+    LegendLayout? legendLayout,
+  })  : legendEntryLayout =
             legendEntryLayout ?? const SimpleLegendEntryLayout(),
-        legendLayout =
-            legendLayout ?? TabularLegendLayout.horizontalFirst();
+        legendLayout = legendLayout ?? TabularLegendLayout.horizontalFirst();
   @override
   final LegendEntryLayout legendEntryLayout;
   @override

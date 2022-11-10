@@ -18,7 +18,6 @@ import 'package:charts/charts/treemap.dart';
 
 /// A renderer element that represents a TreeNode.
 class TreeMapRendererElement<D> {
-
   TreeMapRendererElement({
     Rectangle<num>? boundingRect,
     num? area,
@@ -34,6 +33,7 @@ class TreeMapRendererElement<D> {
     required this.measure,
   })  : _boundingRect = boundingRect,
         _area = area;
+
   /// Bounding rectangle of this element.
   Rectangle<num> get boundingRect => _boundingRect!;
   set boundingRect(Rectangle<num> value) => _boundingRect = value;
@@ -79,7 +79,9 @@ class TreeMapRendererElement<D> {
         boundingRect: _boundingRect == null
             ? null
             : Rectangle.fromPoints(
-                boundingRect.topLeft, boundingRect.bottomRight,),
+                boundingRect.topLeft,
+                boundingRect.bottomRight,
+              ),
         area: area,
         fillPattern: fillPattern,
         fillColor: fillColor,
@@ -110,16 +112,18 @@ class TreeMapRendererElement<D> {
   /// Updates properties of this element based on [animationPercent].
   ///
   /// Used when animation is in progress.
-  void updateAnimationPercent(TreeMapRendererElement<D> previous,
-      TreeMapRendererElement<D> target, double animationPercent,) {
+  void updateAnimationPercent(
+    TreeMapRendererElement<D> previous,
+    TreeMapRendererElement<D> target,
+    double animationPercent,
+  ) {
     // TODO: Implements animation based on animationPercent.
     boundingRect = target.boundingRect;
     area = target.area;
   }
 
   @override
-  String toString() =>
-      '$runtimeType${{
+  String toString() => '$runtimeType${{
         'boundingRect': boundingRect,
         'area': area,
         'strokeColor': strokeColor,

@@ -17,16 +17,17 @@ import 'package:charts/charts/pie.dart';
 
 /// Configuration for an [ArcRenderer].
 class ArcRendererConfig<D> extends BaseArcRendererConfig<D> {
-  ArcRendererConfig(
-      {super.customRendererId,
-      super.arcLength,
-      super.arcRendererDecorators,
-      super.arcRatio,
-      super.arcWidth,
-      super.layoutPaintOrder,
-      super.minHoleWidthForCenterContent,
-      super.startAngle,
-      super.strokeWidthPx,});
+  ArcRendererConfig({
+    super.customRendererId,
+    super.arcLength,
+    super.arcRendererDecorators,
+    super.arcRatio,
+    super.arcWidth,
+    super.layoutPaintOrder,
+    super.minHoleWidthForCenterContent,
+    super.startAngle,
+    super.strokeWidthPx,
+  });
 
   @override
   ArcRenderer<D> build() {

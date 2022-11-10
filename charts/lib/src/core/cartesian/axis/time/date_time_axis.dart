@@ -16,10 +16,11 @@
 import 'package:charts/core.dart';
 
 class DateTimeAxis extends Axis<DateTime> {
-  DateTimeAxis(DateTimeFactory dateTimeFactory,
-      {TickProvider<DateTime>? tickProvider,
-      TickFormatter<DateTime>? tickFormatter,})
-      : super(
+  DateTimeAxis(
+    DateTimeFactory dateTimeFactory, {
+    TickProvider<DateTime>? tickProvider,
+    TickFormatter<DateTime>? tickFormatter,
+  }) : super(
           tickProvider: tickProvider ??
               AutoAdjustingDateTimeTickProvider.createDefault(dateTimeFactory),
           tickFormatter:

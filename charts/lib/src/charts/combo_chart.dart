@@ -40,14 +40,16 @@ class NumericComboChart extends CartesianChart<num> {
 
   @override
   NumericCartesianRenderChart createRenderChart(
-      BaseChartState chartState,) {
+    BaseChartState chartState,
+  ) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return NumericCartesianRenderChart(
-        layoutConfig: layoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),);
+      layoutConfig: layoutConfig,
+      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+    );
   }
 }
 
@@ -72,13 +74,15 @@ class OrdinalComboChart extends CartesianChart<String> {
 
   @override
   OrdinalCartesianRenderChart createRenderChart(
-      BaseChartState chartState,) {
+    BaseChartState chartState,
+  ) {
     // Optionally create primary and secondary measure axes if the chart was
     // configured with them. If no axes were configured, then the chart will
     // use its default types (usually a numeric axis).
     return OrdinalCartesianRenderChart(
-        layoutConfig: layoutConfig,
-        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),);
+      layoutConfig: layoutConfig,
+      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+    );
   }
 }

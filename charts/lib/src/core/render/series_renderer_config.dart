@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'package:charts/core.dart';
+
 /// Interface for series renderer configuration.
 abstract class SeriesRendererConfig<D> {
   /// Stores typed renderer attributes

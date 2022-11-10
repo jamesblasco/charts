@@ -15,6 +15,7 @@
 
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show protected;
+
 /// Enable keyboard navigation of the chart when focused using the directional
 /// keys.
 ///
@@ -35,7 +36,6 @@ import 'package:meta/meta.dart' show protected;
 /// fine-tuned order works best.
 abstract class KeyboardDomainNavigatorState<D>
     implements ChartBehaviorState<D> {
-
   KeyboardDomainNavigatorState() {
     _lifecycleListener = LifecycleListener<D>(onData: onData);
   }
@@ -161,7 +161,9 @@ abstract class KeyboardDomainNavigatorState<D>
   /// no-op.
   @protected
   bool _selectDomainIndex(
-      SelectionModelType selectionModelType, int domainIndex,) {
+    SelectionModelType selectionModelType,
+    int domainIndex,
+  ) {
     final selectionModel = _chart.getSelectionModel(selectionModelType);
     if (selectionModel == null) {
       return false;

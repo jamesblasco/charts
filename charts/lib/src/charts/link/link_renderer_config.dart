@@ -18,12 +18,11 @@ import 'package:charts/charts/link.dart';
 /// Configuration for a [SankeyRenderer].
 class LinkRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
-
-  LinkRendererConfig(
-      {this.customRendererId,
-      this.layoutPaintOrder = LayoutViewPaintOrder.bar,
-      SymbolRenderer? symbolRenderer,})
-      : symbolRenderer = symbolRenderer ?? const RectSymbolRenderer();
+  LinkRendererConfig({
+    this.customRendererId,
+    this.layoutPaintOrder = LayoutViewPaintOrder.bar,
+    SymbolRenderer? symbolRenderer,
+  }) : symbolRenderer = symbolRenderer ?? const RectSymbolRenderer();
   @override
   final String? customRendererId;
 

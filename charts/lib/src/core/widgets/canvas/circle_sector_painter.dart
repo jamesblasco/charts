@@ -45,15 +45,19 @@ class CircleSectorPainter {
     paint.style = PaintingStyle.fill;
 
     final innerRadiusStartPoint = Point<double>(
-        innerRadius * cos(startAngle) + center.x,
-        innerRadius * sin(startAngle) + center.y,);
+      innerRadius * cos(startAngle) + center.x,
+      innerRadius * sin(startAngle) + center.y,
+    );
 
     final innerRadiusEndPoint = Point<double>(
-        innerRadius * cos(endAngle) + center.x,
-        innerRadius * sin(endAngle) + center.y,);
+      innerRadius * cos(endAngle) + center.x,
+      innerRadius * sin(endAngle) + center.y,
+    );
 
-    final radiusStartPoint = Point<double>(radius * cos(startAngle) + center.x,
-        radius * sin(startAngle) + center.y,);
+    final radiusStartPoint = Point<double>(
+      radius * cos(startAngle) + center.x,
+      radius * sin(startAngle) + center.y,
+    );
 
     final centerOffset = Offset(center.x.toDouble(), center.y.toDouble());
 
@@ -68,26 +72,50 @@ class CircleSectorPainter {
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: radius),
-          startAngle, midpointAngle - startAngle, true,);
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: radius),
-          midpointAngle, endAngle - midpointAngle, true,);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: radius),
+        startAngle,
+        midpointAngle - startAngle,
+        true,
+      );
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: radius),
+        midpointAngle,
+        endAngle - midpointAngle,
+        true,
+      );
     } else {
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: radius),
-          startAngle, endAngle - startAngle, true,);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: radius),
+        startAngle,
+        endAngle - startAngle,
+        true,
+      );
     }
 
     path.lineTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y);
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          endAngle, midpointAngle - endAngle, true,);
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          midpointAngle, startAngle - midpointAngle, true,);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: innerRadius),
+        endAngle,
+        midpointAngle - endAngle,
+        true,
+      );
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: innerRadius),
+        midpointAngle,
+        startAngle - midpointAngle,
+        true,
+      );
     } else {
-      path.arcTo(Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          endAngle, startAngle - endAngle, true,);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: innerRadius),
+        endAngle,
+        startAngle - endAngle,
+        true,
+      );
     }
 
     // Drawing two copies of this line segment, before and after the arcs,

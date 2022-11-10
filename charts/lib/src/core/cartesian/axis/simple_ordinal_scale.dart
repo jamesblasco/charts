@@ -24,7 +24,6 @@ import 'package:charts/core.dart';
 /// width of the bar is [rangeBand] and the position of the bar is retrieved
 /// by [[]].
 class SimpleOrdinalScale implements OrdinalScale {
-
   SimpleOrdinalScale() : _domain = OrdinalScaleDomainInfo();
 
   SimpleOrdinalScale._copy(SimpleOrdinalScale other)
@@ -89,7 +88,8 @@ class SimpleOrdinalScale implements OrdinalScale {
     if (barGroupWidthConfig.type == RangeBandType.fixedDomain ||
         barGroupWidthConfig.type == RangeBandType.none) {
       throw ArgumentError(
-          'barGroupWidthConfig must not be NONE or FIXED_DOMAIN',);
+        'barGroupWidthConfig must not be NONE or FIXED_DOMAIN',
+      );
     }
 
     _rangeBandConfig = barGroupWidthConfig;
@@ -103,7 +103,8 @@ class SimpleOrdinalScale implements OrdinalScale {
   set stepSizeConfig(StepSizeConfig? config) {
     if (config != null && config.type != StepSizeType.autoDetect) {
       throw ArgumentError(
-          'Ordinal scales only support StepSizeConfig of type Auto',);
+        'Ordinal scales only support StepSizeConfig of type Auto',
+      );
     }
     // Nothing is set because only auto is supported.
   }
@@ -198,7 +199,9 @@ class SimpleOrdinalScale implements OrdinalScale {
     _viewportScale = viewportScale;
     if (_isVertical) {
       _viewportTranslatePx = max(
-          min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslatePx), 0,);
+        min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslatePx),
+        0,
+      );
     } else {
       _viewportTranslatePx =
           min(max(rangeWidth * (1.0 - viewportScale), viewportTranslatePx), 0);
@@ -229,8 +232,10 @@ class SimpleOrdinalScale implements OrdinalScale {
     }
 
     // Update the scale with zoom level to help find the correct translate.
-    setViewportSettings(_domain.size / min(_viewportDataSize!, _domain.size),
-        _isVertical ? double.maxFinite : 0.0,);
+    setViewportSettings(
+      _domain.size / min(_viewportDataSize!, _domain.size),
+      _isVertical ? double.maxFinite : 0.0,
+    );
     _recalculateScale();
     final domainIndex = _domain.indexOf(_viewportStartingDomain!);
     if (domainIndex != null) {
@@ -265,14 +270,16 @@ class SimpleOrdinalScale implements OrdinalScale {
     }
     if (_isVertical) {
       // Get topmost visible index.
-      final index = (-(rangeWidth + _viewportTranslatePx) / _cachedStepSizePixels)
-              .ceil()
-              .toInt() -
-          1;
+      final index =
+          (-(rangeWidth + _viewportTranslatePx) / _cachedStepSizePixels)
+                  .ceil()
+                  .toInt() -
+              1;
       return _domain.getDomainAtIndex(index);
     } else {
       return _domain.getDomainAtIndex(
-          (-_viewportTranslatePx / _cachedStepSizePixels).ceil().toInt(),);
+        (-_viewportTranslatePx / _cachedStepSizePixels).ceil().toInt(),
+      );
     }
   }
 
@@ -303,7 +310,10 @@ class SimpleOrdinalScale implements OrdinalScale {
   SimpleOrdinalScale copy() => SimpleOrdinalScale._copy(this);
 
   void _updateCachedFields(
-      double stepSizePixels, double rangeBandPixels, double rangeBandShift,) {
+    double stepSizePixels,
+    double rangeBandPixels,
+    double rangeBandShift,
+  ) {
     _cachedStepSizePixels = stepSizePixels;
     _cachedRangeBandSize = rangeBandPixels;
     _cachedRangeBandShift = rangeBandShift;

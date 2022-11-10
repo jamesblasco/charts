@@ -20,7 +20,6 @@ import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show protected;
 
 class ArcRendererElementList<D> {
-
   ArcRendererElementList({
     required this.arcs,
     required this.center,
@@ -44,7 +43,6 @@ class ArcRendererElementList<D> {
 }
 
 class ArcRendererElement<D> {
-
   ArcRendererElement({
     required this.startAngle,
     required this.endAngle,
@@ -73,8 +71,11 @@ class ArcRendererElement<D> {
     );
   }
 
-  void updateAnimationPercent(ArcRendererElement<D> previous,
-      ArcRendererElement<D> target, double animationPercent,) {
+  void updateAnimationPercent(
+    ArcRendererElement<D> previous,
+    ArcRendererElement<D> target,
+    double animationPercent,
+  ) {
     startAngle =
         ((target.startAngle - previous.startAngle) * animationPercent) +
             previous.startAngle;
@@ -103,7 +104,6 @@ class AnimatedArcList<D> {
 
 @protected
 class AnimatedArc<D> {
-
   AnimatedArc(this.key, this.datum, this.domain);
   final String key;
   Object? datum;

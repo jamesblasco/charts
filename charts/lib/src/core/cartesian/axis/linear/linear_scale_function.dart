@@ -50,10 +50,11 @@ class LinearScaleFunction {
   /// Update the scale function's scaleFactor given the current state of the
   /// viewport.
   void updateScaleFactor(
-      LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo,
-      RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig,) {
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    RangeBandConfig rangeBandConfig,
+    StepSizeConfig stepSizeConfig,
+  ) {
     final rangeDiff = viewportSettings.range!.diff.toDouble();
     // Note: if you provided a nicing function that extends the domain, we won't
     // muck with the extended side.
@@ -66,14 +67,22 @@ class LinearScaleFunction {
     // possible half step at the start and end.
     final reservedRangePercentOfStep =
         getStepReservationPercent(hasHalfStepAtStart, hasHalfStepAtEnd);
-    _updateStepSizeAndScaleFactor(viewportSettings, domainInfo, rangeDiff,
-        reservedRangePercentOfStep, rangeBandConfig, stepSizeConfig,);
+    _updateStepSizeAndScaleFactor(
+      viewportSettings,
+      domainInfo,
+      rangeDiff,
+      reservedRangePercentOfStep,
+      rangeBandConfig,
+      stepSizeConfig,
+    );
   }
 
   /// Returns the percentage of the step reserved from the output range due to
   /// maybe having to hold half stepSizes on the start and end of the output.
   double getStepReservationPercent(
-      bool hasHalfStepAtStart, bool hasHalfStepAtEnd,) {
+    bool hasHalfStepAtStart,
+    bool hasHalfStepAtEnd,
+  ) {
     if (!hasHalfStepAtStart && !hasHalfStepAtEnd) {
       return 0;
     }
@@ -85,8 +94,11 @@ class LinearScaleFunction {
 
   /// Updates the scale function's translate and rangeBand given the current
   /// state of the viewport.
-  void updateTranslateAndRangeBand(LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo, RangeBandConfig rangeBandConfig,) {
+  void updateTranslateAndRangeBand(
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    RangeBandConfig rangeBandConfig,
+  ) {
     // Assign the rangeTranslate using the current viewportSettings.translatePx
     // and diffs.
     if (domainInfo.domainDiff == 0) {
@@ -138,12 +150,13 @@ class LinearScaleFunction {
   /// <p>Scale factor and step size are related closely and should be calculated
   /// together so that we do not lose accuracy due to double arithmetic.
   void _updateStepSizeAndScaleFactor(
-      LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo,
-      double rangeDiff,
-      double reservedRangePercentOfStep,
-      RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig,) {
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    double rangeDiff,
+    double reservedRangePercentOfStep,
+    RangeBandConfig rangeBandConfig,
+    StepSizeConfig stepSizeConfig,
+  ) {
     final domainDiff = domainInfo.domainDiff.toDouble();
 
     // If we are going to have any rangeBands, then ensure that we account for

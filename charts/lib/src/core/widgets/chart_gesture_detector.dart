@@ -41,8 +41,11 @@ class ChartGestureDetector {
 
   late ChartContainerRenderObject Function() _containerResolver;
 
-  GestureDetector makeWidget(BuildContext context, ChartContainer<dynamic> chartContainer,
-      Set<GestureType> desiredGestures,) {
+  GestureDetector makeWidget(
+    BuildContext context,
+    ChartContainer<dynamic> chartContainer,
+    Set<GestureType> desiredGestures,
+  ) {
     _containerResolver = () {
       final renderObject = context.findRenderObject()!;
 

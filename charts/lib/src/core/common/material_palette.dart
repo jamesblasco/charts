@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import 'package:charts/core.dart';
 
 /// A canonical palette of colors from material.io.

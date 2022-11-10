@@ -14,7 +14,6 @@
 // limitations under the License.
 import 'package:charts/core.dart';
 
-
 /// Provides ticks for a particular time unit.
 ///
 /// Used by [AutoAdjustingDateTimeTickProvider].

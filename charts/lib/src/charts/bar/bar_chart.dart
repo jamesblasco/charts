@@ -30,12 +30,13 @@ export 'base_bar_renderer_element.dart';
 export 'widgets/bar_chart.dart';
 
 class BarRenderChart extends OrdinalCartesianRenderChart {
-  BarRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,});
+  BarRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  });
 
   @override
   SeriesRenderer<String> makeDefaultRenderer() {

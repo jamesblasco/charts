@@ -15,7 +15,6 @@
 
 /// Collection of configurations that apply to the [LayoutManager].
 class LayoutConfig {
-
   /// Create a new [LayoutConfig] used by [DynamicLayoutManager].
   LayoutConfig({
     MarginSpec? leftSpec,
@@ -34,10 +33,12 @@ class LayoutConfig {
 
 /// Specs that applies to one margin.
 class MarginSpec {
-
   const MarginSpec._internal(
-      int? minPixel, int? maxPixel, int? minPercent, int? maxPercent,)
-      : _minPixel = minPixel,
+    int? minPixel,
+    int? maxPixel,
+    int? minPercent,
+    int? maxPercent,
+  )   : _minPixel = minPixel,
         _maxPixel = maxPixel,
         _minPercent = minPercent,
         _maxPercent = maxPercent;
@@ -87,6 +88,7 @@ class MarginSpec {
 
     return MarginSpec._internal(null, null, minPercent, maxPercent);
   }
+
   /// [MarginSpec] that has max of 50 percent.
   static const defaultSpec = MarginSpec._internal(null, null, null, 50);
 

@@ -23,23 +23,25 @@ import 'package:charts/charts/scatter_plot.dart';
 /// (domainUpperBound, measureUpperBound), beneath the primary point for each
 /// series.
 class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
+  SymbolAnnotationRendererConfig({
+    super.customRendererId,
+    List<PointRendererDecorator<D>>? pointRendererDecorators,
+    super.radiusPx = 5.0,
+    super.symbolRenderer,
+    super.customSymbolRenderers,
+    this.showBottomSeparatorLine = false,
+    this.showSeparatorLines = true,
+    this.verticalSymbolBottomPaddingPx = 5.0,
+    this.verticalSymbolTopPaddingPx = 5.0,
+  }) : super(
+          pointRendererDecorators: pointRendererDecorators ??
+              [
+                ComparisonPointsDecorator<D>(
+                  symbolRenderer: RectangleRangeSymbolRenderer(),
+                )
+              ],
+        );
 
-  SymbolAnnotationRendererConfig(
-      {super.customRendererId,
-      List<PointRendererDecorator<D>>? pointRendererDecorators,
-      super.radiusPx = 5.0,
-      super.symbolRenderer,
-      super.customSymbolRenderers,
-      this.showBottomSeparatorLine = false,
-      this.showSeparatorLines = true,
-      this.verticalSymbolBottomPaddingPx = 5.0,
-      this.verticalSymbolTopPaddingPx = 5.0,})
-      : super(
-            pointRendererDecorators: pointRendererDecorators ??
-                [
-                  ComparisonPointsDecorator<D>(
-                      symbolRenderer: RectangleRangeSymbolRenderer(),)
-                ],);
   /// Whether a separator line should be drawn between the bottom row of
   /// rendered symbols and the axis ticks/labels.
   final bool showBottomSeparatorLine;
@@ -59,6 +61,8 @@ class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
   @override
   SymbolAnnotationRenderer<D> build() {
     return SymbolAnnotationRenderer<D>(
-        config: this, rendererId: customRendererId,);
+      config: this,
+      rendererId: customRendererId,
+    );
   }
 }

@@ -28,14 +28,15 @@ class PiePainter {
 
     for (final slice in canvasPie.slices) {
       CircleSectorPainter.draw(
-          canvas: canvas,
-          paint: paint,
-          center: center,
-          radius: radius,
-          innerRadius: innerRadius,
-          startAngle: slice.startAngle,
-          endAngle: slice.endAngle,
-          fill: slice.fill,);
+        canvas: canvas,
+        paint: paint,
+        center: center,
+        radius: radius,
+        innerRadius: innerRadius,
+        startAngle: slice.startAngle,
+        endAngle: slice.endAngle,
+        fill: slice.fill,
+      );
     }
 
     // Draw stroke lines between pie slices. This is done after the slices are
@@ -51,20 +52,24 @@ class PiePainter {
 
       for (final slice in canvasPie.slices) {
         final innerRadiusStartPoint = Point<double>(
-            innerRadius * cos(slice.startAngle) + center.x,
-            innerRadius * sin(slice.startAngle) + center.y,);
+          innerRadius * cos(slice.startAngle) + center.x,
+          innerRadius * sin(slice.startAngle) + center.y,
+        );
 
         final innerRadiusEndPoint = Point<double>(
-            innerRadius * cos(slice.endAngle) + center.x,
-            innerRadius * sin(slice.endAngle) + center.y,);
+          innerRadius * cos(slice.endAngle) + center.x,
+          innerRadius * sin(slice.endAngle) + center.y,
+        );
 
         final radiusStartPoint = Point<double>(
-            radius * cos(slice.startAngle) + center.x,
-            radius * sin(slice.startAngle) + center.y,);
+          radius * cos(slice.startAngle) + center.x,
+          radius * sin(slice.startAngle) + center.y,
+        );
 
         final radiusEndPoint = Point<double>(
-            radius * cos(slice.endAngle) + center.x,
-            radius * sin(slice.endAngle) + center.y,);
+          radius * cos(slice.endAngle) + center.x,
+          radius * sin(slice.endAngle) + center.y,
+        );
 
         path.moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
 

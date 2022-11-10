@@ -100,9 +100,11 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
         min(max(_scalingFactor * scale, _minScalingFactor), _maxScalingFactor);
 
     domainAxis.setViewportSettings(
-        newScalingFactor, domainAxis.viewportTranslatePx,
-        drawAreaWidth: chart.drawAreaBounds.width,
-        drawAreaHeight: chart.drawAreaBounds.height,);
+      newScalingFactor,
+      domainAxis.viewportTranslatePx,
+      drawAreaWidth: chart.drawAreaBounds.width,
+      drawAreaHeight: chart.drawAreaBounds.height,
+    );
 
     chart.redraw(skipAnimation: true, skipLayout: true);
 
@@ -111,7 +113,10 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
 
   @override
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec,) {
+    Point<double> localPosition,
+    double scale,
+    double pixelsPerSec,
+  ) {
     _isZooming = false;
 
     return super.onDragEnd(localPosition, scale, pixelsPerSec);

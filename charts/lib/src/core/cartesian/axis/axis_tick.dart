@@ -102,7 +102,7 @@ class AxisTicks<D> extends Tick<D> implements Comparable<AxisTicks<D>> {
   double? _lerpDouble(double? a, double? b, double t) {
     if (a == null && b == null) return null;
     var aValue = a;
-     var bValue = b;
+    var bValue = b;
     aValue ??= 0.0;
     bValue ??= 0.0;
     return aValue + (bValue - aValue) * t;

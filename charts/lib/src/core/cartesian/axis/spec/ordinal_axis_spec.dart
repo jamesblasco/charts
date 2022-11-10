@@ -19,7 +19,6 @@ import 'package:meta/meta.dart' show immutable;
 /// [AxisSpec] specialized for ordinal/non-continuous axes typically for bars.
 @immutable
 class OrdinalAxisSpec extends AxisSpec<String> {
-
   /// Creates a [AxisSpec] that specialized for ordinal domain charts.
   ///
   /// [renderSpec] spec used to configure how the ticks and labels
@@ -38,14 +37,18 @@ class OrdinalAxisSpec extends AxisSpec<String> {
     OrdinalScaleSpec? super.scaleSpec,
     this.viewport,
   });
+
   /// Sets viewport for this Axis.
   ///
   /// If pan / zoom behaviors are set, this is the initial viewport.
   final OrdinalViewport? viewport;
 
   @override
-  void configure(Axis<String> axis, ChartContext context,
-      GraphicsFactory graphicsFactory,) {
+  void configure(
+    Axis<String> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is OrdinalAxis && viewport != null) {
@@ -87,7 +90,6 @@ class BasicOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
 /// [TickProviderSpec] that allows you to specify the ticks to be used.
 @immutable
 class StaticOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
-
   const StaticOrdinalTickProviderSpec(this.tickSpecs);
   final List<TickSpec<String>> tickSpecs;
 
@@ -104,15 +106,17 @@ class StaticOrdinalTickProviderSpec extends OrdinalTickProviderSpec {
 @immutable
 class AutoAdjustingStaticOrdinalTickProviderSpec
     extends OrdinalTickProviderSpec {
-
   const AutoAdjustingStaticOrdinalTickProviderSpec(
-      this.tickSpecs, this.allowedTickIncrements,);
+    this.tickSpecs,
+    this.allowedTickIncrements,
+  );
   final List<TickSpec<String>> tickSpecs;
   final List<int> allowedTickIncrements;
 
   @override
   AutoAdjustingStaticTickProvider<String> createTickProvider(
-          ChartContext context,) =>
+    ChartContext context,
+  ) =>
       AutoAdjustingStaticTickProvider<String>(tickSpecs, allowedTickIncrements);
 
   @override
@@ -160,7 +164,6 @@ class SimpleOrdinalScaleSpec extends OrdinalScaleSpec {
 /// pixel size.
 @immutable
 class FixedPixelSpaceOrdinalScaleSpec extends OrdinalScaleSpec {
-
   const FixedPixelSpaceOrdinalScaleSpec(this.pixelSpaceBetweenBars);
   final double pixelSpaceBetweenBars;
 
@@ -176,7 +179,6 @@ class FixedPixelSpaceOrdinalScaleSpec extends OrdinalScaleSpec {
 /// [OrdinalScaleSpec] which allows setting bar width to be a fixed pixel size.
 @immutable
 class FixedPixelOrdinalScaleSpec extends OrdinalScaleSpec {
-
   const FixedPixelOrdinalScaleSpec(this.pixels);
   final double pixels;
 

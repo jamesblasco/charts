@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import 'package:charts/charts/scatter_plot.dart';
 
 class ScatterPlotChart extends CartesianChart<num> {

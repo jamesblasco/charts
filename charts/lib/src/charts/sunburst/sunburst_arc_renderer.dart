@@ -21,21 +21,25 @@ import 'package:charts/charts/sunburst.dart';
 import 'package:collection/collection.dart';
 
 const _arcElementsKey = AttributeKey<List<SunburstArcRendererElement<Object>>>(
-    'SunburstArcRenderer.elements',);
+  'SunburstArcRenderer.elements',
+);
 
 /// ArcRenderer for the Sunburst chart using Tree based data.
 class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
-
-  factory SunburstArcRenderer(
-      {String? rendererId, SunburstArcRendererConfig<D>? config,}) {
+  factory SunburstArcRenderer({
+    String? rendererId,
+    SunburstArcRendererConfig<D>? config,
+  }) {
     return SunburstArcRenderer._internal(
-        rendererId: rendererId ?? 'sunburst',
-        config: config ?? SunburstArcRendererConfig(),);
+      rendererId: rendererId ?? 'sunburst',
+      config: config ?? SunburstArcRendererConfig(),
+    );
   }
 
-  SunburstArcRenderer._internal(
-      {required super.rendererId, required this.config,})
-      : arcRendererDecorators = config.arcRendererDecorators,
+  SunburstArcRenderer._internal({
+    required super.rendererId,
+    required this.config,
+  })  : arcRendererDecorators = config.arcRendererDecorators,
         super(config: config);
   @override
   final SunburstArcRendererConfig<D> config;
@@ -102,11 +106,12 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         final endAngle = startAngle + angle;
 
         final details = SunburstArcRendererElement<D>(
-            startAngle: startAngle,
-            endAngle: endAngle,
-            index: 0,
-            key: 0,
-            series: series,);
+          startAngle: startAngle,
+          endAngle: endAngle,
+          index: 0,
+          key: 0,
+          series: series,
+        );
 
         elements.add(details);
       } else {
@@ -124,7 +129,9 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
   // Create SunburstArcRendererElement for children of the node.
   List<SunburstArcRendererElement<D>> _createArcRenderElementForNode(
-      MutableSeries<D> series, TreeNode<D> node,) {
+    MutableSeries<D> series,
+    TreeNode<D> node,
+  ) {
     final elements = <SunburstArcRendererElement<D>>[];
     final children = node.children;
     if (children.isNotEmpty) {
@@ -158,13 +165,14 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         final endAngle = startAngle + angle;
 
         final details = SunburstArcRendererElement<D>(
-            arcLength: angle,
-            startAngle: startAngle,
-            endAngle: endAngle,
-            index: arcIndex,
-            key: arcIndex,
-            domain: domain,
-            series: series,);
+          arcLength: angle,
+          startAngle: startAngle,
+          endAngle: endAngle,
+          index: arcIndex,
+          key: arcIndex,
+          domain: domain,
+          series: series,
+        );
 
         _nodeToArcRenderElementMap[child] = details;
         elements.add(details);
@@ -192,8 +200,10 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
     final bounds = chart!.drawAreaBounds;
 
-    final center = Point<double>((bounds.left + bounds.width / 2).toDouble(),
-        (bounds.top + bounds.height / 2).toDouble(),);
+    final center = Point<double>(
+      (bounds.left + bounds.width / 2).toDouble(),
+      (bounds.top + bounds.height / 2).toDouble(),
+    );
 
     final radius = bounds.height < bounds.width
         ? (bounds.height / 2).toDouble()
@@ -251,10 +261,11 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         // Get the arcElement we are going to setup.
         // Optimization to prevent allocation in non-animating case.
         final arcElement = SunburstArcRendererElement<D>(
-            startAngle: details.startAngle,
-            endAngle: details.endAngle,
-            color: config.noDataColor,
-            series: series,);
+          startAngle: details.startAngle,
+          endAngle: details.endAngle,
+          color: config.noDataColor,
+          series: series,
+        );
 
         animatingArc.setNewTarget(arcElement);
 
@@ -279,9 +290,11 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
           // Create arc for node that’s within the initial display level or
           // selected nodes and its children up to the maxDisplayLevel.
-          for (final node in _nodeToArcRenderElementMap.keys.where((e) =>
-              e.depth == i + 1 &&
-              (e.depth <= displayLevel || _nodeToExpand.contains(e)),)) {
+          for (final node in _nodeToArcRenderElementMap.keys.where(
+            (e) =>
+                e.depth == i + 1 &&
+                (e.depth <= displayLevel || _nodeToExpand.contains(e)),
+          )) {
             final radii = _calculateRadii(radius, maxDisplayLevel, i + 1);
             final innerRadius = radii.first;
             final outerRadius = radii.last;
@@ -314,14 +327,17 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             // from 0.
             if (animatingArc == null) {
               animatingArc = AnimatedArc<D>(arcKey, datum, domainValue)
-                ..setNewTarget(SunburstArcRendererElement<D>(
+                ..setNewTarget(
+                  SunburstArcRendererElement<D>(
                     color: colorFn!(arcIndex),
                     startAngle: previousEndAngle,
                     endAngle: previousEndAngle,
                     index: arcIndex,
                     series: series,
                     isLeaf: isLeaf,
-                    isOuterMostRing: isOuterMostRing,),);
+                    isOuterMostRing: isOuterMostRing,
+                  ),
+                );
 
               arcList.arcs.add(animatingArc);
             } else {
@@ -338,13 +354,14 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             // Get the arcElement we are going to setup.
             // Optimization to prevent allocation in non-animating case.
             final arcElement = SunburstArcRendererElement<D>(
-                color: colorFn!(arcIndex),
-                startAngle: details.startAngle,
-                endAngle: details.endAngle,
-                index: arcIndex,
-                series: series,
-                isLeaf: isLeaf,
-                isOuterMostRing: isOuterMostRing,);
+              color: colorFn!(arcIndex),
+              startAngle: details.startAngle,
+              endAngle: details.endAngle,
+              index: arcIndex,
+              series: series,
+              isLeaf: isLeaf,
+              isOuterMostRing: isOuterMostRing,
+            );
 
             animatingArc.setNewTarget(arcElement);
           }
@@ -444,8 +461,10 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
   /// node, and one shade for each node of the subtree to series that are
   /// missing their colorFn.
   @override
-  void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette,}) {
+  void assignMissingColors(
+    Iterable<MutableSeries<D>> seriesList, {
+    required bool emptyCategoryUsesSinglePalette,
+  }) {
     for (final series in seriesList) {
       if (series.colorFn == null) {
         final root = series.data.first as TreeNode<D>;
@@ -499,8 +518,11 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
   }
 
   /// Calculate the inner and outer radius of the current level based on config.
-  List<double> _calculateRadii(double radius,
-      [int maxDisplayLevel = 1, int currentLevel = 1,]) {
+  List<double> _calculateRadii(
+    double radius, [
+    int maxDisplayLevel = 1,
+    int currentLevel = 1,
+  ]) {
     // arcRatio trumps arcWidth for determining the inner radius. If neither is
     // defined, then inner radius is 0.
     final double baseInnerRadius;
@@ -516,7 +538,9 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
       // Check if arcWidths provided covers maxDisplayLevel, if not, copy the
       // last value for each level not provided.
       final arcWidths = _ensureConfigLengthCoversMaxDisplayLevel(
-          config.arcWidths!, maxDisplayLevel,);
+        config.arcWidths!,
+        maxDisplayLevel,
+      );
       final sumOfPreviousLevelRadii = currentLevel > 1
           ? arcWidths.take(currentLevel - 1).reduce((a, b) => a + b)
           : 0;
@@ -526,14 +550,16 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         innerRadius + arcWidths[currentLevel - 1] - config.strokeWidthPx
       ];
     } else {
-      final  totalRadius = radius - baseInnerRadius;
+      final totalRadius = radius - baseInnerRadius;
       final int radiusDenom;
       final int sumOfPreviousLevelRadiiFactor;
       final int currentLevelRadiusFactor;
       // If arcRatios is defined, calculate inner and outer radius based on it.
       if (config.arcRatios != null && config.arcRatios!.isNotEmpty) {
         final arcRatios = _ensureConfigLengthCoversMaxDisplayLevel(
-            config.arcRatios!, maxDisplayLevel,);
+          config.arcRatios!,
+          maxDisplayLevel,
+        );
         radiusDenom = arcRatios.reduce((a, b) => a + b);
         sumOfPreviousLevelRadiiFactor = currentLevel > 1
             ? arcRatios.take(currentLevel - 1).reduce((a, b) => a + b)
@@ -574,15 +600,19 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
   }
 
   List<int> _ensureConfigLengthCoversMaxDisplayLevel(
-      List<int> configParam, int maxDisplayLevel,) {
+    List<int> configParam,
+    int maxDisplayLevel,
+  ) {
     // Check if config param provided covers maxDisplayLevel, if not, copy the
     // last value for each level not provided.
     List<int> arcWidths;
     if (configParam.length < maxDisplayLevel) {
       // Repeat last value in the config param to match length of
       // maxDisplayLevel.
-      arcWidths = List<int>.generate(maxDisplayLevel,
-          (i) => (configParam.length > i) ? configParam[i] : configParam.last,);
+      arcWidths = List<int>.generate(
+        maxDisplayLevel,
+        (i) => (configParam.length > i) ? configParam[i] : configParam.last,
+      );
     } else {
       arcWidths = List<int>.from(configParam);
     }
@@ -591,18 +621,19 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 }
 
 class SunburstArcRendererElement<D> extends ArcRendererElement<D> {
+  SunburstArcRendererElement({
+    required super.startAngle,
+    required super.endAngle,
+    required super.series,
+    super.color,
+    super.index,
+    super.key,
+    super.domain,
+    this.arcLength,
+    this.isLeaf,
+    this.isOuterMostRing,
+  });
 
-  SunburstArcRendererElement(
-      {required super.startAngle,
-      required super.endAngle,
-      required super.series,
-      super.color,
-      super.index,
-      super.key,
-      super.domain,
-      this.arcLength,
-      this.isLeaf,
-      this.isOuterMostRing,});
   /// Records the arcLength of a particular node, so its children can use it
   /// to compute the start and end angles.
   double? arcLength;
@@ -618,14 +649,15 @@ class SunburstArcRendererElement<D> extends ArcRendererElement<D> {
   @override
   SunburstArcRendererElement<D> clone() {
     return SunburstArcRendererElement<D>(
-        arcLength: arcLength,
-        startAngle: startAngle,
-        endAngle: endAngle,
-        color: color,
-        index: index,
-        key: key,
-        series: series,
-        isLeaf: isLeaf,
-        isOuterMostRing: isOuterMostRing,);
+      arcLength: arcLength,
+      startAngle: startAngle,
+      endAngle: endAngle,
+      color: color,
+      index: index,
+      key: key,
+      series: series,
+      isLeaf: isLeaf,
+      isOuterMostRing: isOuterMostRing,
+    );
   }
 }

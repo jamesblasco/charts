@@ -69,8 +69,12 @@ class _DesiredViewSizes {
 
 /// A strategy for calculating size of vertical margins (RIGHT & LEFT).
 abstract class VerticalMarginStrategy {
-  SizeList measure(Iterable<LayoutView> views,
-      {required int maxWidth, required int height, required int fullHeight,}) {
+  SizeList measure(
+    Iterable<LayoutView> views, {
+    required int maxWidth,
+    required int height,
+    required int fullHeight,
+  }) {
     final measuredWidths = _DesiredViewSizes();
     var remainingWidth = maxWidth;
 
@@ -103,15 +107,23 @@ abstract class VerticalMarginStrategy {
     return measuredWidths.preferredSizes;
   }
 
-  void layout(List<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,);
+  void layout(
+    List<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  );
 }
 
 /// A strategy for calculating size and bounds of left margins.
 class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
   @override
-  void layout(Iterable<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,) {
+  void layout(
+    Iterable<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  ) {
     var prevBoundsRight = drawAreaBounds.left;
 
     var i = 0;
@@ -140,8 +152,12 @@ class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
 /// A strategy for calculating size and bounds of right margins.
 class RightMarginLayoutStrategy extends VerticalMarginStrategy {
   @override
-  void layout(Iterable<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,) {
+  void layout(
+    Iterable<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  ) {
     var prevBoundsLeft = drawAreaBounds.right;
 
     var i = 0;
@@ -169,8 +185,12 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
 
 /// A strategy for calculating size of horizontal margins (TOP & BOTTOM).
 abstract class HorizontalMarginStrategy {
-  SizeList measure(Iterable<LayoutView> views,
-      {required int maxHeight, required int width, required int fullWidth,}) {
+  SizeList measure(
+    Iterable<LayoutView> views, {
+    required int maxHeight,
+    required int width,
+    required int fullWidth,
+  }) {
     final measuredHeights = _DesiredViewSizes();
     var remainingHeight = maxHeight;
 
@@ -203,15 +223,23 @@ abstract class HorizontalMarginStrategy {
     return measuredHeights.preferredSizes;
   }
 
-  void layout(Iterable<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,);
+  void layout(
+    Iterable<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  );
 }
 
 /// A strategy for calculating size and bounds of top margins.
 class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
   @override
-  void layout(Iterable<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,) {
+  void layout(
+    Iterable<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  ) {
     var prevBoundsBottom = drawAreaBounds.top;
 
     var i = 0;
@@ -241,8 +269,12 @@ class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
 /// A strategy for calculating size and bounds of bottom margins.
 class BottomMarginLayoutStrategy extends HorizontalMarginStrategy {
   @override
-  void layout(Iterable<LayoutView> views, SizeList measuredSizes,
-      Rectangle<int> fullBounds, Rectangle<int> drawAreaBounds,) {
+  void layout(
+    Iterable<LayoutView> views,
+    SizeList measuredSizes,
+    Rectangle<int> fullBounds,
+    Rectangle<int> drawAreaBounds,
+  ) {
     var prevBoundsTop = drawAreaBounds.bottom;
 
     var i = 0;

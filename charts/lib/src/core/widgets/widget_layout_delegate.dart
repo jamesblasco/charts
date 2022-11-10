@@ -20,8 +20,8 @@ import 'package:flutter/widgets.dart';
 
 /// Layout delegate that layout chart widget with [BuildableBehavior] widgets.
 class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
-
   WidgetLayoutDelegate(this.chartID, this.idAndBehavior, this.isRTL);
+
   /// ID of the common chart widget.
   final String chartID;
 
@@ -82,8 +82,12 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
       // TODO: Unable to relayout with smaller width.
       // In the delegate, all children are required to have layout called
       // exactly once.
-      final behaviorOffset = _getBehaviorOffset(idAndBehavior[behaviorID]!,
-          behaviorSize: behaviorSize, chartSize: chartSize, isRTL: isRTL,);
+      final behaviorOffset = _getBehaviorOffset(
+        idAndBehavior[behaviorID]!,
+        behaviorSize: behaviorSize,
+        chartSize: chartSize,
+        isRTL: isRTL,
+      );
 
       positionChild(behaviorID, behaviorOffset);
     }
@@ -97,10 +101,12 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   // Calculate buildable behavior's offset.
-  Offset _getBehaviorOffset(BuildableBehavior behavior,
-      {required Size behaviorSize,
-      required Size chartSize,
-      required bool isRTL,}) {
+  Offset _getBehaviorOffset(
+    BuildableBehavior behavior, {
+    required Size behaviorSize,
+    required Size chartSize,
+    required bool isRTL,
+  }) {
     late Offset behaviorOffset;
 
     final behaviorPosition = behavior.position;
@@ -125,8 +131,9 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
           break;
         case _HorizontalJustification.rightDrawArea:
           behaviorOffset = Offset(
-              behavior.drawAreaBounds!.right - behaviorSize.width,
-              heightOffset,);
+            behavior.drawAreaBounds!.right - behaviorSize.width,
+            heightOffset,
+          );
           break;
         case _HorizontalJustification.right:
           behaviorOffset =
@@ -152,8 +159,10 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
           behaviorOffset = Offset(widthOffset, 0);
           break;
         case OutsideJustification.endDrawArea:
-          behaviorOffset = Offset(widthOffset,
-              behavior.drawAreaBounds!.bottom - behaviorSize.height,);
+          behaviorOffset = Offset(
+            widthOffset,
+            behavior.drawAreaBounds!.bottom - behaviorSize.height,
+          );
           break;
         case OutsideJustification.end:
           behaviorOffset =
@@ -177,7 +186,9 @@ class WidgetLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   _HorizontalJustification getOutsideJustification(
-      OutsideJustification justification, bool isRTL,) {
+    OutsideJustification justification,
+    bool isRTL,
+  ) {
     _HorizontalJustification mappedJustification;
 
     switch (justification) {

@@ -26,7 +26,6 @@ import 'package:meta/meta.dart' show immutable;
 /// and expand selection out to the domain value.
 @immutable
 class DomainHighlighter<D> extends ChartBehavior<D> {
-
   DomainHighlighter([this.selectionModelType = SelectionModelType.info]);
   @override
   final desiredGestures = <GestureType>{};

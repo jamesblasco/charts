@@ -123,8 +123,6 @@ class FakeTextElement implements TextElement {
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
-
-
 class MockChartCanvas extends Mock implements ChartCanvas {}
 
 /// Helper function to create [Tick] for testing.

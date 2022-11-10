@@ -24,7 +24,6 @@ import 'package:meta/meta.dart' show protected;
 ///
 /// By default this behavior creates a legend entry per series.
 class SeriesLegendBehaviorState<D> extends LegendBehaviorState<D> {
-
   SeriesLegendBehaviorState({
     SelectionModelType? selectionModelType,
     LegendEntryGenerator<D>? legendEntryGenerator,
@@ -34,15 +33,17 @@ class SeriesLegendBehaviorState<D> extends LegendBehaviorState<D> {
     LegendDefaultMeasure? legendDefaultMeasure,
     super.entryTextStyle,
   }) : super(
-            selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),) {
+          selectionModelType: selectionModelType ?? SelectionModelType.info,
+          legendEntryGenerator:
+              legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),
+        ) {
     // Calling the setters will automatically use non-null default values.
     this.showMeasures = showMeasures;
     this.legendDefaultMeasure = legendDefaultMeasure;
     this.measureFormatter = measureFormatter;
     this.secondaryMeasureFormatter = secondaryMeasureFormatter;
   }
+
   /// List of currently hidden series, by ID.
   final _hiddenSeriesList = <String>{};
 

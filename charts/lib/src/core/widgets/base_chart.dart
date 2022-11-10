@@ -19,7 +19,6 @@ import 'package:flutter/widgets.dart';
 
 @immutable
 abstract class BaseChart<D> extends StatefulWidget {
-
   const BaseChart(
     this.seriesList, {
     bool? animate,
@@ -35,6 +34,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   })  : animate = animate ?? true,
         animationDuration =
             animationDuration ?? const Duration(milliseconds: 300);
+
   /// Series list to draw.
   final List<Series<dynamic, D>> seriesList;
 
@@ -76,8 +76,11 @@ abstract class BaseChart<D> extends StatefulWidget {
   BaseRenderChart<D> createRenderChart(BaseChartState<D> chartState);
 
   /// Updates the [BaseRenderChart].
-  void updateRenderChart(BaseRenderChart<D> chart, BaseChart<D>? oldWidget,
-      BaseChartState<D> chartState,) {
+  void updateRenderChart(
+    BaseRenderChart<D> chart,
+    BaseChart<D>? oldWidget,
+    BaseChartState<D> chartState,
+  ) {
     Performance.time('chartsUpdateRenderers');
     // Set default renderer if one was provided.
     if (defaultRenderer != null &&
@@ -163,20 +166,25 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// Create the list of default interaction behaviors.
   void addDefaultInteractions(List<ChartBehavior<D>> behaviors) {
     // Update selection model
-    behaviors.add(SelectNearest<D>(
-        ),);
+    behaviors.add(
+      SelectNearest<D>(),
+    );
   }
 
   bool _notACustomBehavior(ChartBehavior behavior) {
     return behaviors == null ||
         !behaviors!.any(
-            (ChartBehavior userBehavior) => userBehavior.role == behavior.role,);
+          (ChartBehavior userBehavior) => userBehavior.role == behavior.role,
+        );
   }
 
   void _updateSelectionModel(
-      BaseRenderChart<D> chart, BaseChartState<D> chartState,) {
+    BaseRenderChart<D> chart,
+    BaseChartState<D> chartState,
+  ) {
     final prevTypes = List<SelectionModelType>.from(
-        chartState.addedSelectionChangedListenersByType.keys,);
+      chartState.addedSelectionChangedListenersByType.keys,
+    );
 
     // Update any listeners for each type.
     selectionModels?.forEach((SelectionModelConfig<D> model) {
@@ -211,9 +219,11 @@ abstract class BaseChart<D> extends StatefulWidget {
     for (final type in prevTypes) {
       chart.getSelectionModel(type)
         ..removeSelectionChangedListener(
-            chartState.addedSelectionChangedListenersByType[type]!,)
+          chartState.addedSelectionChangedListenersByType[type]!,
+        )
         ..removeSelectionUpdatedListener(
-            chartState.addedSelectionUpdatedListenersByType[type]!,);
+          chartState.addedSelectionUpdatedListenersByType[type]!,
+        );
     }
   }
 
@@ -231,7 +241,8 @@ abstract class BaseChart<D> extends StatefulWidget {
 
     if (defaultInteractions && chartState.autoBehaviorWidgets.isEmpty) {
       addDefaultInteractions(
-          List<ChartBehavior<D>>.from(chartState.autoBehaviorWidgets),);
+        List<ChartBehavior<D>>.from(chartState.autoBehaviorWidgets),
+      );
     }
 
     for (final behavior in chartState.autoBehaviorWidgets) {

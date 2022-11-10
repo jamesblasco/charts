@@ -15,14 +15,14 @@
 
 import 'package:charts/charts/treemap.dart';
 
-
 /// A treemap renderer that renders a treemap with slice layout.
 class SliceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
   SliceTreeMapRenderer({String? rendererId, TreeMapRendererConfig<D>? config})
       : super(
-            config: config ??
-                TreeMapRendererConfig(tileType: TreeMapTileType.slice),
-            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,);
+          config:
+              config ?? TreeMapRendererConfig(tileType: TreeMapTileType.slice),
+          rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,
+        );
 
   /// Uses slicing as the tiling algorithm for this tree map.
   @override

@@ -20,7 +20,6 @@ import 'package:meta/meta.dart' show immutable;
 /// [AxisSpec] specialized for numeric/continuous axes like the measure axis.
 @immutable
 class NumericAxisSpec extends AxisSpec<num> {
-
   /// Creates a [AxisSpec] that specialized for numeric data.
   ///
   /// [renderSpec] spec used to configure how the ticks and labels
@@ -60,6 +59,7 @@ class NumericAxisSpec extends AxisSpec<num> {
       viewport: viewport ?? other.viewport,
     );
   }
+
   /// Sets viewport for this Axis.
   ///
   /// If pan / zoom behaviors are set, this is the initial viewport.
@@ -67,7 +67,10 @@ class NumericAxisSpec extends AxisSpec<num> {
 
   @override
   void configure(
-      Axis<num> axis, ChartContext context, GraphicsFactory graphicsFactory,) {
+    Axis<num> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {
@@ -92,7 +95,6 @@ abstract class NumericTickFormatterSpec extends TickFormatterSpec<num> {
 
 @immutable
 class BasicNumericTickProviderSpec extends NumericTickProviderSpec {
-
   /// Creates a [TickProviderSpec] that dynamically chooses the number of
   /// ticks based on the extents of the data.
   ///
@@ -108,12 +110,13 @@ class BasicNumericTickProviderSpec extends NumericTickProviderSpec {
   /// [desiredMaxTickCount] automatically choose the best tick
   ///     count to produce the 'nicest' ticks but make sure we don't have more
   ///     than this many.
-  const BasicNumericTickProviderSpec(
-      {this.zeroBound,
-      this.dataIsInWholeNumbers,
-      this.desiredTickCount,
-      this.desiredMinTickCount,
-      this.desiredMaxTickCount,});
+  const BasicNumericTickProviderSpec({
+    this.zeroBound,
+    this.dataIsInWholeNumbers,
+    this.desiredTickCount,
+    this.desiredMinTickCount,
+    this.desiredMaxTickCount,
+  });
   final bool? zeroBound;
   final bool? dataIsInWholeNumbers;
   final int? desiredTickCount;
@@ -133,8 +136,10 @@ class BasicNumericTickProviderSpec extends NumericTickProviderSpec {
     if (desiredMinTickCount != null ||
         desiredMaxTickCount != null ||
         desiredTickCount != null) {
-      provider.setTickCount(desiredMaxTickCount ?? desiredTickCount ?? 10,
-          desiredMinTickCount ?? desiredTickCount ?? 2,);
+      provider.setTickCount(
+        desiredMaxTickCount ?? desiredTickCount ?? 10,
+        desiredMinTickCount ?? desiredTickCount ?? 2,
+      );
     }
     return provider;
   }
@@ -169,7 +174,6 @@ class NumericEndPointsTickProviderSpec extends NumericTickProviderSpec {
 /// [TickProviderSpec] that allows you to specific the ticks to be used.
 @immutable
 class StaticNumericTickProviderSpec extends NumericTickProviderSpec {
-
   const StaticNumericTickProviderSpec(this.tickSpecs);
   final List<TickSpec<num>> tickSpecs;
 
@@ -183,7 +187,6 @@ class StaticNumericTickProviderSpec extends NumericTickProviderSpec {
 
 @immutable
 class BasicNumericTickFormatterSpec extends NumericTickFormatterSpec {
-
   /// Simple [TickFormatterSpec] that delegates formatting to the given
   /// [NumberFormat].
   const BasicNumericTickFormatterSpec(this.formatter) : numberFormat = null;

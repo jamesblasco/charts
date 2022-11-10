@@ -29,7 +29,6 @@ export 'widgets/pie_chart.dart';
 export 'widgets/pie_chart.dart';
 
 class PieRenderChart<D> extends BaseRenderChart<D> {
-
   PieRenderChart({LayoutConfig? layoutConfig})
       : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
@@ -40,13 +39,19 @@ class PieRenderChart<D> extends BaseRenderChart<D> {
   );
 
   @override
-  void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout,}) {
+  void drawInternal(
+    List<MutableSeries<D>> seriesList, {
+    bool? skipAnimation,
+    bool? skipLayout,
+  }) {
     if (seriesList.length > 1) {
       throw ArgumentError('PieChart can only render a single series');
     }
-    super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout,);
+    super.drawInternal(
+      seriesList,
+      skipAnimation: skipAnimation,
+      skipLayout: skipLayout,
+    );
   }
 
   @override

@@ -36,7 +36,6 @@ const domainValuesKey =
 /// swim lanes may optionally be merged together into one wide lane that covers
 /// the full domain range band width.
 class BarLaneRenderer<D> extends BarRenderer<D> {
-
   factory BarLaneRenderer({
     BarLaneRendererConfig? config,
     String? rendererId,
@@ -50,6 +49,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
     required BarLaneRendererConfig super.config,
     required super.rendererId,
   }) : super.internal();
+
   /// Store a map of domain+barGroupIndex+category index to bar lanes in a
   /// stack.
   ///
@@ -153,7 +153,9 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
         final barKey = '${barStackMapKey}0';
 
         final barStackList = _barLaneStackMap.putIfAbsent(
-            barStackMapKey, () => <AnimatedBar<D>>[],);
+          barStackMapKey,
+          () => <AnimatedBar<D>>[],
+        );
 
         // If we already have an AnimatingBar for that index, use it.
         var animatingBar =
@@ -165,45 +167,17 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
         final measureValue = measureFn(0);
         final measureIsNegative = measureValue != null && measureValue < 0;
         final maxMeasureValue = _getMaxMeasureValue(
-            measureAxis, measureIsNegative && renderNegativeLanes,);
+          measureAxis,
+          measureIsNegative && renderNegativeLanes,
+        );
 
         // If we don't have any existing bar element, create a new bar and have
         // it animate in from the domain axis.
         if (animatingBar == null) {
           animatingBar = makeAnimatedBar(
-              key: barKey,
-              series: laneSeries,
-              datum: datum,
-              barGroupIndex: barGroupIndex,
-              previousBarGroupWeight: previousBarGroupWeight,
-              barGroupWeight: barGroupWeight,
-              allBarGroupWeights: allBarGroupWeights,
-              color: (config as BarLaneRendererConfig).backgroundBarColor,
-              details: BarRendererElement<D>(),
-              domainValue: domainValue,
-              domainAxis: domainAxis,
-              domainWidth: domainAxis.rangeBand.round(),
-              fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
-              measureValue: maxMeasureValue,
-              measureOffsetValue: 0.0,
-              measureAxisPosition: measureAxisPosition,
-              measureAxis: measureAxis,
-              numBarGroups: barGroupCount,
-              strokeWidthPx: config.strokeWidthPx,
-              measureIsNull: false,
-              measureIsNegative: renderNegativeLanes && measureIsNegative,);
-
-          barStackList.add(animatingBar);
-        } else {
-          animatingBar
-            ..datum = datum
-            ..series = laneSeries
-            ..domainValue = domainValue;
-        }
-
-        // Get the barElement we are going to setup.
-        // Optimization to prevent allocation in non-animating case.
-        final barElement = makeBarRendererElement(
+            key: barKey,
+            series: laneSeries,
+            datum: datum,
             barGroupIndex: barGroupIndex,
             previousBarGroupWeight: previousBarGroupWeight,
             barGroupWeight: barGroupWeight,
@@ -221,7 +195,39 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             numBarGroups: barGroupCount,
             strokeWidthPx: config.strokeWidthPx,
             measureIsNull: false,
-            measureIsNegative: renderNegativeLanes && measureIsNegative,);
+            measureIsNegative: renderNegativeLanes && measureIsNegative,
+          );
+
+          barStackList.add(animatingBar);
+        } else {
+          animatingBar
+            ..datum = datum
+            ..series = laneSeries
+            ..domainValue = domainValue;
+        }
+
+        // Get the barElement we are going to setup.
+        // Optimization to prevent allocation in non-animating case.
+        final barElement = makeBarRendererElement(
+          barGroupIndex: barGroupIndex,
+          previousBarGroupWeight: previousBarGroupWeight,
+          barGroupWeight: barGroupWeight,
+          allBarGroupWeights: allBarGroupWeights,
+          color: (config as BarLaneRendererConfig).backgroundBarColor,
+          details: BarRendererElement<D>(),
+          domainValue: domainValue,
+          domainAxis: domainAxis,
+          domainWidth: domainAxis.rangeBand.round(),
+          fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
+          measureValue: maxMeasureValue,
+          measureOffsetValue: 0.0,
+          measureAxisPosition: measureAxisPosition,
+          measureAxis: measureAxis,
+          numBarGroups: barGroupCount,
+          strokeWidthPx: config.strokeWidthPx,
+          measureIsNull: false,
+          measureIsNegative: renderNegativeLanes && measureIsNegative,
+        );
 
         animatingBar.setNewTarget(barElement);
 
@@ -269,7 +275,9 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
           final barKey = '${barStackMapKey}0';
 
           final barStackList = _barLaneStackMap.putIfAbsent(
-              barStackMapKey, () => <AnimatedBar<D>>[],);
+            barStackMapKey,
+            () => <AnimatedBar<D>>[],
+          );
 
           // If we already have an AnimatingBar for that index, use it.
           var animatingBar =
@@ -279,38 +287,9 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
           // it animate in from the domain axis.
           if (animatingBar == null) {
             animatingBar = makeAnimatedBar(
-                key: barKey,
-                series: mergedSeries,
-                datum: datum,
-                barGroupIndex: barGroupIndex,
-                previousBarGroupWeight: previousBarGroupWeight,
-                barGroupWeight: barGroupWeight,
-                color: (config as BarLaneRendererConfig).backgroundBarColor,
-                details: BarRendererElement<D>(),
-                domainValue: domainValue,
-                domainAxis: domainAxis,
-                domainWidth: domainAxis.rangeBand.round(),
-                fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
-                measureValue: maxMeasureValue,
-                measureOffsetValue: 0.0,
-                measureAxisPosition: measureAxisPosition,
-                measureAxis: measureAxis,
-                numBarGroups: barGroupCount,
-                strokeWidthPx: config.strokeWidthPx,
-                measureIsNull: false,
-                measureIsNegative: false,);
-
-            barStackList.add(animatingBar);
-          } else {
-            animatingBar
-              ..datum = datum
-              ..series = mergedSeries
-              ..domainValue = domainValue;
-          }
-
-          // Get the barElement we are going to setup.
-          // Optimization to prevent allocation in non-animating case.
-          final barElement = makeBarRendererElement(
+              key: barKey,
+              series: mergedSeries,
+              datum: datum,
               barGroupIndex: barGroupIndex,
               previousBarGroupWeight: previousBarGroupWeight,
               barGroupWeight: barGroupWeight,
@@ -327,7 +306,38 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
               numBarGroups: barGroupCount,
               strokeWidthPx: config.strokeWidthPx,
               measureIsNull: false,
-              measureIsNegative: false,);
+              measureIsNegative: false,
+            );
+
+            barStackList.add(animatingBar);
+          } else {
+            animatingBar
+              ..datum = datum
+              ..series = mergedSeries
+              ..domainValue = domainValue;
+          }
+
+          // Get the barElement we are going to setup.
+          // Optimization to prevent allocation in non-animating case.
+          final barElement = makeBarRendererElement(
+            barGroupIndex: barGroupIndex,
+            previousBarGroupWeight: previousBarGroupWeight,
+            barGroupWeight: barGroupWeight,
+            color: (config as BarLaneRendererConfig).backgroundBarColor,
+            details: BarRendererElement<D>(),
+            domainValue: domainValue,
+            domainAxis: domainAxis,
+            domainWidth: domainAxis.rangeBand.round(),
+            fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
+            measureValue: maxMeasureValue,
+            measureOffsetValue: 0.0,
+            measureAxisPosition: measureAxisPosition,
+            measureAxis: measureAxis,
+            numBarGroups: barGroupCount,
+            strokeWidthPx: config.strokeWidthPx,
+            measureIsNull: false,
+            measureIsNegative: false,
+          );
 
           animatingBar.setNewTarget(barElement);
 

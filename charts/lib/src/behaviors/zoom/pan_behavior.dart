@@ -23,7 +23,6 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PanBehavior<D> extends ChartBehavior<D> {
-
   PanBehavior({this.panningCompletedCallback});
   final _desiredGestures = <GestureType>{
     GestureType.onDrag,
@@ -101,7 +100,10 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
   @override
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec,) {
+    Point<double> localPosition,
+    double scale,
+    double pixelsPerSec,
+  ) {
     if (isPanning) {
       // Ignore slow drag gestures to avoid jitter.
       if (pixelsPerSec.abs() < minimumFlingVelocity) {
@@ -124,8 +126,9 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
         pixelsPerSec * flingDistanceMultiplier;
 
     final flingDuration = Duration(
-        milliseconds:
-            max(200, (pixelsPerSec * flingDurationMultiplier).abs().round()),);
+      milliseconds:
+          max(200, (pixelsPerSec * flingDurationMultiplier).abs().round()),
+    );
 
     _flingAnimator!
       ..duration = flingDuration
@@ -146,14 +149,19 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
     final percent = _flingAnimator!.value;
     final deceleratedPercent = _decelerate(percent);
-    final translation = lerpDouble(_flingAnimationInitialTranslatePx,
-        _flingAnimationTargetTranslatePx, deceleratedPercent,);
+    final translation = lerpDouble(
+      _flingAnimationInitialTranslatePx,
+      _flingAnimationTargetTranslatePx,
+      deceleratedPercent,
+    );
 
     final domainAxis = chart!.domainAxis!;
 
     domainAxis.setViewportSettings(
-        domainAxis.viewportScalingFactor, translation!,
-        drawAreaWidth: chart!.drawAreaBounds.width,);
+      domainAxis.viewportScalingFactor,
+      translation!,
+      drawAreaWidth: chart!.drawAreaBounds.width,
+    );
 
     if (percent >= 1.0) {
       stopFlingAnimation();

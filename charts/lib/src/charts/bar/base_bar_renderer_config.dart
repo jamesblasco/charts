@@ -35,21 +35,21 @@ import 'package:charts/charts/bar.dart';
 ///   series.
 abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  BaseBarRendererConfig({
+    this.barGroupInnerPaddingPx = 2,
+    this.customRendererId,
+    this.dashPattern,
+    this.groupingType = BarGroupingType.grouped,
+    this.layoutPaintOrder,
+    this.minBarLengthPx = 0,
+    this.maxBarWidthPx,
+    this.fillPattern,
+    this.stackedBarPaddingPx = 1,
+    this.strokeWidthPx = 0.0,
+    SymbolRenderer? symbolRenderer,
+    this.weightPattern,
+  }) : symbolRenderer = symbolRenderer ?? const RoundedRectSymbolRenderer();
 
-  BaseBarRendererConfig(
-      {this.barGroupInnerPaddingPx = 2,
-      this.customRendererId,
-      this.dashPattern,
-      this.groupingType = BarGroupingType.grouped,
-      this.layoutPaintOrder,
-      this.minBarLengthPx = 0,
-      this.maxBarWidthPx,
-      this.fillPattern,
-      this.stackedBarPaddingPx = 1,
-      this.strokeWidthPx = 0.0,
-      SymbolRenderer? symbolRenderer,
-      this.weightPattern,})
-      : symbolRenderer = symbolRenderer ?? const RoundedRectSymbolRenderer();
   /// Spacing between the bars in a group.
   final int barGroupInnerPaddingPx;
 

@@ -17,7 +17,6 @@ import 'package:charts/charts.dart';
 import 'package:charts/charts/bar.dart';
 
 abstract class BaseBarRendererElement {
-
   BaseBarRendererElement();
 
   BaseBarRendererElement.clone(BaseBarRendererElement other) {
@@ -47,18 +46,23 @@ abstract class BaseBarRendererElement {
   bool? measureIsNull;
   bool? measureIsNegative;
 
-  void updateAnimationPercent(BaseBarRendererElement previous,
-      BaseBarRendererElement target, double animationPercent,) {
+  void updateAnimationPercent(
+    BaseBarRendererElement previous,
+    BaseBarRendererElement target,
+    double animationPercent,
+  ) {
     color = getAnimatedColor(previous.color!, target.color!, animationPercent);
     fillColor = getAnimatedColor(
-        previous.fillColor!, target.fillColor!, animationPercent,);
+      previous.fillColor!,
+      target.fillColor!,
+      animationPercent,
+    );
     measureIsNull = target.measureIsNull;
     measureIsNegative = target.measureIsNegative;
   }
 }
 
 abstract class BaseAnimatedBar<D, R extends BaseBarRendererElement> {
-
   BaseAnimatedBar({
     required this.key,
     required this.datum,

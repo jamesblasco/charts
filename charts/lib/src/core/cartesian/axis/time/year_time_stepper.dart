@@ -15,12 +15,12 @@
 
 import 'package:charts/core.dart';
 
-
 /// Year stepper.
 class YearTimeStepper extends BaseTimeStepper {
-
-  factory YearTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements,}) {
+  factory YearTimeStepper(
+    DateTimeFactory dateTimeFactory, {
+    List<int>? allowedTickIncrements,
+  }) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -30,8 +30,9 @@ class YearTimeStepper extends BaseTimeStepper {
   }
 
   YearTimeStepper._internal(
-      super.dateTimeFactory, List<int> increments,)
-      : _allowedTickIncrements = increments;
+    super.dateTimeFactory,
+    List<int> increments,
+  ) : _allowedTickIncrements = increments;
   static const _defaultIncrements = [1, 2, 5, 10, 50, 100, 500, 1000];
 
   final List<int> _allowedTickIncrements;

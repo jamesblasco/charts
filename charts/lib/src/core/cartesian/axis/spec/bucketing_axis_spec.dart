@@ -39,7 +39,6 @@ import 'package:meta/meta.dart' show immutable;
 /// This axis will format numbers as percents by default.
 @immutable
 class BucketingAxisSpec extends NumericAxisSpec {
-
   /// Creates a [NumericAxisSpec] that is specialized for percentage data.
   BucketingAxisSpec({
     super.renderSpec,
@@ -51,12 +50,15 @@ class BucketingAxisSpec extends NumericAxisSpec {
     NumericExtents? viewport,
   })  : showBucket = showBucket ?? true,
         super(
-            tickProviderSpec:
-                tickProviderSpec ?? const BucketingNumericTickProviderSpec(),
-            tickFormatterSpec: tickFormatterSpec ??
-                BasicNumericTickFormatterSpec.fromNumberFormat(
-                    NumberFormat.percentPattern(),),
-            viewport: viewport ?? const NumericExtents(0.0, 1.0),);
+          tickProviderSpec:
+              tickProviderSpec ?? const BucketingNumericTickProviderSpec(),
+          tickFormatterSpec: tickFormatterSpec ??
+              BasicNumericTickFormatterSpec.fromNumberFormat(
+                NumberFormat.percentPattern(),
+              ),
+          viewport: viewport ?? const NumericExtents(0.0, 1.0),
+        );
+
   /// All values smaller than the threshold will be bucketed into the same
   /// position in the reserved space on the axis.
   final num? threshold;
@@ -70,7 +72,10 @@ class BucketingAxisSpec extends NumericAxisSpec {
 
   @override
   void configure(
-      Axis<num> axis, ChartContext context, GraphicsFactory graphicsFactory,) {
+    Axis<num> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {
@@ -109,13 +114,13 @@ class BucketingNumericTickProviderSpec extends BasicNumericTickProviderSpec {
   /// [desiredMaxTickCount] automatically choose the best tick
   ///     count to produce the 'nicest' ticks but make sure we don't have more
   ///     than this many.
-  const BucketingNumericTickProviderSpec(
-      {bool? zeroBound,
-      bool? dataIsInWholeNumbers,
-      super.desiredTickCount,
-      super.desiredMinTickCount,
-      super.desiredMaxTickCount,})
-      : super(
+  const BucketingNumericTickProviderSpec({
+    bool? zeroBound,
+    bool? dataIsInWholeNumbers,
+    super.desiredTickCount,
+    super.desiredMinTickCount,
+    super.desiredMaxTickCount,
+  }) : super(
           zeroBound: zeroBound ?? true,
           dataIsInWholeNumbers: dataIsInWholeNumbers ?? false,
         );
@@ -129,8 +134,10 @@ class BucketingNumericTickProviderSpec extends BasicNumericTickProviderSpec {
     if (desiredMinTickCount != null ||
         desiredMaxTickCount != null ||
         desiredTickCount != null) {
-      provider.setTickCount(desiredMaxTickCount ?? desiredTickCount ?? 10,
-          desiredMinTickCount ?? desiredTickCount ?? 2,);
+      provider.setTickCount(
+        desiredMaxTickCount ?? desiredTickCount ?? 10,
+        desiredMinTickCount ?? desiredTickCount ?? 2,
+      );
     }
     return provider;
   }

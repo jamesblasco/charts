@@ -74,8 +74,6 @@ class FakeGraphicsFactory extends GraphicsFactory {
 
 class MockTextElement extends Mock implements TextElement {}
 
-
-
 class MockChartContext extends Mock implements ChartContext {}
 
 /// A celsius to fahrenheit converter for testing axis with unit converter.

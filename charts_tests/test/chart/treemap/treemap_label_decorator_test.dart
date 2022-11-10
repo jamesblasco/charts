@@ -90,7 +90,6 @@ class FakeTextElement implements TextElement {
   }
 }
 
-
 class FakeTreeMapRendererElement extends TreeMapRendererElement<String> {
   final _series = MockImmutableSeries<String>();
   final AccessorFn<String> labelAccessor;

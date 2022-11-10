@@ -115,7 +115,8 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
     // Add the common chart canvas widget.
     chartWidgets.add(
-        LayoutId(id: chartContainerLayoutID, child: _buildChartContainer()),);
+      LayoutId(id: chartContainerLayoutID, child: _buildChartContainer()),
+    );
 
     // Add widget for each behavior that can build widgets
     addedCommonBehaviorsByRole.forEach((id, behavior) {
@@ -133,9 +134,13 @@ class BaseChartState<D> extends State<BaseChart<D>>
     final isRTL = Directionality.of(context) == TextDirection.rtl;
 
     return CustomMultiChildLayout(
-        delegate: WidgetLayoutDelegate(
-            chartContainerLayoutID, idAndBehaviorMap, isRTL,),
-        children: chartWidgets,);
+      delegate: WidgetLayoutDelegate(
+        chartContainerLayoutID,
+        idAndBehaviorMap,
+        isRTL,
+      ),
+      children: chartWidgets,
+    );
   }
 
   @override

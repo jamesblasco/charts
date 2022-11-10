@@ -13,12 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import 'package:charts/behaviors.dart';
 import 'package:charts/charts/line.dart';
 
 class TimeSeriesChart extends CartesianChart<DateTime> {
-
   /// Create a [TimeSeriesChart].
   ///
   /// [dateTimeFactory] allows specifying a factory that creates [DateTime] to
@@ -66,16 +64,16 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
 }
 
 class TimeSeriesRenderChart extends CartesianRenderChart<DateTime> {
-
-  TimeSeriesRenderChart(
-      {super.vertical,
-      super.layoutConfig,
-      super.primaryMeasureAxis,
-      super.secondaryMeasureAxis,
-      super.disjointMeasureAxes,
-      this.dateTimeFactory = const LocalDateTimeFactory(),})
-      : super(
-            domainAxis: DateTimeAxis(dateTimeFactory),);
+  TimeSeriesRenderChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+    this.dateTimeFactory = const LocalDateTimeFactory(),
+  }) : super(
+          domainAxis: DateTimeAxis(dateTimeFactory),
+        );
   final DateTimeFactory dateTimeFactory;
 
   @override

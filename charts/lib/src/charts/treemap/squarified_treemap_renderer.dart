@@ -17,16 +17,16 @@ import 'dart:collection' show Queue;
 import 'dart:math' as math;
 import 'package:charts/charts/treemap.dart';
 
-
 /// A treemap renderer that renders a squarified treemap.
 class SquarifiedTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
+  SquarifiedTreeMapRenderer({
+    String? rendererId,
+    TreeMapRendererConfig<D>? config,
+  }) : super(
+          config: config ?? TreeMapRendererConfig(),
+          rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,
+        );
 
-  SquarifiedTreeMapRenderer(
-      {String? rendererId, TreeMapRendererConfig<D>? config,})
-      : super(
-            config: config ??
-                TreeMapRendererConfig(),
-            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,);
   /// Golden ratio.
   final _ratio = .5 * (1 + math.sqrt(5));
 
@@ -82,8 +82,8 @@ class SquarifiedTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
 /// An analyzer that computes whether adding a node to a layout can improve the
 /// aspect ratio of the layout.
 class _SquarifyRatioAnalyzer {
-
   _SquarifyRatioAnalyzer(this._ratio, this._areaFn);
+
   /// A accessor function that returns area of a [TreeNode].
   final AreaFn _areaFn;
 
@@ -130,8 +130,10 @@ class _SquarifyRatioAnalyzer {
     final sqWidth = _square(width);
     final sqArea = _square(_layoutArea);
     return sqArea > 0
-        ? math.max(sqWidth * rMax * _ratio / sqArea,
-            sqArea / (sqWidth * rMin * _ratio),)
+        ? math.max(
+            sqWidth * rMax * _ratio / sqArea,
+            sqArea / (sqWidth * rMin * _ratio),
+          )
         : double.infinity;
   }
 

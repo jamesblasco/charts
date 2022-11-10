@@ -17,17 +17,19 @@ import 'dart:math' show Rectangle;
 
 import 'package:charts/charts/treemap.dart';
 
-
 /// Decorator that gets rendered after [TreeMapRendererElement]s are rendered.
 abstract class TreeMapRendererDecorator<D> {
   const TreeMapRendererDecorator();
 
   /// Paints decorator on top of [rendererElement].
-  void decorate(TreeMapRendererElement<D> rendererElement, ChartCanvas canvas,
-      GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false,
-      bool renderVertically = false,
-      bool renderMultiline = false,});
+  void decorate(
+    TreeMapRendererElement<D> rendererElement,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+    bool renderVertically = false,
+    bool renderMultiline = false,
+  });
 }

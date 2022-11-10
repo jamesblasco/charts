@@ -30,11 +30,11 @@ import 'package:equatable/equatable.dart';
 /// for each datum for a given domain/time, but highlights the closest entry to
 /// match up with highlighting/bolding of the line and legend.
 class SelectionModel<D> extends Equatable {
-
   /// Create selection model with the desired selection.
-  SelectionModel(
-      {List<SeriesDatum<D>>? selectedData,
-      List<ImmutableSeries<D>>? selectedSeries,}) {
+  SelectionModel({
+    List<SeriesDatum<D>>? selectedData,
+    List<ImmutableSeries<D>>? selectedSeries,
+  }) {
     if (selectedData != null) {
       _selectedDatum = selectedData;
     }
@@ -50,8 +50,11 @@ class SelectionModel<D> extends Equatable {
   }
 
   /// Create selection model from configuration.
-  SelectionModel.fromConfig(List<SeriesDatumConfig<D>>? selectedDataConfig,
-      List<String>? selectedSeriesConfig, List<ImmutableSeries<D>> seriesList,) {
+  SelectionModel.fromConfig(
+    List<SeriesDatumConfig<D>>? selectedDataConfig,
+    List<String>? selectedSeriesConfig,
+    List<ImmutableSeries<D>> seriesList,
+  ) {
     final selectedDataMap = <String, List<D>>{};
 
     if (selectedDataConfig != null) {
@@ -61,8 +64,12 @@ class SelectionModel<D> extends Equatable {
       }
 
       // Add to list of selected series.
-      _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          selectedDataMap.keys.contains(series.id),),);
+      _selectedSeries.addAll(
+        seriesList.where(
+          (ImmutableSeries<D> series) =>
+              selectedDataMap.keys.contains(series.id),
+        ),
+      );
 
       // Add to list of selected data.
       for (final series in seriesList) {
@@ -90,8 +97,12 @@ class SelectionModel<D> extends Equatable {
           .where((String seriesId) => !existingSeriesIds.contains(seriesId))
           .toSet();
 
-      _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          remainingSeriesToAdd.contains(series.id),),);
+      _selectedSeries.addAll(
+        seriesList.where(
+          (ImmutableSeries<D> series) =>
+              remainingSeriesToAdd.contains(series.id),
+        ),
+      );
     }
   }
   var _selectedDatum = <SeriesDatum<D>>[];
@@ -134,10 +145,6 @@ class SelectionModel<D> extends Equatable {
 
   @override
   List<Object?> get props => [_selectedDatum, _selectedSeries];
-
-
-
-
 }
 
 /// A [SelectionModel] that can be updated.
@@ -169,8 +176,10 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   /// Updates the selection state. If mouse driven, [datumSelection] should be
   /// ordered by distance from mouse, closest first.
   bool updateSelection(
-      List<SeriesDatum<D>> datumSelection, List<ImmutableSeries<D>> seriesList,
-      {bool notifyListeners = true,}) {
+    List<SeriesDatum<D>> datumSelection,
+    List<ImmutableSeries<D>> seriesList, {
+    bool notifyListeners = true,
+  }) {
     if (_locked) return false;
 
     final origSelectedDatum = _selectedDatum;

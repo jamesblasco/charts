@@ -21,15 +21,15 @@ import 'package:flutter/scheduler.dart';
 
 /// Widget that inflates to a [CustomPaint] that implements common [ChartContext].
 class ChartContainer<D> extends CustomPaint {
-
-  const ChartContainer(
-      {this.oldChartWidget,
-      required this.chartWidget,
-      required this.chartState,
-      required this.animationValue,
-      required this.rtl,
-      this.rtlSpec,
-      this.userManagedState,});
+  const ChartContainer({
+    this.oldChartWidget,
+    required this.chartWidget,
+    required this.chartState,
+    required this.animationValue,
+    required this.rtl,
+    this.rtlSpec,
+    this.userManagedState,
+  });
   final BaseChart<D> chartWidget;
   final BaseChart<D>? oldChartWidget;
   final BaseChartState<D> chartState;
@@ -45,7 +45,9 @@ class ChartContainer<D> extends CustomPaint {
 
   @override
   void updateRenderObject(
-      BuildContext context, ChartContainerRenderObject renderObject,) {
+    BuildContext context,
+    ChartContainerRenderObject renderObject,
+  ) {
     renderObject.reconfigure(this, context);
   }
 }
@@ -140,7 +142,9 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
       if (model != userModel) {
         model.updateSelection(
-            userModel.selectedDatum, userModel.selectedSeries,);
+          userModel.selectedDatum,
+          userModel.selectedSeries,
+        );
       }
     }
   }
@@ -274,22 +278,23 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
   void _setNewPainter() {
     painter = ChartContainerCustomPaint(
-        oldPainter: painter as ChartContainerCustomPaint?,
-        chart: _chart!,
-        exploreMode: _exploreMode,
-        a11yNodes: _a11yNodes ?? [],
-        textDirection: textDirection,);
+      oldPainter: painter as ChartContainerCustomPaint?,
+      chart: _chart!,
+      exploreMode: _exploreMode,
+      a11yNodes: _a11yNodes ?? [],
+      textDirection: textDirection,
+    );
   }
 }
 
 class ChartContainerCustomPaint extends CustomPainter {
-
-  factory ChartContainerCustomPaint(
-      {ChartContainerCustomPaint? oldPainter,
-      required BaseRenderChart chart,
-      bool exploreMode = false,
-      List<A11yNode> a11yNodes = const [],
-      TextDirection textDirection = TextDirection.ltr,}) {
+  factory ChartContainerCustomPaint({
+    ChartContainerCustomPaint? oldPainter,
+    required BaseRenderChart chart,
+    bool exploreMode = false,
+    List<A11yNode> a11yNodes = const [],
+    TextDirection textDirection = TextDirection.ltr,
+  }) {
     if (oldPainter != null &&
         oldPainter.exploreMode == exploreMode &&
         oldPainter.a11yNodes == a11yNodes &&
@@ -297,18 +302,20 @@ class ChartContainerCustomPaint extends CustomPainter {
       return oldPainter;
     } else {
       return ChartContainerCustomPaint._internal(
-          chart: chart,
-          exploreMode: exploreMode,
-          a11yNodes: a11yNodes,
-          textDirection: textDirection,);
+        chart: chart,
+        exploreMode: exploreMode,
+        a11yNodes: a11yNodes,
+        textDirection: textDirection,
+      );
     }
   }
 
-  ChartContainerCustomPaint._internal(
-      {required this.chart,
-      required this.exploreMode,
-      required this.a11yNodes,
-      required this.textDirection,});
+  ChartContainerCustomPaint._internal({
+    required this.chart,
+    required this.exploreMode,
+    required this.a11yNodes,
+    required this.textDirection,
+  });
   final BaseRenderChart chart;
   final bool exploreMode;
   final List<A11yNode> a11yNodes;
@@ -342,16 +349,21 @@ class ChartContainerCustomPaint extends CustomPainter {
 
     for (final node in a11yNodes) {
       final rect = Rect.fromLTWH(
-          node.boundingBox.left.toDouble(),
-          node.boundingBox.top.toDouble(),
-          node.boundingBox.width.toDouble(),
-          node.boundingBox.height.toDouble(),);
-      nodes.add(CustomPainterSemantics(
+        node.boundingBox.left.toDouble(),
+        node.boundingBox.top.toDouble(),
+        node.boundingBox.width.toDouble(),
+        node.boundingBox.height.toDouble(),
+      );
+      nodes.add(
+        CustomPainterSemantics(
           rect: rect,
           properties: SemanticsProperties(
-              value: node.label,
-              textDirection: textDirection,
-              onDidGainAccessibilityFocus: node.onFocus,),),);
+            value: node.label,
+            textDirection: textDirection,
+            onDidGainAccessibilityFocus: node.onFocus,
+          ),
+        ),
+      );
     }
 
     return nodes;

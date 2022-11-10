@@ -17,11 +17,11 @@ import 'package:charts/core.dart';
 
 /// A base stepper for operating with DateTimeFactory and time range steps.
 abstract class BaseTimeStepper implements TimeStepper {
-
   BaseTimeStepper(this.dateTimeFactory) {
     // Must have at least one increment option.
     assert(allowedTickIncrements.isNotEmpty);
   }
+
   /// The factory to generate a DateTime object.
   ///
   /// This is needed because Dart's DateTime does not handle time zone.
@@ -80,9 +80,11 @@ abstract class BaseTimeStepper implements TimeStepper {
 }
 
 class _TimeStepIteratorImpl implements TimeStepIterator {
-
   _TimeStepIteratorImpl(
-      this.extentStartTime, this.extentEndTime, this.stepper,) {
+    this.extentStartTime,
+    this.extentEndTime,
+    this.stepper,
+  ) {
     reset(_tickIncrement);
   }
   final DateTime extentStartTime;
@@ -116,18 +118,22 @@ class _TimeStepIteratorImpl implements TimeStepIterator {
 }
 
 class _TimeStepIteratorFactoryImpl extends TimeStepIteratorFactory {
-
   factory _TimeStepIteratorFactoryImpl(
-      DateTimeExtents timeExtent, BaseTimeStepper stepper,) {
+    DateTimeExtents timeExtent,
+    BaseTimeStepper stepper,
+  ) {
     final startTime = timeExtent.start;
     final endTime = timeExtent.end;
     return _TimeStepIteratorFactoryImpl._internal(
-        _TimeStepIteratorImpl(startTime, endTime, stepper), timeExtent,);
+      _TimeStepIteratorImpl(startTime, endTime, stepper),
+      timeExtent,
+    );
   }
 
   _TimeStepIteratorFactoryImpl._internal(
-      _TimeStepIteratorImpl timeStepIterator, this.timeExtent,)
-      : _timeStepIterator = timeStepIterator;
+    _TimeStepIteratorImpl timeStepIterator,
+    this.timeExtent,
+  ) : _timeStepIterator = timeStepIterator;
   final DateTimeExtents timeExtent;
   final _TimeStepIteratorImpl _timeStepIterator;
 

@@ -17,23 +17,23 @@ import 'package:charts/charts/bar.dart';
 
 /// Configuration for a bar target line renderer.
 class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
-
-  BarTargetLineRendererConfig(
-      {super.barGroupInnerPaddingPx,
-      super.customRendererId,
-      super.dashPattern,
-      super.groupingType,
-      int super.layoutPaintOrder = LayoutViewPaintOrder.barTargetLine,
-      super.minBarLengthPx,
-      this.overDrawOuterPx,
-      this.overDrawPx = 0,
-      this.roundEndCaps = true,
-      super.strokeWidthPx = 3.0,
-      SymbolRenderer? symbolRenderer,
-      super.weightPattern,})
-      : super(
+  BarTargetLineRendererConfig({
+    super.barGroupInnerPaddingPx,
+    super.customRendererId,
+    super.dashPattern,
+    super.groupingType,
+    int super.layoutPaintOrder = LayoutViewPaintOrder.barTargetLine,
+    super.minBarLengthPx,
+    this.overDrawOuterPx,
+    this.overDrawPx = 0,
+    this.roundEndCaps = true,
+    super.strokeWidthPx = 3.0,
+    SymbolRenderer? symbolRenderer,
+    super.weightPattern,
+  }) : super(
           symbolRenderer: symbolRenderer ?? const LineSymbolRenderer(),
         );
+
   /// The number of pixels that the line will extend beyond the bandwidth at the
   /// edges of the bar group.
   ///

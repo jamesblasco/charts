@@ -17,16 +17,16 @@ import 'dart:math' show Rectangle, min, max, Point;
 
 import 'package:charts/core.dart';
 
-
 /// A rectangle to be painted by [ChartCanvas].
 class CanvasRect {
-
-  CanvasRect(this.bounds,
-      {this.dashPattern,
-      this.fill,
-      this.pattern,
-      this.stroke,
-      this.strokeWidthPx,});
+  CanvasRect(
+    this.bounds, {
+    this.dashPattern,
+    this.fill,
+    this.pattern,
+    this.stroke,
+    this.strokeWidthPx,
+  });
   final Rectangle<int> bounds;
   final List<int>? dashPattern;
   final Color? fill;
@@ -37,7 +37,6 @@ class CanvasRect {
 
 /// A stack of [CanvasRect] to be painted by [ChartCanvas].
 class CanvasBarStack {
-
   factory CanvasBarStack(
     List<CanvasRect> segments, {
     int? radius,
@@ -102,9 +101,14 @@ class CanvasBarStack {
 
 /// A list of [CanvasPieSlice]s to be painted by [ChartCanvas].
 class CanvasPie {
-
-  CanvasPie(this.slices, this.center, this.radius, this.innerRadius,
-      {this.stroke, this.strokeWidthPx = 0.0,});
+  CanvasPie(
+    this.slices,
+    this.center,
+    this.radius,
+    this.innerRadius, {
+    this.stroke,
+    this.strokeWidthPx = 0.0,
+  });
   final List<CanvasPieSlice> slices;
   Point center;
   double radius;
@@ -119,7 +123,6 @@ class CanvasPie {
 
 /// A circle sector to be painted by [ChartCanvas].
 class CanvasPieSlice {
-
   CanvasPieSlice(this.startAngle, this.endAngle, {this.fill});
   double startAngle;
   double endAngle;

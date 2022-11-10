@@ -18,11 +18,11 @@ import 'package:meta/meta.dart' show immutable;
 
 @immutable
 class SelectionModelConfig<D> {
-
-  const SelectionModelConfig(
-      {this.type = SelectionModelType.info,
-      this.changedListener,
-      this.updatedListener,});
+  const SelectionModelConfig({
+    this.type = SelectionModelType.info,
+    this.changedListener,
+    this.updatedListener,
+  });
   final SelectionModelType type;
 
   /// Listens for change in selection.
