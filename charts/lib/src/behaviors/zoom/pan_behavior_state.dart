@@ -24,6 +24,15 @@ import 'package:meta/meta.dart' show protected;
 /// Panning is supported by clicking and dragging the mouse for web, or tapping
 /// and dragging on the chart for mobile devices.
 class PanBehaviorState<D> implements ChartBehaviorState<D> {
+  PanBehaviorState() {
+    _listener = GestureListener(
+      onTapTest: onTapTest,
+      onDragStart: onDragStart,
+      onDragUpdate: onDragUpdate,
+      onDragEnd: onDragEnd,
+    );
+  }
+
   /// Listens for drag gestures.
   late GestureListener _listener;
 
@@ -62,20 +71,13 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     _panningCompletedCallback = callback;
   }
 
-  PanBehavior() {
-    _listener = GestureListener(
-        onTapTest: onTapTest,
-        onDragStart: onDragStart,
-        onDragUpdate: onDragUpdate,
-        onDragEnd: onDragEnd,);
-  }
-
   /// Injects the behavior into a chart.
   @override
   void attachTo(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>',);
+        'PanBehavior can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -95,7 +97,8 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   void removeFrom(BaseRenderChart<D> chart) {
     if (chart is! CartesianRenderChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>',);
+        'PanBehavior can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -169,9 +172,12 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     }
 
     final chart = this.chart!;
-    domainAxis.setViewportSettings(domainScalingFactor, domainChange,
-        drawAreaWidth: chart.drawAreaBounds.width,
-        drawAreaHeight: chart.drawAreaBounds.height,);
+    domainAxis.setViewportSettings(
+      domainScalingFactor,
+      domainChange,
+      drawAreaWidth: chart.drawAreaBounds.width,
+      drawAreaHeight: chart.drawAreaBounds.height,
+    );
 
     _lastPosition = localPosition;
 
@@ -181,7 +187,10 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
 
   @protected
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec,) {
+    Point<double> localPosition,
+    double scale,
+    double pixelsPerSec,
+  ) {
     onPanEnd();
     return true;
   }
