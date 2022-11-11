@@ -99,7 +99,7 @@ class LinearScaleFunction {
     LinearScaleDomainInfo domainInfo,
     RangeBandConfig rangeBandConfig,
   ) {
-    // Assign the rangeTranslate using the current viewportSettings.translatePx
+    // Assign the rangeTranslate using the current viewportSettings.translate
     // and diffs.
     if (domainInfo.domainDiff == 0) {
       // Translate it to the center of the range.
@@ -114,7 +114,7 @@ class LinearScaleFunction {
           hasHalfStepAtStart ? (stepSizePixels / 2.0) : 0.0;
 
       rangeTranslate = viewportSettings.range!.start +
-          viewportSettings.translatePx +
+          viewportSettings.translate +
           reservedRangePixelShift;
     }
 

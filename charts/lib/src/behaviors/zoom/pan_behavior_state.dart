@@ -165,10 +165,10 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     var domainChange = 0.0;
     if (domainAxis.isVertical) {
       domainChange =
-          domainAxis.viewportTranslatePx + localPosition.y - _lastPosition!.y;
+          domainAxis.viewportTranslate + localPosition.y - _lastPosition!.y;
     } else {
       domainChange =
-          domainAxis.viewportTranslatePx + localPosition.x - _lastPosition!.x;
+          domainAxis.viewportTranslate + localPosition.x - _lastPosition!.x;
     }
 
     final chart = this.chart!;

@@ -39,7 +39,7 @@ class SunburstArcRendererConfig<D> extends BaseArcRendererConfig<D> {
     int? initialDisplayLevel,
     super.minHoleWidthForCenterContent,
     super.startAngle,
-    super.strokeWidthPx,
+    super.strokeWidth,
   })  : maxDisplayLevel = maxDisplayLevel ?? _maxInt32Value,
         initialDisplayLevel =
             initialDisplayLevel ?? maxDisplayLevel ?? _maxInt32Value;

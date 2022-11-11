@@ -23,21 +23,21 @@ import 'package:charts/charts/bar.dart';
 class BarErrorDecorator<D> extends BarRendererDecorator<D> {
   BarErrorDecorator({
     this.strokeColor = _defaultStrokeColor,
-    this.strokeWidthPx = _defaultStrokeWidthPx,
-    this.endpointLengthPx = _defaultEndpointLengthPx,
-    this.outlineWidthPx = _defaultOutlineWidthPx,
+    this.strokeWidth = _defaultStrokeWidth,
+    this.endpointLength = _defaultEndpointLength,
+    this.outlineWidth = _defaultOutlineWidth,
     this.outlineColor = _defaultOutlineColor,
   });
   static const Color _defaultStrokeColor = Colors.black;
-  static const double _defaultStrokeWidthPx = 1;
-  static const double _defaultEndpointLengthPx = 16;
+  static const double _defaultStrokeWidth = 1;
+  static const double _defaultEndpointLength = 16;
 
   static const Color _defaultOutlineColor = Colors.white;
-  static const double _defaultOutlineWidthPx = 0;
+  static const double _defaultOutlineWidth = 0;
 
-  final double strokeWidthPx;
-  final double endpointLengthPx;
-  final double outlineWidthPx;
+  final double strokeWidth;
+  final double endpointLength;
+  final double outlineWidth;
 
   final Color strokeColor;
   final Color outlineColor;
@@ -85,13 +85,13 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             final barWidth = bounds.right - bounds.left;
             final x = (bounds.left + bounds.right) / 2;
             final rectWidth =
-                min(strokeWidthPx + 2 * outlineWidthPx, barWidth.toDouble());
-            final strokeWidth = rectWidth - 2 * outlineWidthPx;
+                min(this.strokeWidth + 2 * outlineWidth, barWidth);
+            final strokeWidth = rectWidth - 2 * outlineWidth;
             final rectEndpointLength =
-                min(endpointLengthPx + 2 * outlineWidthPx, barWidth.toDouble());
-            final endpointLength = rectEndpointLength - 2 * outlineWidthPx;
+                min(this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+            final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
-            if (outlineWidthPx > 0) {
+            if (outlineWidth > 0) {
               // Draw rectangle rendering the outline for the vertical line.
               canvas.drawRect(
                 Rectangle.fromPoints(
@@ -99,7 +99,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   Point(x + rectWidth / 2, endY),
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
 
               // Draw rectangle rendering the outline for the horizontal
@@ -112,7 +112,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   rectWidth,
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
 
               // Draw rectangle rendering the outline for the horizontal
@@ -125,7 +125,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   rectWidth,
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
             }
 
@@ -133,7 +133,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             canvas.drawLine(
               points: [Point(x, startY), Point(x, endY)],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
 
             // Draw horizontal whisker line for the lower bound.
@@ -143,7 +143,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 Point(x + endpointLength / 2, startY)
               ],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
 
             // Draw horizontal whisker line for the upper bound.
@@ -153,7 +153,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 Point(x + endpointLength / 2, endY)
               ],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
           }
         } else {
@@ -170,13 +170,13 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             final barWidth = bounds.bottom - bounds.top;
             final y = (bounds.top + bounds.bottom) / 2;
             final rectWidth =
-                min(strokeWidthPx + 2 * outlineWidthPx, barWidth.toDouble());
-            final strokeWidth = rectWidth - 2 * outlineWidthPx;
+                min(this.strokeWidth + 2 * outlineWidth, barWidth.toDouble());
+            final strokeWidth = rectWidth - 2 * outlineWidth;
             final rectEndpointLength =
-                min(endpointLengthPx + 2 * outlineWidthPx, barWidth.toDouble());
-            final endpointLength = rectEndpointLength - 2 * outlineWidthPx;
+                min(this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+            final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
-            if (outlineWidthPx > 0) {
+            if (outlineWidth > 0) {
               // Draw rectangle rendering the outline for the horizontal line.
               canvas.drawRect(
                 Rectangle.fromPoints(
@@ -184,7 +184,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   Point(endX, y + rectWidth / 2),
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
 
               // Draw rectangle rendering the outline for the vertical
@@ -197,7 +197,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   rectEndpointLength,
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
 
               // Draw rectangle rendering the outline for the vertical
@@ -210,7 +210,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                   rectEndpointLength,
                 ),
                 fill: outlineColor,
-                strokeWidthPx: outlineWidthPx,
+                strokeWidth: outlineWidth,
               );
             }
 
@@ -218,7 +218,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             canvas.drawLine(
               points: [Point(startX, y), Point(endX, y)],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
 
             // Draw vertical whisker line for the lower bound.
@@ -228,7 +228,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 Point(startX, y + endpointLength / 2)
               ],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
 
             // Draw vertical whisker line for the upper bound.
@@ -238,7 +238,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 Point(endX, y + endpointLength / 2)
               ],
               stroke: strokeColor,
-              strokeWidthPx: strokeWidth,
+              strokeWidth: strokeWidth,
             );
           }
         }

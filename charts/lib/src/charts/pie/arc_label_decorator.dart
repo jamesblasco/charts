@@ -410,7 +410,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         leaderLineTailPoint,
       ],
       stroke: leaderLineStyle.color,
-      strokeWidthPx: leaderLineStyle.thickness,
+      strokeWidth: leaderLineStyle.thickness,
     );
 
     return tailX;

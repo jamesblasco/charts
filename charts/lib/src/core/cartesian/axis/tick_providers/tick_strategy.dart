@@ -76,7 +76,7 @@ abstract class BaseTickStrategyElement<D> extends TickStrategyElement<D> {
       final tick = TickElement(
         value: value,
         textElement: graphicsFactory.createTextElement(labels[i]),
-        locationPx: scale[value]?.toDouble(),
+        location: scale[value]?.toDouble(),
       );
 
       ticks.add(tick);

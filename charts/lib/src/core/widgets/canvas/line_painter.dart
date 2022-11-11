@@ -39,7 +39,7 @@ class LinePainter {
     Color? fill,
     Color? stroke,
     bool? roundEndCaps,
-    double? strokeWidthPx,
+    double? strokeWidth,
     List<int>? dashPattern,
     ui.Shader? shader,
   }) {
@@ -73,12 +73,12 @@ class LinePainter {
       paint.style = PaintingStyle.fill;
       canvas.drawCircle(
         Offset(point.x.toDouble(), point.y.toDouble()),
-        strokeWidthPx ?? 0,
+        strokeWidth ?? 0,
         paint,
       );
     } else {
-      if (strokeWidthPx != null) {
-        paint.strokeWidth = strokeWidthPx;
+      if (strokeWidth != null) {
+        paint.strokeWidth = strokeWidth;
       }
       paint.strokeJoin = StrokeJoin.round;
       paint.style = PaintingStyle.stroke;

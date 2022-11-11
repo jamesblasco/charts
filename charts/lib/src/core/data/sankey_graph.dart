@@ -30,7 +30,7 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
     TypedAccessorFn<N, Color>? nodeColorFn,
     TypedAccessorFn<N, Color>? nodeFillColorFn,
     TypedAccessorFn<N, FillPatternType>? nodeFillPatternFn,
-    TypedAccessorFn<N, num>? nodeStrokeWidthPxFn,
+    TypedAccessorFn<N, num>? nodeStrokeWidthFn,
     TypedAccessorFn<L, Color>? linkFillColorFn,
     TypedAccessorFn<L, num>? secondaryLinkMeasureFn,
   }) {
@@ -57,7 +57,7 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
       nodeFillColorFn: actOnNodeData<N, L, Color>(nodeFillColorFn),
       nodeFillPatternFn:
           actOnNodeData<N, L, FillPatternType>(nodeFillPatternFn),
-      nodeStrokeWidthPxFn: actOnNodeData<N, L, num>(nodeStrokeWidthPxFn),
+      nodeStrokeWidthFn: actOnNodeData<N, L, num>(nodeStrokeWidthFn),
       linkFillColorFn: actOnLinkData<N, L, Color>(linkFillColorFn),
     );
   }
@@ -73,7 +73,7 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
     super.nodeColorFn,
     super.nodeFillColorFn,
     super.nodeFillPatternFn,
-    super.nodeStrokeWidthPxFn,
+    super.nodeStrokeWidthFn,
     super.linkFillColorFn,
   }) : super.base(
           nodes: nodes,

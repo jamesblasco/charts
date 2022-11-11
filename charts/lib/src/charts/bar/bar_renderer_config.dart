@@ -19,16 +19,16 @@ import 'package:equatable/equatable.dart';
 /// Configuration for a bar renderer.
 class BarRendererConfig<D> extends BaseBarRendererConfig<D> {
   BarRendererConfig({
-    super.barGroupInnerPaddingPx,
+    super.barGroupInnerPadding,
     super.customRendererId,
     CornerStrategy? cornerStrategy,
     super.fillPattern,
     BarGroupingType? groupingType,
     int super.layoutPaintOrder = LayoutViewPaintOrder.bar,
-    super.minBarLengthPx,
-    super.maxBarWidthPx,
-    super.stackedBarPaddingPx,
-    super.strokeWidthPx,
+    super.minBarLength,
+    super.maxBarWidth,
+    super.stackedBarPadding,
+    super.strokeWidth,
     this.barRendererDecorator,
     super.symbolRenderer,
     super.weightPattern,

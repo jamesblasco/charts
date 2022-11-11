@@ -79,7 +79,7 @@ abstract class CustomSymbolRenderer extends SymbolRenderer
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     // Intentionally ignored (never called).
   }

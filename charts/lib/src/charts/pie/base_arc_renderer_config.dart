@@ -29,7 +29,7 @@ abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
     this.layoutPaintOrder = LayoutViewPaintOrder.arc,
     this.minHoleWidthForCenterContent = 30,
     this.startAngle = -pi / 2,
-    this.strokeWidthPx = 2.0,
+    this.strokeWidth = 2.0,
     SymbolRenderer? symbolRenderer,
   })  : noDataColor = StyleFactory.style.noDataColor,
         stroke = StyleFactory.style.arcStrokeColor,
@@ -73,7 +73,7 @@ abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
   final double startAngle;
 
   /// Stroke width of the border of the arcs.
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   /// Stroke color of the border of the arcs.
   final Color stroke;
@@ -94,6 +94,6 @@ abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
         arcWidth,
         minHoleWidthForCenterContent,
         startAngle,
-        strokeWidthPx
+        strokeWidth
       ];
 }

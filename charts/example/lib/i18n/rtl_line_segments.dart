@@ -16,7 +16,7 @@
 /// Example of a RTL stacked area chart with changing styles within each line.
 ///
 /// Each series of data in this example contains different values for color,
-/// dashPattern, or strokeWidthPx between each datum. The line and area skirt
+/// dashPattern, or strokeWidth between each datum. The line and area skirt
 /// will be rendered in segments, with the styling of the series changing when
 /// these data attributes change.
 ///
@@ -28,7 +28,6 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-
 
 import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +105,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? blue[1] : blue[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: colorChangeData,
@@ -117,7 +116,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? red[1] : red[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: dashPatternChangeData,
@@ -128,7 +127,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? green[1] : green[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: strokeWidthChangeData,
@@ -207,7 +206,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? blue[1] : blue[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: colorChangeData,
@@ -218,7 +217,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? red[1] : red[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: dashPatternChangeData,
@@ -229,7 +228,7 @@ class RTLLineSegments extends StatelessWidget {
         colorFn: (LinearSales sales, _) =>
             sales.year % 2 == 0 ? green[1] : green[0],
         dashPatternFn: (LinearSales sales, _) => sales.dashPattern,
-        strokeWidthPxFn: (LinearSales sales, _) => sales.strokeWidthPx,
+        strokeWidthFn: (LinearSales sales, _) => sales.strokeWidth,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: strokeWidthChangeData,
@@ -243,7 +242,7 @@ class LinearSales {
   final int year;
   final int sales;
   final List<int>? dashPattern;
-  final double strokeWidthPx;
+  final double strokeWidth;
 
-  LinearSales(this.year, this.sales, this.dashPattern, this.strokeWidthPx);
+  LinearSales(this.year, this.sales, this.dashPattern, this.strokeWidth);
 }

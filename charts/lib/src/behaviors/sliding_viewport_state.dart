@@ -41,11 +41,11 @@ class SlidingViewportState<D> implements ChartBehaviorState<D> {
         .getLocation(selectedDatum.series.domainFn(selectedDatum.index))!;
     final viewportCenter =
         domainAxis.range!.start + (domainAxis.range!.width / 2);
-    final translatePx =
-        domainAxis.viewportTranslatePx + (viewportCenter - domainLocation);
+    final translate =
+        domainAxis.viewportTranslate + (viewportCenter - domainLocation);
     domainAxis.setViewportSettings(
       domainAxis.viewportScalingFactor,
-      translatePx,
+      translate,
     );
 
     _chart.redraw();

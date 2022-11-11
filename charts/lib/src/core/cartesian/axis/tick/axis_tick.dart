@@ -20,12 +20,12 @@ class AxisTicksElement<D> extends TickElement<D>
   AxisTicksElement(TickElement<D> tick)
       : // Set the initial target for a new animated tick.
         _markedForRemoval = false,
-        _targetLocation = tick.locationPx,
+        _targetLocation = tick.location,
         super(
           value: tick.value,
           textElement: tick.textElement,
-          locationPx: tick.locationPx,
-          labelOffsetPx: tick.labelOffsetPx,
+          location: tick.location,
+          labelOffset: tick.labelOffset,
         );
 
   /// This tick is being animated out.
@@ -93,7 +93,7 @@ class AxisTicksElement<D> extends TickElement<D>
           _lerpDouble(_previousOpacity, _targetOpacity, animationPercent);
     }
 
-    locationPx = _currentLocation;
+    location = _currentLocation;
     textElement!.opacity = _currentOpacity;
   }
 

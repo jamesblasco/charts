@@ -81,25 +81,25 @@ class LayoutViewPositionOrder {
 
 /// A configuration for margin (empty space) around a layout child view.
 class ViewMargin {
-  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
-      : topPx = topPx ?? 0,
-        bottomPx = bottomPx ?? 0,
-        rightPx = rightPx ?? 0,
-        leftPx = leftPx ?? 0;
+  const ViewMargin({int? top, int? bottom, int? right, int? left})
+      : top = top ?? 0,
+        bottom = bottom ?? 0,
+        right = right ?? 0,
+        left = left ?? 0;
 
   /// A [ViewMargin] with all zero px.
-  static const empty = ViewMargin(topPx: 0, bottomPx: 0, rightPx: 0, leftPx: 0);
+  static const empty = ViewMargin(top: 0, bottom: 0, right: 0, left: 0);
 
-  final int topPx;
-  final int bottomPx;
-  final int rightPx;
-  final int leftPx;
+  final int top;
+  final int bottom;
+  final int right;
+  final int left;
 
   /// Total width.
-  int get width => leftPx + rightPx;
+  int get width => left + right;
 
   /// Total height.
-  int get height => topPx + bottomPx;
+  int get height => top + bottom;
 }
 
 /// Configuration of a [LayoutView].
@@ -223,7 +223,8 @@ abstract class LayoutView {
   ViewMeasuredSizes? measure(double maxWidth, double maxHeight);
 
   /// Layout this component.
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds);
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds);
 
   /// Draw this component on the canvas.
   void paint(ChartCanvas canvas, double animationPercent);

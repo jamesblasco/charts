@@ -31,13 +31,13 @@ const pointSymbolRendererIdKey =
 
 /// Defines a fixed radius for data bounds lines (typically drawn by attaching a
 /// [ComparisonPointsDecorator] to the renderer.
-const boundsLineRadiusPxKey =
-    AttributeKey<double>('SymbolAnnotationRenderer.boundsLineRadiusPx');
+const boundsLineRadiusKey =
+    AttributeKey<double>('SymbolAnnotationRenderer.boundsLineRadius');
 
 /// Defines an [AccessorFn] for the radius for data bounds lines (typically
 /// drawn by attaching a [ComparisonPointsDecorator] to the renderer.
-const boundsLineRadiusPxFnKey = AttributeKey<AccessorFn<double?>>(
-  'SymbolAnnotationRenderer.boundsLineRadiusPxFn',
+const boundsLineRadiusFnKey = AttributeKey<AccessorFn<double?>>(
+  'SymbolAnnotationRenderer.boundsLineRadiusFn',
 );
 
 const defaultSymbolRendererId = '__default__';
@@ -91,24 +91,24 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
       final elements = <PointRendererElement<D>>[];
 
       // Default to the configured radius if none was defined by the series.
-      series.radiusPxFn ??= (_) => config.radiusPx;
+      series.radiusFn ??= (_) => config.radius;
 
       // Create an accessor function for the bounds line radius, if needed. If
       // the series doesn't define an accessor function, then each datum's
-      // boundsLineRadiusPx value will be filled in by using the following
+      // boundsLineRadius value will be filled in by using the following
       // values, in order of what is defined:
       //
-      // 1) boundsLineRadiusPx defined on the series.
-      // 2) boundsLineRadiusPx defined on the renderer config.
-      // 3) Final fallback is to use the point radiusPx for this datum.
-      var boundsLineRadiusPxFn = series.getAttr(boundsLineRadiusPxFnKey);
+      // 1) boundsLineRadius defined on the series.
+      // 2) boundsLineRadius defined on the renderer config.
+      // 3) Final fallback is to use the point radius for this datum.
+      var boundsLineRadiusFn = series.getAttr(boundsLineRadiusFnKey);
 
-      if (boundsLineRadiusPxFn == null) {
-        var boundsLineRadiusPx = series.getAttr(boundsLineRadiusPxKey);
-        boundsLineRadiusPx ??= config.boundsLineRadiusPx;
-        if (boundsLineRadiusPx != null) {
-          boundsLineRadiusPxFn = (_) => boundsLineRadiusPx!.toDouble();
-          series.setAttr(boundsLineRadiusPxFnKey, boundsLineRadiusPxFn);
+      if (boundsLineRadiusFn == null) {
+        var boundsLineRadius = series.getAttr(boundsLineRadiusKey);
+        boundsLineRadius ??= config.boundsLineRadius;
+        if (boundsLineRadius != null) {
+          boundsLineRadiusFn = (_) => boundsLineRadius!.toDouble();
+          series.setAttr(boundsLineRadiusFnKey, boundsLineRadiusFn);
         }
       }
 
@@ -125,27 +125,26 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
       for (var index = 0; index < series.data.length; index++) {
         // Default to the configured radius if none was returned by the
         // accessor function.
-        var radiusPx = series.radiusPxFn!(index);
-        radiusPx ??= config.radiusPx;
+        var radius = series.radiusFn!(index);
+        radius ??= config.radius;
 
-        num? boundsLineRadiusPx;
-        if (boundsLineRadiusPxFn != null) {
-          boundsLineRadiusPx = (boundsLineRadiusPxFn is TypedAccessorFn)
-              ? (boundsLineRadiusPxFn as TypedAccessorFn<dynamic, int>)(
+        num? boundsLineRadius;
+        if (boundsLineRadiusFn != null) {
+          boundsLineRadius = (boundsLineRadiusFn is TypedAccessorFn)
+              ? (boundsLineRadiusFn as TypedAccessorFn<dynamic, int>)(
                   series.data[index],
                   index,
                 )
-              : boundsLineRadiusPxFn(index);
+              : boundsLineRadiusFn(index);
         }
-        boundsLineRadiusPx ??= config.boundsLineRadiusPx;
-        boundsLineRadiusPx ??= radiusPx;
+        boundsLineRadius ??= config.boundsLineRadius;
+        boundsLineRadius ??= radius;
 
         // Default to the configured stroke width if none was returned by the
         // accessor function.
-        var strokeWidthPx = series.strokeWidthPxFn != null
-            ? series.strokeWidthPxFn!(index)
-            : null;
-        strokeWidthPx ??= config.strokeWidthPx;
+        var strokeWidth =
+            series.strokeWidthFn != null ? series.strokeWidthFn!(index) : null;
+        strokeWidth ??= config.strokeWidth;
 
         // Get the ID of the [SymbolRenderer] for this point. An ID may be
         // specified on the datum, or on the series. If neither is specified,
@@ -173,9 +172,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
           index: index,
           color: color,
           fillColor: fillColor,
-          radiusPx: radiusPx.toDouble(),
-          boundsLineRadiusPx: boundsLineRadiusPx.toDouble(),
-          strokeWidthPx: strokeWidthPx.toDouble(),
+          radius: radius.toDouble(),
+          boundsLineRadius: boundsLineRadius.toDouble(),
+          strokeWidth: strokeWidth.toDouble(),
           symbolRendererId: symbolRendererId,
         );
 
@@ -279,9 +278,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
                 fillColor: details.fillColor,
                 measureAxisPosition: measureAxis.getLocation(0.0),
                 point: point,
-                radiusPx: details.radiusPx,
-                boundsLineRadiusPx: details.boundsLineRadiusPx,
-                strokeWidthPx: details.strokeWidthPx,
+                radius: details.radius,
+                boundsLineRadius: details.boundsLineRadius,
+                strokeWidth: details.strokeWidth,
                 symbolRendererId: details.symbolRendererId,
               ),
             );
@@ -299,9 +298,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
           fillColor: details.fillColor,
           measureAxisPosition: measureAxis.getLocation(0.0),
           point: point,
-          radiusPx: details.radiusPx,
-          boundsLineRadiusPx: details.boundsLineRadiusPx,
-          strokeWidthPx: details.strokeWidthPx,
+          radius: details.radius,
+          boundsLineRadius: details.boundsLineRadius,
+          strokeWidth: details.strokeWidth,
           symbolRendererId: details.symbolRendererId,
         );
 
@@ -382,10 +381,10 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         if (point.point!.y != null &&
             componentBounds!.containsPoint(point.point!.toPoint())) {
           final bounds = Rectangle<double>(
-            point.point!.x! - point.radiusPx,
-            point.point!.y! - point.radiusPx,
-            point.radiusPx * 2,
-            point.radiusPx * 2,
+            point.point!.x! - point.radius,
+            point.point!.y! - point.radius,
+            point.radius * 2,
+            point.radius * 2,
           );
 
           if (point.symbolRendererId == defaultSymbolRendererId) {
@@ -394,7 +393,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
               bounds,
               fillColor: point.fillColor,
               strokeColor: point.color,
-              strokeWidthPx: point.strokeWidthPx,
+              strokeWidth: point.strokeWidth,
             );
           } else {
             final id = point.symbolRendererId;
@@ -408,7 +407,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
               bounds,
               fillColor: point.fillColor,
               strokeColor: point.color,
-              strokeWidthPx: point.strokeWidthPx,
+              strokeWidth: point.strokeWidth,
             );
           }
         }
@@ -599,8 +598,8 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
     Point<double> chartPoint,
   ) {
     final datumPoint = point._currentPoint!.point!;
-    final radiusPx = point._currentPoint!.radiusPx;
-    final boundsLineRadiusPx = point._currentPoint!.boundsLineRadiusPx;
+    final radius = point._currentPoint!.radius;
+    final boundsLineRadius = point._currentPoint!.boundsLineRadius;
 
     // Compute distances from [chartPoint] to the primary point of the datum.
     final domainDistance = (chartPoint.x - datumPoint.x!).abs();
@@ -629,14 +628,14 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         Vector2(datumPoint.xUpper!, datumPoint.yUpper!),
       );
 
-      insidePoint = (relativeDistance < radiusPx) ||
-          (relativeDistanceBounds < boundsLineRadiusPx);
+      insidePoint = (relativeDistance < radius) ||
+          (relativeDistanceBounds < boundsLineRadius);
 
       // Keep the smaller relative distance after we have determined whether
       // [chartPoint] is located inside the datum.
       relativeDistance = min(relativeDistance, relativeDistanceBounds);
     } else {
-      insidePoint = relativeDistance < radiusPx;
+      insidePoint = relativeDistance < radius;
     }
 
     return _Distances(
@@ -761,9 +760,9 @@ class PointRendererElement<D> {
     this.color,
     this.fillColor,
     this.measureAxisPosition,
-    required this.radiusPx,
-    required this.boundsLineRadiusPx,
-    required this.strokeWidthPx,
+    required this.radius,
+    required this.boundsLineRadius,
+    required this.strokeWidth,
     this.symbolRendererId,
   });
   DatumPoint<D>? point;
@@ -771,9 +770,9 @@ class PointRendererElement<D> {
   Color? color;
   Color? fillColor;
   double? measureAxisPosition;
-  double radiusPx;
-  double boundsLineRadiusPx;
-  double strokeWidthPx;
+  double radius;
+  double boundsLineRadius;
+  double strokeWidth;
   String? symbolRendererId;
 
   PointRendererElement<D> clone() {
@@ -783,9 +782,9 @@ class PointRendererElement<D> {
       color: color,
       fillColor: fillColor,
       measureAxisPosition: measureAxisPosition,
-      radiusPx: radiusPx,
-      boundsLineRadiusPx: boundsLineRadiusPx,
-      strokeWidthPx: strokeWidthPx,
+      radius: radius,
+      boundsLineRadius: boundsLineRadius,
+      strokeWidth: strokeWidth,
       symbolRendererId: symbolRendererId,
     );
   }
@@ -849,17 +848,16 @@ class PointRendererElement<D> {
       animationPercent,
     );
 
-    radiusPx = (target.radiusPx - previous.radiusPx) * animationPercent +
-        previous.radiusPx;
+    radius =
+        (target.radius - previous.radius) * animationPercent + previous.radius;
 
-    boundsLineRadiusPx =
-        ((target.boundsLineRadiusPx - previous.boundsLineRadiusPx) *
-                animationPercent) +
-            previous.boundsLineRadiusPx;
+    boundsLineRadius = ((target.boundsLineRadius - previous.boundsLineRadius) *
+            animationPercent) +
+        previous.boundsLineRadius;
 
-    strokeWidthPx =
-        ((target.strokeWidthPx - previous.strokeWidthPx) * animationPercent) +
-            previous.strokeWidthPx;
+    strokeWidth =
+        ((target.strokeWidth - previous.strokeWidth) * animationPercent) +
+            previous.strokeWidth;
   }
 }
 
@@ -898,8 +896,8 @@ class AnimatedPoint<D> {
 
     // Animate the radius and stroke width to 0 so that we don't get a lingering
     // point after animation is done.
-    newTarget.radiusPx = 0.0;
-    newTarget.strokeWidthPx = 0.0;
+    newTarget.radius = 0.0;
+    newTarget.strokeWidth = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

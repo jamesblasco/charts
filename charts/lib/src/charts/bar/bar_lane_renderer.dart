@@ -195,7 +195,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             measureAxisPosition: measureAxisPosition,
             measureAxis: measureAxis,
             numBarGroups: barGroupCount,
-            strokeWidthPx: config.strokeWidthPx,
+            strokeWidth: config.strokeWidth,
             measureIsNull: false,
             measureIsNegative: renderNegativeLanes && measureIsNegative,
           );
@@ -226,7 +226,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
           measureAxisPosition: measureAxisPosition,
           measureAxis: measureAxis,
           numBarGroups: barGroupCount,
-          strokeWidthPx: config.strokeWidthPx,
+          strokeWidth: config.strokeWidth,
           measureIsNull: false,
           measureIsNegative: renderNegativeLanes && measureIsNegative,
         );
@@ -306,7 +306,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
               measureAxisPosition: measureAxisPosition,
               measureAxis: measureAxis,
               numBarGroups: barGroupCount,
-              strokeWidthPx: config.strokeWidthPx,
+              strokeWidth: config.strokeWidth,
               measureIsNull: false,
               measureIsNegative: false,
             );
@@ -336,7 +336,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             measureAxisPosition: measureAxisPosition,
             measureAxis: measureAxis,
             numBarGroups: barGroupCount,
-            strokeWidthPx: config.strokeWidthPx,
+            strokeWidth: config.strokeWidth,
             measureIsNull: false,
             measureIsNegative: false,
           );

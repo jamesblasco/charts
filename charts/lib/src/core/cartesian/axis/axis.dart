@@ -359,7 +359,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
           animatedTick.setNewTarget(newTarget);
         } else {
           // Animate out ticks that are outside the viewport.
-          animatedTick.animateOut(animatedTick.locationPx);
+          animatedTick.animateOut(animatedTick.location);
         }
         providedTicks.remove(tick);
       } else {
@@ -376,7 +376,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
       } else {
         animatedTick = AxisTicksElement<D>(tick);
       }
-      if (scale.isRangeValueWithinViewport(animatedTick.locationPx!)) {
+      if (scale.isRangeValueWithinViewport(animatedTick.location!)) {
         if (_previousScale != null) {
           animatedTick.animateInFrom(_previousScale![tick.value]!.toDouble());
         }
@@ -397,7 +397,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   /// the complete data extents to the output range, and 2.0 only maps half the
   /// data to the output range.
   ///
-  /// [viewportTranslatePx] is the translate/pan to use in pixel units,
+  /// [viewportTranslate] is the translate/pan to use in pixel units,
   /// likely <= 0 which shifts the start of the data before the edge of the
   /// chart giving us a pan.
   ///
@@ -405,23 +405,23 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   /// units, at minimum viewport scale level (1.0). When provided,
   /// [drawAreaHeight] is the height of the draw area for the series data in
   /// pixel units, at minimum viewport scale level (1.0). When provided,
-  /// [viewportTranslatePx] will be clamped such that the axis cannot be panned
+  /// [viewportTranslate] will be clamped such that the axis cannot be panned
   /// beyond the bounds of the data.
   void setViewportSettings(
     double viewportScale,
-    double viewportTranslatePx, {
+    double viewportTranslate, {
     double? drawAreaWidth,
     double? drawAreaHeight,
   }) {
     // Don't let the viewport be panned beyond the bounds of the data.
-    final clampedViewportTranslatePx = _clampTranslatePx(
+    final clampedViewportTranslate = _clampTranslate(
       viewportScale,
-      viewportTranslatePx,
+      viewportTranslate,
       drawAreaWidth: drawAreaWidth,
       drawAreaHeight: drawAreaHeight,
     );
 
-    scale!.setViewportSettings(viewportScale, clampedViewportTranslatePx);
+    scale!.setViewportSettings(viewportScale, clampedViewportTranslate);
   }
 
   /// Returns the current viewport scale.
@@ -437,38 +437,36 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   /// The translate is used by the scale function when it applies the scale.
   /// This is the equivalent to panning.  Its value is likely <= 0 to pan the
   /// data to the left.
-  double get viewportTranslatePx => scale!.viewportTranslatePx;
+  double get viewportTranslate => scale!.viewportTranslate;
 
   /// Clamps a possible change in domain translation to fit within the range of
   /// the data.
-  double _clampTranslatePx(
+  double _clampTranslate(
     double viewportScalingFactor,
-    double viewportTranslatePx, {
+    double viewportTranslate, {
     double? drawAreaWidth,
     double? drawAreaHeight,
   }) {
     if (isVertical) {
       if (drawAreaHeight == null) {
-        return viewportTranslatePx;
+        return viewportTranslate;
       }
       // Bound the viewport translate to the range of the data.
       final maxPositiveTranslate =
           (drawAreaHeight * viewportScalingFactor) - drawAreaHeight;
 
-      viewportTranslatePx =
-          max(min(viewportTranslatePx, maxPositiveTranslate), 0);
+      viewportTranslate = max(min(viewportTranslate, maxPositiveTranslate), 0);
     } else {
       if (drawAreaWidth == null) {
-        return viewportTranslatePx;
+        return viewportTranslate;
       }
       // Bound the viewport translate to the range of the data.
       final maxNegativeTranslate =
           -1.0 * ((drawAreaWidth * viewportScalingFactor) - drawAreaWidth);
 
-      viewportTranslatePx =
-          min(max(viewportTranslatePx, maxNegativeTranslate), 0);
+      viewportTranslate = min(max(viewportTranslate, maxNegativeTranslate), 0);
     }
-    return viewportTranslatePx;
+    return viewportTranslate;
   }
 
   //
@@ -546,7 +544,8 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
 
   /// Layout this component.
   @override
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -650,7 +649,8 @@ class OrdinalAxisElement extends MutableAxisElement<String> {
   }
 
   @override
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     // We are purposely clearing the viewport starting domain and data size

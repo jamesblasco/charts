@@ -88,7 +88,7 @@ class StaticTickProviderElement<D> extends TickStrategyElement<D> {
           value: spec.value,
           textElement: graphicsFactory
               .createTextElement(spec.label ?? formattedValues[i]),
-          locationPx: scale[spec.value]?.toDouble(),
+          location: scale[spec.value]?.toDouble(),
         );
         final style = spec.style;
         if (style != null) {

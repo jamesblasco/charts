@@ -68,7 +68,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         // Providing a radius function is optional.
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         data: data,
       )
     ];

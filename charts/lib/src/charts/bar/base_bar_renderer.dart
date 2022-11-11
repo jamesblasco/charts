@@ -142,7 +142,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       final measureFn = series.measureFn;
       final measureOffsetFn = series.measureOffsetFn;
       final fillPatternFn = series.fillPatternFn;
-      final strokeWidthPxFn = series.strokeWidthPxFn;
+      final strokeWidthFn = series.strokeWidthFn;
 
       series.dashPatternFn ??= (_) => config.dashPattern;
 
@@ -180,10 +180,10 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
           details.fillPattern = config.fillPattern;
         }
 
-        if (strokeWidthPxFn != null) {
-          details.strokeWidthPx = strokeWidthPxFn(barIndex)?.toDouble();
+        if (strokeWidthFn != null) {
+          details.strokeWidth = strokeWidthFn(barIndex)?.toDouble();
         } else {
-          details.strokeWidthPx = config.strokeWidthPx;
+          details.strokeWidth = config.strokeWidth;
         }
 
         // When stacking is enabled, adjust the measure offset for each domain
@@ -442,7 +442,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
               measureAxisPosition: measureAxisPosition,
               measureAxis: measureAxis,
               numBarGroups: barGroupCount!,
-              strokeWidthPx: details.strokeWidthPx,
+              strokeWidth: details.strokeWidth,
               measureIsNull: measureIsNull,
               measureIsNegative: measureIsNegative,
             );
@@ -489,7 +489,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
           measureAxisPosition: measureAxisPosition,
           measureAxis: measureAxis,
           numBarGroups: barGroupCount!,
-          strokeWidthPx: details.strokeWidthPx,
+          strokeWidth: details.strokeWidth,
           measureIsNull: measureIsNull,
           measureIsNegative: measureIsNegative,
         );
@@ -533,7 +533,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     required int numBarGroups,
     Color? fillColor,
     FillPatternType? fillPattern,
-    double? strokeWidthPx,
+    double? strokeWidth,
     bool? measureIsNull,
     bool? measureIsNegative,
   });
@@ -559,7 +559,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     required int numBarGroups,
     Color? fillColor,
     FillPatternType? fillPattern,
-    double? strokeWidthPx,
+    double? strokeWidth,
     bool? measureIsNull,
     bool? measureIsNegative,
   });

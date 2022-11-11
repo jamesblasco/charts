@@ -176,7 +176,7 @@ void main() {
       scale.setViewportSettings(2.0, -700.0);
 
       expect(scale.viewportScalingFactor, closeTo(2.0, EPSILON));
-      expect(scale.viewportTranslatePx, closeTo(-700.0, EPSILON));
+      expect(scale.viewportTranslate, closeTo(-700.0, EPSILON));
     });
 
     test('sets vertically', () {
@@ -184,7 +184,7 @@ void main() {
       scale.setViewportSettings(2.0, 700.0);
 
       expect(scale.viewportScalingFactor, closeTo(2.0, EPSILON));
-      expect(scale.viewportTranslatePx, closeTo(700.0, EPSILON));
+      expect(scale.viewportTranslate, closeTo(700.0, EPSILON));
     });
 
     test('rangeband is scaled horizontally', () {

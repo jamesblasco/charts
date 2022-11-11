@@ -143,10 +143,10 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
         rect,
         fill: element.fillColor,
         fillPattern: element.fillPattern,
-        patternStrokeWidthPx: config.patternStrokeWidthPx,
+        patternStrokeWidth: config.patternStrokeWidth,
         patternColor: element.patternColor,
         stroke: element.strokeColor,
-        strokeWidthPx: element.strokeWidthPx!.toDouble(),
+        strokeWidth: element.strokeWidth!.toDouble(),
         radius: 0,
       );
 
@@ -256,12 +256,12 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
     }
   }
 
-  /// Assigns missing stroke widths in case when strokeWidthPx accessor
+  /// Assigns missing stroke widths in case when strokeWidth accessor
   /// functions are not set.
   @protected
   void assignMissingStrokeWidths(Iterable<MutableSeries<D>> seriesList) {
     for (final series in seriesList) {
-      series.strokeWidthPxFn ??= (_) => config.strokeWidthPx;
+      series.strokeWidthFn ??= (_) => config.strokeWidth;
     }
   }
 
@@ -273,12 +273,12 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   MutableRectangle availableLayoutBoundingRect(TreeNode<Object> node) {
     final element = _getRendererElement(node);
     final rect = element.boundingRect;
-    final padding = config.rectPaddingPx;
+    final padding = config.rectPadding;
 
-    var top = rect.top + padding.topPx;
-    var left = rect.left + padding.leftPx;
-    var width = rect.width - padding.leftPx - padding.rightPx;
-    var height = rect.height - padding.topPx - padding.bottomPx;
+    var top = rect.top + padding.top;
+    var left = rect.left + padding.left;
+    var width = rect.width - padding.left - padding.right;
+    var height = rect.height - padding.top - padding.bottom;
 
     // Handles an edge case when width or height is negative.
     if (width < 0) {
@@ -312,7 +312,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
   /// Gets the area of a [Rectangle].
   @protected
-  double areaForRectangle(Rectangle rect) => rect.height.toDouble() * rect.width;
+  double areaForRectangle(Rectangle rect) =>
+      rect.height.toDouble() * rect.width;
 
   /// Gets the area for a tree [node].
   @protected
@@ -354,7 +355,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.top + boundingRect.height - top,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(), length.toDouble(), height.toDouble());
+        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(),
+            length.toDouble(), height.toDouble());
         top += height;
       }
       boundingRect.left += length;
@@ -368,7 +370,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.left + boundingRect.width - left,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(), width.toDouble(), length.toDouble());
+        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(),
+            width.toDouble(), length.toDouble());
         left += width;
       }
       boundingRect.top += length;
@@ -467,7 +470,7 @@ class _AnimatedTreeMapRect<D> {
       0,
       0,
     );
-    newTarget.strokeWidthPx = 0.0;
+    newTarget.strokeWidth = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

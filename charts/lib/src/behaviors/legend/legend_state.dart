@@ -257,7 +257,8 @@ abstract class LegendBehaviorState<D>
   }
 
   @override
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -297,17 +298,17 @@ class LegendCellPadding {
     this.topPct,
     this.rightPct,
     this.bottomPct,
-  )   : leftPx = null,
-        topPx = null,
-        rightPx = null,
-        bottomPx = null;
+  )   : left = null,
+        top = null,
+        right = null,
+        bottom = null;
 
   /// Creates padding in pixels from the left, top, right, and bottom.
-  const LegendCellPadding.fromLTRBPx(
-    this.leftPx,
-    this.topPx,
-    this.rightPx,
-    this.bottomPx,
+  const LegendCellPadding.fromLTRB(
+    this.left,
+    this.top,
+    this.right,
+    this.bottom,
   )   : leftPct = null,
         topPct = null,
         rightPct = null,
@@ -319,17 +320,17 @@ class LegendCellPadding {
     this.rightPct,
     this.bottomPct,
     this.leftPct,
-  )   : topPx = null,
-        rightPx = null,
-        bottomPx = null,
-        leftPx = null;
+  )   : top = null,
+        right = null,
+        bottom = null,
+        left = null;
 
   /// Creates padding in pixels from the top, right, bottom, and left.
-  const LegendCellPadding.fromTRBLPx(
-    this.topPx,
-    this.rightPx,
-    this.bottomPx,
-    this.leftPx,
+  const LegendCellPadding.fromTRBL(
+    this.top,
+    this.right,
+    this.bottom,
+    this.left,
   )   : topPct = null,
         rightPct = null,
         bottomPct = null,
@@ -354,27 +355,27 @@ class LegendCellPadding {
   /// Typical eight-pixel margin on all sides:
   ///
   /// ```dart
-  /// const LegendCellPadding.allPx(8.0)
+  /// const LegendCellPadding.all(8.0)
   /// ```
-  const LegendCellPadding.allPx(double value)
-      : this.fromLTRBPx(value, value, value, value);
+  const LegendCellPadding.all(double value)
+      : this.fromLTRB(value, value, value, value);
   final double? bottomPct;
-  final double? bottomPx;
+  final double? bottom;
   final double? leftPct;
-  final double? leftPx;
+  final double? left;
   final double? rightPct;
-  final double? rightPx;
+  final double? right;
   final double? topPct;
-  final double? topPx;
+  final double? top;
 
-  double bottom(num height) =>
-      bottomPct != null ? bottomPct! * height : bottomPx!;
+  double getBottom(num height) =>
+      bottomPct != null ? bottomPct! * height : bottom!;
 
-  double left(num width) => leftPct != null ? leftPct! * width : leftPx!;
+  double getLeft(num width) => leftPct != null ? leftPct! * width : left!;
 
-  double right(num width) => rightPct != null ? rightPct! * width : rightPx!;
+  double getRight(num width) => rightPct != null ? rightPct! * width : right!;
 
-  double top(num height) => topPct != null ? topPct! * height : topPx!;
+  double getTop(num height) => topPct != null ? topPct! * height : top!;
 }
 
 /// Options for behavior of tapping/clicking on entries in the legend.

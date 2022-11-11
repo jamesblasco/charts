@@ -44,29 +44,29 @@ class RangeTickElement<D> extends TickElement<D> {
   RangeTickElement({
     required super.value,
     required TextElement super.textElement,
-    super.locationPx,
-    super.labelOffsetPx,
+    super.location,
+    super.labelOffset,
     required this.rangeStartValue,
-    required this.rangeStartLocationPx,
+    required this.rangeStartLocation,
     required this.rangeEndValue,
-    required this.rangeEndLocationPx,
+    required this.rangeEndLocation,
   });
 
   /// The value that this range tick starting point represents
   final D rangeStartValue;
 
   /// Position of the range tick starting point.
-  double rangeStartLocationPx;
+  double rangeStartLocation;
 
   /// The value that this range tick ending point represents.
   final D rangeEndValue;
 
   /// Position of the range tick ending point.
-  double rangeEndLocationPx;
+  double rangeEndLocation;
 
   @override
-  String toString() => 'RangeTick(value: $value, locationPx: $locationPx, '
-      'labelOffsetPx: $labelOffsetPx, rangeStartValue: $rangeStartValue, '
-      'rangeStartLocationPx: $rangeStartLocationPx, '
-      'rangeEndValue: $rangeEndValue,  rangeEndLocationPx: $rangeEndLocationPx)';
+  String toString() => 'RangeTick(value: $value, location: $location, '
+      'labelOffset: $labelOffset, rangeStartValue: $rangeStartValue, '
+      'rangeStartLocation: $rangeStartLocation, '
+      'rangeEndValue: $rangeEndValue,  rangeEndLocation: $rangeEndLocation)';
 }

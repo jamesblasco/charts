@@ -20,10 +20,10 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
   TreeMapRendererConfig({
     this.customRendererId,
-    this.patternStrokeWidthPx = 1.0,
-    this.strokeWidthPx = 1.0,
+    this.patternStrokeWidth = 1.0,
+    this.strokeWidth = 1.0,
     this.layoutPaintOrder = LayoutViewPaintOrder.treeMap,
-    this.rectPaddingPx = _defaultRectPadding,
+    this.rectPadding = _defaultRectPadding,
     this.tileType = TreeMapTileType.squarified,
     this.labelDecorator,
     Color? strokeColor,
@@ -33,7 +33,7 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
 
   /// Default padding of a treemap rectangle.
   static const _defaultRectPadding =
-      ViewMargin(topPx: 26, leftPx: 4, rightPx: 4, bottomPx: 4);
+      ViewMargin(top: 26, left: 4, right: 4, bottom: 4);
 
   @override
   final String? customRendererId;
@@ -52,16 +52,16 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
   final int layoutPaintOrder;
 
   /// Padding of the treemap rectangle.
-  final ViewMargin rectPaddingPx;
+  final ViewMargin rectPadding;
 
   /// Stroke width of the border of the treemap rectangle.
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   /// Stroke color of the border of the treemap rectangle.
   final Color strokeColor;
 
   /// Pattern stroke width of the treemap rectangle.
-  final double patternStrokeWidthPx;
+  final double patternStrokeWidth;
 
   /// Decorator for optionally decorating treemap rectangle label.
   final TreeMapLabelDecorator<D>? labelDecorator;
@@ -99,9 +99,9 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
         symbolRenderer,
         layoutPaintOrder,
         tileType,
-        rectPaddingPx,
-        strokeWidthPx,
-        patternStrokeWidthPx
+        rectPadding,
+        strokeWidth,
+        patternStrokeWidth
       ];
 }
 

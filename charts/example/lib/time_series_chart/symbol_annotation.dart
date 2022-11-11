@@ -141,7 +141,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation shape. If not specified, this will
         // default to the same radius as the points.
-        ..setAttribute(boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(boundsLineRadiusKey, 3.5),
       Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
         colorFn: (_, __) => Colors.red,
@@ -156,7 +156,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation shape. If not specified, this will
         // default to the same radius as the points.
-        ..setAttribute(boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(boundsLineRadiusKey, 3.5),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -259,7 +259,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation range. If not specified, this will
         // default to the same radius as the domain point.
-        ..setAttribute(boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(boundsLineRadiusKey, 3.5),
       Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
         colorFn: (_, __) => Colors.red,
@@ -277,7 +277,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation range. If not specified, this will
         // default to the same radius as the domain point.
-        ..setAttribute(boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(boundsLineRadiusKey, 3.5),
     ];
   }
 }

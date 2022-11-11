@@ -26,13 +26,13 @@ class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
   SymbolAnnotationRendererConfig({
     super.customRendererId,
     List<PointRendererDecorator<D>>? pointRendererDecorators,
-    super.radiusPx = 5.0,
+    super.radius = 5.0,
     super.symbolRenderer,
     super.customSymbolRenderers,
     this.showBottomSeparatorLine = false,
     this.showSeparatorLines = true,
-    this.verticalSymbolBottomPaddingPx = 5.0,
-    this.verticalSymbolTopPaddingPx = 5.0,
+    this.verticalSymbolBottomPadding = 5.0,
+    this.verticalSymbolTopPadding = 5.0,
   }) : super(
           pointRendererDecorators: pointRendererDecorators ??
               [
@@ -52,11 +52,11 @@ class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
 
   /// Space reserved at the bottom of each row where the symbol should not
   /// render into.
-  final double verticalSymbolBottomPaddingPx;
+  final double verticalSymbolBottomPadding;
 
   /// Space reserved at the top of each row where the symbol should not render
   /// into.
-  final double verticalSymbolTopPaddingPx;
+  final double verticalSymbolTopPadding;
 
   @override
   SymbolAnnotationRenderer<D> build() {

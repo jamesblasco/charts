@@ -29,7 +29,7 @@ abstract class BaseBarRendererElement {
     measureAxisPosition = other.measureAxisPosition;
     measureOffset = other.measureOffset;
     measureOffsetPlusMeasure = other.measureOffsetPlusMeasure;
-    strokeWidthPx = other.strokeWidthPx;
+    strokeWidth = other.strokeWidth;
     measureIsNull = other.measureIsNull;
     measureIsNegative = other.measureIsNegative;
   }
@@ -42,7 +42,7 @@ abstract class BaseBarRendererElement {
   double? measureAxisPosition;
   double? measureOffset;
   double? measureOffsetPlusMeasure;
-  double? strokeWidthPx;
+  double? strokeWidth;
   bool? measureIsNull;
   bool? measureIsNegative;
 

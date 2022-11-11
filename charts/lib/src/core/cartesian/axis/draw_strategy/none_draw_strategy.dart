@@ -110,7 +110,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
       dashPattern: axisLineStyle.dashPattern,
       fill: axisLineStyle.color,
       stroke: axisLineStyle.color,
-      strokeWidthPx: axisLineStyle.strokeWidth,
+      strokeWidth: axisLineStyle.strokeWidth,
     );
   }
 

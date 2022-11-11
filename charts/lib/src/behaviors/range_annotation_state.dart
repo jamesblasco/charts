@@ -20,7 +20,7 @@ import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart';
 
-const _defaultStrokeWidthPx = 2.0;
+const _defaultStrokeWidth = 2.0;
 
 /// Chart behavior that annotates domain ranges with a solid fill color.
 ///
@@ -39,7 +39,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
     TextStyle? defaultLabelStyleSpec,
     bool? extendAxis,
     double? labelPadding,
-    double? defaultStrokeWidthPx,
+    double? defaultStrokeWidth,
     int? layoutPaintOrder,
   })  : defaultColor = StyleFactory.style.rangeAnnotationColor,
         defaultLabelAnchor = defaultLabelAnchor ?? _defaultLabelAnchor,
@@ -48,7 +48,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
         defaultLabelStyleSpec = defaultLabelStyleSpec ?? _defaultLabelStyle,
         extendAxis = extendAxis ?? true,
         labelPadding = labelPadding ?? _defaultLabelPadding,
-        defaultStrokeWidthPx = defaultStrokeWidthPx ?? _defaultStrokeWidthPx,
+        defaultStrokeWidth = defaultStrokeWidth ?? _defaultStrokeWidth,
         layoutPaintOrder =
             layoutPaintOrder ?? LayoutViewPaintOrder.rangeAnnotation {
     _lifecycleListener = LifecycleListener<D>(
@@ -82,7 +82,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   final TextStyle defaultLabelStyleSpec;
 
   /// Configures the stroke width for line annotations.
-  final double defaultStrokeWidthPx;
+  final double defaultStrokeWidth;
 
   /// Whether or not the range of the axis should be extended to include the
   /// annotation start and end values.
@@ -217,8 +217,8 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
       final dashPattern = annotation is LineAnnotationSegment<Object>
           ? annotation.dashPattern
           : null;
-      final strokeWidthPx = annotation is LineAnnotationSegment<Object>
-          ? annotation.strokeWidthPx
+      final strokeWidth = annotation is LineAnnotationSegment<Object>
+          ? annotation.strokeWidth
           : 0.0;
 
       final isRange = annotation is RangeAnnotationSegment;
@@ -263,7 +263,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
               labelDirection: labelDirection,
               labelPosition: labelPosition,
               labelStyleSpec: labelStyleSpec,
-              strokeWidthPx: strokeWidthPx,
+              strokeWidth: strokeWidth,
             ),
           );
 
@@ -287,7 +287,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
         labelDirection: labelDirection,
         labelPosition: labelPosition,
         labelStyleSpec: labelStyleSpec,
-        strokeWidthPx: strokeWidthPx,
+        strokeWidth: strokeWidth,
       );
 
       animatingAnnotation.setNewTarget(annotationElement);
@@ -444,7 +444,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
           dashPattern: annotationElement.dashPattern,
           points: points,
           stroke: annotationElement.color,
-          strokeWidthPx: annotationElement.strokeWidthPx,
+          strokeWidth: annotationElement.strokeWidth,
         );
       }
 
@@ -1185,7 +1185,7 @@ class _AnnotationElement<D> {
     required this.labelPosition,
     required this.labelStyleSpec,
     required this.dashPattern,
-    required this.strokeWidthPx,
+    required this.strokeWidth,
   });
   _DatumAnnotation annotation;
   final AnnotationSegment<Object> annotationSegment;
@@ -1199,7 +1199,7 @@ class _AnnotationElement<D> {
   final AnnotationLabelPosition labelPosition;
   final TextStyle labelStyleSpec;
   final List<int>? dashPattern;
-  double strokeWidthPx;
+  double strokeWidth;
 
   _AnnotationElement<D> clone() {
     return _AnnotationElement<D>(
@@ -1215,7 +1215,7 @@ class _AnnotationElement<D> {
       labelPosition: labelPosition,
       labelStyleSpec: labelStyleSpec,
       dashPattern: dashPattern,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
     );
   }
 
@@ -1242,9 +1242,9 @@ class _AnnotationElement<D> {
 
     color = getAnimatedColor(previous.color!, target.color!, animationPercent);
 
-    strokeWidthPx =
-        ((target.strokeWidthPx - previous.strokeWidthPx) * animationPercent) +
-            previous.strokeWidthPx;
+    strokeWidth =
+        ((target.strokeWidth - previous.strokeWidth) * animationPercent) +
+            previous.strokeWidth;
   }
 }
 
@@ -1428,7 +1428,7 @@ class LineAnnotationSegment<D> extends AnnotationSegment<D> {
     AnnotationLabelPosition? labelPosition,
     TextStyle? labelStyleSpec,
     this.dashPattern,
-    this.strokeWidthPx = _defaultStrokeWidthPx,
+    this.strokeWidth = _defaultStrokeWidth,
   }) : super(
           axisType,
           axisId: axisId,
@@ -1443,7 +1443,7 @@ class LineAnnotationSegment<D> extends AnnotationSegment<D> {
         );
   final D value;
   final List<int>? dashPattern;
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   @override
   String get key => 'l::$axisType::$axisId::$value';

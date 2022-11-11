@@ -36,22 +36,22 @@ import 'package:charts/charts/bar.dart';
 abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
   BaseBarRendererConfig({
-    this.barGroupInnerPaddingPx = 2,
+    this.barGroupInnerPadding = 2,
     this.customRendererId,
     this.dashPattern,
     this.groupingType = BarGroupingType.grouped,
     this.layoutPaintOrder,
-    this.minBarLengthPx = 0,
-    this.maxBarWidthPx,
+    this.minBarLength = 0,
+    this.maxBarWidth,
     this.fillPattern,
-    this.stackedBarPaddingPx = 1,
-    this.strokeWidthPx = 0.0,
+    this.stackedBarPadding = 1,
+    this.strokeWidth = 0.0,
     SymbolRenderer? symbolRenderer,
     this.weightPattern,
   }) : symbolRenderer = symbolRenderer ?? const RoundedRectSymbolRenderer();
 
   /// Spacing between the bars in a group.
-  final double barGroupInnerPaddingPx;
+  final double barGroupInnerPadding;
 
   @override
   final String? customRendererId;
@@ -68,19 +68,19 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
   /// The order to paint this renderer on the canvas.
   final int? layoutPaintOrder;
 
-  final double minBarLengthPx;
+  final double minBarLength;
 
   // The maximum bar group width in pixels, or null if bars can be arbitrarily
   // wide.
-  final double? maxBarWidthPx;
+  final double? maxBarWidth;
 
   final FillPatternType? fillPattern;
 
   /// The padding between bar stacks.
-  final double stackedBarPaddingPx;
+  final double stackedBarPadding;
 
   /// Stroke width of the target line.
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   /// Sets the series weight pattern. This is a pattern of weights used to
   /// calculate the width of bars within a bar group. If not specified, each bar
@@ -119,10 +119,10 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
         dashPattern,
         fillPattern,
         groupingType,
-        minBarLengthPx,
-        maxBarWidthPx,
-        stackedBarPaddingPx,
-        strokeWidthPx,
+        minBarLength,
+        maxBarWidth,
+        stackedBarPadding,
+        strokeWidth,
         symbolRenderer,
         weightPattern,
       ];

@@ -25,7 +25,7 @@ class LinearScaleViewportSettings {
     range = other.range;
     keepViewportWithinData = other.keepViewportWithinData;
     scalingFactor = other.scalingFactor;
-    translatePx = other.translatePx;
+    translate = other.translate;
     _manualDomainExtent = other._manualDomainExtent;
     _domainExtent = other._domainExtent;
   }
@@ -46,7 +46,7 @@ class LinearScaleViewportSettings {
   double scalingFactor = 1;
 
   /// User configured viewport translate in pixel units.
-  double translatePx = 0;
+  double translate = 0;
 
   /// The current extent of the viewport in domain units.
   NumericExtents? _domainExtent;
@@ -66,7 +66,7 @@ class LinearScaleViewportSettings {
   void reset() {
     // Likely an auto assigned viewport (niced), so reset it between draws.
     scalingFactor = 1.0;
-    translatePx = 0.0;
+    translate = 0.0;
     domainExtent = null;
   }
 
@@ -101,22 +101,22 @@ class LinearScaleViewportSettings {
 
   /// Updates the viewport's internal translate given the current domainInfo and
   /// main scalingFactor from LinearScaleFunction (not internal scalingFactor).
-  void updateViewportTranslatePx(
+  void updateViewportTranslate(
     LinearScaleDomainInfo domainInfo,
     double scaleScalingFactor,
   ) {
     // If we are loading from the viewport, then update the translate now that
     // the scaleFactor has been setup.
     if (_manualDomainExtent) {
-      translatePx =
+      translate =
           -scaleScalingFactor * (_domainExtent!.min - domainInfo.extent.min);
     }
 
-    // Make sure that the viewportSettings.translatePx is sane if desired.
+    // Make sure that the viewportSettings.translate is sane if desired.
     if (!keepViewportWithinData) {
       // Make sure we don't translate beyond the max domain extent.
-      translatePx = math.min(0, translatePx);
-      translatePx = math.max(range!.diff * (1.0 - scalingFactor), translatePx);
+      translate = math.min(0, translate);
+      translate = math.max(range!.diff * (1.0 - scalingFactor), translate);
     }
   }
 
@@ -131,7 +131,7 @@ class LinearScaleViewportSettings {
     if (!_manualDomainExtent) {
       final viewportDomainDiff = domainInfo.domainDiff / scalingFactor;
       final viewportStart =
-          (-translatePx / scaleScalingFactor) + domainInfo.extent.min;
+          (-translate / scaleScalingFactor) + domainInfo.extent.min;
       _domainExtent =
           NumericExtents(viewportStart, viewportStart + viewportDomainDiff);
     }

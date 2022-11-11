@@ -47,7 +47,7 @@ void main() {
     final series = MutableSeries(Series<MyRow, num>(
       id: id,
       data: data,
-      radiusPxFn: (row, _) => row.radius,
+      radiusFn: (row, _) => row.radius,
       domainFn: (row, _) => row.campaign,
       measureFn: (row, _) => row.clickCount,
       seriesCategory: seriesCategory,

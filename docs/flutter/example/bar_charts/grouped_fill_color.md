@@ -33,7 +33,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
       animate: animate,
       // Configure a stroke width to enable borders on the bars.
       defaultRenderer: new charts.BarRendererConfig(
-          groupingType: charts.BarGroupingType.grouped, strokeWidthPx: 2.0),
+          groupingType: charts.BarGroupingType.grouped, strokeWidth: 2.0),
     );
   }
 

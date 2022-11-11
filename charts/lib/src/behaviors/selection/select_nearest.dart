@@ -48,7 +48,7 @@ class SelectNearest<D> extends ChartBehavior<D> {
     bool selectAcrossAllDrawAreaComponents = false,
     bool selectClosestSeries = true,
     SelectionTrigger eventTrigger = SelectionTrigger.tap,
-    int? maximumDomainDistancePx,
+    int? maximumDomainDistance,
   }) {
     return SelectNearest._internal(
       selectionModelType: selectionModelType,
@@ -57,7 +57,7 @@ class SelectNearest<D> extends ChartBehavior<D> {
       selectClosestSeries: selectClosestSeries,
       eventTrigger: eventTrigger,
       desiredGestures: SelectNearest._getDesiredGestures(eventTrigger),
-      maximumDomainDistancePx: maximumDomainDistancePx,
+      maximumDomainDistance: maximumDomainDistance,
     );
   }
 
@@ -68,7 +68,7 @@ class SelectNearest<D> extends ChartBehavior<D> {
     this.selectClosestSeries = true,
     required this.eventTrigger,
     required this.desiredGestures,
-    this.maximumDomainDistancePx,
+    this.maximumDomainDistance,
   });
   @override
   final Set<GestureType> desiredGestures;
@@ -78,7 +78,7 @@ class SelectNearest<D> extends ChartBehavior<D> {
   final SelectionMode selectionMode;
   final bool selectAcrossAllDrawAreaComponents;
   final bool selectClosestSeries;
-  final int? maximumDomainDistancePx;
+  final int? maximumDomainDistance;
 
   static Set<GestureType> _getDesiredGestures(SelectionTrigger eventTrigger) {
     final desiredGestures = <GestureType>{};
@@ -113,11 +113,9 @@ class SelectNearest<D> extends ChartBehavior<D> {
       eventTrigger: eventTrigger,
       selectionMode: selectionMode,
       selectClosestSeries: selectClosestSeries,
-      maximumDomainDistancePx: maximumDomainDistancePx,
+      maximumDomainDistance: maximumDomainDistance,
     );
   }
-
-
 
   // TODO: Explore the performance impact of calculating this once
   // at the constructor for this and common ChartBehaviors.
@@ -130,6 +128,6 @@ class SelectNearest<D> extends ChartBehavior<D> {
         eventTrigger,
         selectClosestSeries,
         selectionMode,
-        maximumDomainDistancePx
+        maximumDomainDistance
       ];
 }

@@ -136,14 +136,14 @@ void main() {
       expect(ticks, hasLength(20));
 
       // Verify that we still have a 0 tick with an empty label.
-      expect(ticks[0].labelOffsetPx, isNull);
-      expect(ticks[0].locationPx, equals(100.0));
+      expect(ticks[0].labelOffset, isNull);
+      expect(ticks[0].location, equals(100.0));
       expect(ticks[0].value, equals(0.0));
       expect(ticks[0].textElement.text, equals(''));
 
       // Verify that we have a threshold tick.
-      expect(ticks[1].labelOffsetPx, equals(5.0));
-      expect(ticks[1].locationPx, equals(90.0));
+      expect(ticks[1].labelOffset, equals(5.0));
+      expect(ticks[1].location, equals(90.0));
       expect(ticks[1].value, equals(0.10));
       expect(ticks[1].textElement.text, equals('< 0.1'));
 
@@ -159,7 +159,7 @@ void main() {
       expect(aboveThresholdTicks, hasLength(18));
 
       aboveThresholdTicks = ticks.sublist(2);
-      aboveThresholdTicks.retainWhere((tick) => tick.labelOffsetPx == null);
+      aboveThresholdTicks.retainWhere((tick) => tick.labelOffset == null);
       expect(aboveThresholdTicks, hasLength(18));
     });
   });

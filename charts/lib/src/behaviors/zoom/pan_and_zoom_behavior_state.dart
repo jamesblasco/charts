@@ -101,7 +101,7 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
 
     domainAxis.setViewportSettings(
       newScalingFactor,
-      domainAxis.viewportTranslatePx,
+      domainAxis.viewportTranslate,
       drawAreaWidth: chart.drawAreaBounds.width,
       drawAreaHeight: chart.drawAreaBounds.height,
     );

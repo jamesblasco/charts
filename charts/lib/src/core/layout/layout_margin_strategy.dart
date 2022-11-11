@@ -50,13 +50,13 @@ class _DesiredViewSizes {
     if (maxSize < preferredSizes.total) {
       var delta = preferredSizes.total - maxSize;
       for (var i = preferredSizes.length - 1; i >= 0; i--) {
-        final viewAvailablePx = preferredSizes[i] - minimumSizes[i];
+        final viewAvailable = preferredSizes[i] - minimumSizes[i];
 
-        if (viewAvailablePx < delta) {
+        if (viewAvailable < delta) {
           // We need even more than this one view can give up, so assign the
           // minimum to the view and adjust totals.
-          preferredSizes.adjust(i, -viewAvailablePx);
-          delta -= viewAvailablePx;
+          preferredSizes.adjust(i, -viewAvailable);
+          delta -= viewAvailable;
         } else {
           // We can adjust this view to account for the delta.
           preferredSizes.adjust(i, -delta);
@@ -131,15 +131,15 @@ class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
       final params = view.layoutConfig;
 
       final width = measuredSizes[i];
-      final left = prevBoundsRight - params.viewMargin.rightPx - width;
+      final left = prevBoundsRight - params.viewMargin.right - width;
       final height =
           (params.isFullPosition ? fullBounds.height : drawAreaBounds.height) -
               params.viewMargin.height;
-      final top = params.viewMargin.topPx +
+      final top = params.viewMargin.top +
           (params.isFullPosition ? fullBounds.top : drawAreaBounds.top);
 
       // Update the remaining bounds.
-      prevBoundsRight = left - params.viewMargin.leftPx;
+      prevBoundsRight = left - params.viewMargin.left;
 
       // Layout this component.
       view.layout(Rectangle(left, top, width, height), drawAreaBounds);
@@ -165,15 +165,15 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
       final params = view.layoutConfig;
 
       final width = measuredSizes[i];
-      final left = prevBoundsLeft + params.viewMargin.leftPx;
+      final left = prevBoundsLeft + params.viewMargin.left;
       final height =
           (params.isFullPosition ? fullBounds.height : drawAreaBounds.height) -
               params.viewMargin.height;
-      final top = params.viewMargin.topPx +
+      final top = params.viewMargin.top +
           (params.isFullPosition ? fullBounds.top : drawAreaBounds.top);
 
       // Update the remaining bounds.
-      prevBoundsLeft = left + width + params.viewMargin.rightPx;
+      prevBoundsLeft = left + width + params.viewMargin.right;
 
       // Layout this component.
       view.layout(Rectangle(left, top, width, height), drawAreaBounds);
@@ -247,16 +247,16 @@ class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
       final params = view.layoutConfig;
 
       final height = measuredSizes[i];
-      final top = prevBoundsBottom - height - params.viewMargin.bottomPx;
+      final top = prevBoundsBottom - height - params.viewMargin.bottom;
 
       final width =
           (params.isFullPosition ? fullBounds.width : drawAreaBounds.width) -
               params.viewMargin.width;
-      final left = params.viewMargin.leftPx +
+      final left = params.viewMargin.left +
           (params.isFullPosition ? fullBounds.left : drawAreaBounds.left);
 
       // Update the remaining bounds.
-      prevBoundsBottom = top - params.viewMargin.topPx;
+      prevBoundsBottom = top - params.viewMargin.top;
 
       // Layout this component.
       view.layout(Rectangle(left, top, width, height), drawAreaBounds);
@@ -282,16 +282,16 @@ class BottomMarginLayoutStrategy extends HorizontalMarginStrategy {
       final params = view.layoutConfig;
 
       final height = measuredSizes[i];
-      final top = prevBoundsTop + params.viewMargin.topPx;
+      final top = prevBoundsTop + params.viewMargin.top;
 
       final width =
           (params.isFullPosition ? fullBounds.width : drawAreaBounds.width) -
               params.viewMargin.width;
-      final left = params.viewMargin.leftPx +
+      final left = params.viewMargin.left +
           (params.isFullPosition ? fullBounds.left : drawAreaBounds.left);
 
       // Update the remaining bounds.
-      prevBoundsTop = top + height + params.viewMargin.bottomPx;
+      prevBoundsTop = top + height + params.viewMargin.bottom;
 
       // Layout this component.
       view.layout(Rectangle(left, top, width, height), drawAreaBounds);

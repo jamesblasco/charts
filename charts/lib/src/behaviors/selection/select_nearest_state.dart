@@ -57,7 +57,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     this.selectAcrossAllSeriesRendererComponents = true,
     this.selectClosestSeries = true,
     this.eventTrigger = SelectionTrigger.hover,
-    this.maximumDomainDistancePx,
+    this.maximumDomainDistance,
     this.hoverEventDelay,
   }) {
     // Setup the appropriate gesture listening.
@@ -134,7 +134,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
   ///
   /// This allows sparse data to not get selected until the mouse is some
   /// reasonable distance. Defaults to no maximum distance.
-  final int? maximumDomainDistancePx;
+  final int? maximumDomainDistance;
 
   /// Wait time in milliseconds for when the next event can be called.
   final int? hoverEventDelay;
@@ -172,8 +172,8 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     if (details.isNotEmpty) {
       details.sort((a, b) => a.domainDistance!.compareTo(b.domainDistance!));
 
-      if (maximumDomainDistancePx == null ||
-          details[0].domainDistance! <= maximumDomainDistancePx!) {
+      if (maximumDomainDistance == null ||
+          details[0].domainDistance! <= maximumDomainDistance!) {
         seriesDatumList = _extractSeriesFromNearestSelection(details);
 
         // Filter out points from overlay series.
@@ -216,12 +216,15 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
       case SelectionMode.selectOverlapping:
         return details
             .map(
-              (datumDetails) =>
-                  SeriesDatum<D>(series:datumDetails.series!, datum:datumDetails.datum),
+              (datumDetails) => SeriesDatum<D>(
+                  series: datumDetails.series!, datum: datumDetails.datum),
             )
             .toList();
       case SelectionMode.single:
-        return [SeriesDatum<D>(series:details.first.series!, datum:details.first.datum)];
+        return [
+          SeriesDatum<D>(
+              series: details.first.series!, datum: details.first.datum)
+        ];
     }
   }
 
@@ -240,7 +243,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
   List<SeriesDatum<D>> _expandToDomain(DatumDetails<D> nearestDetails) {
     // Make sure that the "nearest" datum is at the top of the list.
     final data = <SeriesDatum<D>>[
-      SeriesDatum(series:nearestDetails.series!, datum:nearestDetails.datum)
+      SeriesDatum(series: nearestDetails.series!, datum: nearestDetails.datum)
     ];
     final nearestDomain = nearestDetails.domain;
 
@@ -263,7 +266,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         }
 
         if (domain == nearestDomain) {
-          data.add(SeriesDatum(series:series, datum:datum));
+          data.add(SeriesDatum(series: series, datum: datum));
         } else if (testBounds) {
           final domainLowerBound = domainLowerBoundFn(i);
           final domainUpperBound = domainUpperBoundFn(i);
@@ -287,7 +290,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
           }
 
           if (addDatum) {
-            data.add(SeriesDatum(series:series,datum:datum));
+            data.add(SeriesDatum(series: series, datum: datum));
           }
         }
       }

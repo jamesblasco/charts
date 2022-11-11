@@ -67,27 +67,26 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
       final seriesKey = series.id;
 
       // Default to the configured radius if none was defined by the series.
-      series.radiusPxFn ??= (_) => config.radiusPx;
+      series.radiusFn ??= (_) => config.radius;
 
       var maxRadius = 0.0;
       for (var index = 0; index < series.data.length; index++) {
         // Default to the configured radius if none was returned by the
         // accessor function.
-        var radiusPx = series.radiusPxFn?.call(index)?.toDouble();
-        radiusPx ??= config.radiusPx;
+        var radius = series.radiusFn?.call(index)?.toDouble();
+        radius ??= config.radius;
 
-        maxRadius = max(maxRadius, radiusPx);
+        maxRadius = max(maxRadius, radius);
       }
 
       final rowInnerHeight = maxRadius * 2;
 
-      final rowHeight = localConfig.verticalSymbolBottomPaddingPx +
-          localConfig.verticalSymbolTopPaddingPx +
+      final rowHeight = localConfig.verticalSymbolBottomPadding +
+          localConfig.verticalSymbolTopPadding +
           rowInnerHeight;
 
-      final symbolCenter = offset +
-          localConfig.verticalSymbolTopPaddingPx +
-          (rowInnerHeight / 2);
+      final symbolCenter =
+          offset + localConfig.verticalSymbolTopPadding + (rowInnerHeight / 2);
 
       series.measureFn = (index) => 0;
       series.measureOffsetFn = (index) => 0;

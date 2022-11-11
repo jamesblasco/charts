@@ -156,8 +156,8 @@ class BucketingNumericTickProviderElement extends NumericTickProviderElement {
       value: threshold,
       textElement: graphicsFactory
           .createTextElement(localFormatter.formatValue(threshold)),
-      locationPx: (showBucket ? scale[threshold] : scale[0])!.toDouble(),
-      labelOffsetPx: showBucket ? -0.5 * (scale[threshold]! - scale[0]!) : 0.0,
+      location: (showBucket ? scale[threshold] : scale[0])!.toDouble(),
+      labelOffset: showBucket ? -0.5 * (scale[threshold]! - scale[0]!) : 0.0,
     );
     tickDrawStrategy.decorateTicks(<TickElement<num>>[thresholdTick]);
 

@@ -49,8 +49,8 @@ class MutableSeries<D> extends ImmutableSeries<D> {
         patternColorFn = series.patternColorFn,
         insideLabelStyleAccessorFn = series.insideLabelStyleAccessorFn,
         outsideLabelStyleAccessorFn = series.outsideLabelStyleAccessorFn,
-        radiusPxFn = series.radiusPxFn,
-        strokeWidthPxFn = series.strokeWidthPxFn {
+        radiusFn = series.radiusFn,
+        strokeWidthFn = series.strokeWidthFn {
     // Pre-compute the sum of the measure values to make it available on demand.
     seriesMeasureTotal = 0;
     for (var i = 0; i < data.length; i++) {
@@ -96,8 +96,8 @@ class MutableSeries<D> extends ImmutableSeries<D> {
         labelAccessorFn = other.labelAccessorFn,
         insideLabelStyleAccessorFn = other.insideLabelStyleAccessorFn,
         outsideLabelStyleAccessorFn = other.outsideLabelStyleAccessorFn,
-        radiusPxFn = other.radiusPxFn,
-        strokeWidthPxFn = other.strokeWidthPxFn
+        radiusFn = other.radiusFn,
+        strokeWidthFn = other.strokeWidthFn
   //  measureAxis = other.measureAxis,
   // domainAxis = other.domainAxis
   {
@@ -186,9 +186,9 @@ class MutableSeries<D> extends ImmutableSeries<D> {
   AccessorFn<Color?>? patternColorFn;
 
   @override
-  AccessorFn<num?>? radiusPxFn;
+  AccessorFn<num?>? radiusFn;
   @override
-  AccessorFn<num?>? strokeWidthPxFn;
+  AccessorFn<num?>? strokeWidthFn;
   @override
   AccessorFn<String>? labelAccessorFn;
 
@@ -296,9 +296,9 @@ abstract class ImmutableSeries<D> {
   AccessorFn<TextStyle>? insideLabelStyleAccessorFn;
   AccessorFn<TextStyle>? outsideLabelStyleAccessorFn;
 
-  AccessorFn<num?>? get radiusPxFn;
+  AccessorFn<num?>? get radiusFn;
 
-  AccessorFn<num?>? get strokeWidthPxFn;
+  AccessorFn<num?>? get strokeWidthFn;
 
   void setAttr<R>(AttributeKey<R> key, R value);
 

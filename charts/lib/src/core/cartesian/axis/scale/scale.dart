@@ -106,7 +106,7 @@ abstract class ScaleElement<D> {
   /// The translate is used by the scale function when it applies the scale.
   /// This is the equivalent to panning.  Its value is likely <= 0 to pan the
   /// data to the left.
-  double get viewportTranslatePx;
+  double get viewportTranslate;
 
   /// Returns a mutable copy of the scale.
   ///
@@ -150,10 +150,10 @@ abstract class MutableScaleElement<D> extends ScaleElement<D> {
   /// the complete data extents to the output range, and 2.0 only maps half the
   /// data to the output range.
   ///
-  /// [viewportTranslatePx] is the translate/pan to use in pixel units,
+  /// [viewportTranslate] is the translate/pan to use in pixel units,
   /// likely <= 0 which shifts the start of the data before the edge of the
   /// chart giving us a pan.
-  void setViewportSettings(double viewportScale, double viewportTranslatePx);
+  void setViewportSettings(double viewportScale, double viewportTranslate);
 
   /// Sets the configuration used to determine the rangeBand (bar group width).
   set rangeBandConfig(RangeBandConfig barGroupWidthConfig);

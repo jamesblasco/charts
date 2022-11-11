@@ -166,7 +166,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         radius: arcList.radius!,
         startAngle: config.startAngle,
         stroke: arcList.stroke,
-        strokeWidthPx: arcList.strokeWidthPx,
+        strokeWidth: arcList.strokeWidth,
       );
 
       arcListToElementsList[arcList] = elementsList;
@@ -212,7 +212,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
           arcList.radius!,
           arcList.innerRadius!,
           stroke: arcList.stroke,
-          strokeWidthPx: arcList.strokeWidthPx ?? 0,
+          strokeWidth: arcList.strokeWidth ?? 0,
         ),
       );
     }

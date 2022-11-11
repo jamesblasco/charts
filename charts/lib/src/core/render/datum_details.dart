@@ -52,9 +52,9 @@ class DatumDetails<D> {
     this.domainDistance,
     this.measureDistance,
     this.relativeDistance,
-    this.radiusPx,
+    this.radius,
     this.symbolRenderer,
-    this.strokeWidthPx,
+    this.strokeWidth,
   });
 
   factory DatumDetails.from(
@@ -85,7 +85,7 @@ class DatumDetails<D> {
     DomainFormatter<D>? domainFormatter,
     double? domainDistance,
     double? measureDistance,
-    double? radiusPx,
+    double? radius,
     SymbolRenderer? symbolRenderer,
   }) {
     return DatumDetails<D>(
@@ -115,9 +115,9 @@ class DatumDetails<D> {
       bounds: bounds ?? other.bounds,
       domainDistance: domainDistance ?? other.domainDistance,
       measureDistance: measureDistance ?? other.measureDistance,
-      radiusPx: radiusPx ?? other.radiusPx,
+      radius: radius ?? other.radius,
       symbolRenderer: symbolRenderer ?? other.symbolRenderer,
-      strokeWidthPx: radiusPx ?? other.strokeWidthPx,
+      strokeWidth: radius ?? other.strokeWidth,
     );
   }
   final dynamic datum;
@@ -219,7 +219,7 @@ class DatumDetails<D> {
   final double? relativeDistance;
 
   /// The radius of this [datum].
-  final double? radiusPx;
+  final double? radius;
 
   /// Renderer used to draw the shape of this datum.
   ///
@@ -227,7 +227,7 @@ class DatumDetails<D> {
   final SymbolRenderer? symbolRenderer;
 
   /// The stroke width of this [datum].
-  final double? strokeWidthPx;
+  final double? strokeWidth;
 
   /// Optional formatter for [domain].
   final DomainFormatter<D>? domainFormatter;

@@ -43,7 +43,6 @@ class PanBehavior<D> extends ChartBehavior<D> {
       ..panningCompletedCallback = panningCompletedCallback;
   }
 
-
   @override
   String get role => 'Pan';
 
@@ -69,8 +68,8 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
   AnimationController? _flingAnimator;
 
-  double _flingAnimationInitialTranslatePx = 0;
-  double _flingAnimationTargetTranslatePx = 0;
+  double _flingAnimationInitialTranslate = 0;
+  double _flingAnimationTargetTranslate = 0;
 
   bool _isFlinging = false;
 
@@ -119,8 +118,8 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
   void _startFling(double pixelsPerSec) {
     final domainAxis = chart!.domainAxis;
 
-    _flingAnimationInitialTranslatePx = domainAxis!.viewportTranslatePx;
-    _flingAnimationTargetTranslatePx = _flingAnimationInitialTranslatePx +
+    _flingAnimationInitialTranslate = domainAxis!.viewportTranslate;
+    _flingAnimationTargetTranslate = _flingAnimationInitialTranslate +
         pixelsPerSec * flingDistanceMultiplier;
 
     final flingDuration = Duration(
@@ -148,8 +147,8 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
     final percent = _flingAnimator!.value;
     final deceleratedPercent = _decelerate(percent);
     final translation = lerpDouble(
-      _flingAnimationInitialTranslatePx,
-      _flingAnimationTargetTranslatePx,
+      _flingAnimationInitialTranslate,
+      _flingAnimationTargetTranslate,
       deceleratedPercent,
     );
 

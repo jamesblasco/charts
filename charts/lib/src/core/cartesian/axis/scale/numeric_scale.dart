@@ -48,7 +48,7 @@ abstract class NumericScaleElement extends MutableScaleElement<num> {
 
   /// Sets the domain extent visible in the viewport of the drawArea.
   ///
-  /// Invalidates the viewportScale & viewportTranslatePx.
+  /// Invalidates the viewportScale & viewportTranslate.
   set viewportDomain(NumericExtents extent);
 
   /// Returns the viewportScaleFactor needed to present the given domainWindow.

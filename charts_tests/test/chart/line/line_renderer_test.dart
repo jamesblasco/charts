@@ -27,9 +27,9 @@ class MyRow {
   final int clickCount;
   final Color color;
   final List<int> dashPattern;
-  final double strokeWidthPx;
+  final double strokeWidth;
   MyRow(this.campaignString, this.campaign, this.clickCount, this.color,
-      this.dashPattern, this.strokeWidthPx);
+      this.dashPattern, this.strokeWidth);
 }
 
 class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {
@@ -85,7 +85,7 @@ void main() {
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          strokeWidthPxFn: (_, __) => 1.25,
+          strokeWidthFn: (_, __) => 1.25,
           data: myFakeTabletData)),
       MutableSeries<int>(Series<MyRow, int>(
           id: 'Mobile',
@@ -93,7 +93,7 @@ void main() {
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          strokeWidthPxFn: (_, __) => 3.0,
+          strokeWidthFn: (_, __) => 3.0,
           data: myFakeMobileData))
     ];
 
@@ -111,7 +111,7 @@ void main() {
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          strokeWidthPxFn: (_, __) => 1.25,
+          strokeWidthFn: (_, __) => 1.25,
           data: myFakeTabletData)),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile',
@@ -119,7 +119,7 @@ void main() {
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          strokeWidthPxFn: (_, __) => 3.0,
+          strokeWidthFn: (_, __) => 3.0,
           data: myFakeMobileData))
     ];
   });
@@ -127,7 +127,7 @@ void main() {
   group('preprocess', () {
     test('with numeric data and simple lines', () {
       renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+          LineRenderer<num>(config: LineRendererConfig(strokeWidth: 2.0));
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -145,7 +145,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -163,7 +163,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(1.25));
+      expect(segment.strokeWidth, equals(1.25));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -181,7 +181,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(3.0));
+      expect(segment.strokeWidth, equals(3.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -191,7 +191,7 @@ void main() {
 
     test('with numeric data and stacked lines', () {
       renderer = LineRenderer<num>(
-          config: LineRendererConfig(stacked: true, strokeWidthPx: 2.0));
+          config: LineRendererConfig(stacked: true, strokeWidth: 2.0));
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -209,7 +209,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -227,7 +227,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(1.25));
+      expect(segment.strokeWidth, equals(1.25));
 
       expect(series.measureOffsetFn(0), 5);
       expect(series.measureOffsetFn(1), 25);
@@ -245,7 +245,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(3.0));
+      expect(segment.strokeWidth, equals(3.0));
 
       expect(series.measureOffsetFn(0), 10);
       expect(series.measureOffsetFn(1), 50);
@@ -259,7 +259,7 @@ void main() {
             id: 'Desktop',
             colorFn: (MyRow row, _) => row.color,
             dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            strokeWidthFn: (MyRow row, _) => row.strokeWidth,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
@@ -268,7 +268,7 @@ void main() {
             id: 'Tablet',
             colorFn: (MyRow row, _) => row.color,
             dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            strokeWidthFn: (MyRow row, _) => row.strokeWidth,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
@@ -277,7 +277,7 @@ void main() {
             id: 'Mobile',
             colorFn: (MyRow row, _) => row.color,
             dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            strokeWidthFn: (MyRow row, _) => row.strokeWidth,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
@@ -285,7 +285,7 @@ void main() {
       ];
 
       renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+          LineRenderer<num>(config: LineRendererConfig(strokeWidth: 2.0));
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -303,21 +303,21 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       segment = styleSegments[1];
       expect(segment.color, equals(Colors.green));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       segment = styleSegments[2];
       expect(segment.color, equals(Colors.red));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -335,21 +335,21 @@ void main() {
       expect(segment.dashPattern, equals([2, 2]));
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       segment = styleSegments[1];
       expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, equals([3, 3]));
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       segment = styleSegments[2];
       expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, equals([4, 4]));
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -367,21 +367,21 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(1));
       expect(segment.domainExtent.end, equals(2));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       segment = styleSegments[1];
       expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(2));
       expect(segment.domainExtent.end, equals(3));
-      expect(segment.strokeWidthPx, equals(3.0));
+      expect(segment.strokeWidth, equals(3.0));
 
       segment = styleSegments[2];
       expect(segment.color, equals(Colors.blue));
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals(3));
       expect(segment.domainExtent.end, equals(4));
-      expect(segment.strokeWidthPx, equals(4.0));
+      expect(segment.strokeWidth, equals(4.0));
 
       expect(series.measureOffsetFn(0), 0);
       expect(series.measureOffsetFn(1), 0);
@@ -406,7 +406,7 @@ void main() {
             id: 'Desktop',
             colorFn: (row, _) => row.color,
             dashPatternFn: (row, _) => row.dashPattern,
-            strokeWidthPxFn: (row, _) => row.strokeWidthPx,
+            strokeWidthFn: (row, _) => row.strokeWidth,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
@@ -414,7 +414,7 @@ void main() {
       ];
 
       renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+          LineRenderer<num>(config: LineRendererConfig(strokeWidth: 2.0));
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -470,7 +470,7 @@ void main() {
 
     test('with ordinal data and simple lines', () {
       renderer =
-          LineRenderer<String>(config: LineRendererConfig(strokeWidthPx: 2.0));
+          LineRenderer<String>(config: LineRendererConfig(strokeWidth: 2.0));
 
       renderer.configureSeries(ordinalSeriesList);
       renderer.preprocessSeries(ordinalSeriesList);
@@ -488,7 +488,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));
-      expect(segment.strokeWidthPx, equals(2.0));
+      expect(segment.strokeWidth, equals(2.0));
 
       // Validate Tablet series.
       series = ordinalSeriesList[1];
@@ -501,7 +501,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));
-      expect(segment.strokeWidthPx, equals(1.25));
+      expect(segment.strokeWidth, equals(1.25));
 
       // Validate Mobile series.
       series = ordinalSeriesList[2];
@@ -514,7 +514,7 @@ void main() {
       expect(segment.dashPattern, isNull);
       expect(segment.domainExtent.start, equals('MyCampaign1'));
       expect(segment.domainExtent.end, equals('MyOtherCampaign'));
-      expect(segment.strokeWidthPx, equals(3.0));
+      expect(segment.strokeWidth, equals(3.0));
     });
   });
 

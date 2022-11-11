@@ -26,7 +26,7 @@ class ArcRendererConfig<D> extends BaseArcRendererConfig<D> {
     super.layoutPaintOrder,
     super.minHoleWidthForCenterContent,
     super.startAngle,
-    super.strokeWidthPx,
+    super.strokeWidth,
   });
 
   @override

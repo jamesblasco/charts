@@ -36,7 +36,7 @@ class PolygonPainter {
     Rectangle<num>? clipBounds,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     if (points.isEmpty) {
       return;
@@ -69,12 +69,12 @@ class PolygonPainter {
       paint.style = PaintingStyle.fill;
       canvas.drawCircle(
         Offset(point.x.toDouble(), point.y.toDouble()),
-        strokeWidthPx!,
+        strokeWidth!,
         paint,
       );
     } else {
-      if (strokeColor != null && strokeWidthPx != null) {
-        paint.strokeWidth = strokeWidthPx;
+      if (strokeColor != null && strokeWidth != null) {
+        paint.strokeWidth = strokeWidth;
         paint.strokeJoin = StrokeJoin.bevel;
         paint.style = PaintingStyle.stroke;
       }

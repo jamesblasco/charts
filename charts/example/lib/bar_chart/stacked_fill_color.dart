@@ -18,7 +18,6 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 
-
 import 'package:flutter/material.dart';
 import 'package:charts/charts.dart';
 
@@ -110,7 +109,7 @@ class StackedFillColorBarChart extends StatelessWidget {
       animate: animate,
       // Configure a stroke width to enable borders on the bars.
       defaultRenderer: BarRendererConfig(
-          groupingType: BarGroupingType.stacked, strokeWidthPx: 2.0),
+          groupingType: BarGroupingType.stacked, strokeWidth: 2.0),
     );
   }
 

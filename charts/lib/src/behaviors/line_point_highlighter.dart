@@ -28,8 +28,8 @@ import 'package:meta/meta.dart';
 class LinePointHighlighter<D> extends ChartBehavior<D> {
   LinePointHighlighter({
     this.selectionModelType,
-    this.defaultRadiusPx,
-    this.radiusPaddingPx,
+    this.defaultRadius,
+    this.radiusPadding,
     this.showHorizontalFollowLine,
     this.showVerticalFollowLine,
     this.dashPattern,
@@ -44,14 +44,14 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
   /// Default radius of the dots if the series has no radius mapping function.
   ///
   /// When no radius mapping function is provided, this value will be used as
-  /// is. [radiusPaddingPx] will not be added to [defaultRadiusPx].
-  final double? defaultRadiusPx;
+  /// is. [radiusPadding] will not be added to [defaultRadius].
+  final double? defaultRadius;
 
   /// Additional radius value added to the radius of the selected data.
   ///
   /// This value is only used when the series has a radius mapping function
   /// defined.
-  final double? radiusPaddingPx;
+  final double? radiusPadding;
 
   final LinePointHighlighterFollowLineType? showHorizontalFollowLine;
 
@@ -78,8 +78,8 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
   LinePointHighlighterState<D> createBehaviorState() =>
       LinePointHighlighterState<D>(
         selectionModelType: selectionModelType,
-        defaultRadiusPx: defaultRadiusPx,
-        radiusPaddingPx: radiusPaddingPx,
+        defaultRadius: defaultRadius,
+        radiusPadding: radiusPadding,
         showHorizontalFollowLine: showHorizontalFollowLine,
         showVerticalFollowLine: showVerticalFollowLine,
         dashPattern: dashPattern,
@@ -87,15 +87,14 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
         symbolRenderer: symbolRenderer,
       );
 
-
   @override
   String get role => 'LinePointHighlighter-${selectionModelType.toString()}';
 
   @override
   List<Object?> get props => [
         selectionModelType,
-        defaultRadiusPx,
-        radiusPaddingPx,
+        defaultRadius,
+        radiusPadding,
         showHorizontalFollowLine,
         showVerticalFollowLine,
         dashPattern,

@@ -243,7 +243,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         arcList.innerRadius = innerRadius;
         arcList.series = series;
         arcList.stroke = config.noDataColor;
-        arcList.strokeWidthPx = 0.0;
+        arcList.strokeWidth = 0.0;
 
         // If we don't have any existing arc element, create a new arc. Unlike
         // real arcs, we should not animate the no data state in from 0.
@@ -319,7 +319,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             arcList.innerRadius = innerRadius;
             arcList.series = series;
             arcList.stroke = config.stroke;
-            arcList.strokeWidthPx = config.strokeWidthPx;
+            arcList.strokeWidth = config.strokeWidth;
 
             // If we don't have any existing arc element, create a new arc and
             // have it animate in from the position of the previous arc's end
@@ -547,7 +547,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
       final innerRadius = baseInnerRadius + sumOfPreviousLevelRadii;
       return [
         innerRadius,
-        innerRadius + arcWidths[currentLevel - 1] - config.strokeWidthPx
+        innerRadius + arcWidths[currentLevel - 1] - config.strokeWidth
       ];
     } else {
       final totalRadius = radius - baseInnerRadius;
@@ -583,7 +583,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
           totalRadius *
               (sumOfPreviousLevelRadiiFactor + currentLevelRadiusFactor) /
               radiusDenom -
-          config.strokeWidthPx;
+          config.strokeWidth;
       return [innerRadius, outerRadius];
     }
   }

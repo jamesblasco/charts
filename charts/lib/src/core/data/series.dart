@@ -43,9 +43,9 @@ class Series<T, D> {
     TypedAccessorFn<T, num?>? measureUpperBoundFn,
     TypedAccessorFn<T, num>? measureOffsetFn,
     bool overlaySeries = false,
-    TypedAccessorFn<T, num>? radiusPxFn,
+    TypedAccessorFn<T, num>? radiusFn,
     String? seriesCategory,
-    TypedAccessorFn<T, num?>? strokeWidthPxFn,
+    TypedAccessorFn<T, num?>? strokeWidthFn,
   }) {
     // Wrap typed accessors.
     final _domainFn = (int? index) => domainFn(data[index!], index);
@@ -97,12 +97,11 @@ class Series<T, D> {
     final _measureOffsetFn = measureOffsetFn == null
         ? null
         : (int? index) => measureOffsetFn(data[index!], index);
-    final _radiusPxFn = radiusPxFn == null
+    final _radiusFn =
+        radiusFn == null ? null : (int? index) => radiusFn(data[index!], index);
+    final _strokeWidthFn = strokeWidthFn == null
         ? null
-        : (int? index) => radiusPxFn(data[index!], index);
-    final _strokeWidthPxFn = strokeWidthPxFn == null
-        ? null
-        : (int? index) => strokeWidthPxFn(data[index!], index);
+        : (int? index) => strokeWidthFn(data[index!], index);
     final _keyFn =
         keyFn == null ? null : (int? index) => keyFn(data[index!], index);
 
@@ -130,10 +129,10 @@ class Series<T, D> {
       measureUpperBoundFn: _measureUpperBoundFn,
       measureOffsetFn: _measureOffsetFn,
       overlaySeries: overlaySeries,
-      radiusPxFn: _radiusPxFn,
+      radiusFn: _radiusFn,
       seriesCategory: seriesCategory,
       seriesColor: seriesColor,
-      strokeWidthPxFn: _strokeWidthPxFn,
+      strokeWidthFn: _strokeWidthFn,
     );
   }
 
@@ -161,10 +160,10 @@ class Series<T, D> {
     required this.measureUpperBoundFn,
     required this.measureOffsetFn,
     required this.overlaySeries,
-    required this.radiusPxFn,
+    required this.radiusFn,
     required this.seriesCategory,
     required this.seriesColor,
-    required this.strokeWidthPxFn,
+    required this.strokeWidthFn,
   });
   final String id;
   final String? displayName;
@@ -238,8 +237,8 @@ class Series<T, D> {
   final AccessorFn<Color>? patternColorFn;
 
   final AccessorFn<FillPatternType>? fillPatternFn;
-  final AccessorFn<num>? radiusPxFn;
-  final AccessorFn<num?>? strokeWidthPxFn;
+  final AccessorFn<num>? radiusFn;
+  final AccessorFn<num?>? strokeWidthFn;
   final AccessorFn<String>? labelAccessorFn;
   final AccessorFn<TextStyle>? insideLabelStyleAccessorFn;
   final AccessorFn<TextStyle>? outsideLabelStyleAccessorFn;

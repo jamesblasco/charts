@@ -29,7 +29,7 @@ class Tree<T, D> {
     TypedAccessorFn<T, Color>? fillColorFn,
     TypedAccessorFn<T, Color>? patternColorFn,
     TypedAccessorFn<T, FillPatternType>? fillPatternFn,
-    TypedAccessorFn<T, num>? strokeWidthPxFn,
+    TypedAccessorFn<T, num>? strokeWidthFn,
     TypedAccessorFn<T, String>? labelFn,
     TypedAccessorFn<T, TextStyle>? labelStyleFn,
   }) {
@@ -42,7 +42,7 @@ class Tree<T, D> {
       fillColorFn: _castFrom<T, Color>(fillColorFn),
       fillPatternFn: _castFrom<T, FillPatternType>(fillPatternFn),
       patternColorFn: _castFrom<T, Color>(patternColorFn),
-      strokeWidthPxFn: _castFrom<T, num>(strokeWidthPxFn),
+      strokeWidthFn: _castFrom<T, num>(strokeWidthFn),
       labelFn: _castFrom<T, String>(labelFn),
       labelStyleFn: _castFrom<T, TextStyle>(labelStyleFn),
     );
@@ -57,7 +57,7 @@ class Tree<T, D> {
     required this.fillColorFn,
     required this.fillPatternFn,
     required this.patternColorFn,
-    required this.strokeWidthPxFn,
+    required this.strokeWidthFn,
     required this.labelFn,
     required this.labelStyleFn,
   });
@@ -89,7 +89,7 @@ class Tree<T, D> {
   final TypedAccessorFn<TreeNode<T>, FillPatternType>? fillPatternFn;
 
   /// Accessor function that returns the stroke width in pixel for a tree node.
-  final TypedAccessorFn<TreeNode<T>, num>? strokeWidthPxFn;
+  final TypedAccessorFn<TreeNode<T>, num>? strokeWidthFn;
 
   /// Accessor function that returns the label for a tree node.
   final TypedAccessorFn<TreeNode<T>, String>? labelFn;
@@ -129,7 +129,7 @@ class Tree<T, D> {
       fillColorFn: fillColorFn,
       fillPatternFn: fillPatternFn,
       patternColorFn: patternColorFn,
-      strokeWidthPxFn: strokeWidthPxFn,
+      strokeWidthFn: strokeWidthFn,
       labelAccessorFn: labelFn,
       insideLabelStyleAccessorFn: labelStyleFn,
     )..attributes.mergeFrom(attributes);

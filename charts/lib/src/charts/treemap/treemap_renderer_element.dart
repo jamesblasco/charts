@@ -26,7 +26,7 @@ class TreeMapRendererElement<D> {
     this.patternColor,
     this.strokeColor,
     required this.isLeaf,
-    this.strokeWidthPx,
+    this.strokeWidth,
     required this.index,
     required this.series,
     required this.domain,
@@ -60,7 +60,7 @@ class TreeMapRendererElement<D> {
   bool isLeaf;
 
   /// Stroke width of this element.
-  num? strokeWidthPx;
+  num? strokeWidth;
 
   /// Associated index in the [series].
   int index;
@@ -87,7 +87,7 @@ class TreeMapRendererElement<D> {
         fillColor: fillColor,
         patternColor: patternColor,
         strokeColor: strokeColor,
-        strokeWidthPx: strokeWidthPx,
+        strokeWidth: strokeWidth,
         isLeaf: isLeaf,
         index: index,
         series: series,
@@ -101,7 +101,7 @@ class TreeMapRendererElement<D> {
   /// and redraw of this element is triggered.
   void refreshPaintProperties() {
     strokeColor = series.colorFn!(index);
-    strokeWidthPx = series.strokeWidthPxFn!(index);
+    strokeWidth = series.strokeWidthFn!(index);
     fillColor = series.fillColorFn!(index);
     fillPattern = series.fillPatternFn == null
         ? FillPatternType.solid
@@ -127,7 +127,7 @@ class TreeMapRendererElement<D> {
         'boundingRect': boundingRect,
         'area': area,
         'strokeColor': strokeColor,
-        'strokeWidthPx': strokeWidthPx,
+        'strokeWidth': strokeWidth,
         'fillColor': fillColor,
         'fillPattern': fillPattern,
         'patternColor': patternColor,

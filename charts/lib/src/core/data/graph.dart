@@ -32,7 +32,7 @@ class Graph<N, L, D> {
     TypedAccessorFn<N, Color>? nodeColorFn,
     TypedAccessorFn<N, Color>? nodeFillColorFn,
     TypedAccessorFn<N, FillPatternType>? nodeFillPatternFn,
-    TypedAccessorFn<N, num>? nodeStrokeWidthPxFn,
+    TypedAccessorFn<N, num>? nodeStrokeWidthFn,
     TypedAccessorFn<L, Color>? linkFillColorFn,
   }) {
     return Graph.base(
@@ -53,7 +53,7 @@ class Graph<N, L, D> {
       nodeFillColorFn: actOnNodeData<N, L, Color>(nodeFillColorFn),
       nodeFillPatternFn:
           actOnNodeData<N, L, FillPatternType>(nodeFillPatternFn),
-      nodeStrokeWidthPxFn: actOnNodeData<N, L, num>(nodeStrokeWidthPxFn),
+      nodeStrokeWidthFn: actOnNodeData<N, L, num>(nodeStrokeWidthFn),
       linkFillColorFn: actOnLinkData<N, L, Color>(linkFillColorFn),
     );
   }
@@ -69,7 +69,7 @@ class Graph<N, L, D> {
     required this.nodeColorFn,
     required this.nodeFillColorFn,
     required this.nodeFillPatternFn,
-    required this.nodeStrokeWidthPxFn,
+    required this.nodeStrokeWidthFn,
     required this.linkFillColorFn,
   });
 
@@ -112,7 +112,7 @@ class Graph<N, L, D> {
   final TypedAccessorFn<Node<N, L>, FillPatternType>? nodeFillPatternFn;
 
   /// Accessor function that returns the stroke width of a node
-  final TypedAccessorFn<Node<N, L>, num>? nodeStrokeWidthPxFn;
+  final TypedAccessorFn<Node<N, L>, num>? nodeStrokeWidthFn;
 
   /// Accessor function that returns the fill color of a node
   final TypedAccessorFn<GraphLink<N, L>, Color>? linkFillColorFn;
@@ -136,7 +136,7 @@ class Graph<N, L, D> {
       colorFn: nodeColorFn,
       fillColorFn: nodeFillColorFn,
       fillPatternFn: nodeFillPatternFn,
-      strokeWidthPxFn: nodeStrokeWidthPxFn,
+      strokeWidthFn: nodeStrokeWidthFn,
     )..attributes.mergeFrom(nodeAttributes);
 
     final linkSeries = Series<GraphLink<N, L>, D>(

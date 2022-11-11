@@ -260,7 +260,7 @@ void main() {
       scale.resetDomain();
       scale.resetViewportSettings();
       expect(scale.viewportScalingFactor, closeTo(1.0, EPSILON));
-      expect(scale.viewportTranslatePx, closeTo(0, EPSILON));
+      expect(scale.viewportTranslate, closeTo(0, EPSILON));
       expect(scale.range, equals(ScaleOutputExtent(100, 200)));
     });
 

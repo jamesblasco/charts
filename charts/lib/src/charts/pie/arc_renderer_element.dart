@@ -27,7 +27,7 @@ class ArcRendererElementList<D> {
     required this.radius,
     required this.startAngle,
     this.stroke,
-    this.strokeWidthPx,
+    this.strokeWidth,
   });
   final List<ArcRendererElement<D>> arcs;
   final Point<double> center;
@@ -39,7 +39,7 @@ class ArcRendererElementList<D> {
   final Color? stroke;
 
   /// Stroke width of separator lines between arcs.
-  final double? strokeWidthPx;
+  final double? strokeWidth;
 }
 
 class ArcRendererElement<D> {
@@ -99,7 +99,7 @@ class AnimatedArcList<D> {
   Color? stroke;
 
   /// Stroke width of separator lines between arcs.
-  double? strokeWidthPx;
+  double? strokeWidth;
 }
 
 @protected

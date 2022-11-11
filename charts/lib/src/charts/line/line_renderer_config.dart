@@ -20,9 +20,9 @@ class LineRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
   LineRendererConfig({
     this.customRendererId,
-    this.radiusPx = 3.5,
+    this.radius = 3.5,
     this.stacked = false,
-    this.strokeWidthPx = 2.0,
+    this.strokeWidth = 2.0,
     this.dashPattern,
     this.includeLine = true,
     this.includePoints = false,
@@ -42,7 +42,7 @@ class LineRendererConfig<D> extends LayoutViewConfig
   final rendererAttributes = RendererAttributes();
 
   /// Radius of points on the line, if [includePoints] is enabled.
-  final double radiusPx;
+  final double radius;
 
   /// Whether or not series should be rendered in a stack.
   ///
@@ -50,7 +50,7 @@ class LineRendererConfig<D> extends LayoutViewConfig
   final bool stacked;
 
   /// Stroke width of the line.
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   /// Dash pattern for the line.
   final List<int>? dashPattern;
@@ -93,9 +93,9 @@ class LineRendererConfig<D> extends LayoutViewConfig
         super.props,
         customRendererId,
         symbolRenderer,
-        radiusPx,
+        radius,
         stacked,
-        strokeWidthPx,
+        strokeWidth,
         dashPattern,
         includeLine,
         includePoints,

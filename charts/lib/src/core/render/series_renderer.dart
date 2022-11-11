@@ -290,7 +290,8 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   }
 
   @override
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
@@ -332,8 +333,8 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
     final colorFn = series.colorFn;
     final areaColorFn = series.areaColorFn ?? colorFn;
     final fillColorFn = series.fillColorFn ?? colorFn;
-    final radiusPxFn = series.radiusPxFn;
-    final strokeWidthPxFn = series.strokeWidthPxFn;
+    final radiusFn = series.radiusFn;
+    final strokeWidthFn = series.strokeWidthFn;
 
     final domainValue = domainFn(index);
     final domainLowerBoundValue = domainLowerBoundFn?.call(index);
@@ -358,11 +359,11 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
     // Area color is entirely optional.
     final areaColor = areaColorFn!(index);
 
-    var radiusPx = radiusPxFn?.call(index)?.toDouble();
-    radiusPx = radiusPx?.toDouble();
+    var radius = radiusFn?.call(index)?.toDouble();
+    radius = radius?.toDouble();
 
-    var strokeWidthPx = strokeWidthPxFn?.call(index)?.toDouble();
-    strokeWidthPx = strokeWidthPx?.toDouble();
+    var strokeWidth = strokeWidthFn?.call(index)?.toDouble();
+    strokeWidth = strokeWidth?.toDouble();
 
     final details = DatumDetails<D>(
       datum: seriesDatum.datum,
@@ -381,8 +382,8 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
       color: color,
       fillColor: fillColor,
       areaColor: areaColor,
-      radiusPx: radiusPx,
-      strokeWidthPx: strokeWidthPx,
+      radius: radius,
+      strokeWidth: strokeWidth,
     );
 
     // chartPosition depends on the shape of the rendered elements, and must be
@@ -398,7 +399,8 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   /// [bounds] optional override for component bounds. If this is passed, then
   /// we will check whether the point is within these bounds instead of the
   /// component bounds.
-  bool isPointWithinBounds(Point<double> chartPoint, Rectangle<double>? bounds) {
+  bool isPointWithinBounds(
+      Point<double> chartPoint, Rectangle<double>? bounds) {
     // Was it even in the drawArea?
     if (bounds != null) {
       if (!bounds.containsPoint(chartPoint)) {

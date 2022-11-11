@@ -64,10 +64,10 @@ void main() {
           domainFn: (MyRow row, _) => row.campaign,
           measureFn: (MyRow row, _) => row.clickCount,
           measureOffsetFn: (MyRow row, _) => 0,
-          radiusPxFn: (MyRow row, _) => row.radius,
+          radiusFn: (MyRow row, _) => row.radius,
           data: myFakeDesktopData)
         // Define a bounds line radius function.
-        ..setAttribute(boundsLineRadiusPxFnKey,
+        ..setAttribute(boundsLineRadiusFnKey,
             (int index) => myFakeDesktopData[index].boundsRadius))
     ];
   });
@@ -93,15 +93,15 @@ void main() {
       expect(elementsList[2].index, equals(2));
       expect(elementsList[3].index, equals(3));
 
-      expect(elementsList[0].radiusPx, equals(3.0));
-      expect(elementsList[1].radiusPx, equals(5.0));
-      expect(elementsList[2].radiusPx, equals(4.0));
-      expect(elementsList[3].radiusPx, equals(3.5));
+      expect(elementsList[0].radius, equals(3.0));
+      expect(elementsList[1].radius, equals(5.0));
+      expect(elementsList[2].radius, equals(4.0));
+      expect(elementsList[3].radius, equals(3.5));
 
-      expect(elementsList[0].boundsLineRadiusPx, equals(3.0));
-      expect(elementsList[1].boundsLineRadiusPx, equals(4.0));
-      expect(elementsList[2].boundsLineRadiusPx, equals(4.0));
-      expect(elementsList[3].boundsLineRadiusPx, equals(3.5));
+      expect(elementsList[0].boundsLineRadius, equals(3.0));
+      expect(elementsList[1].boundsLineRadius, equals(4.0));
+      expect(elementsList[2].boundsLineRadius, equals(4.0));
+      expect(elementsList[3].boundsLineRadius, equals(3.5));
 
       expect(elementsList[0].symbolRendererId, equals(defaultSymbolRendererId));
       expect(elementsList[1].symbolRendererId, equals(defaultSymbolRendererId));
@@ -114,13 +114,13 @@ void main() {
       expect(keyFn(3), equals('Desktop__13__225'));
     });
 
-    test('with numeric data and missing radiusPxFn', () {
+    test('with numeric data and missing radiusFn', () {
       renderer = PointRenderer<int>(
-          config: PointRendererConfig(radiusPx: 2.0, boundsLineRadiusPx: 1.5));
+          config: PointRendererConfig(radius: 2.0, boundsLineRadius: 1.5));
 
       // Remove the radius functions to test configured defaults.
-      numericSeriesList[0].radiusPxFn = null;
-      numericSeriesList[0].setAttr(boundsLineRadiusPxFnKey, null);
+      numericSeriesList[0].radiusFn = null;
+      numericSeriesList[0].setAttr(boundsLineRadiusFnKey, null);
 
       renderer.preprocessSeries(numericSeriesList);
 
@@ -132,15 +132,15 @@ void main() {
       var elementsList = series.getAttr(pointElementsKey);
       expect(elementsList.length, equals(4));
 
-      expect(elementsList[0].radiusPx, equals(2.0));
-      expect(elementsList[1].radiusPx, equals(2.0));
-      expect(elementsList[2].radiusPx, equals(2.0));
-      expect(elementsList[3].radiusPx, equals(2.0));
+      expect(elementsList[0].radius, equals(2.0));
+      expect(elementsList[1].radius, equals(2.0));
+      expect(elementsList[2].radius, equals(2.0));
+      expect(elementsList[3].radius, equals(2.0));
 
-      expect(elementsList[0].boundsLineRadiusPx, equals(1.5));
-      expect(elementsList[1].boundsLineRadiusPx, equals(1.5));
-      expect(elementsList[2].boundsLineRadiusPx, equals(1.5));
-      expect(elementsList[3].boundsLineRadiusPx, equals(1.5));
+      expect(elementsList[0].boundsLineRadius, equals(1.5));
+      expect(elementsList[1].boundsLineRadius, equals(1.5));
+      expect(elementsList[2].boundsLineRadius, equals(1.5));
+      expect(elementsList[3].boundsLineRadius, equals(1.5));
     });
 
     test('with custom symbol renderer ID in data', () {

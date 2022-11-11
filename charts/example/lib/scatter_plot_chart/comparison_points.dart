@@ -79,7 +79,7 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         measureLowerBoundFn: (LinearSales sales, _) => sales.salesLower,
         measureUpperBoundFn: (LinearSales sales, _) => sales.salesUpper,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         data: data,
       )
     ];
@@ -145,7 +145,7 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
         measureLowerBoundFn: (LinearSales sales, _) => sales.salesLower,
         measureUpperBoundFn: (LinearSales sales, _) => sales.salesUpper,
         // Providing a radius function is optional.
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         data: data,
       )
     ];

@@ -18,16 +18,16 @@ import 'package:charts/charts/bar.dart';
 /// Configuration for a bar target line renderer.
 class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
   BarTargetLineRendererConfig({
-    super.barGroupInnerPaddingPx,
+    super.barGroupInnerPadding,
     super.customRendererId,
     super.dashPattern,
     super.groupingType,
     int super.layoutPaintOrder = LayoutViewPaintOrder.barTargetLine,
-    super.minBarLengthPx,
-    this.overDrawOuterPx,
-    this.overDrawPx = 0,
+    super.minBarLength,
+    this.overDrawOuter,
+    this.overDraw = 0,
     this.roundEndCaps = true,
-    super.strokeWidthPx = 3.0,
+    super.strokeWidth = 3.0,
     SymbolRenderer? symbolRenderer,
     super.weightPattern,
   }) : super(
@@ -37,15 +37,15 @@ class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
   /// The number of pixels that the line will extend beyond the bandwidth at the
   /// edges of the bar group.
   ///
-  /// If set, this overrides overDrawPx for the beginning side of the first bar
+  /// If set, this overrides overDraw for the beginning side of the first bar
   /// target line in the group, and the ending side of the last bar target line.
-  /// overDrawPx will be used for overdrawing the target lines for interior
+  /// overDraw will be used for overdrawing the target lines for interior
   /// sides of the bars.
-  final int? overDrawOuterPx;
+  final int? overDrawOuter;
 
   /// The number of pixels that the line will extend beyond the bandwidth for
   /// every bar in a group.
-  final int overDrawPx;
+  final int overDraw;
 
   /// Whether target lines should have round end caps, or square if false.
   final bool roundEndCaps;
@@ -58,8 +58,8 @@ class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
   @override
   List<Object?> get props => [
         super.props,
-        overDrawOuterPx,
-        overDrawPx,
+        overDrawOuter,
+        overDraw,
         roundEndCaps,
       ];
 }

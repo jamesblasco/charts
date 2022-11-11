@@ -52,9 +52,9 @@ void main() {
             y: 20.0,
             yLower: 20.0,
             yUpper: 20.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -78,9 +78,9 @@ void main() {
             y: -20.0,
             yLower: -20.0,
             yUpper: -20.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -98,9 +98,9 @@ void main() {
             y: 120.0,
             yLower: 120.0,
             yUpper: 120.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -118,9 +118,9 @@ void main() {
             y: 20.0,
             yLower: 20.0,
             yUpper: 50.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -138,9 +138,9 @@ void main() {
             y: 20.0,
             yLower: 20.0,
             yUpper: 50.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -158,9 +158,9 @@ void main() {
             y: 20.0,
             yLower: 20.0,
             yUpper: 20.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -184,9 +184,9 @@ void main() {
             y: 10.0,
             yLower: -10.0,
             yUpper: 110.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -210,9 +210,9 @@ void main() {
             y: 50.0,
             yLower: -50.0,
             yUpper: 150.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =
@@ -236,9 +236,9 @@ void main() {
             y: 50.0,
             yLower: 150.0,
             yUpper: -50.0),
-        radiusPx: 0,
-        boundsLineRadiusPx: 0,
-        strokeWidthPx: 0,
+        radius: 0,
+        boundsLineRadius: 0,
+        strokeWidth: 0,
       );
 
       final points =

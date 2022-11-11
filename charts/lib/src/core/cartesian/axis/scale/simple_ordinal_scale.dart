@@ -17,7 +17,6 @@ import 'dart:math' show min, max;
 
 import 'package:charts/core.dart';
 
-
 /// Scale that converts ordinal values of type [D] to a given range output.
 ///
 /// A `SimpleOrdinalScale` is used to map values from its domain to the
@@ -31,13 +30,13 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
       : _domain = other._domain.copy(),
         _range = ScaleOutputExtent(other._range.start, other._range.end),
         _viewportScale = other._viewportScale,
-        _viewportTranslatePx = other._viewportTranslatePx,
+        _viewportTranslate = other._viewportTranslate,
         _rangeBandConfig = other._rangeBandConfig;
   final _stepSizeConfig = const StepSizeConfig.auto();
   final OrdinalScaleDomainInfo _domain;
   ScaleOutputExtent _range = const ScaleOutputExtent(0, 1);
   double _viewportScale = 1;
-  double _viewportTranslatePx = 0;
+  double _viewportTranslate = 0;
   RangeBandConfig _rangeBandConfig = RangeBandConfig.styleAssignedPercent();
 
   bool _scaleChanged = true;
@@ -124,7 +123,7 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
 
     final i = _domain.indexOf(domainValue);
     if (i != null) {
-      return viewportTranslatePx +
+      return viewportTranslate +
           _range.start +
           _cachedRangeBandShift +
           (_cachedStepSizePixels * i);
@@ -136,7 +135,7 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
   @override
   String reverse(double pixelLocation) {
     final index = (pixelLocation -
-            viewportTranslatePx -
+            viewportTranslate -
             _range.start -
             _cachedRangeBandShift) /
         _cachedStepSizePixels;
@@ -182,7 +181,7 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
   @override
   void resetViewportSettings() {
     _viewportScale = 1.0;
-    _viewportTranslatePx = 0.0;
+    _viewportTranslate = 0.0;
     _scaleChanged = true;
   }
 
@@ -193,19 +192,19 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
   double get viewportScalingFactor => _viewportScale;
 
   @override
-  double get viewportTranslatePx => _viewportTranslatePx;
+  double get viewportTranslate => _viewportTranslate;
 
   @override
-  void setViewportSettings(double viewportScale, double viewportTranslatePx) {
+  void setViewportSettings(double viewportScale, double viewportTranslate) {
     _viewportScale = viewportScale;
     if (_isVertical) {
-      _viewportTranslatePx = max(
-        min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslatePx),
+      _viewportTranslate = max(
+        min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslate),
         0,
       );
     } else {
-      _viewportTranslatePx =
-          min(max(rangeWidth * (1.0 - viewportScale), viewportTranslatePx), 0);
+      _viewportTranslate =
+          min(max(rangeWidth * (1.0 - viewportScale), viewportTranslate), 0);
     }
     _scaleChanged = true;
   }
@@ -240,15 +239,15 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
     _recalculateScale();
     final domainIndex = _domain.indexOf(_viewportStartingDomain!);
     if (domainIndex != null) {
-      var viewportTranslatePx = 0.0;
+      var viewportTranslate = 0.0;
       if (_isVertical) {
         // Account for the domain values being reversed.
-        viewportTranslatePx =
+        viewportTranslate =
             (_viewportDataSize! - domainIndex - 1) * _cachedStepSizePixels;
       } else {
-        viewportTranslatePx = -(_cachedStepSizePixels * domainIndex);
+        viewportTranslate = -(_cachedStepSizePixels * domainIndex);
       }
-      setViewportSettings(_viewportScale, viewportTranslatePx);
+      setViewportSettings(_viewportScale, viewportTranslate);
     }
   }
 
@@ -271,15 +270,14 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
     }
     if (_isVertical) {
       // Get topmost visible index.
-      final index =
-          (-(rangeWidth + _viewportTranslatePx) / _cachedStepSizePixels)
-                  .ceil()
-                  .toInt() -
-              1;
+      final index = (-(rangeWidth + _viewportTranslate) / _cachedStepSizePixels)
+              .ceil()
+              .toInt() -
+          1;
       return _domain.getDomainAtIndex(index);
     } else {
       return _domain.getDomainAtIndex(
-        (-_viewportTranslatePx / _cachedStepSizePixels).ceil().toInt(),
+        (-_viewportTranslate / _cachedStepSizePixels).ceil().toInt(),
       );
     }
   }
@@ -295,11 +293,11 @@ class SimpleOrdinalScaleElement implements OrdinalScaleElement {
     // This needs to be looked into further.
     final i = _domain.indexOf(domainValue);
     if (i != null) {
-      final domainPx = this[domainValue];
-      if (domainPx < range.min) {
+      final domain = this[domainValue];
+      if (domain < range.min) {
         return -1;
       }
-      if (domainPx > range.max) {
+      if (domain > range.max) {
         return 1;
       }
       return 0;

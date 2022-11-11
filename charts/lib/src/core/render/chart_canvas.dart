@@ -18,7 +18,6 @@ import 'dart:math' show Point, Rectangle;
 import 'package:charts/core.dart';
 
 abstract class ChartCanvas {
-
   /// Set the name of the view doing the rendering for debugging purposes,
   /// or null when we believe rendering is complete.
   set drawingView(String? viewName);
@@ -35,7 +34,7 @@ abstract class ChartCanvas {
   ///     positive x axis and expressed in radians.
   /// [fill] Fill color for the sector.
   /// [stroke] Stroke color of the arc and radius lines.
-  /// [strokeWidthPx] Stroke width of the arc and radius lines.
+  /// [strokeWidth] Stroke width of the arc and radius lines.
   void drawCircleSector(
     Point center,
     double radius,
@@ -44,7 +43,7 @@ abstract class ChartCanvas {
     double endAngle, {
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   });
 
   /// Draws a smooth link from source to target.
@@ -70,7 +69,7 @@ abstract class ChartCanvas {
     Color? fill,
     Color? stroke,
     bool? roundEndCaps,
-    double? strokeWidthPx,
+    double? strokeWidth,
     List<int>? dashPattern,
   });
 
@@ -85,7 +84,7 @@ abstract class ChartCanvas {
   ///
   /// [fill] Fill color for the point.
   ///
-  /// [stroke] and [strokeWidthPx] configure the color and thickness of the
+  /// [stroke] and [strokeWidth] configure the color and thickness of the
   /// outer edge of the point. Both must be provided together for a line to
   /// appear.
   ///
@@ -95,7 +94,7 @@ abstract class ChartCanvas {
     required double radius,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
     BlendMode? blendMode,
   });
 
@@ -107,14 +106,14 @@ abstract class ChartCanvas {
   /// [fill] configures the color inside the polygon. The shape will be
   /// transparent if this is not provided.
   ///
-  /// [stroke] and [strokeWidthPx] configure the color and thickness of the
+  /// [stroke] and [strokeWidth] configure the color and thickness of the
   /// edges of the polygon. Both must be provided together for a line to appear.
   void drawPolygon({
     required List<Point> points,
     Rectangle<num>? clipBounds,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   });
 
   /// Renders a simple rectangle.
@@ -127,7 +126,7 @@ abstract class ChartCanvas {
     Rectangle<num> bounds, {
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
     Rectangle<num>? drawAreaBounds,
   });
 
@@ -138,8 +137,8 @@ abstract class ChartCanvas {
     Color? stroke,
     Color? patternColor,
     FillPatternType? fillPattern,
-    double? patternStrokeWidthPx,
-    double? strokeWidthPx,
+    double? patternStrokeWidth,
+    double? strokeWidth,
     num? radius,
     bool roundTopLeft = false,
     bool roundTopRight = false,

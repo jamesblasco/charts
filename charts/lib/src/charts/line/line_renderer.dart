@@ -37,15 +37,15 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   LineRenderer._internal({required super.rendererId, required this.config})
       : _pointRenderer = PointRenderer<D>(
-          config: PointRendererConfig<D>(radiusPx: config.radiusPx),
+          config: PointRendererConfig<D>(radius: config.radius),
         ),
         super(
           layoutPaintOrder: config.layoutPaintOrder,
           symbolRenderer: config.symbolRenderer,
         );
   // Configuration used to extend the clipping area to extend the draw bounds.
-  static const drawBoundTopExtensionPx = 5;
-  static const drawBoundBottomExtensionPx = 5;
+  static const drawBoundTopExtension = 5;
+  static const drawBoundBottomExtension = 5;
 
   final LineRendererConfig<D> config;
 
@@ -72,7 +72,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   final _currentKeys = <String>[];
 
   @override
-  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     if (config.includePoints) {
@@ -122,7 +123,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       final areaColorFn = series.areaColorFn;
       final domainFn = series.domainFn;
       final measureFn = series.measureFn;
-      final strokeWidthPxFn = series.strokeWidthPxFn;
+      final strokeWidthFn = series.strokeWidthFn;
 
       series.dashPatternFn ??= (_) => config.dashPattern;
       final dashPatternFn = series.dashPatternFn!;
@@ -147,17 +148,17 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         final color = colorFn!(index);
         final areaColor = areaColorFn!(index);
         final dashPattern = dashPatternFn(index);
-        final strokeWidthPx =
-            strokeWidthPxFn?.call(index)?.toDouble() ?? config.strokeWidthPx;
+        final strokeWidth =
+            strokeWidthFn?.call(index)?.toDouble() ?? config.strokeWidth;
 
         // Create a style key for this datum, and then compare it to the
         // previous datum.
         //
-        // Compare strokeWidthPx to 2 decimals of precision. Any less and you
+        // Compare strokeWidth to 2 decimals of precision. Any less and you
         // can't see any difference in the canvas anyways.
-        final strokeWidthPxRounded = (strokeWidthPx * 100).round() / 100;
+        final strokeWidthRounded = (strokeWidth * 100).round() / 100;
         var styleKey = '${series.id}__${styleSegmentsIndex}__$color'
-            '__${dashPattern}__$strokeWidthPxRounded';
+            '__${dashPattern}__$strokeWidthRounded';
 
         if (styleKey != previousSegmentKey) {
           // If we have a repeated style segment, update the repeat index and
@@ -167,7 +168,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             styleSegmentsIndex++;
 
             styleKey = '${series.id}__${styleSegmentsIndex}__$color'
-                '__${dashPattern}__$strokeWidthPxRounded';
+                '__${dashPattern}__$strokeWidthRounded';
           }
 
           // Make sure that the previous style segment extends to the current
@@ -183,7 +184,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             areaColor: areaColor,
             dashPattern: dashPattern,
             domainExtent: _Range<D>(domain, domain),
-            strokeWidthPx: strokeWidthPx,
+            strokeWidth: strokeWidth,
             styleKey: styleKey,
             roundEndCaps: config.roundEndCaps,
           );
@@ -354,11 +355,11 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       // TODO: Handle ordinal axes by looking at the next domains.
       if (styleSegments.isNotEmpty && domainAxis is! OrdinalAxis) {
         final drawBounds = this.drawBounds!;
-        final startPx = (isRtl ? drawBounds.right : drawBounds.left).toDouble();
-        final endPx = (isRtl ? drawBounds.left : drawBounds.right).toDouble();
+        final start = (isRtl ? drawBounds.right : drawBounds.left).toDouble();
+        final end = (isRtl ? drawBounds.left : drawBounds.right).toDouble();
 
-        final startDomain = domainAxis.getDomain(startPx);
-        final endDomain = domainAxis.getDomain(endPx);
+        final startDomain = domainAxis.getDomain(start);
+        final endDomain = domainAxis.getDomain(end);
 
         styleSegments.first.domainExtent.includePoint(startDomain);
         styleSegments.last.domainExtent.includePoint(endDomain);
@@ -601,7 +602,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final areaColor = styleSegment.areaColor;
     final dashPattern = styleSegment.dashPattern;
     final domainExtent = styleSegment.domainExtent;
-    final strokeWidthPx = styleSegment.strokeWidthPx;
+    final strokeWidth = styleSegment.strokeWidth;
     final styleKey = styleSegment.styleKey;
     final roundEndCaps = styleSegment.roundEndCaps;
 
@@ -642,7 +643,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           domainExtent: domainExtent,
           measureAxisPosition: measureAxis.getLocation(0.0),
           positionExtent: positionExtent,
-          strokeWidthPx: strokeWidthPx,
+          strokeWidth: strokeWidth,
           styleKey: lineStyleKey,
           roundEndCaps: roundEndCaps,
         ),
@@ -1107,7 +1108,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
             dashPattern: line.dashPattern,
             points: line.points!.toPoints(),
             stroke: line.color,
-            strokeWidthPx: line.strokeWidthPx,
+            strokeWidth: line.strokeWidth,
             roundEndCaps: line.roundEndCaps,
           );
         });
@@ -1136,9 +1137,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
     return Rectangle<num>(
       left,
-      drawBounds.top - drawBoundTopExtensionPx,
+      drawBounds.top - drawBoundTopExtension,
       right - left,
-      drawBounds.height + drawBoundTopExtensionPx + drawBoundBottomExtensionPx,
+      drawBounds.height + drawBoundTopExtension + drawBoundBottomExtension,
     );
   }
 
@@ -1378,7 +1379,7 @@ class _LineRendererElement<D> {
     required this.domainExtent,
     this.measureAxisPosition,
     this.positionExtent,
-    required this.strokeWidthPx,
+    required this.strokeWidth,
     required this.styleKey,
     required this.roundEndCaps,
   });
@@ -1389,7 +1390,7 @@ class _LineRendererElement<D> {
   _Range<D> domainExtent;
   double? measureAxisPosition;
   _Range<num>? positionExtent;
-  double strokeWidthPx;
+  double strokeWidth;
   String styleKey;
   bool roundEndCaps;
 
@@ -1402,7 +1403,7 @@ class _LineRendererElement<D> {
       domainExtent: domainExtent,
       measureAxisPosition: measureAxisPosition,
       positionExtent: positionExtent,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
       styleKey: styleKey,
       roundEndCaps: roundEndCaps,
     );
@@ -1468,9 +1469,9 @@ class _LineRendererElement<D> {
       );
     }
 
-    strokeWidthPx =
-        ((target.strokeWidthPx - previous.strokeWidthPx) * animationPercent) +
-            previous.strokeWidthPx;
+    strokeWidth =
+        ((target.strokeWidth - previous.strokeWidth) * animationPercent) +
+            previous.strokeWidth;
   }
 }
 
@@ -1516,7 +1517,7 @@ class _AnimatedLine<D> {
 
     // Animate the stroke width to 0 so that we don't get a lingering line after
     // animation is done.
-    newTarget.strokeWidthPx = 0.0;
+    newTarget.strokeWidth = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

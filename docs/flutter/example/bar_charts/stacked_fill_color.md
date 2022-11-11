@@ -33,7 +33,7 @@ class StackedFillColorBarChart extends StatelessWidget {
       animate: animate,
       // Configure a stroke width to enable borders on the bars.
       defaultRenderer: new charts.BarRendererConfig(
-          groupingType: charts.BarGroupingType.stacked, strokeWidthPx: 2.0),
+          groupingType: charts.BarGroupingType.stacked, strokeWidth: 2.0),
     );
   }
 

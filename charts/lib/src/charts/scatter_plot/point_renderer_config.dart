@@ -22,9 +22,9 @@ class PointRendererConfig<D> extends LayoutViewConfig
     this.customRendererId,
     this.layoutPaintOrder = LayoutViewPaintOrder.point,
     this.pointRendererDecorators = const [],
-    this.radiusPx = 3.5,
-    this.boundsLineRadiusPx,
-    this.strokeWidthPx = 0.0,
+    this.radius = 3.5,
+    this.boundsLineRadius,
+    this.strokeWidth = 0.0,
     this.symbolRenderer,
     this.customSymbolRenderers,
   });
@@ -52,24 +52,24 @@ class PointRendererConfig<D> extends LayoutViewConfig
   @override
   final rendererAttributes = RendererAttributes();
 
-  /// Default radius of the points, used if a series does not define a radiusPx
+  /// Default radius of the points, used if a series does not define a radius
   /// accessor function.
-  final double radiusPx;
+  final double radius;
 
   /// Stroke width of the target line.
-  final double strokeWidthPx;
+  final double strokeWidth;
 
   /// Optional default radius of data bounds lines, used if a series does not
-  /// define a boundsLineRadiusPx accessor function.
+  /// define a boundsLineRadius accessor function.
   ///
-  /// If the series does not define a boundsLineRadiusPx accessor function, then
-  /// each datum's boundsLineRadiusPx value will be filled in by using the
+  /// If the series does not define a boundsLineRadius accessor function, then
+  /// each datum's boundsLineRadius value will be filled in by using the
   /// following values, in order of what is defined:
   ///
-  /// 1) boundsLineRadiusPx property defined on the series.
-  /// 2) boundsLineRadiusPx property defined on this renderer config.
-  /// 3) Final fallback is to use the point radiusPx for the datum.
-  final double? boundsLineRadiusPx;
+  /// 1) boundsLineRadius property defined on the series.
+  /// 2) boundsLineRadius property defined on this renderer config.
+  /// 3) Final fallback is to use the point radius for the datum.
+  final double? boundsLineRadius;
 
   @override
   PointRenderer<D> build() {

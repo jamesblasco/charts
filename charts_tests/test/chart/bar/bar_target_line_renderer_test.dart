@@ -40,7 +40,7 @@ class MockCanvas extends Mock implements ChartCanvas {
       Color fill,
       Color stroke,
       bool roundEndCaps,
-      double strokeWidthPx,
+      double strokeWidth,
       List<int> dashPattern}) {
     drawLinePointsList.add(points);
   }
@@ -146,7 +146,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -164,7 +164,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -182,7 +182,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
     });
 
     test('with stacked bar target lines', () {
@@ -210,7 +210,7 @@ void main() {
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
       expect(series.measureOffsetFn(0), equals(10));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -228,7 +228,7 @@ void main() {
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
       expect(series.measureOffsetFn(0), equals(5));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -246,7 +246,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
     });
 
     test('with stacked bar target lines containing zero and null', () {
@@ -276,25 +276,25 @@ void main() {
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
       expect(series.measureOffsetFn(0), equals(5));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(25));
       expect(element.measureOffsetPlusMeasure, equals(50));
       expect(series.measureOffsetFn(1), equals(25));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(100));
       expect(element.measureOffsetPlusMeasure, equals(100));
       expect(series.measureOffsetFn(2), equals(100));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(75));
       expect(element.measureOffsetPlusMeasure, equals(150));
       expect(series.measureOffsetFn(3), equals(75));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -307,25 +307,25 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(25));
       expect(element.measureOffsetPlusMeasure, equals(25));
       expect(series.measureOffsetFn(1), equals(25));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(100));
       expect(series.measureOffsetFn(2), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(75));
       expect(element.measureOffsetPlusMeasure, equals(75));
       expect(series.measureOffsetFn(3), equals(75));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -336,32 +336,32 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(0));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[1];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(25));
       expect(series.measureOffsetFn(1), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[2];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(0));
       expect(series.measureOffsetFn(2), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       element = elementsList[3];
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(75));
       expect(series.measureOffsetFn(3), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
     });
   });
 
   test('with stroke width target lines', () {
     renderer = makeRenderer(
         config: BarTargetLineRendererConfig(
-            groupingType: BarGroupingType.grouped, strokeWidthPx: 5.0));
+            groupingType: BarGroupingType.grouped, strokeWidth: 5.0));
 
     renderer.preprocessSeries(seriesList);
 
@@ -372,16 +372,16 @@ void main() {
     var elementsList = series.getAttr(barElementsKey);
 
     var element = elementsList[0];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[1];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[2];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[3];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     // Validate Tablet series.
     series = seriesList[1];
@@ -390,32 +390,32 @@ void main() {
     expect(elementsList.length, equals(4));
 
     element = elementsList[0];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[1];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[2];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[3];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     // Validate Mobile series.
     series = seriesList[2];
     elementsList = series.getAttr(barElementsKey);
 
     element = elementsList[0];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[1];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[2];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
 
     element = elementsList[3];
-    expect(element.strokeWidthPx, equals(5));
+    expect(element.strokeWidth, equals(5));
   });
 
   group('preprocess with weight pattern', () {
@@ -448,7 +448,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -466,7 +466,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -484,7 +484,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
     });
 
     test('with stacked bar target lines - weightPattern not used', () {
@@ -515,7 +515,7 @@ void main() {
       expect(element.measureOffset, equals(10));
       expect(element.measureOffsetPlusMeasure, equals(15));
       expect(series.measureOffsetFn(0), equals(10));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Tablet series.
       series = seriesList[1];
@@ -533,7 +533,7 @@ void main() {
       expect(element.measureOffset, equals(5));
       expect(element.measureOffsetPlusMeasure, equals(10));
       expect(series.measureOffsetFn(0), equals(5));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
 
       // Validate Mobile series.
       series = seriesList[2];
@@ -551,7 +551,7 @@ void main() {
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(5));
       expect(series.measureOffsetFn(0), equals(0));
-      expect(element.strokeWidthPx, equals(3));
+      expect(element.strokeWidth, equals(3));
     });
   });
 

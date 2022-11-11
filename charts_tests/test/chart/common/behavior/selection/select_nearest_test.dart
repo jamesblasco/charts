@@ -56,13 +56,13 @@ void main() {
       SelectionModelType selectionModelType, SelectionTrigger eventTrigger,
       {bool selectClosestSeries,
       SelectionMode selectionMode = SelectionMode.expandToDomain,
-      int maximumDomainDistancePx}) {
+      int maximumDomainDistance}) {
     SelectNearestState<String> behavior = SelectNearestState<String>(
         selectionModelType: selectionModelType,
         selectionMode: selectionMode,
         selectClosestSeries: selectClosestSeries,
         eventTrigger: eventTrigger,
-        maximumDomainDistancePx: maximumDomainDistancePx);
+        maximumDomainDistance: maximumDomainDistance);
 
     behavior.attachTo(_chart);
 
@@ -158,7 +158,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
+          [SeriesDatum(series: _series1, datum: _details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
       // Shouldn't be listening to anything else.
@@ -183,7 +183,7 @@ void main() {
 
       // Validate
       verify(_clickSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
+          [SeriesDatum(series: _series1, datum: _details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
     });
@@ -231,10 +231,11 @@ void main() {
       // Validate
       // details1 was tripped 2 times (startPoint & updatePoint1)
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1])).called(2);
+          [SeriesDatum(series: _series1, datum: _details1.datum)],
+          [_series1])).called(2);
       // details2 was tripped for updatePoint2
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details2.datum)], [_series1]));
+          [SeriesDatum(series: _series1, datum: _details2.datum)], [_series1]));
       // dragEnd deselects even though we are over details3.
       verify(_hoverSelectionModel.updateSelection([], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
@@ -282,9 +283,10 @@ void main() {
       // Validate
       // details1 was tripped 2 times (longPress & dragStart)
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1])).called(2);
+          [SeriesDatum(series: _series1, datum: _details1.datum)],
+          [_series1])).called(2);
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details2.datum)], [_series1]));
+          [SeriesDatum(series: _series1, datum: _details2.datum)], [_series1]));
       // dragEnd deselects even though we are over details3.
       verify(_hoverSelectionModel.updateSelection([], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
@@ -349,8 +351,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(series:_series1, datum:_details1.datum),
-        SeriesDatum(series:_series2, datum:_details1Series2.datum)
+        SeriesDatum(series: _series1, datum: _details1.datum),
+        SeriesDatum(series: _series2, datum: _details1Series2.datum)
       ], [
         _series1
       ]));
@@ -376,7 +378,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
+          [SeriesDatum(series: _series1, datum: _details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
     });
@@ -399,8 +401,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(series:_series1, datum:_details1.datum),
-        SeriesDatum(series:_series2, datum:_details1Series2.datum)
+        SeriesDatum(series: _series1, datum: _details1.datum),
+        SeriesDatum(series: _series2, datum: _details1Series2.datum)
       ], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
@@ -426,7 +428,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(series:_series1, datum:_details1.datum),
+        SeriesDatum(series: _series1, datum: _details1.datum),
       ], [
         _series1
       ]));
@@ -434,10 +436,10 @@ void main() {
       verifyNoMoreInteractions(_clickSelectionModel);
     });
 
-    test('selection does not exceed maximumDomainDistancePx', () {
+    test('selection does not exceed maximumDomainDistance', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
-          selectClosestSeries: true, maximumDomainDistancePx: 1);
+          selectClosestSeries: true, maximumDomainDistance: 1);
       Point<double> point = Point(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
@@ -472,14 +474,14 @@ void main() {
           datum: 'datum1',
           domain: 'myDomain1',
           series: series,
-          radiusPx: 10,
+          radius: 10,
           domainDistance: 4,
           relativeDistance: 5);
       final details2 = DatumDetails(
           datum: 'datum2',
           domain: 'myDomain1',
           series: series,
-          radiusPx: 10,
+          radius: 10,
           domainDistance: 7,
           relativeDistance: 9);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
@@ -494,8 +496,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(series:series,datum: details1.datum),
-        SeriesDatum(series:series, datum:details2.datum)
+        SeriesDatum(series: series, datum: details1.datum),
+        SeriesDatum(series: series, datum: details2.datum)
       ], [
         series
       ]));

@@ -27,7 +27,7 @@ class FlutterChartCanvas implements ChartCanvas {
   static const double rectTopGradientPixels = 5;
 
   final Canvas canvas;
- 
+
   final _paint = Paint();
 
   @override
@@ -39,7 +39,7 @@ class FlutterChartCanvas implements ChartCanvas {
     double endAngle, {
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     CircleSectorPainter.draw(
       canvas: canvas,
@@ -60,7 +60,7 @@ class FlutterChartCanvas implements ChartCanvas {
     Color? fill,
     Color? stroke,
     bool? roundEndCaps,
-    double? strokeWidthPx,
+    double? strokeWidth,
     List<int>? dashPattern,
   }) {
     LinePainter.draw(
@@ -71,7 +71,7 @@ class FlutterChartCanvas implements ChartCanvas {
       fill: fill,
       stroke: stroke,
       roundEndCaps: roundEndCaps,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
       dashPattern: dashPattern,
     );
   }
@@ -87,7 +87,7 @@ class FlutterChartCanvas implements ChartCanvas {
     required double radius,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
     BlendMode? blendMode,
   }) {
     PointPainter.draw(
@@ -97,7 +97,7 @@ class FlutterChartCanvas implements ChartCanvas {
       radius: radius,
       fill: fill,
       stroke: stroke,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
     );
   }
 
@@ -107,7 +107,7 @@ class FlutterChartCanvas implements ChartCanvas {
     Rectangle<num>? clipBounds,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     PolygonPainter.draw(
       canvas: canvas,
@@ -116,7 +116,7 @@ class FlutterChartCanvas implements ChartCanvas {
       clipBounds: clipBounds,
       fill: fill,
       stroke: stroke,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
     );
   }
 
@@ -135,15 +135,15 @@ class FlutterChartCanvas implements ChartCanvas {
     Color? fill,
     FillPatternType? pattern,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
     Rectangle<num>? drawAreaBounds,
   }) {
     // TODO: remove this explicit `bool` type when no longer needed
     // to work around https://github.com/dart-lang/language/issues/1785
     final drawStroke =
-        strokeWidthPx != null && strokeWidthPx > 0.0 && stroke != null;
+        strokeWidth != null && strokeWidth > 0.0 && stroke != null;
 
-    final strokeWidthOffset = drawStroke ? strokeWidthPx : 0;
+    final strokeWidthOffset = drawStroke ? strokeWidth : 0;
 
     // Factor out stroke width, if a stroke is enabled.
     final fillRectBounds = Rectangle<num>(
@@ -198,7 +198,7 @@ class FlutterChartCanvas implements ChartCanvas {
               )
             : null
         ..strokeJoin = StrokeJoin.round
-        ..strokeWidth = strokeWidthPx
+        ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke;
 
       canvas.drawRect(_getRect(bounds), _paint);
@@ -215,8 +215,8 @@ class FlutterChartCanvas implements ChartCanvas {
     Color? stroke,
     Color? patternColor,
     FillPatternType? fillPattern,
-    double? patternStrokeWidthPx,
-    double? strokeWidthPx,
+    double? patternStrokeWidth,
+    double? strokeWidth,
     num? radius,
     bool roundTopLeft = false,
     bool roundTopRight = false,
@@ -273,7 +273,7 @@ class FlutterChartCanvas implements ChartCanvas {
         fill: segment.fill,
         pattern: segment.pattern,
         stroke: segment.stroke,
-        strokeWidthPx: segment.strokeWidthPx,
+        strokeWidth: segment.strokeWidth,
         drawAreaBounds: drawAreaBounds,
       );
     }
@@ -381,7 +381,7 @@ class FlutterChartCanvas implements ChartCanvas {
     Canvas canvas, {
     Color? background,
     Color? fill,
-    double fillWidthPx = 4.0,
+    double fillWidth = 4.0,
     Rectangle<num>? drawAreaBounds,
   }) {
     background ??= StyleFactory.style.white;
@@ -407,10 +407,10 @@ class FlutterChartCanvas implements ChartCanvas {
     // Get the longer side of the bounds here for the size of this square.
     final size = max(bounds.width, bounds.height);
 
-    final x0 = bounds.left + size + fillWidthPx;
-    final x1 = bounds.left - fillWidthPx;
-    final y0 = bounds.bottom - size - fillWidthPx;
-    final y1 = bounds.bottom + fillWidthPx;
+    final x0 = bounds.left + size + fillWidth;
+    final x1 = bounds.left - fillWidth;
+    final y0 = bounds.bottom - size - fillWidth;
+    final y1 = bounds.bottom + fillWidth;
     const offset = 8;
 
     final isVertical = bounds.height >= bounds.width;
@@ -451,7 +451,7 @@ class FlutterChartCanvas implements ChartCanvas {
           Point(x1 + modifier, y1),
         ],
         stroke: fill,
-        strokeWidthPx: fillWidthPx,
+        strokeWidth: fillWidth,
         shader: lineShader,
       );
     }

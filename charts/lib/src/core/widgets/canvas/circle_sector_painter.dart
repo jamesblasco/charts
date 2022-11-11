@@ -30,7 +30,7 @@ class CircleSectorPainter {
   ///     positive x axis and expressed in radians.
   /// [fill] Fill color for the sector.
   /// [stroke] Stroke color of the arc and radius lines.
-  /// [strokeWidthPx] Stroke width of the arc and radius lines.
+  /// [strokeWidth] Stroke width of the arc and radius lines.
   static void draw({
     required Canvas canvas,
     required Paint paint,

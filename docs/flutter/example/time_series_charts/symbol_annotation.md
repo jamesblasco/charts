@@ -121,7 +121,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation shape. If not specified, this will
         // default to the same radius as the points.
-        ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(charts.boundsLineRadiusKey, 3.5),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
         colorFn: (_, __) => Colors.red,
@@ -136,7 +136,7 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         ..setAttribute(charts.rendererIdKey, 'customSymbolAnnotation')
         // Optional radius for the annotation shape. If not specified, this will
         // default to the same radius as the points.
-        ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+        ..setAttribute(charts.boundsLineRadiusKey, 3.5),
     ];
   }
 }

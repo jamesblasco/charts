@@ -34,10 +34,10 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
   ///
   /// If this is true, then fillColor and strokeColor will be used to fill in
   /// the shape, and draw a border, respectively. The stroke (border) will only
-  /// be visible if a non-zero strokeWidthPx is configured.
+  /// be visible if a non-zero strokeWidth is configured.
   ///
   /// If this is false, then the shape will be filled in with a white color
-  /// (overriding fillColor). strokeWidthPx will default to 2 if none was
+  /// (overriding fillColor). strokeWidth will default to 2 if none was
   /// configured.
   final bool isSolid;
 
@@ -48,12 +48,12 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   });
 
   @protected
-  double? getSolidStrokeWidthPx(double? strokeWidthPx) {
-    return isSolid ? strokeWidthPx : (strokeWidthPx ?? 2.0);
+  double? getSolidStrokeWidth(double? strokeWidth) {
+    return isSolid ? strokeWidth : (strokeWidth ?? 2.0);
   }
 
   @protected
@@ -93,7 +93,7 @@ class RoundedRectSymbolRenderer extends SymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     canvas.drawRRect(
       bounds,
@@ -144,20 +144,20 @@ class LineSymbolRenderer extends SymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     final centerHeight = (bounds.bottom - bounds.top) / 2;
 
     // If we have a dash pattern, do not round the end caps, and set
-    // strokeWidthPx to a smaller value. Using round end caps makes smaller
+    // strokeWidth to a smaller value. Using round end caps makes smaller
     // patterns blurry.
     final localDashPattern = dashPattern ?? _dashPattern;
     final roundEndCaps = localDashPattern == null;
 
     // If we have a dash pattern, the normal stroke width makes them look
     // strangely tall.
-    final localStrokeWidthPx = localDashPattern == null
-        ? getSolidStrokeWidthPx(strokeWidthPx ?? strokeWidth)
+    final localStrokeWidth = localDashPattern == null
+        ? getSolidStrokeWidth(strokeWidth ?? strokeWidth)
         : strokeWidthForNonRoundedEndCaps;
 
     // Adjust the length so the total width includes the rounded pixels.
@@ -179,7 +179,7 @@ class LineSymbolRenderer extends SymbolRenderer {
       fill: getSolidFillColor(fillColor),
       roundEndCaps: roundEndCaps,
       stroke: strokeColor,
-      strokeWidthPx: localStrokeWidthPx,
+      strokeWidth: localStrokeWidth,
     );
   }
 
@@ -204,7 +204,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     final center = Point(
       bounds.left + (bounds.width / 2),
@@ -216,7 +216,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
       radius: radius,
       fill: getSolidFillColor(fillColor),
       stroke: strokeColor,
-      strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),
+      strokeWidth: getSolidStrokeWidth(strokeWidth),
     );
   }
 
@@ -241,13 +241,13 @@ class RectSymbolRenderer extends SymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     canvas.drawRect(
       bounds,
       fill: getSolidFillColor(fillColor),
       stroke: strokeColor,
-      strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),
+      strokeWidth: getSolidStrokeWidth(strokeWidth),
     );
   }
 
@@ -269,7 +269,7 @@ class TriangleSymbolRenderer extends SymbolRenderer {
     Color? fillColor,
     FillPatternType? fillPattern,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     // To maximize the size of the triangle in the available space, we can use
     // the width as the length of each size. Set the bottom edge to be the full
@@ -285,7 +285,7 @@ class TriangleSymbolRenderer extends SymbolRenderer {
       ],
       fill: getSolidFillColor(fillColor),
       stroke: strokeColor,
-      strokeWidthPx: getSolidStrokeWidthPx(strokeWidthPx),
+      strokeWidth: getSolidStrokeWidth(strokeWidth),
     );
   }
 
@@ -307,7 +307,7 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
     required Point<double> p2,
     Color? fillColor,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     if (p1 == null) {
       throw ArgumentError('Invalid point p1 "$p1"');
@@ -324,7 +324,7 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
       points: [adjustedP1, adjustedP2],
       stroke: strokeColor,
       roundEndCaps: true,
-      strokeWidthPx: radius * 2,
+      strokeWidth: radius * 2,
     );
   }
 
@@ -349,7 +349,7 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
     required Point<double> p2,
     Color? fillColor,
     Color? strokeColor,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     if (p1 == null) {
       throw ArgumentError('Invalid point p1 "$p1"');
@@ -366,7 +366,7 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
       points: [adjustedP1, adjustedP2],
       stroke: strokeColor,
       roundEndCaps: false,
-      strokeWidthPx: radius * 2,
+      strokeWidth: radius * 2,
     );
   }
 

@@ -35,16 +35,16 @@ import 'package:meta/meta.dart';
 class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
   LinePointHighlighterState({
     SelectionModelType? selectionModelType,
-    double? defaultRadiusPx,
-    double? radiusPaddingPx,
+    double? defaultRadius,
+    double? radiusPadding,
     LinePointHighlighterFollowLineType? showHorizontalFollowLine,
     LinePointHighlighterFollowLineType? showVerticalFollowLine,
     List<int>? dashPattern,
     bool? drawFollowLinesAcrossChart,
     SymbolRenderer? symbolRenderer,
   })  : selectionModelType = selectionModelType ?? SelectionModelType.info,
-        defaultRadiusPx = defaultRadiusPx ?? 4.0,
-        radiusPaddingPx = radiusPaddingPx ?? 2.0,
+        defaultRadius = defaultRadius ?? 4.0,
+        radiusPadding = radiusPadding ?? 2.0,
         showHorizontalFollowLine =
             showHorizontalFollowLine ?? LinePointHighlighterFollowLineType.none,
         showVerticalFollowLine = showVerticalFollowLine ??
@@ -60,14 +60,14 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
   /// Default radius of the dots if the series has no radius mapping function.
   ///
   /// When no radius mapping function is provided, this value will be used as
-  /// is. [radiusPaddingPx] will not be added to [defaultRadiusPx].
-  final double defaultRadiusPx;
+  /// is. [radiusPadding] will not be added to [defaultRadius].
+  final double defaultRadius;
 
   /// Additional radius value added to the radius of the selected data.
   ///
   /// This value is only used when the series has a radius mapping function
   /// defined.
-  final double radiusPaddingPx;
+  final double radiusPadding;
 
   /// Whether or not to draw horizontal follow lines through the selected
   /// points.
@@ -184,9 +184,9 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
 
       final lineKey = series.id;
 
-      final radiusPx = (detail.radiusPx != null)
-          ? detail.radiusPx!.toDouble() + radiusPaddingPx
-          : defaultRadiusPx;
+      final radius = (detail.radius != null)
+          ? detail.radius!.toDouble() + radiusPadding
+          : defaultRadius;
 
       final pointKey = '$lineKey::${detail.domain}::${detail.measure}';
 
@@ -212,9 +212,9 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
               point: point,
               color: detail.color,
               fillColor: detail.fillColor,
-              radiusPx: radiusPx,
+              radius: radius,
               measureAxisPosition: measureAxis.getLocation(0.0),
-              strokeWidthPx: detail.strokeWidthPx,
+              strokeWidth: detail.strokeWidth,
               symbolRenderer: detail.symbolRenderer,
             ),
           );
@@ -239,9 +239,9 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
         point: point,
         color: detail.color,
         fillColor: detail.fillColor,
-        radiusPx: radiusPx,
+        radius: radius,
         measureAxisPosition: measureAxis.getLocation(0.0),
-        strokeWidthPx: detail.strokeWidthPx,
+        strokeWidth: detail.strokeWidth,
         symbolRenderer: detail.symbolRenderer,
       );
 
@@ -441,7 +441,7 @@ class _LinePointLayoutView<D> extends LayoutView {
             Point<num>(rightBound, point.y),
           ],
           stroke: StyleFactory.style.linePointHighlighterColor,
-          strokeWidthPx: 1,
+          strokeWidth: 1,
           dashPattern: dashPattern,
         );
 
@@ -466,7 +466,7 @@ class _LinePointLayoutView<D> extends LayoutView {
             Point<num>(point.x, drawBounds.top + drawBounds.height),
           ],
           stroke: StyleFactory.style.linePointHighlighterColor,
-          strokeWidthPx: 1,
+          strokeWidth: 1,
           dashPattern: dashPattern,
         );
 
@@ -491,10 +491,10 @@ class _LinePointLayoutView<D> extends LayoutView {
       final point = pointElement.point.toPoint();
 
       final bounds = Rectangle<double>(
-        point.x - pointElement.radiusPx,
-        point.y - pointElement.radiusPx,
-        pointElement.radiusPx * 2,
-        pointElement.radiusPx * 2,
+        point.x - pointElement.radius,
+        point.y - pointElement.radius,
+        pointElement.radius * 2,
+        pointElement.radius * 2,
       );
 
       // Draw the highlight dot. Use the [SymbolRenderer] from the datum if one
@@ -504,7 +504,7 @@ class _LinePointLayoutView<D> extends LayoutView {
         bounds,
         fillColor: pointElement.fillColor,
         strokeColor: pointElement.color,
-        strokeWidthPx: pointElement.strokeWidthPx,
+        strokeWidth: pointElement.strokeWidth,
       );
     }
   }
@@ -544,17 +544,17 @@ class _PointRendererElement<D> {
     required this.point,
     required this.color,
     required this.fillColor,
-    required this.radiusPx,
+    required this.radius,
     required this.measureAxisPosition,
-    required this.strokeWidthPx,
+    required this.strokeWidth,
     required this.symbolRenderer,
   });
   _DatumPoint<D> point;
   Color? color;
   Color? fillColor;
-  double radiusPx;
+  double radius;
   double? measureAxisPosition;
-  double? strokeWidthPx;
+  double? strokeWidth;
   SymbolRenderer? symbolRenderer;
 
   _PointRendererElement<D> clone() {
@@ -563,8 +563,8 @@ class _PointRendererElement<D> {
       color: color,
       fillColor: fillColor,
       measureAxisPosition: measureAxisPosition,
-      radiusPx: radiusPx,
-      strokeWidthPx: strokeWidthPx,
+      radius: radius,
+      strokeWidth: strokeWidth,
       symbolRenderer: symbolRenderer,
     );
   }
@@ -591,17 +591,16 @@ class _PointRendererElement<D> {
       animationPercent,
     );
 
-    radiusPx =
-        _lerpDouble(previous.radiusPx, target.radiusPx, animationPercent)!;
+    radius = _lerpDouble(previous.radius, target.radius, animationPercent)!;
 
-    final targetStrokeWidthPx = target.strokeWidthPx;
-    final previousStrokeWidthPx = previous.strokeWidthPx;
-    if (targetStrokeWidthPx != null && previousStrokeWidthPx != null) {
-      strokeWidthPx =
-          ((targetStrokeWidthPx - previousStrokeWidthPx) * animationPercent) +
-              previousStrokeWidthPx;
+    final targetStrokeWidth = target.strokeWidth;
+    final previousStrokeWidth = previous.strokeWidth;
+    if (targetStrokeWidth != null && previousStrokeWidth != null) {
+      strokeWidth =
+          ((targetStrokeWidth - previousStrokeWidth) * animationPercent) +
+              previousStrokeWidth;
     } else {
-      strokeWidthPx = null;
+      strokeWidth = null;
     }
   }
 
@@ -651,7 +650,7 @@ class _AnimatedPoint<D> {
 
     // Animate the radius to 0 so that we don't get a lingering point after
     // animation is done.
-    newTarget.radiusPx = 0.0;
+    newTarget.radius = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

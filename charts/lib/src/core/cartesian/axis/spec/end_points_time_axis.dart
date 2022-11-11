@@ -40,7 +40,7 @@ class EndPointsTimeAxis extends DateTimeAxis {
           decoration: renderSpec ??
               const SmallTickAxisDecoration<DateTime>(
                 labelAnchor: TickLabelAnchor.inside,
-                labelOffsetFromTickPx: 0,
+                labelOffsetFromTick: 0,
               ),
           tickProvider:
               tickProvider ?? const DateTimeEndPointsTickProviderSpec(),

@@ -109,9 +109,9 @@ class ShapesScatterPlotChart extends StatelessWidget {
         },
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         fillColorFn: (LinearSales row, _) => row.fillColor,
-        strokeWidthPxFn: (LinearSales row, _) => row.strokeWidth,
+        strokeWidthFn: (LinearSales row, _) => row.strokeWidth,
         data: data,
       )
         // Accessor function that associates each datum with a symbol renderer.
@@ -175,9 +175,9 @@ class ShapesScatterPlotChart extends StatelessWidget {
         },
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         fillColorFn: (LinearSales row, _) => row.fillColor,
-        strokeWidthPxFn: (LinearSales row, _) => row.strokeWidth,
+        strokeWidthFn: (LinearSales row, _) => row.strokeWidth,
         data: data,
       )
         // Accessor function that associates each datum with a symbol renderer.

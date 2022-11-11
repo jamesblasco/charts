@@ -116,10 +116,10 @@ class LinearScaleElement implements NumericScaleElement {
   //
 
   @override
-  void setViewportSettings(double viewportScale, double viewportTranslatePx) {
+  void setViewportSettings(double viewportScale, double viewportTranslate) {
     _viewportSettings
       ..scalingFactor = viewportScale
-      ..translatePx = viewportTranslatePx
+      ..translate = viewportTranslate
       ..domainExtent = null;
     _scaleReady = false;
   }
@@ -128,7 +128,7 @@ class LinearScaleElement implements NumericScaleElement {
   double get viewportScalingFactor => _viewportSettings.scalingFactor;
 
   @override
-  double get viewportTranslatePx => _viewportSettings.translatePx;
+  double get viewportTranslate => _viewportSettings.translate;
 
   @override
   set viewportDomain(NumericExtents extent) {
@@ -228,7 +228,7 @@ class LinearScaleElement implements NumericScaleElement {
     // If the viewport's domainExtent are set, then we can calculate the
     // viewport's translate now that the scaleFactor has been loaded.
     // The viewport also has a chance to correct the translate.
-    _viewportSettings.updateViewportTranslatePx(
+    _viewportSettings.updateViewportTranslate(
       _domainInfo,
       _scaleFunction.scalingFactor,
     );

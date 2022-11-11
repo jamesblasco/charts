@@ -23,10 +23,10 @@ import 'package:charts/core.dart';
 class DomainOutlinerState<D> implements ChartBehaviorState<D> {
   DomainOutlinerState({
     this.selectionType = SelectionModelType.info,
-    double? defaultStrokePx,
-    double? strokePaddingPx,
-  })  : defaultStrokePx = defaultStrokePx ?? 2.0,
-        strokePaddingPx = strokePaddingPx ?? 1.0 {
+    double? defaultStroke,
+    double? strokePadding,
+  })  : defaultStroke = defaultStroke ?? 2.0,
+        strokePadding = strokePadding ?? 1.0 {
     _lifecycleListener = LifecycleListener<D>(onPostprocess: _outline);
   }
   final SelectionModelType selectionType;
@@ -35,14 +35,14 @@ class DomainOutlinerState<D> implements ChartBehaviorState<D> {
   /// function.
   ///
   /// When no stroke width function is provided, this value will be used as
-  /// is. [strokePaddingPx] will not be added to [defaultStrokePx].
-  final double defaultStrokePx;
+  /// is. [strokePadding] will not be added to [defaultStroke].
+  final double defaultStroke;
 
   /// Additional stroke width added to the outline of the selected data.
   ///
   /// This value is only used when the series has a stroke width function
   /// defined.
-  final double strokePaddingPx;
+  final double strokePadding;
 
   late BaseRenderChart<D> _chart;
 
@@ -56,7 +56,7 @@ class DomainOutlinerState<D> implements ChartBehaviorState<D> {
     final selectionModel = _chart.getSelectionModel(selectionType);
 
     for (final series in seriesList) {
-      final strokeWidthPxFn = series.strokeWidthPxFn;
+      final strokeWidthFn = series.strokeWidthFn;
       final colorFn = series.colorFn;
 
       if (colorFn != null) {
@@ -68,15 +68,15 @@ class DomainOutlinerState<D> implements ChartBehaviorState<D> {
         };
       }
 
-      if (strokeWidthPxFn != null) {
-        series.strokeWidthPxFn = (int? index) {
-          final strokeWidthPx = strokeWidthPxFn(index);
+      if (strokeWidthFn != null) {
+        series.strokeWidthFn = (int? index) {
+          final strokeWidth = strokeWidthFn(index);
           if (!selectionModel.isDatumSelected(series, index)) {
-            return strokeWidthPx;
+            return strokeWidth;
           }
-          return strokeWidthPx == null
-              ? defaultStrokePx
-              : strokeWidthPx + strokePaddingPx;
+          return strokeWidth == null
+              ? defaultStroke
+              : strokeWidth + strokePadding;
         };
       }
     }

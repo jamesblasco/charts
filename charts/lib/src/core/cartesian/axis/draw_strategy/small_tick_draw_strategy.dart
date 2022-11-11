@@ -26,17 +26,17 @@ class SmallTickAxisDecoration<D> extends BaseAxisDecoration<D> {
     super.axisLineStyle,
     super.labelAnchor,
     super.labelJustification,
-    super.labelOffsetFromAxisPx,
-    super.labelCollisionOffsetFromAxisPx,
-    super.labelOffsetFromTickPx,
-    super.labelCollisionOffsetFromTickPx,
-    this.tickLengthPx,
-    super.minimumPaddingBetweenLabelsPx,
+    super.labelOffsetFromAxis,
+    super.labelCollisionOffsetFromAxis,
+    super.labelOffsetFromTick,
+    super.labelCollisionOffsetFromTick,
+    this.tickLength,
+    super.minimumPaddingBetweenLabels,
     super.labelRotation,
     super.labelCollisionRotation,
   });
   final LineStyle? lineStyle;
-  final double? tickLengthPx;
+  final double? tickLength;
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
@@ -46,23 +46,23 @@ class SmallTickAxisDecoration<D> extends BaseAxisDecoration<D> {
       SmallTickDrawStrategy<D>(
         context,
         graphicsFactory,
-        tickLengthPx: tickLengthPx,
+        tickLength: tickLength,
         lineStyle: lineStyle,
         labelStyleSpec: labelStyle,
         axisLineStyle: axisLineStyle,
         labelAnchor: labelAnchor,
         labelJustification: labelJustification,
-        labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-        labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-        labelOffsetFromTickPx: labelOffsetFromTickPx,
-        labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-        minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
+        labelOffsetFromAxis: labelOffsetFromAxis,
+        labelCollisionOffsetFromAxis: labelCollisionOffsetFromAxis,
+        labelOffsetFromTick: labelOffsetFromTick,
+        labelCollisionOffsetFromTick: labelCollisionOffsetFromTick,
+        minimumPaddingBetweenLabels: minimumPaddingBetweenLabels,
         labelRotation: labelRotation,
         labelCollisionRotation: labelCollisionRotation,
       );
 
   @override
-  List<Object?> get props => [lineStyle, tickLengthPx, super.props];
+  List<Object?> get props => [lineStyle, tickLength, super.props];
 }
 
 /// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
@@ -70,20 +70,20 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   SmallTickDrawStrategy(
     super.chartContext,
     super.graphicsFactory, {
-    double? tickLengthPx,
+    double? tickLength,
     LineStyle? lineStyle,
     super.labelStyleSpec,
     LineStyle? axisLineStyle,
     super.labelAnchor,
     super.labelJustification,
-    super.labelOffsetFromAxisPx,
-    super.labelCollisionOffsetFromAxisPx,
-    super.labelOffsetFromTickPx,
-    super.labelCollisionOffsetFromTickPx,
-    super.minimumPaddingBetweenLabelsPx,
+    super.labelOffsetFromAxis,
+    super.labelCollisionOffsetFromAxis,
+    super.labelOffsetFromTick,
+    super.labelCollisionOffsetFromTick,
+    super.minimumPaddingBetweenLabels,
     super.labelRotation,
     super.labelCollisionRotation,
-  })  : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
+  })  : tickLength = tickLength ?? StyleFactory.style.tickLength,
         lineStyle =
             StyleFactory.style.createTickLineStyle(graphicsFactory, lineStyle),
         super(
@@ -118,7 +118,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       dashPattern: lineStyle.dashPattern,
       fill: lineStyle.color,
       stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth,
+      strokeWidth: lineStyle.strokeWidth,
     );
 
     drawLabel(
@@ -142,25 +142,25 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   ) {
     Point<num> tickStart;
     Point<num> tickEnd;
-    final tickLocationPx = tick.locationPx!;
+    final tickLocation = tick.location!;
     switch (orientation) {
       case AxisOrientation.top:
-        final x = tickLocationPx;
+        final x = tickLocation;
         tickStart = Point(x, axisBounds.bottom - tickLength);
         tickEnd = Point(x, axisBounds.bottom);
         break;
       case AxisOrientation.bottom:
-        final x = tickLocationPx;
+        final x = tickLocation;
         tickStart = Point(x, axisBounds.top);
         tickEnd = Point(x, axisBounds.top + tickLength);
         break;
       case AxisOrientation.right:
-        final y = tickLocationPx;
+        final y = tickLocation;
         tickStart = Point(axisBounds.left, y);
         tickEnd = Point(axisBounds.left + tickLength, y);
         break;
       case AxisOrientation.left:
-        final y = tickLocationPx;
+        final y = tickLocation;
         tickStart = Point(axisBounds.right - tickLength, y);
         tickEnd = Point(axisBounds.right, y);
         break;

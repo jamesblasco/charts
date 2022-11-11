@@ -87,7 +87,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.blue,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeDesktopData),
       new charts.Series<LinearSales, int>(
           id: 'Tablet',
@@ -95,7 +95,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.red,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeTabletData),
       new charts.Series<LinearSales, int>(
           id: 'Mobile',
@@ -103,7 +103,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeMobileData),
       new charts.Series<LinearSales, int>(
           id: 'Chromebook',
@@ -111,7 +111,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeChromebookData),
       new charts.Series<LinearSales, int>(
           id: 'Home',
@@ -119,7 +119,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.indigo,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeHomeData),
       new charts.Series<LinearSales, int>(
           id: 'Other',
@@ -127,7 +127,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
               Colors.grey,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
-          radiusPxFn: (LinearSales sales, _) => sales.radius,
+          radiusFn: (LinearSales sales, _) => sales.radius,
           data: myFakeOtherData),
     ];
   }

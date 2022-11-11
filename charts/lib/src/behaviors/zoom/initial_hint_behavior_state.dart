@@ -102,9 +102,9 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   /// factor is only calculated on the first axis configuration.
   bool _firstAxisConfigured = false;
 
-  double? _initialViewportTranslatePx;
+  double? _initialViewportTranslate;
   double? _initialViewportScalingFactor;
-  late double _targetViewportTranslatePx;
+  late double _targetViewportTranslate;
   late double _targetViewportScalingFactor;
 
   @override
@@ -165,14 +165,13 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
 
       // Save the target viewport and scale factor from axis, because the
       // viewport can be set by the user using AxisSpec.
-      _targetViewportTranslatePx = domainAxis.viewportTranslatePx;
+      _targetViewportTranslate = domainAxis.viewportTranslate;
       _targetViewportScalingFactor = domainAxis.viewportScalingFactor;
 
       // Calculate the amount to translate from the target viewport.
       final translateAmount = domainAxis.stepSize * maxHintTranslate;
 
-      _initialViewportTranslatePx =
-          _targetViewportTranslatePx - translateAmount;
+      _initialViewportTranslate = _targetViewportTranslate - translateAmount;
 
       _initialViewportScalingFactor =
           maxHintScaleFactor ?? _targetViewportScalingFactor;
@@ -180,7 +179,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
       assert(_initialViewportScalingFactor != null);
       domainAxis.setViewportSettings(
         _initialViewportScalingFactor!,
-        _initialViewportTranslatePx!,
+        _initialViewportTranslate!,
       );
       chart!.redraw(skipAnimation: true);
     }
@@ -236,27 +235,27 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
       percent,
     );
 
-    var translatePx = _lerpDouble(
-      _initialViewportTranslatePx,
-      _targetViewportTranslatePx,
+    var translate = _lerpDouble(
+      _initialViewportTranslate,
+      _targetViewportTranslate,
       percent,
     );
 
-    // If there is a scale factor animation, need to scale the translatePx so
+    // If there is a scale factor animation, need to scale the translate so
     // the animation appears to be zooming in on the viewport when there is no
     // [maxHintTranslate] provided.
     //
     // If there is a translate hint, the animation will still first zoom in
     // and then translate the [maxHintTranslate] amount.
     if (_initialViewportScalingFactor != _targetViewportScalingFactor) {
-      translatePx = translatePx * percent;
+      translate = translate * percent;
     }
 
     final chart = this.chart!;
     final domainAxis = chart.domainAxis!;
     domainAxis.setViewportSettings(
       scaleFactor,
-      translatePx,
+      translate,
       drawAreaWidth: chart.drawAreaBounds.width,
     );
 

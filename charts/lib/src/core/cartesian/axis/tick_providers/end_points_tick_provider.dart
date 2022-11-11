@@ -68,7 +68,7 @@ class EndPointsTickProviderElement<D> extends BaseTickStrategyElement<D> {
           TickElement(
             value: start,
             textElement: graphicsFactory.createTextElement(labels[0]),
-            locationPx: scale[start]?.toDouble(),
+            location: scale[start]?.toDouble(),
           ),
         );
       }
@@ -78,7 +78,7 @@ class EndPointsTickProviderElement<D> extends BaseTickStrategyElement<D> {
           TickElement(
             value: end,
             textElement: graphicsFactory.createTextElement(labels[1]),
-            locationPx: scale[end]?.toDouble(),
+            location: scale[end]?.toDouble(),
           ),
         );
       }

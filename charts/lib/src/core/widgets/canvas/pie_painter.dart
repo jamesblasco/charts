@@ -44,7 +44,7 @@ class PiePainter {
     if (canvasPie.stroke != null && canvasPie.slices.length > 1) {
       paint.color = canvasPie.stroke!;
 
-      paint.strokeWidth = canvasPie.strokeWidthPx;
+      paint.strokeWidth = canvasPie.strokeWidth;
       paint.strokeJoin = StrokeJoin.bevel;
       paint.style = PaintingStyle.stroke;
 

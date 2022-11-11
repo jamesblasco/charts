@@ -56,8 +56,8 @@ class DateTimeScale extends MutableScaleElement<DateTime> {
   }
 
   @override
-  void setViewportSettings(double viewportScale, double viewportTranslatePx) {
-    _linearScale.setViewportSettings(viewportScale, viewportTranslatePx);
+  void setViewportSettings(double viewportScale, double viewportTranslate) {
+    _linearScale.setViewportSettings(viewportScale, viewportTranslate);
   }
 
   @override
@@ -96,7 +96,7 @@ class DateTimeScale extends MutableScaleElement<DateTime> {
   DateTimeScale copy() => DateTimeScale._copy(this);
 
   @override
-  double get viewportTranslatePx => _linearScale.viewportTranslatePx;
+  double get viewportTranslate => _linearScale.viewportTranslate;
 
   @override
   double get viewportScalingFactor => _linearScale.viewportScalingFactor;

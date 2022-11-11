@@ -89,15 +89,15 @@ class RangeTickProviderElement<D> extends TickStrategyElement<D> {
             value: spec.value,
             textElement: graphicsFactory
                 .createTextElement(spec.label ?? formattedValues![i]),
-            locationPx: (scale[spec.rangeStartValue]! +
+            location: (scale[spec.rangeStartValue]! +
                     (scale[spec.rangeEndValue]! -
                             scale[spec.rangeStartValue]!) /
                         2)
                 .toDouble(),
             rangeStartValue: spec.rangeStartValue,
-            rangeStartLocationPx: scale[spec.rangeStartValue]!.toDouble(),
+            rangeStartLocation: scale[spec.rangeStartValue]!.toDouble(),
             rangeEndValue: spec.rangeEndValue,
-            rangeEndLocationPx: scale[spec.rangeEndValue]!.toDouble(),
+            rangeEndLocation: scale[spec.rangeEndValue]!.toDouble(),
           );
         }
       } else {
@@ -108,7 +108,7 @@ class RangeTickProviderElement<D> extends TickStrategyElement<D> {
             value: spec.value,
             textElement: graphicsFactory
                 .createTextElement(spec.label ?? formattedValues![i]),
-            locationPx: scale[spec.value]?.toDouble(),
+            location: scale[spec.value]?.toDouble(),
           );
         }
       }

@@ -833,7 +833,7 @@ void main() {
       final seriesList = _createSeriesList(data);
 
       final renderer =
-          makeFakeRenderer(config: BarRendererConfig(maxBarWidthPx: 40));
+          makeFakeRenderer(config: BarRendererConfig(maxBarWidth: 40));
 
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);

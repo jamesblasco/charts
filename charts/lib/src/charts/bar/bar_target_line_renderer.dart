@@ -37,14 +37,14 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   BarTargetLineRenderer._internal({
     required BarTargetLineRendererConfig<D> super.config,
     required super.rendererId,
-  })  : _barGroupInnerPaddingPx = config.barGroupInnerPaddingPx,
+  })  : _barGroupInnerPadding = config.barGroupInnerPadding,
         super(
           layoutPaintOrder:
               config.layoutPaintOrder ?? LayoutViewPaintOrder.barTargetLine,
         );
 
   /// If we are grouped, use this spacing between the bars in a group.
-  final double _barGroupInnerPaddingPx;
+  final double _barGroupInnerPadding;
 
   /// Standard color for all bar target lines.
   final _color = const Color.fromARGB(153, 0, 0, 0);
@@ -88,7 +88,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       details.domain,
       domainAxis,
       domainAxis.rangeBand,
-      config.maxBarWidthPx,
+      config.maxBarWidth,
       details.measure?.toDouble(),
       details.measureOffset!.toDouble(),
       measureAxis,
@@ -148,7 +148,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     double? barGroupWeight,
     List<double>? allBarGroupWeights,
     required int numBarGroups,
-    double? strokeWidthPx,
+    double? strokeWidth,
     bool? measureIsNull,
     bool? measureIsNegative,
   }) {
@@ -171,7 +171,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           measureAxis: measureAxis,
           fillColor: fillColor,
           fillPattern: fillPattern,
-          strokeWidthPx: strokeWidthPx,
+          strokeWidth: strokeWidth,
           barGroupIndex: barGroupIndex,
           previousBarGroupWeight: previousBarGroupWeight,
           barGroupWeight: barGroupWeight,
@@ -199,7 +199,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
-    double? strokeWidthPx,
+    double? strokeWidth,
     required int barGroupIndex,
     double? previousBarGroupWeight,
     double? barGroupWeight,
@@ -214,14 +214,14 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       ..fillColor = fillColor
       ..fillPattern = fillPattern
       ..measureAxisPosition = measureAxisPosition
-      ..strokeWidthPx = strokeWidthPx
+      ..strokeWidth = strokeWidth
       ..measureIsNull = measureIsNull
       ..measureIsNegative = measureIsNegative
       ..points = _getTargetLinePoints(
         domainValue,
         domainAxis,
         domainWidth,
-        config.maxBarWidthPx,
+        config.maxBarWidth,
         measureValue,
         measureOffsetValue,
         measureAxis,
@@ -247,7 +247,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
         points: bar.points,
         stroke: bar.color,
         roundEndCaps: bar.roundEndCaps,
-        strokeWidthPx: bar.strokeWidthPx,
+        strokeWidth: bar.strokeWidth,
         dashPattern: bar.dashPattern,
       );
     }
@@ -258,7 +258,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     D? domainValue,
     ImmutableAxisElement<D> domainAxis,
     double domainWidth,
-    double? maxBarWidthPx,
+    double? maxBarWidth,
     double? measureValue,
     double measureOffsetValue,
     ImmutableAxisElement<num> measureAxis,
@@ -279,11 +279,11 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     // Calculate how wide each bar target line should be within the group of
     // bar target lines. If we only have one series, or are stacked, then
     // barWidth should equal domainWidth.
-    final spacingLoss = _barGroupInnerPaddingPx * (numBarGroups - 1);
+    final spacingLoss = _barGroupInnerPadding * (numBarGroups - 1);
     var desiredWidth = ((domainWidth - spacingLoss) / numBarGroups);
 
-    if (maxBarWidthPx != null) {
-      desiredWidth = min(desiredWidth, maxBarWidthPx);
+    if (maxBarWidth != null) {
+      desiredWidth = min(desiredWidth, maxBarWidth);
       domainWidth = desiredWidth * numBarGroups + spacingLoss;
     }
 
@@ -296,17 +296,17 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
           desiredWidth * numBarGroups * allBarGroupWeights[barGroupIndex];
     }
     // Get the overdraw boundaries.
-    final overDrawOuterPx = localConfig.overDrawOuterPx;
-    final overDrawPx = localConfig.overDrawPx;
+    final overDrawOuter = localConfig.overDrawOuter;
+    final overDraw = localConfig.overDraw;
 
-    final overDrawStartPx = (barGroupIndex == 0) && overDrawOuterPx != null
-        ? overDrawOuterPx
-        : overDrawPx;
+    final overDrawStart = (barGroupIndex == 0) && overDrawOuter != null
+        ? overDrawOuter
+        : overDraw;
 
-    final overDrawEndPx =
-        (barGroupIndex == numBarGroups - 1) && overDrawOuterPx != null
-            ? overDrawOuterPx
-            : overDrawPx;
+    final overDrawEnd =
+        (barGroupIndex == numBarGroups - 1) && overDrawOuter != null
+            ? overDrawOuter
+            : overDraw;
 
     // Flip bar group index for calculating location on the domain axis if RTL.
     final adjustedBarGroupIndex =
@@ -321,11 +321,10 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
     final domainStart = domainAxis.getLocation(domainValue)! -
         (domainWidth / 2) +
-        (previousAverageWidth + _barGroupInnerPaddingPx) *
-            adjustedBarGroupIndex -
-        overDrawStartPx;
+        (previousAverageWidth + _barGroupInnerPadding) * adjustedBarGroupIndex -
+        overDrawStart;
 
-    final domainEnd = domainStart + barWidth + overDrawStartPx + overDrawEndPx;
+    final domainEnd = domainStart + barWidth + overDrawStart + overDrawEnd;
 
     measureValue = measureValue ?? 0;
 
@@ -424,10 +423,9 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
       points.removeRange(pointIndex, points.length);
     }
 
-    strokeWidthPx =
-        ((localTarget.strokeWidthPx! - localPrevious.strokeWidthPx!) *
-                animationPercent) +
-            localPrevious.strokeWidthPx!;
+    strokeWidth = ((localTarget.strokeWidth! - localPrevious.strokeWidth!) *
+            animationPercent) +
+        localPrevious.strokeWidth!;
 
     roundEndCaps = localTarget.roundEndCaps;
 

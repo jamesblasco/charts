@@ -75,7 +75,7 @@ class ScatterPlotAnimationZoomChart extends StatelessWidget {
         },
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         data: data,
       )
     ];
@@ -125,7 +125,7 @@ class ScatterPlotAnimationZoomChart extends StatelessWidget {
         },
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusFn: (LinearSales sales, _) => sales.radius,
         data: data,
       )
     ];

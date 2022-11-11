@@ -34,19 +34,19 @@ class BarRenderer<D>
     required BarRendererConfig<Object?> super.config,
     required super.rendererId,
   })  : barRendererDecorator = config.barRendererDecorator,
-        _stackedBarPaddingPx = config.stackedBarPaddingPx,
-        _barGroupInnerPaddingPx = config.barGroupInnerPaddingPx,
+        _stackedBarPadding = config.stackedBarPadding,
+        _barGroupInnerPadding = config.barGroupInnerPadding,
         super(
           layoutPaintOrder: config.layoutPaintOrder ?? 0,
         );
 
   /// If we are grouped, use this spacing between the bars in a group.
-  final double _barGroupInnerPaddingPx;
+  final double _barGroupInnerPadding;
 
   /// The padding between bar stacks.
   ///
   /// The padding comes out of the bottom of the bar.
-  final double _stackedBarPaddingPx;
+  final double _stackedBarPadding;
 
   final BarRendererDecorator<Object?>? barRendererDecorator;
 
@@ -79,7 +79,7 @@ class BarRenderer<D>
       details.domain,
       domainAxis,
       domainAxis.rangeBand,
-      config.maxBarWidthPx,
+      config.maxBarWidth,
       details.measure?.toDouble(),
       details.measureOffset!.toDouble(),
       measureAxis,
@@ -139,7 +139,7 @@ class BarRenderer<D>
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
-    double? strokeWidthPx,
+    double? strokeWidth,
     required int barGroupIndex,
     double? previousBarGroupWeight,
     double? barGroupWeight,
@@ -167,7 +167,7 @@ class BarRenderer<D>
           measureAxis: measureAxis,
           fillColor: fillColor,
           fillPattern: fillPattern,
-          strokeWidthPx: strokeWidthPx,
+          strokeWidth: strokeWidth,
           barGroupIndex: barGroupIndex,
           previousBarGroupWeight: previousBarGroupWeight,
           barGroupWeight: barGroupWeight,
@@ -195,7 +195,7 @@ class BarRenderer<D>
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
-    double? strokeWidthPx,
+    double? strokeWidth,
     required int barGroupIndex,
     double? previousBarGroupWeight,
     double? barGroupWeight,
@@ -210,15 +210,15 @@ class BarRenderer<D>
       ..fillColor = fillColor
       ..fillPattern = fillPattern
       ..measureAxisPosition = measureAxisPosition
-      ..roundPx = details.roundPx
-      ..strokeWidthPx = strokeWidthPx
+      ..round = details.round
+      ..strokeWidth = strokeWidth
       ..measureIsNull = measureIsNull
       ..measureIsNegative = measureIsNegative
       ..bounds = _getBarBounds(
         domainValue,
         domainAxis,
         domainWidth,
-        config.maxBarWidthPx,
+        config.maxBarWidth,
         measureValue,
         measureOffsetValue,
         measureAxis,
@@ -261,19 +261,19 @@ class BarRenderer<D>
                 max(
                   0,
                   bar.bounds!.top +
-                      (measureIsNegative ? _stackedBarPaddingPx : 0),
+                      (measureIsNegative ? _stackedBarPadding : 0),
                 ),
                 bar.bounds!.width,
-                max(0, bar.bounds!.height - _stackedBarPaddingPx),
+                max(0, bar.bounds!.height - _stackedBarPadding),
               )
             : Rectangle<double>(
                 max(
                   0,
                   bar.bounds!.left +
-                      (measureIsNegative ? _stackedBarPaddingPx : 0),
+                      (measureIsNegative ? _stackedBarPadding : 0),
                 ),
                 bar.bounds!.top,
-                max(0, bar.bounds!.width - _stackedBarPaddingPx),
+                max(0, bar.bounds!.width - _stackedBarPadding),
                 bar.bounds!.height,
               );
       }
@@ -285,7 +285,7 @@ class BarRenderer<D>
           fill: bar.fillColor,
           pattern: bar.fillPattern,
           stroke: bar.color,
-          strokeWidthPx: bar.strokeWidthPx,
+          strokeWidth: bar.strokeWidth,
         ),
       );
 
@@ -319,7 +319,7 @@ class BarRenderer<D>
     final barStack = CanvasBarStack(
       bars,
       radius: cornerStrategy.getRadius(maxBarWidth),
-      stackedBarPadding: _stackedBarPaddingPx,
+      stackedBarPadding: _stackedBarPadding,
       roundTopLeft: roundTopLeft,
       roundTopRight: roundTopRight,
       roundBottomLeft: roundBottomLeft,
@@ -409,7 +409,7 @@ class BarRenderer<D>
     D? domainValue,
     ImmutableAxisElement<D> domainAxis,
     double domainWidth,
-    double? maxBarWidthPx,
+    double? maxBarWidth,
     double? measureValue,
     double measureOffsetValue,
     ImmutableAxisElement<num> measureAxis,
@@ -432,11 +432,11 @@ class BarRenderer<D>
     // Calculate how wide each bar should be within the group of bars. If we
     // only have one series, or are stacked, then barWidth should equal
     // domainWidth.
-    final spacingLoss = _barGroupInnerPaddingPx * (numBarGroups - 1);
+    final spacingLoss = _barGroupInnerPadding * (numBarGroups - 1);
     var desiredWidth = (domainWidth - spacingLoss) / numBarGroups;
 
-    if (maxBarWidthPx != null) {
-      desiredWidth = min(desiredWidth, maxBarWidthPx);
+    if (maxBarWidth != null) {
+      desiredWidth = min(desiredWidth, maxBarWidth);
       domainWidth = desiredWidth * numBarGroups + spacingLoss;
     }
 
@@ -468,8 +468,7 @@ class BarRenderer<D>
 
     final domainStart = domainAxis.getLocation(domainValue)! -
         (domainWidth / 2) +
-        (previousAverageWidth + _barGroupInnerPaddingPx) *
-            adjustedBarGroupIndex;
+        (previousAverageWidth + _barGroupInnerPadding) * adjustedBarGroupIndex;
 
     final domainEnd = domainStart + barWidth;
 
@@ -530,7 +529,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
   BarRendererElement.clone(BarRendererElement<D> other) : super.clone(other) {
     series = other.series;
     bounds = other.bounds;
-    roundPx = other.roundPx;
+    round = other.round;
     index = other.index;
     _datum = other._datum;
   }
@@ -540,7 +539,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
   @override
   Rectangle<double>? bounds;
 
-  int? roundPx;
+  int? round;
 
   @override
   int? index;
@@ -586,7 +585,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
       bottom - top,
     );
 
-    roundPx = localTarget.roundPx;
+    round = localTarget.round;
 
     super.updateAnimationPercent(previous, target, animationPercent);
   }

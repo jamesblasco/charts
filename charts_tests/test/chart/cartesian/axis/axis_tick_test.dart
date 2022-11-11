@@ -43,15 +43,13 @@ class FakeTextElement implements TextElement {
 }
 
 /// Helper to create a tick for testing.
-TickElement<String> _createTestTick(String value, double locationPx) {
+TickElement<String> _createTestTick(String value, double location) {
   return TickElement(
-      value: value,
-      textElement: FakeTextElement(value),
-      locationPx: locationPx);
+      value: value, textElement: FakeTextElement(value), location: location);
 }
 
 void _verify(TickElement<String> tick, {double location, double opacity}) {
-  expect(tick.locationPx, equals(location));
+  expect(tick.location, equals(location));
   expect((tick.textElement as FakeTextElement).opacity, equals(opacity));
 }
 

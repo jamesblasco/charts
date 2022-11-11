@@ -89,8 +89,7 @@ void main() {
   setUp(() {
     selectNearestByDomain = true;
 
-    renderer =
-        LineRenderer<int>(config: LineRendererConfig(strokeWidthPx: 1.0));
+    renderer = LineRenderer<int>(config: LineRendererConfig(strokeWidth: 1.0));
     final layoutBounds = Rectangle<double>(70, 20, 200, 100);
     renderer.layout(layoutBounds, layoutBounds);
     return renderer;
@@ -350,7 +349,7 @@ void main() {
       selectNearestByDomain = true;
 
       renderer = LineRenderer<int>(
-          config: LineRendererConfig(strokeWidthPx: 1.0, includeArea: true));
+          config: LineRendererConfig(strokeWidth: 1.0, includeArea: true));
       final layoutBounds = Rectangle<double>(70, 20, 200, 100);
       renderer.layout(layoutBounds, layoutBounds);
       return renderer;

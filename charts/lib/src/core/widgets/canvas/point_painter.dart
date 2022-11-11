@@ -27,7 +27,7 @@ class PointPainter {
     required double radius,
     Color? fill,
     Color? stroke,
-    double? strokeWidthPx,
+    double? strokeWidth,
   }) {
     if (point == null) {
       return;
@@ -46,9 +46,9 @@ class PointPainter {
 
     // [Canvas.drawCircle] does not support drawing a circle with both a fill
     // and a stroke at this time. Use a separate circle for the stroke.
-    if (stroke != null && strokeWidthPx != null && strokeWidthPx > 0.0) {
+    if (stroke != null && strokeWidth != null && strokeWidth > 0.0) {
       paint.color = stroke;
-      paint.strokeWidth = strokeWidthPx;
+      paint.strokeWidth = strokeWidth;
       paint.strokeJoin = StrokeJoin.bevel;
       paint.style = PaintingStyle.stroke;
 

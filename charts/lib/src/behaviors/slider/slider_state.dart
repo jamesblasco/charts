@@ -296,7 +296,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       ),
       fill: _style.fillColor,
       stroke: _style.strokeColor,
-      strokeWidthPx: _style.strokeWidthPx,
+      strokeWidth: _style.strokeWidth,
     );
 
     _sliderHandle!.setNewTarget(element);
@@ -537,7 +537,7 @@ class SliderStyle extends Equatable {
     this.handleSize = const Rectangle<double>(0, 0, 10, 20),
     Color? strokeColor,
     this.handlePosition = SliderHandlePosition.middle,
-    this.strokeWidthPx = 2.0,
+    this.strokeWidth = 2.0,
   })  : fillColor = fillColor ?? StyleFactory.style.sliderFillColor,
         strokeColor = strokeColor ?? StyleFactory.style.sliderStrokeColor;
 
@@ -557,7 +557,7 @@ class SliderStyle extends Equatable {
   Rectangle<double> handleSize;
 
   /// Stroke width of the slider line and the slider handle.
-  double strokeWidthPx;
+  double strokeWidth;
 
   /// Stroke color of the slider line and hte slider handle
   Color strokeColor = StyleFactory.style.sliderStrokeColor;
@@ -566,7 +566,7 @@ class SliderStyle extends Equatable {
         fillColor,
         handleOffset,
         handleSize,
-        strokeWidthPx,
+        strokeWidth,
         strokeColor,
         handlePosition
       ];
@@ -636,7 +636,7 @@ class _SliderLayoutView<D> extends LayoutView {
         Point<num>(sliderElement.domainCenterPoint.x, _drawAreaBounds.bottom),
       ],
       stroke: sliderElement.stroke,
-      strokeWidthPx: sliderElement.strokeWidthPx,
+      strokeWidth: sliderElement.strokeWidth,
     );
 
     _handleRenderer.paint(
@@ -644,7 +644,7 @@ class _SliderLayoutView<D> extends LayoutView {
       sliderElement.buttonBounds,
       fillColor: sliderElement.fill,
       strokeColor: sliderElement.stroke,
-      strokeWidthPx: sliderElement.strokeWidthPx,
+      strokeWidth: sliderElement.strokeWidth,
     );
   }
 
@@ -662,13 +662,13 @@ class _SliderElement<D> {
     required this.buttonBounds,
     required this.fill,
     required this.stroke,
-    required this.strokeWidthPx,
+    required this.strokeWidth,
   });
   Point<double> domainCenterPoint;
   Rectangle<double> buttonBounds;
   Color fill;
   Color stroke;
-  double strokeWidthPx;
+  double strokeWidth;
 
   _SliderElement<D> clone() {
     return _SliderElement<D>(
@@ -676,7 +676,7 @@ class _SliderElement<D> {
       buttonBounds: buttonBounds,
       fill: fill,
       stroke: stroke,
-      strokeWidthPx: strokeWidthPx,
+      strokeWidth: strokeWidth,
     );
   }
 
@@ -722,9 +722,9 @@ class _SliderElement<D> {
 
     stroke = getAnimatedColor(previous.stroke, target.stroke, animationPercent);
 
-    strokeWidthPx =
-        ((target.strokeWidthPx - previous.strokeWidthPx) * animationPercent) +
-            previous.strokeWidthPx;
+    strokeWidth =
+        ((target.strokeWidth - previous.strokeWidth) * animationPercent) +
+            previous.strokeWidth;
   }
 }
 
@@ -764,7 +764,7 @@ class _AnimatedSlider<D> {
 
     // Animate the stroke width to 0 so that we don't get a lingering line after
     // animation is done.
-    newTarget.strokeWidthPx = 0.0;
+    newTarget.strokeWidth = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;
