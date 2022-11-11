@@ -103,7 +103,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       measure: measure,
       series: series,
       color: color,
-      chartPosition: NullablePoint.from(chartPosition),
+      chartPosition: NullableOffset.from(chartPosition),
     );
   }
 
@@ -261,7 +261,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       final innerRadius = arcList.innerRadius!;
       final radius = arcList.radius!;
 
-      final distance = (chartPoint -center).distance;
+      final distance = (chartPoint - center).distance;
 
       // Calculate the angle of [chartPoint] from the center of the arcs.
       var chartPointAngle =
@@ -311,7 +311,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint.from(chartPosition),
+      chartPosition: NullableOffset.from(chartPosition),
     );
   }
 }

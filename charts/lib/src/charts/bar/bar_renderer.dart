@@ -90,15 +90,15 @@ class BarRenderer<D>
       numBarGroups,
     );
 
-    NullablePoint chartPosition;
+    NullableOffset chartPosition;
 
     if (renderingVertically) {
-      chartPosition = NullablePoint(
+      chartPosition = NullableOffset(
         (bounds.left + (bounds.width / 2)).toDouble(),
         bounds.top.toDouble(),
       );
     } else {
-      chartPosition = NullablePoint(
+      chartPosition = NullableOffset(
         isRtl ? bounds.left.toDouble() : bounds.right.toDouble(),
         (bounds.top + (bounds.height / 2)).toDouble(),
       );
@@ -578,7 +578,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
         ((targetBounds.left - previousBounds.left) * animationPercent) +
             previousBounds.left;
 
-    bounds =  Rect.fromLTWH(
+    bounds = Rect.fromLTWH(
       left,
       top,
       right - left,
@@ -604,7 +604,7 @@ class AnimatedBar<D> extends BaseAnimatedBar<D, BarRendererElement<D>> {
     final localTarget = target as BarRendererElement<D>;
 
     // TODO: Animate out bars in the middle of a stack.
-    localTarget.bounds =  Rect.fromLTWH(
+    localTarget.bounds = Rect.fromLTWH(
       localTarget.bounds!.left + (localTarget.bounds!.width / 2).round(),
       localTarget.measureAxisPosition!,
       0,

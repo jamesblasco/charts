@@ -13,11 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle;
 
 import 'package:charts/charts.dart';
-import 'package:charts/src/core/layout/layout_config.dart' show LayoutConfig;
-import 'package:charts/src/core/layout/layout_view.dart' show LayoutView;
 
 abstract class LayoutManager {
   /// Adds a view to be managed by the LayoutManager.

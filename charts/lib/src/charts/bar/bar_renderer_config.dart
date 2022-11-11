@@ -77,6 +77,10 @@ class ConstCornerStrategy extends CornerStrategy {
 
   @override
   List<Object?> get props => [radius];
+
+
+
+
 }
 
 /// Strategy for no corner radius.

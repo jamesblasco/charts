@@ -13,11 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Rectangle;
 
 import 'package:charts/charts/pie.dart';
 import 'package:charts/charts/sunburst.dart';
-import 'package:flutter/material.dart';
 
 /// Renders labels for sunburst arc renderers. Configures label based on arc's
 /// position via innerRingArcLabelPosition, innerRingLeafArcLabelPosition, and

@@ -17,7 +17,6 @@ import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show max, min, Point, Rectangle;
 
 import 'package:charts/charts.dart';
-import 'package:charts/core.dart';
 import 'package:meta/meta.dart';
 
 /// Chart behavior that monitors the specified [SelectionModel] and renders a
@@ -354,7 +353,7 @@ class _LinePointLayoutView<D> extends LayoutView {
       if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
-      final point = pointElement.point.toPoint();
+      final point = pointElement.point.toOffset();
 
       final roundedX = point.dx;
       final roundedY = point.dy;
@@ -410,7 +409,7 @@ class _LinePointLayoutView<D> extends LayoutView {
       if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
-      final point = pointElement.point.toPoint();
+      final point = pointElement.point.toOffset();
 
       final roundedX = point.dx.round();
       final roundedY = point.dy.round();
@@ -487,7 +486,7 @@ class _LinePointLayoutView<D> extends LayoutView {
       if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
-      final point = pointElement.point.toPoint();
+      final point = pointElement.point.toOffset();
 
       final bounds = Rect.fromLTWH(
         point.dx - pointElement.radius,
@@ -515,7 +514,7 @@ class _LinePointLayoutView<D> extends LayoutView {
   bool get isSeriesRenderer => false;
 }
 
-class _DatumPoint<D> extends NullablePoint {
+class _DatumPoint<D> extends NullableOffset {
   const _DatumPoint({
     this.datum,
     this.domain,

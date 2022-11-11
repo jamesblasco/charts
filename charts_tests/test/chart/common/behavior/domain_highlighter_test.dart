@@ -35,6 +35,7 @@ class MockChart extends Mock implements BaseRenderChart {
   }
 }
 
+// ignore: must_be_immutable
 class MockSelectionModel extends Mock implements MutableSelectionModel {
   SelectionModelListener lastListener;
 

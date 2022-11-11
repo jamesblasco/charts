@@ -16,7 +16,6 @@
 import 'dart:math' show Point, Rectangle, max;
 
 import 'package:charts/charts.dart';
-import 'package:charts/core.dart';
 import 'package:meta/meta.dart';
 
 /// Unique identifier used to associate custom series renderers on a chart with

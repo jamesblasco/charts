@@ -191,7 +191,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             domainWidth: domainAxis.rangeBand,
             fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
             measureValue: maxMeasureValue,
-            measureOffsetValue: 0.0,
+            measureOffsetValue: 0,
             measureAxisPosition: measureAxisPosition,
             measureAxis: measureAxis,
             numBarGroups: barGroupCount,
@@ -222,7 +222,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
           domainWidth: domainAxis.rangeBand,
           fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
           measureValue: maxMeasureValue,
-          measureOffsetValue: 0.0,
+          measureOffsetValue: 0,
           measureAxisPosition: measureAxisPosition,
           measureAxis: measureAxis,
           numBarGroups: barGroupCount,
@@ -302,7 +302,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
               domainWidth: domainAxis.rangeBand,
               fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
               measureValue: maxMeasureValue,
-              measureOffsetValue: 0.0,
+              measureOffsetValue: 0,
               measureAxisPosition: measureAxisPosition,
               measureAxis: measureAxis,
               numBarGroups: barGroupCount,
@@ -332,7 +332,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             domainWidth: domainAxis.rangeBand,
             fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
             measureValue: maxMeasureValue,
-            measureOffsetValue: 0.0,
+            measureOffsetValue: 0,
             measureAxisPosition: measureAxisPosition,
             measureAxis: measureAxis,
             numBarGroups: barGroupCount,
@@ -351,7 +351,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
 
   /// Gets the maximum measure value that will fit in the draw area.
   double _getMaxMeasureValue(
-      ImmutableAxisElement<num> measureAxis, bool laneIsNegative) {
+      ImmutableAxisElement<num> measureAxis, bool laneIsNegative,) {
     final pos = chart.vertical
         ? chart.drawAreaBounds.top
         : ((isRtl && !laneIsNegative) || (!isRtl && laneIsNegative))

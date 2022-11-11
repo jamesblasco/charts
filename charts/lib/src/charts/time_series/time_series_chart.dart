@@ -90,7 +90,7 @@ class TimeSeriesRenderChart extends CartesianRenderChart<DateTime> {
 
   @override
   MutableAxisElement<DateTime> createDomainAxisFromSpec(
-      AxisData<DateTime> axisSpec) {
+      AxisData<DateTime> axisSpec,) {
     return (axisSpec as DateTimeAxis).createDateTimeAxis(dateTimeFactory);
   }
 }

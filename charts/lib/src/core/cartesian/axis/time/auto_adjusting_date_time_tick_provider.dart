@@ -122,7 +122,7 @@ class AutoAdjustingDateTimeTickProvider extends TickStrategyElement<DateTime> {
 
   /// Find the closest tick provider based on the tick hint.
   TimeRangeTickProviderElement _getClosestTickProvider(
-      TickHint<DateTime> tickHint) {
+      TickHint<DateTime> tickHint,) {
     final stepSize = ((tickHint.end.difference(tickHint.start).inMilliseconds) /
             (tickHint.tickCount - 1))
         .round();

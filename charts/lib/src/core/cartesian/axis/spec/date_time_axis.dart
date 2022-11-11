@@ -277,7 +277,7 @@ class AutoDateTimeTickFormatterSpec extends DateTimeTickFormatterSpec {
     }
 
     return DateTimeTickFormatterElement(context.dateTimeFactory,
-        overrides: map);
+        overrides: map,);
   }
 
   TimeTickFormatterImplElement _makeFormatter(

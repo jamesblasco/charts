@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle;
 import 'package:charts/charts/link.dart' hide GraphLink;
 import 'package:charts/src/core/render/chart_canvas.dart';
 
@@ -86,7 +85,7 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
     const chartPosition = Offset(0, 0);
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint.from(chartPosition),
+      chartPosition: NullableOffset.from(chartPosition),
     );
   }
 

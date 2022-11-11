@@ -13,11 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point;
 
 import 'package:charts/charts.dart';
-import 'package:charts/src/core/common/gesture_listener.dart'
-    show GestureListener;
 import 'package:collection/collection.dart' show IterableExtension;
 
 /// Listens to all gestures and proxies to child listeners.

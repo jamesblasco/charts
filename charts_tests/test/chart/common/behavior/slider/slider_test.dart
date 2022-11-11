@@ -15,7 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math';
 import 'package:charts/charts.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -130,21 +129,21 @@ void main() {
         measureFn: (_, __) => null));
 
     _details1 = DatumDetails(
-        chartPosition: NullablePoint(20.0, 80.0),
+        chartPosition: NullableOffset(20.0, 80.0),
         datum: 'myDatum1',
         domain: 1.0,
         series: _series1,
         domainDistance: 10.0,
         measureDistance: 20.0);
     _details2 = DatumDetails(
-        chartPosition: NullablePoint(40.0, 80.0),
+        chartPosition: NullableOffset(40.0, 80.0),
         datum: 'myDatum2',
         domain: 2.0,
         series: _series1,
         domainDistance: 10.0,
         measureDistance: 20.0);
     _details3 = DatumDetails(
-        chartPosition: NullablePoint(90.0, 80.0),
+        chartPosition: NullableOffset(90.0, 80.0),
         datum: 'myDatum3',
         domain: 4.5,
         series: _series1,

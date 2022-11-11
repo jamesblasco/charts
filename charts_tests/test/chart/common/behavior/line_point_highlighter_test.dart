@@ -15,7 +15,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle;
 
 import 'package:charts/charts.dart';
 
@@ -83,7 +82,7 @@ class MockSeriesRenderer<D> extends BaseSeriesRenderer<D> {
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
       DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    return DatumDetails.from(details, chartPosition: NullablePoint(0.0, 0.0));
+    return DatumDetails.from(details, chartPosition: NullableOffset(0.0, 0.0));
   }
 }
 

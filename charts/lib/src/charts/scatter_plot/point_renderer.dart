@@ -14,12 +14,12 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
+import 'dart:math' show min, Point, Rectangle;
+
 import 'package:charts/charts.dart';
 import 'package:collection/collection.dart';
-import 'dart:math' show min, Point, Rectangle;
-import 'package:vector_math/vector_math.dart' show Vector2;
-import 'package:charts/charts/scatter_plot.dart';
 import 'package:flutter/foundation.dart';
+import 'package:vector_math/vector_math.dart' show Vector2;
 
 const pointElementsKey =
     AttributeKey<List<PointRendererElement<Object>>>('PointRenderer.elements');
@@ -380,7 +380,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         // near the edge will be allowed to render partially outside. This
         // prevents harshly clipping off half of the shape.
         if (point.point!.dy != null &&
-            componentBounds!.containsPoint(point.point!.toPoint())) {
+            componentBounds!.containsPoint(point.point!.toOffset())) {
           final bounds = Rect.fromLTWH(
             point.point!.dx! - point.radius,
             point.point!.dy! - point.radius,
@@ -610,7 +610,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         : _maxInitialDistance;
 
     var relativeDistance = datumPoint.dy != null
-        ?  (datumPoint.toPoint() -  chartPoint).distance
+        ? (datumPoint.toOffset() - chartPoint).distance
         : _maxInitialDistance;
 
     var insidePoint = false;
@@ -699,15 +699,15 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
 
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint(point.dx, point.dy),
-      chartPositionLower: NullablePoint(point.xLower, point.yLower),
-      chartPositionUpper: NullablePoint(point.xUpper, point.yUpper),
+      chartPosition: NullableOffset(point.dx, point.dy),
+      chartPositionLower: NullableOffset(point.xLower, point.yLower),
+      chartPositionUpper: NullableOffset(point.xUpper, point.yUpper),
       symbolRenderer: nearestSymbolRenderer,
     );
   }
 }
 
-class DatumPoint<D> extends NullablePoint {
+class DatumPoint<D> extends NullableOffset {
   const DatumPoint({
     this.datum,
     this.domain,

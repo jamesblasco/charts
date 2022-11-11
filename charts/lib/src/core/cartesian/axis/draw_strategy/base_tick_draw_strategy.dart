@@ -216,7 +216,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
     List<TickElement<D>>? ticks,
     AxisOrientation? orientation,
   ) {
-    List<TickElement<D>>? effectiveTicks = ticks;
+    var effectiveTicks = ticks;
     // TODO: Collision analysis for rotated labels are not
     // supported yet.
 
@@ -331,7 +331,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
     // text and the axis baseline (even if it isn't drawn).
 
     final maxHorizontalSliceWidth =
-        ticks.fold<double>(0.0, (double prevMax, tick) {
+        ticks.fold<double>(0, (double prevMax, tick) {
       final labelElements = splitLabel(tick.textElement!);
 
       return max(

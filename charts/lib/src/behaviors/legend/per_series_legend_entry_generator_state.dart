@@ -209,4 +209,8 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable
         legendDefaultMeasure,
         entryTextStyle
       ];
+
+
+
+
 }

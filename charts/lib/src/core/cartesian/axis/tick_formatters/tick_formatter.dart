@@ -15,7 +15,6 @@
 
 import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 @immutable

@@ -38,8 +38,7 @@ class FakeNumericTickFormatter extends TickFormatterElement<num> {
     return tickValues.map((value) => value.toString()).toList();
   }
 
-  @override
-  List<Object> get props => throw UnimplementedError();
+
 }
 
 class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}

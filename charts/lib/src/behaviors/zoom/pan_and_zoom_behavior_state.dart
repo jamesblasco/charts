@@ -15,7 +15,6 @@
 
 import 'dart:math' show min, max, Point;
 
-import 'package:charts/behaviors.dart';
 import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show protected;
 

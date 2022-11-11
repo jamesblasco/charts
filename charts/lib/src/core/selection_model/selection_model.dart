@@ -145,6 +145,10 @@ class SelectionModel<D> extends Equatable {
 
   @override
   List<Object?> get props => [_selectedDatum, _selectedSeries];
+
+
+
+
 }
 
 /// A [SelectionModel] that can be updated.

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Rectangle, Point;
 
 import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
@@ -329,7 +328,7 @@ abstract class BaseRenderChart<D> {
       for (final dynamic datum in series.data) {
         details.add(
           getSeriesRenderer(rendererId).getDetailsForSeriesDatum(
-              SeriesDatum<D>(series: series, datum: datum)),
+              SeriesDatum<D>(series: series, datum: datum),),
         );
       }
     }

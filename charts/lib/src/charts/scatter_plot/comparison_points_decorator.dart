@@ -13,11 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle;
-import 'dart:ui';
 
 import 'package:charts/charts.dart';
-import 'package:charts/charts/scatter_plot.dart';
 import 'package:flutter/foundation.dart';
 
 /// Decorates a point chart by drawing a shape connecting the domain and measure
@@ -147,7 +144,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
       if (p != null &&
           bounds.containsPoint(
-              Offset(p.dx.roundToDouble(), p.dy.roundToDouble()))) {
+              Offset(p.dx.roundToDouble(), p.dy.roundToDouble()),)) {
         return p;
       }
     }

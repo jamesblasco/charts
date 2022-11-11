@@ -17,7 +17,6 @@ import 'dart:collection' show Queue;
 import 'dart:math' show MutableRectangle, Point, Rectangle, min;
 
 import 'package:charts/charts.dart';
-import 'package:charts/charts/treemap.dart';
 import 'package:flutter/foundation.dart';
 
 /// Key for storing a list of treemap renderer elements.
@@ -228,7 +227,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
     );
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint.from(chartPosition),
+      chartPosition: NullableOffset.from(chartPosition),
     );
   }
 
@@ -356,7 +355,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           length > 0 ? (element.area / length) : 0,
         );
         element.boundingRect = Rect.fromLTWH(left.toDouble(), top.toDouble(),
-            length.toDouble(), height.toDouble());
+            length.toDouble(), height.toDouble(),);
         top += height;
       }
       return Rect.fromLTWH(
@@ -375,7 +374,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           length > 0 ? (element.area / length) : 0,
         );
         element.boundingRect = Rect.fromLTWH(left.toDouble(), top.toDouble(),
-            width.toDouble(), length.toDouble());
+            width.toDouble(), length.toDouble(),);
         left += width;
       }
       return Rect.fromLTWH(

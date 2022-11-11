@@ -99,15 +99,15 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
       numBarGroups,
     );
 
-    NullablePoint chartPosition;
+    NullableOffset chartPosition;
 
     if (renderingVertically) {
-      chartPosition = NullablePoint(
+      chartPosition = NullableOffset(
         (points[0].dx + (points[1].dx - points[0].dx) / 2).toDouble(),
         points[0].dy.toDouble(),
       );
     } else {
-      chartPosition = NullablePoint(
+      chartPosition = NullableOffset(
         points[0].dx.toDouble(),
         (points[0].dy + (points[1].dy - points[0].dy) / 2).toDouble(),
       );
@@ -280,7 +280,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     // bar target lines. If we only have one series, or are stacked, then
     // barWidth should equal domainWidth.
     final spacingLoss = _barGroupInnerPadding * (numBarGroups - 1);
-    var desiredWidth = ((domainWidth - spacingLoss) / numBarGroups);
+    var desiredWidth = (domainWidth - spacingLoss) / numBarGroups;
 
     if (maxBarWidth != null) {
       desiredWidth = min(desiredWidth, maxBarWidth);
@@ -314,7 +314,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
     // Calculate the start and end of the bar target line, taking into account
     // accumulated padding for grouped bars.
-    final num previousAverageWidth = adjustedBarGroupIndex > 0
+    final previousAverageWidth = adjustedBarGroupIndex > 0
         ? (domainWidth - spacingLoss) *
             (previousBarGroupWeight! / adjustedBarGroupIndex)
         : 0;

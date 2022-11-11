@@ -13,9 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Rectangle;
 import 'package:charts/charts.dart';
-import 'package:charts/src/core/layout/layout_view.dart';
 
 class SizeList {
   final _sizes = <double>[];

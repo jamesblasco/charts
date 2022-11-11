@@ -574,7 +574,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    double maxWidth = 0;
+    double maxWidth = 0.0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -676,8 +676,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    double labelX = 0;
-    double labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -769,8 +769,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    double labelX = 0;
-    double labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -889,8 +889,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    double labelX = 0;
-    double labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -987,8 +987,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    double labelX = 0;
-    double labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);

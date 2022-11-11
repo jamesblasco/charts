@@ -8,7 +8,6 @@
 /// A Very Good Project created by Very Good CLI.
 library charts;
 
-import 'dart:math';
 import 'dart:ui';
 
 export 'core.dart';

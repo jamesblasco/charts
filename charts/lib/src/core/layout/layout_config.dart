@@ -107,7 +107,7 @@ class LayoutValue extends Equatable {
   /// is also set, then must be less than [maxPercent].
   /// [maxPercent] if set must be between 0 and 100 inclusive.
   factory LayoutValue.relativeBetween(
-      {double? minPercent, double? maxPercent}) {
+      {double? minPercent, double? maxPercent,}) {
     // Percent must be within 0 to 100
     assert(minPercent == null || (minPercent >= 0 && minPercent <= 100));
     assert(maxPercent == null || (maxPercent >= 0 && maxPercent <= 100));

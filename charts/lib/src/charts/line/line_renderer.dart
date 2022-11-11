@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
-import 'dart:math' show Rectangle, Point;
 
 import 'package:charts/charts/line.dart';
 import 'package:charts/charts/scatter_plot.dart';
@@ -1066,7 +1065,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           canvas.drawPolygon(
             clipBounds: _getClipBoundsForExtent(area.positionExtent),
             fill: area.areaColor ?? area.color,
-            points: area.points.toPoints(),
+            points: area.points.toOffsets(),
           );
         });
       }
@@ -1086,7 +1085,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           canvas.drawPolygon(
             clipBounds: _getClipBoundsForExtent(bound.positionExtent),
             fill: bound.areaColor ?? bound.color,
-            points: bound.points.toPoints(),
+            points: bound.points.toOffsets(),
           );
         });
       }
@@ -1105,7 +1104,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           canvas.drawLine(
             clipBounds: _getClipBoundsForExtent(line.positionExtent!),
             dashPattern: line.dashPattern,
-            points: line.points!.toPoints(),
+            points: line.points!.toOffsets(),
             stroke: line.color,
             strokeWidth: line.strokeWidth,
             roundEndCaps: line.roundEndCaps,
@@ -1211,7 +1210,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           if (p.dy != null) {
             measureDistance = (p.dy! - chartPoint.dy).abs();
             domainDistance = (p.dx! - chartPoint.dx).abs();
-            relativeDistance = (p.toPoint() - chartPoint).distance;
+            relativeDistance = (p.toOffset() - chartPoint).distance;
           } else {
             // Null measures have no real position, so make them the farthest
             // away by real distance.
@@ -1257,7 +1256,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       if (nearestPoint != null) {
         nearest.add(
           DatumDetails<D>(
-            chartPosition: NullablePoint(nearestPoint.dx, nearestPoint.dy),
+            chartPosition: NullableOffset(nearestPoint.dx, nearestPoint.dy),
             datum: nearestPoint.datum,
             domain: nearestPoint.domain,
             series: nearestPoint.series,
@@ -1336,13 +1335,13 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       details.measureOffset,
       measureAxis,
     );
-    final chartPosition = NullablePoint(point.dx, point.dy);
+    final chartPosition = NullableOffset(point.dx, point.dy);
 
     return DatumDetails.from(details, chartPosition: chartPosition);
   }
 }
 
-class _DatumPoint<D> extends NullablePoint {
+class _DatumPoint<D> extends NullableOffset {
   const _DatumPoint({
     this.datum,
     this.domain,

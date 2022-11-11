@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Rectangle;
 import 'package:charts/charts/bar.dart';
 import 'package:flutter/material.dart';
 
@@ -409,7 +408,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     return graphicsFactory
         .createTextPaint()
         .copyWith(
-            color: Colors.black, fontWeight: FontWeight.w400, fontSize: 12)
+            color: Colors.black, fontWeight: FontWeight.w400, fontSize: 12,)
         .merge(labelSpec);
   }
 

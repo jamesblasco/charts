@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math';
 
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart';
@@ -78,9 +77,9 @@ class DatumDetails<D> {
     FillPatternType? fillPattern,
     Color? areaColor,
     List<int>? dashPattern,
-    NullablePoint? chartPosition,
-    NullablePoint? chartPositionLower,
-    NullablePoint? chartPositionUpper,
+    NullableOffset? chartPosition,
+    NullableOffset? chartPositionLower,
+    NullableOffset? chartPositionUpper,
     Rect? bounds,
     DomainFormatter<D>? domainFormatter,
     double? domainDistance,
@@ -191,15 +190,15 @@ class DatumDetails<D> {
 
   /// The chart position of the (domain, measure) for the [datum] from a
   /// renderer.
-  final NullablePoint? chartPosition;
+  final NullableOffset? chartPosition;
 
   /// The chart position of the (domainLowerBound, measureLowerBound) for the
   /// [datum] from a renderer.
-  final NullablePoint? chartPositionLower;
+  final NullableOffset? chartPositionLower;
 
   /// The chart position of the (domainUpperBound, measureUpperBound) for the
   /// [datum] from a renderer.
-  final NullablePoint? chartPositionUpper;
+  final NullableOffset? chartPositionUpper;
 
   /// The bounding box for the chart space occupied by this datum.
   ///

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle;
 import 'package:charts/charts/sankey.dart';
 
 /// Sankey Renderer for the Sankey Chart using Graph data structure
@@ -63,7 +62,7 @@ class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
     const chartPosition = Offset(0, 0);
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint.from(chartPosition),
+      chartPosition: NullableOffset.from(chartPosition),
     );
   }
 

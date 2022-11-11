@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:charts/charts/bar.dart';
 
@@ -89,7 +88,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 min(this.strokeWidth + 2 * outlineWidth, barWidth);
             final strokeWidth = rectWidth - 2 * outlineWidth;
             final rectEndpointLength = min(
-                this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+                this.endpointLength + 2 * outlineWidth, barWidth.toDouble(),);
             final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
             if (outlineWidth > 0) {
@@ -174,7 +173,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
                 min(this.strokeWidth + 2 * outlineWidth, barWidth.toDouble());
             final strokeWidth = rectWidth - 2 * outlineWidth;
             final rectEndpointLength = min(
-                this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+                this.endpointLength + 2 * outlineWidth, barWidth.toDouble(),);
             final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
             if (outlineWidth > 0) {

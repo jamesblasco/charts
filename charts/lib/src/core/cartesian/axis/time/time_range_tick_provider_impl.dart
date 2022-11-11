@@ -18,7 +18,7 @@ import 'package:charts/core.dart';
 // Contains all the common code for the time range tick providers.
 class TimeRangeTickProviderImplElement extends TimeRangeTickProviderElement {
   TimeRangeTickProviderImplElement(this.timeStepper,
-      {this.requiredMinimumTicks = 3});
+      {this.requiredMinimumTicks = 3,});
   final int requiredMinimumTicks;
   final TimeStepper timeStepper;
 

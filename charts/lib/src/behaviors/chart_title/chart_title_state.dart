@@ -16,7 +16,6 @@
 import 'dart:math';
 
 import 'package:charts/core.dart';
-import 'package:flutter/cupertino.dart';
 
 /// Chart behavior that adds title text to a chart. An optional second line of
 /// text may be rendered as a sub-title.

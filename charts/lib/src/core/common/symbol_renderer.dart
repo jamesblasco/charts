@@ -18,7 +18,6 @@ import 'dart:math' show Rectangle, Point, min, sqrt;
 import 'package:charts/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart' show protected;
 
 /// Strategy for rendering a symbol.
 abstract class BaseSymbolRenderer extends Equatable {

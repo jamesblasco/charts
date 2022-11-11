@@ -17,7 +17,6 @@ import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show Point, Rectangle, max;
 
 import 'package:charts/charts.dart';
-import 'package:charts/charts/bar.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
@@ -438,8 +437,8 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
               domainWidth: domainAxis.rangeBand,
               fillColor: fillColorFn!(barIndex),
               fillPattern: details.fillPattern,
-              measureValue: 0.0,
-              measureOffsetValue: 0.0,
+              measureValue: 0,
+              measureOffsetValue: 0,
               measureAxisPosition: measureAxisPosition,
               measureAxis: measureAxis,
               numBarGroups: barGroupCount!,

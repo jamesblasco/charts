@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math';
 
 import 'package:charts/behaviors.dart';
 import 'package:charts/core.dart';
@@ -217,13 +216,13 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         return details
             .map(
               (datumDetails) => SeriesDatum<D>(
-                  series: datumDetails.series!, datum: datumDetails.datum),
+                  series: datumDetails.series!, datum: datumDetails.datum,),
             )
             .toList();
       case SelectionMode.single:
         return [
           SeriesDatum<D>(
-              series: details.first.series!, datum: details.first.datum)
+              series: details.first.series!, datum: details.first.datum,)
         ];
     }
   }

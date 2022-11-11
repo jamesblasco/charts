@@ -18,28 +18,23 @@ import 'dart:math' show Rectangle, min, max;
 import 'package:charts/charts.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
-import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart' show protected, visibleForTesting;
-
-export 'tick_providers/auto_adjusting_static_tick_provider.dart';
 
 export 'collision_report.dart';
 export 'draw_strategy/draw_strategy.dart';
-
-export 'tick_formatters/formatters.dart';
-export 'tick_providers/tick_providers.dart';
 export 'linear/linear.dart';
-export 'tick_providers/numeric_tick_provider.dart';
 export 'ordinal_scale_domain_info.dart';
-
 export 'scale/extents/extents.dart';
 export 'scale/numeric_scale.dart';
 export 'scale/ordinal_scale.dart';
 export 'scale/scale.dart';
 export 'scale/simple_ordinal_scale.dart';
 export 'spec/spec.dart';
-
 export 'tick/tick.dart';
+export 'tick_formatters/formatters.dart';
+export 'tick_providers/auto_adjusting_static_tick_provider.dart';
+export 'tick_providers/numeric_tick_provider.dart';
+export 'tick_providers/tick_providers.dart';
 export 'tick_providers/tick_strategy.dart';
 export 'time/time.dart';
 
@@ -78,7 +73,7 @@ abstract class ImmutableAxisElement<D> {
 abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
     implements LayoutView {
   MutableAxisElement(
-      {this.tickProvider, TickFormatterElement<D>? tickFormatter, this.scale})
+      {this.tickProvider, TickFormatterElement<D>? tickFormatter, this.scale,})
       : _defaultScale = scale,
         _defaultTickProvider = tickProvider,
         _defaultTickFormatter = tickFormatter,

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math';
 
 import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
@@ -45,7 +44,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     LineStyle? axisLineStyle,
   })  : axisLineStyle = StyleFactory.style
             .createAxisLineStyle(graphicsFactory, axisLineStyle),
-        noneTextStyle = TextStyle(color: Colors.transparent, fontSize: 0);
+        noneTextStyle = const TextStyle(color: Colors.transparent, fontSize: 0);
   LineStyle axisLineStyle;
   TextStyle noneTextStyle;
 

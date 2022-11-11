@@ -82,7 +82,7 @@ class DateTimeTickFormatterElement extends TickFormatterElement<DateTime> {
 
   /// Creates a [DateTimeTickFormatterElement] without the time component.
   factory DateTimeTickFormatterElement.withoutTime(
-      DateTimeFactory dateTimeFactory) {
+      DateTimeFactory dateTimeFactory,) {
     return DateTimeTickFormatterElement._internal({
       23 * HOUR: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
@@ -112,7 +112,7 @@ class DateTimeTickFormatterElement extends TickFormatterElement<DateTime> {
   ///
   /// [formatter] The format for all ticks.
   factory DateTimeTickFormatterElement.uniform(
-      TimeTickFormatterElement formatter) {
+      TimeTickFormatterElement formatter,) {
     return DateTimeTickFormatterElement._internal({ANY: formatter});
   }
 

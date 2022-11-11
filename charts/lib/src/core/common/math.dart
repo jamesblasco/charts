@@ -73,21 +73,21 @@ double distanceBetweenPointAndLineSegmentSquared(
 
 /// A two-dimensional cartesian coordinate pair with potentially null coordinate
 /// values.
-class NullablePoint extends Equatable {
+class NullableOffset extends Equatable {
   /// Creates a point with the provided [x] and [y] coordinates.
-  const NullablePoint(this.dx, this.dy);
+  const NullableOffset(this.dx, this.dy);
 
-  /// Creates a [NullablePoint] from a [Point].
-  NullablePoint.from(Offset? point) : this(point?.dx, point?.dy);
+  /// Creates a [NullableOffset] from a [Point].
+  NullableOffset.from(Offset? offset) : this(offset?.dx, offset?.dy);
   final double? dx;
   final double? dy;
 
   @override
-  String toString() => 'NullablePoint($dx, $dy)';
+  String toString() => 'NullableOffset($dx, $dy)';
 
   /// Whether [other] is a point with the same coordinates as this point.
   ///
-  /// Returns `true` if [other] is a [NullablePoint] with [x] and [y]
+  /// Returns `true` if [other] is a [NullableOffset] with [x] and [y]
   /// coordinates equal to the corresponding coordinates of this point,
   /// and `false` otherwise.
 
@@ -97,22 +97,22 @@ class NullablePoint extends Equatable {
   /// Converts this to a [Point].
   ///
   /// Throws if [x] or [y] is null.
-  Offset toPoint() {
+  Offset toOffset() {
     assert(dx != null);
     assert(dy != null);
     return Offset(dx!, dy!);
   }
 }
 
-extension NullablePointsToPoints on Iterable<NullablePoint> {
-  /// Converts an [Iterable] of [NullablePoint]s to a [List] of [Point]s.
+extension NullableOffsetsToOffsets on Iterable<NullableOffset> {
+  /// Converts an [Iterable] of [NullableOffset]s to a [List] of [Offsets]s.
   ///
-  /// Any [NullablePoint]s that have null values will be filtered out.
-  List<Offset> toPoints() {
+  /// Any [NullableOffset]s that have null values will be filtered out.
+  List<Offset> toOffsets() {
     return [
-      for (final nullablePoint in this)
-        if (nullablePoint.dx != null && nullablePoint.dy != null)
-          nullablePoint.toPoint(),
+      for (final nullableOffset in this)
+        if (nullableOffset.dx != null && nullableOffset.dy != null)
+          nullableOffset.toOffset(),
     ];
   }
 }

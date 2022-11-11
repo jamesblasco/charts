@@ -225,7 +225,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     // text and the axis baseline (even if it isn't drawn).
 
     final maxHorizontalSliceWidth =
-        ticks.fold<double>(0.0, (double prevMax, tick) {
+        ticks.fold<double>(0, (double prevMax, tick) {
       assert(tick.textElement != null);
       final labelElements = splitLabel(tick.textElement!);
       if (tick is RangeAxisTicks) {
@@ -270,7 +270,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     bool collision = false,
   }) {
     final maxVerticalSliceWidth =
-        ticks.fold<double>(0.0, (double prevMax, tick) {
+        ticks.fold<double>(0, (double prevMax, tick) {
       final labelElements = splitLabel(tick.textElement!);
 
       if (tick is RangeAxisTicks) {

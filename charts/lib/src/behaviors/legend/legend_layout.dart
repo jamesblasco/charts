@@ -152,6 +152,6 @@ class TabularLegendLayout extends Equatable implements LegendLayout {
     // Flutter's documentation, but has to be used if the table is desired to
     // have a width that is tight on each column.
     return Table(
-        children: rows, defaultColumnWidth: const IntrinsicColumnWidth());
+        children: rows, defaultColumnWidth: const IntrinsicColumnWidth(),);
   }
 }

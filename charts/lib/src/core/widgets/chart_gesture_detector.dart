@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import 'dart:async' show Timer;
-import 'dart:math' show Point;
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart'
     show

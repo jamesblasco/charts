@@ -179,7 +179,7 @@ abstract class KeyboardDomainNavigatorState<D>
 
       for (final seriesDatum in datumPairs) {
         seriesDatumList.add(SeriesDatum<D>(
-            series: seriesDatum.series, datum: seriesDatum.datum));
+            series: seriesDatum.series, datum: seriesDatum.datum,),);
 
         if (!seriesList.contains(seriesDatum.series)) {
           seriesList.add(seriesDatum.series as MutableSeries<D>);
