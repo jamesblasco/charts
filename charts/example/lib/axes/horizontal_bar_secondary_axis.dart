@@ -18,7 +18,7 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of using a primary and secondary axis (left & right respectively)
 /// for a set of grouped bars. This is useful for comparing Series that have
@@ -36,7 +36,7 @@ import 'package:charts/charts.dart' as charts;
 /// RTL.flipAxisLocations is set.
 class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   HorizontalBarChartWithSecondaryAxis(this.seriesList, {this.animate = false});
@@ -58,7 +58,7 @@ class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final globalSalesData = [
@@ -76,18 +76,18 @@ class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: globalSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Los Angeles Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: losAngelesSalesData,
-      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId)
+      )..setAttribute(measureAxisIdKey, secondaryMeasureAxisId)
       // Set the 'Los Angeles Revenue' series to use the secondary measure axis.
       // All series that have this set will use the secondary measure axis.
       // All other series will use the primary measure axis.
@@ -97,26 +97,24 @@ class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // For horizontal bar charts, set the [vertical] flag to false.
-    return charts.BarChart(
+    // For horizontal bar  set the [vertical] flag to false.
+    return BarChart(
       seriesList,
       animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
+      barGroupingType: BarGroupingType.grouped,
       vertical: false,
       // It is important when using both primary and secondary axes to choose
       // the same number of ticks for both sides to get the gridlines to line
       // up.
-      primaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-      secondaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec:
-              charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+      primaryMeasureAxis: NumericAxis(
+          tickProvider: BasicNumericTickProvider(desiredTickCount: 3)),
+      secondaryMeasureAxis: NumericAxis(
+          tickProvider: BasicNumericTickProvider(desiredTickCount: 3)),
     );
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
       OrdinalSales('2014', 5000),
       OrdinalSales('2015', 25000),
@@ -132,18 +130,18 @@ class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: globalSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Los Angeles Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: losAngelesSalesData,
-      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId)
+      )..setAttribute(measureAxisIdKey, secondaryMeasureAxisId)
       // Set the 'Los Angeles Revenue' series to use the secondary measure axis.
       // All series that have this set will use the secondary measure axis.
       // All other series will use the primary measure axis.

@@ -43,10 +43,10 @@ void main() {
         data: [_closestDatumClosestSeries, _otherDatumClosestSeries],
         domainFn: (d, _) => d.id,
         measureFn: (_, __) => 0));
-    _closestDatumClosestSeriesPair =
-        SeriesDatum<String>(_closestSeries, _closestDatumClosestSeries);
-    _otherDatumClosestSeriesPair =
-        SeriesDatum<String>(_closestSeries, _otherDatumClosestSeries);
+    _closestDatumClosestSeriesPair = SeriesDatum<String>(
+        series: _closestSeries, datum: _closestDatumClosestSeries);
+    _otherDatumClosestSeriesPair = SeriesDatum<String>(
+        series: _closestSeries, datum: _otherDatumClosestSeries);
 
     _closestDatumOtherSeries = MyDatum('cDoS');
     _otherDatumOtherSeries = MyDatum('oDoS');
@@ -55,10 +55,10 @@ void main() {
         data: [_closestDatumOtherSeries, _otherDatumOtherSeries],
         domainFn: (d, _) => d.id,
         measureFn: (_, __) => 0));
-    _closestDatumOtherSeriesPair =
-        SeriesDatum<String>(_otherSeries, _closestDatumOtherSeries);
-    _otherDatumOtherSeriesPair =
-        SeriesDatum<String>(_otherSeries, _otherDatumOtherSeries);
+    _closestDatumOtherSeriesPair = SeriesDatum<String>(
+        series: _otherSeries, datum: _closestDatumOtherSeries);
+    _otherDatumOtherSeriesPair = SeriesDatum<String>(
+        series: _otherSeries, datum: _otherDatumOtherSeries);
   });
 
   group('SelectionModel persists values', () {
@@ -70,8 +70,8 @@ void main() {
     test('all datum are selected but only the first Series is', () {
       // Select the 'closest' datum for each Series.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
+        SeriesDatum(series: _otherSeries, datum: _closestDatumOtherSeries),
       ], [
         _closestSeries
       ]);
@@ -97,15 +97,15 @@ void main() {
     test('selection can change', () {
       // Select the 'closest' datum for each Series.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
+        SeriesDatum(series: _otherSeries, datum: _closestDatumOtherSeries),
       ], [
         _closestSeries
       ]);
 
       // Change selection to just the other datum on the other series.
       _selectionModel.updateSelection([
-        SeriesDatum(_otherSeries, _otherDatumOtherSeries),
+        SeriesDatum(series: _otherSeries, datum: _otherDatumOtherSeries),
       ], [
         _otherSeries
       ]);
@@ -136,8 +136,8 @@ void main() {
 
       // Try to the 'closest' datum for each Series.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
+        SeriesDatum(series: _otherSeries, datum: _closestDatumOtherSeries),
       ], [
         _closestSeries
       ]);
@@ -150,8 +150,8 @@ void main() {
 
       // Try to the 'closest' datum for each Series.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
+        SeriesDatum(series: _otherSeries, datum: _closestDatumOtherSeries),
       ], [
         _closestSeries
       ]);
@@ -164,7 +164,7 @@ void main() {
 
       // Attempt to change selection
       _selectionModel.updateSelection([
-        SeriesDatum(_otherSeries, _otherDatumOtherSeries),
+        SeriesDatum(series: _otherSeries, datum: _otherDatumOtherSeries),
       ], [
         _otherSeries
       ]);
@@ -192,7 +192,7 @@ void main() {
 
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -205,7 +205,7 @@ void main() {
       SelectionModel<String> triggeredModel;
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -218,7 +218,7 @@ void main() {
 
       // Try to update the model with the same value.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -242,7 +242,7 @@ void main() {
 
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -263,7 +263,7 @@ void main() {
 
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -276,7 +276,7 @@ void main() {
       SelectionModel<String> triggeredModel;
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -289,7 +289,7 @@ void main() {
 
       // Try to update the model with the same value.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);
@@ -313,7 +313,7 @@ void main() {
 
       // Set the selection to closest datum.
       _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+        SeriesDatum(series: _closestSeries, datum: _closestDatumClosestSeries),
       ], [
         _closestSeries
       ]);

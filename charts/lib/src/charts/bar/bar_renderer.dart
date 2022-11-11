@@ -65,8 +65,9 @@ class BarRenderer<D>
   ) {
     final series = details.series!;
 
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final barGroupIndex = series.getAttr(barGroupIndexKey)!;
     final previousBarGroupWeight = series.getAttr(previousBarGroupWeightKey);
@@ -130,11 +131,11 @@ class BarRenderer<D>
     Color? color,
     required BarRendererElement<D> details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -186,11 +187,11 @@ class BarRenderer<D>
     List<int>? dashPattern,
     required BarRendererElement<D> details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -406,12 +407,12 @@ class BarRenderer<D>
   /// Generates a set of bounds that describe a bar.
   Rectangle<int> _getBarBounds(
     D? domainValue,
-    ImmutableAxis<D> domainAxis,
+    ImmutableAxisElement<D> domainAxis,
     int domainWidth,
     int? maxBarWidthPx,
     num? measureValue,
     num measureOffsetValue,
-    ImmutableAxis<num> measureAxis,
+    ImmutableAxisElement<num> measureAxis,
     int barGroupIndex,
     double? previousBarGroupWeight,
     double? barGroupWeight,

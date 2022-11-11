@@ -22,11 +22,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class BucketingAxisScatterPlotChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   BucketingAxisScatterPlotChart(this.seriesList, {this.animate = false});
@@ -49,7 +49,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final makeRadius = (int value) => (random.nextInt(value) + 6).toDouble();
@@ -93,42 +93,42 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Desktop',
           colorFn: (LinearSales sales, _) => Colors.blue,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeDesktopData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Tablet',
           colorFn: (LinearSales sales, _) => Colors.red,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeTabletData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (LinearSales sales, _) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeMobileData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Chromebook',
           colorFn: (LinearSales sales, _) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeChromebookData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Home',
           colorFn: (LinearSales sales, _) => Colors.indigo,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeHomeData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Other',
           colorFn: (LinearSales sales, _) => Colors.grey,
           domainFn: (LinearSales sales, _) => sales.year,
@@ -141,25 +141,24 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.ScatterPlotChart(seriesList,
+    return ScatterPlotChart(seriesList,
         // Set up a bucketing axis that will place all values below 0.1 (10%)
         // into a bucket at the bottom of the chart.
         //
         // Configure a tick count of 3 so that we get 100%, 50%, and the
         // threshold.
-        primaryMeasureAxis: charts.BucketingAxisSpec(
+        primaryMeasureAxis: BucketingAxis(
             threshold: 0.1,
-            tickProviderSpec:
-                charts.BucketingNumericTickProviderSpec(desiredTickCount: 3)),
+            tickProvider: BucketingNumericTickProvider(desiredTickCount: 3)),
         // Add a series legend to display the series names.
         behaviors: [
-          charts.SeriesLegend(position: charts.BehaviorPosition.end),
+          SeriesLegend(position: BehaviorPosition.end),
         ],
         animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final myFakeDesktopData = [
       LinearSales(52, 0.75, 14.0),
     ];
@@ -190,42 +189,42 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Desktop',
           colorFn: (LinearSales sales, _) => Colors.blue,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeDesktopData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Tablet',
           colorFn: (LinearSales sales, _) => Colors.red,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeTabletData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (LinearSales sales, _) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeMobileData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Chromebook',
           colorFn: (LinearSales sales, _) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeChromebookData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Home',
           colorFn: (LinearSales sales, _) => Colors.indigo,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.revenueShare,
           radiusPxFn: (LinearSales sales, _) => sales.radius,
           data: myFakeHomeData),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Other',
           colorFn: (LinearSales sales, _) => Colors.grey,
           domainFn: (LinearSales sales, _) => sales.year,

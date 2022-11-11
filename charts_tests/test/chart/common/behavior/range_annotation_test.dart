@@ -45,20 +45,20 @@ class ConcreteChart extends LineRenderChart {
   }
 
   @override
-  Axis<num> get domainAxis => _domainAxis;
+  MutableAxisElement<num> get domainAxis => _domainAxis;
 
   @override
-  NumericAxis getMeasureAxis({String axisId}) => _primaryMeasureAxis;
+  NumericAxisElement getMeasureAxis({String axisId}) => _primaryMeasureAxis;
 }
 
-class ConcreteNumericAxis extends NumericAxis {
+class ConcreteNumericAxis extends NumericAxisElement {
   ConcreteNumericAxis()
       : super(
           tickProvider: MockTickProvider(),
         );
 }
 
-class MockTickProvider extends Mock implements NumericTickProvider {}
+class MockTickProvider extends Mock implements NumericTickProviderElement {}
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
@@ -107,7 +107,7 @@ void main() {
     var graphicsFactory = MockGraphicsFactory();
     var drawStrategy = MockTickDrawStrategy();
     var tickProvider = MockTickProvider();
-    var ticks = <Tick<num>>[];
+    var ticks = <TickElement<num>>[];
     when(tickProvider.getTicks(
       context: anyNamed('context'),
       graphicsFactory: anyNamed('graphicsFactory'),

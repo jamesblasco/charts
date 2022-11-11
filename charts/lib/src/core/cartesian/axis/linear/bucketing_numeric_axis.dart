@@ -15,7 +15,7 @@
 
 import 'package:charts/core.dart';
 
-/// A numeric [Axis] that positions all values beneath a certain [threshold]
+/// A numeric [MutableAxisElement] that positions all values beneath a certain [threshold]
 /// into a reserved space on the axis range. The label for the bucket line will
 /// be drawn in the middle of the bucket range, rather than aligned with the
 /// gridline for that value's position on the scale.
@@ -35,8 +35,9 @@ import 'package:charts/core.dart';
 ///       0         50          100
 ///
 /// This axis will format numbers as percents by default.
-class BucketingNumericAxis extends NumericAxis {
-  BucketingNumericAxis() : super(tickProvider: BucketingNumericTickProvider());
+class BucketingNumericAxisElement extends NumericAxisElement {
+  BucketingNumericAxisElement()
+      : super(tickProvider: BucketingNumericTickProviderElement());
 
   /// All values smaller than the threshold will be bucketed into the same
   /// position in the reserved space on the axis.
@@ -51,12 +52,13 @@ class BucketingNumericAxis extends NumericAxis {
 
   set threshold(num threshold) {
     _threshold = threshold;
-    (tickProvider as BucketingNumericTickProvider).threshold = threshold;
+    (tickProvider as BucketingNumericTickProviderElement).threshold = threshold;
   }
 
   set showBucket(bool showBucket) {
     _showBucket = showBucket;
-    (tickProvider as BucketingNumericTickProvider).showBucket = showBucket;
+    (tickProvider as BucketingNumericTickProviderElement).showBucket =
+        showBucket;
   }
 
   /// Gets the location of [domain] on the axis, repositioning any value less

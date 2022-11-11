@@ -22,7 +22,7 @@ const EPSILON = 0.001;
 void main() {
   group('Stacking bars', () {
     test('basic apply survives copy and reset', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.addDomain(100.0);
       scale.addDomain(130.0);
       scale.addDomain(200.0);
@@ -43,7 +43,7 @@ void main() {
       expect(scale[300.0], closeTo(0, EPSILON));
 
       // test copy
-      LinearScale other = scale.copy();
+      LinearScaleElement other = scale.copy();
       expect(other[166.0], closeTo(1340, EPSILON));
       expect(other.range.start, equals(2000));
       expect(other.range.end, equals(1000));
@@ -67,7 +67,8 @@ void main() {
     });
 
     test('viewport assigned domain extent applies to scale', () {
-      LinearScale scale = LinearScale()..keepViewportWithinData = false;
+      LinearScaleElement scale = LinearScaleElement()
+        ..keepViewportWithinData = false;
       scale.addDomain(50.0);
       scale.addDomain(70.0);
       scale.viewportDomain = NumericExtents(100.0, 200.0);
@@ -92,7 +93,7 @@ void main() {
     });
 
     test('comparing domain and range to viewport handles extent edges', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.range = ScaleOutputExtent(1000, 1400);
       scale.domainOverride = NumericExtents(100.0, 300.0);
       scale.viewportDomain = NumericExtents(200.0, 300.0);
@@ -116,7 +117,7 @@ void main() {
     });
 
     test('scale applies in reverse', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.range = ScaleOutputExtent(1000, 1400);
       scale.domainOverride = NumericExtents(100.0, 300.0);
       scale.viewportDomain = NumericExtents(200.0, 300.0);
@@ -127,7 +128,7 @@ void main() {
     });
 
     test('scale works with a range from larger to smaller', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.range = ScaleOutputExtent(1400, 1000);
       scale.domainOverride = NumericExtents(100.0, 300.0);
       scale.viewportDomain = NumericExtents(200.0, 300.0);
@@ -138,7 +139,7 @@ void main() {
     });
 
     test('scaleFactor and translate applies to scale', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.range = ScaleOutputExtent(1000, 1200);
       scale.domainOverride = NumericExtents(100.0, 200.0);
       scale.setViewportSettings(4.0, -50.0);
@@ -163,7 +164,7 @@ void main() {
     });
 
     test('scale handles single point', () {
-      LinearScale domainScale = LinearScale();
+      LinearScaleElement domainScale = LinearScaleElement();
       domainScale.range = ScaleOutputExtent(1000, 1200);
       domainScale.addDomain(50.0);
 
@@ -172,7 +173,7 @@ void main() {
     });
 
     test('testAllZeros', () {
-      LinearScale measureScale = LinearScale();
+      LinearScaleElement measureScale = LinearScaleElement();
       measureScale.range = ScaleOutputExtent(1000, 1200);
       measureScale.addDomain(0.0);
 
@@ -180,7 +181,7 @@ void main() {
     });
 
     test('scale calculates step size', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
       scale.addDomain(1.0);
       scale.addDomain(3.0);
@@ -192,7 +193,7 @@ void main() {
     });
 
     test('scale applies rangeBand to detected step size', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(0.5);
       scale.addDomain(1.0);
       scale.addDomain(2.0);
@@ -204,7 +205,7 @@ void main() {
     });
 
     test('scale stepSize calculation survives copy', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.stepSizeConfig = StepSizeConfig.fixedDomain(1.0);
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
       scale.addDomain(1.0);
@@ -214,7 +215,7 @@ void main() {
     });
 
     test('scale rangeBand calculation survives copy', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.fixedPixel(123.0);
       scale.addDomain(1.0);
       scale.addDomain(3.0);
@@ -224,7 +225,7 @@ void main() {
     });
 
     test('scale rangeBand works for single domain value', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
       scale.addDomain(1.0);
       scale.range = ScaleOutputExtent(100, 200);
@@ -233,7 +234,7 @@ void main() {
     });
 
     test('scale rangeBand works for multiple domains of the same value', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
       scale.addDomain(1.0);
       scale.addDomain(1.0);
@@ -243,14 +244,14 @@ void main() {
     });
 
     test('scale rangeBand is zero when no domains are added', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.range = ScaleOutputExtent(100, 200);
 
       expect(scale.rangeBand, closeTo(0.0, EPSILON));
     });
 
     test('scale domain info reset on resetDomain', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.addDomain(1.0);
       scale.addDomain(3.0);
       scale.range = ScaleOutputExtent(100, 200);
@@ -264,7 +265,7 @@ void main() {
     });
 
     test('scale handles null domain values', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
       scale.addDomain(1.0);
       scale.addDomain(null);
@@ -276,21 +277,22 @@ void main() {
     });
 
     test('scale domainOverride survives copy', () {
-      LinearScale scale = LinearScale()..keepViewportWithinData = false;
+      LinearScaleElement scale = LinearScaleElement()
+        ..keepViewportWithinData = false;
       scale.addDomain(1.0);
       scale.addDomain(3.0);
       scale.range = ScaleOutputExtent(100, 200);
       scale.setViewportSettings(2.0, 10.0);
       scale.domainOverride = NumericExtents(0.0, 100.0);
 
-      LinearScale other = scale.copy();
+      LinearScaleElement other = scale.copy();
 
       expect(other.domainOverride, equals(NumericExtents(0.0, 100.0)));
       expect(other[5.0], closeTo(120.0, EPSILON));
     });
 
     test('scale calculates a scaleFactor given a domain window', () {
-      LinearScale scale = LinearScale();
+      LinearScaleElement scale = LinearScaleElement();
       scale.addDomain(100.0);
       scale.addDomain(130.0);
       scale.addDomain(200.0);

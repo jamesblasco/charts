@@ -21,11 +21,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SimpleNullsLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SimpleNullsLineChart(this.seriesList, {this.animate = false});
@@ -48,7 +48,7 @@ class SimpleNullsLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final myFakeDesktopData = [
@@ -82,21 +82,21 @@ class SimpleNullsLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -109,11 +109,11 @@ class SimpleNullsLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList, animate: animate);
+    return LineChart(seriesList, animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final myFakeDesktopData = [
       LinearSales(0, 5),
       LinearSales(1, 15),
@@ -145,21 +145,21 @@ class SimpleNullsLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,

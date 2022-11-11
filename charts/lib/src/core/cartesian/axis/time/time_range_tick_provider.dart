@@ -17,7 +17,8 @@ import 'package:charts/core.dart';
 /// Provides ticks for a particular time unit.
 ///
 /// Used by [AutoAdjustingDateTimeTickProvider].
-abstract class TimeRangeTickProvider extends BaseTickProvider<DateTime> {
+abstract class TimeRangeTickProviderElement
+    extends BaseTickStrategyElement<DateTime> {
   /// Returns if this tick provider will produce a sufficient number of ticks
   /// for [domainExtents].
   bool providesSufficientTicksForRange(DateTimeExtents domainExtents);

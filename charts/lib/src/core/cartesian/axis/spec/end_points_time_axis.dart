@@ -1,0 +1,51 @@
+// Copyright 2018 the Charts project authors. Please see the AUTHORS file
+// for details.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import 'package:charts/core.dart';
+import 'package:meta/meta.dart' show immutable;
+
+/// Default [AxisData] used for Timeseries charts.
+@immutable
+class EndPointsTimeAxis extends DateTimeAxis {
+  /// Creates a [AxisData] that specialized for timeseries charts.
+  ///
+  /// [renderSpec] spec used to configure how the ticks and labels
+  ///     actually render. Possible values are [GridlineAxisDecoration],
+  ///     [SmallTickAxisDecoration] & [NoneAxisDecoration]. Make sure that the <D>
+  ///     given to the RenderSpec is of type [DateTime] for Timeseries.
+  /// [tickProvider] spec used to configure what ticks are generated.
+  /// [tickFormatter] spec used to configure how the tick labels
+  ///     are formatted.
+  /// [showAxisLine] override to force the axis to draw the axis
+  ///     line.
+  const EndPointsTimeAxis({
+    AxisDecoration<DateTime>? renderSpec,
+    DateTimeTickProviderSpec? tickProvider,
+    super.tickFormatter,
+    super.showAxisLine,
+    super.viewport,
+  }) : super(
+          decoration: renderSpec ??
+              const SmallTickAxisDecoration<DateTime>(
+                labelAnchor: TickLabelAnchor.inside,
+                labelOffsetFromTickPx: 0,
+              ),
+          tickProvider:
+              tickProvider ?? const DateTimeEndPointsTickProviderSpec(),
+        );
+
+  @override
+  List<Object?> get props => [super.props];
+}

@@ -23,11 +23,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class DateTimeComboLinePointChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   DateTimeComboLinePointChart(this.seriesList, {this.animate = false});
@@ -50,7 +50,7 @@ class DateTimeComboLinePointChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -75,57 +75,57 @@ class DateTimeComboLinePointChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.green,
           domainFn: (TimeSeriesSales sales, _) => sales.time,
           measureFn: (TimeSeriesSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom point renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customPoint'),
+        ..setAttribute(rendererIdKey, 'customPoint'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
+    return TimeSeriesChart(
       seriesList,
       animate: animate,
       // Configure the default renderer as a line renderer. This will be used
       // for any series that does not define a rendererIdKey.
       //
       // This is the default configuration, but is shown here for  illustration.
-      defaultRenderer: charts.LineRendererConfig(),
+      defaultRenderer: LineRendererConfig(),
       // Custom renderer configuration for the point series.
       customSeriesRenderers: [
-        charts.PointRendererConfig(
+        PointRendererConfig(
             // ID used to link series to this renderer.
             customRendererId: 'customPoint')
       ],
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
+      dateTimeFactory: const LocalDateTimeFactory(),
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final desktopSalesData = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -148,28 +148,28 @@ class DateTimeComboLinePointChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.green,
           domainFn: (TimeSeriesSales sales, _) => sales.time,
           measureFn: (TimeSeriesSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom point renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customPoint'),
+        ..setAttribute(rendererIdKey, 'customPoint'),
     ];
   }
 }

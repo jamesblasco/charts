@@ -177,8 +177,10 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
       final series = detail.series!;
       final Object? datum = detail.datum;
 
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+      final measureAxis =
+          series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
       final lineKey = series.id;
 

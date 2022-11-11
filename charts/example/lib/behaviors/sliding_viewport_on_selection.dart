@@ -18,11 +18,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SlidingViewportOnSelection extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   SlidingViewportOnSelection(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class SlidingViewportOnSelection extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -69,7 +69,7 @@ class SlidingViewportOnSelection extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -82,27 +82,26 @@ class SlidingViewportOnSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
       behaviors: [
         // Add the sliding viewport behavior to have the viewport center on the
         // domain that is currently selected.
-        charts.SlidingViewport(),
+        SlidingViewport(),
         // A pan and zoom behavior helps demonstrate the sliding viewport
         // behavior by allowing the data visible in the viewport to be adjusted
         // dynamically.
-        charts.PanAndZoomBehavior(),
+        PanAndZoomBehavior(),
       ],
       // Set an initial viewport to demonstrate the sliding viewport behavior on
       // initial chart load.
-      domainAxis:
-          charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('2018', 4)),
+      domainAxis: OrdinalAxis(viewport: OrdinalViewport('2018', 4)),
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final data = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -124,7 +123,7 @@ class SlidingViewportOnSelection extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,

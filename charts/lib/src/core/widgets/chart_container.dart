@@ -97,10 +97,9 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     // does not reprocess the series.
     //
     // Series list is considered "changed" based on the instance.
-    if (_seriesList != config.chartWidget.seriesList ||
-        _chartState.chartIsDirty) {
+    if (_seriesList != config.chartWidget.series || _chartState.chartIsDirty) {
       _chartState.resetChartDirtyFlag();
-      _seriesList = config.chartWidget.seriesList;
+      _seriesList = config.chartWidget.series;
 
       // Clear out the a11y nodes generated.
       _a11yNodes = null;
@@ -240,7 +239,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   @override
   bool get isRtl =>
       _chartContainerIsRtl &&
-      (_rtlSpec == null || _rtlSpec?.axisDirection == AxisDirection.reversed);
+      (_rtlSpec == null ||
+          _rtlSpec?.axisDirection == AxisRTLDirection.reversed);
 
   @override
   bool get isTappable => _chart!.isTappable;

@@ -110,8 +110,10 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
     for (final series in seriesList) {
       final domainValues = series.getAttr(domainValuesKey) as Set<D>;
 
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+      final measureAxis =
+          series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
       final seriesStackKey = series.getAttr(stackKeyKey);
       final barGroupCount = series.getAttr(barGroupCountKey)!;
       final barGroupIndex = series.getAttr(barGroupIndexKey)!;
@@ -240,9 +242,9 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
     if ((config as BarLaneRendererConfig).mergeEmptyLanes) {
       // Use the axes from the first series.
       final domainAxis =
-          seriesList[0].getAttr(domainAxisKey) as ImmutableAxis<D>;
+          seriesList[0].getAttr(domainAxisKey) as ImmutableAxisElement<D>;
       final measureAxis =
-          seriesList[0].getAttr(measureAxisKey) as ImmutableAxis<num>;
+          seriesList[0].getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
       final measureAxisPosition = measureAxis.getLocation(0.0);
       final maxMeasureValue = _getMaxMeasureValue(measureAxis, false);
@@ -348,7 +350,8 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
   }
 
   /// Gets the maximum measure value that will fit in the draw area.
-  num _getMaxMeasureValue(ImmutableAxis<num> measureAxis, bool laneIsNegative) {
+  num _getMaxMeasureValue(
+      ImmutableAxisElement<num> measureAxis, bool laneIsNegative) {
     final pos = chart.vertical
         ? chart.drawAreaBounds.top
         : ((isRtl && !laneIsNegative) || (!isRtl && laneIsNegative))

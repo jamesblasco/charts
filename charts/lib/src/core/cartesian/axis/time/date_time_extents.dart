@@ -16,7 +16,8 @@
 import 'package:charts/core.dart';
 
 class DateTimeExtents extends Extents<DateTime> {
-  const DateTimeExtents({required this.start, required this.end});
+  const DateTimeExtents({required this.start, required this.end})
+      : super.base();
   final DateTime start;
   final DateTime end;
 

@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/cartesian/axis/numeric_extents.dart'
-    show NumericExtents;
+import 'package:charts/charts.dart';
 
-/// Encapsulation of all the domain processing logic for the [LinearScale].
+/// Encapsulation of all the domain processing logic for the [LinearScaleElement].
 class LinearScaleDomainInfo {
   LinearScaleDomainInfo();
 

@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class RTLSeriesLegend extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   RTLSeriesLegend(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class RTLSeriesLegend extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -76,25 +76,25 @@ class RTLSeriesLegend extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -128,18 +128,17 @@ class RTLSeriesLegend extends StatelessWidget {
     // work with the correct directionality.
     return Directionality(
         textDirection: TextDirection.rtl,
-        child: charts.BarChart(
+        child: BarChart(
           seriesList,
           animate: animate,
           behaviors: [
-            charts.SeriesLegend(
-                position: charts.BehaviorPosition.end, desiredMaxRows: 2)
+            SeriesLegend(position: BehaviorPosition.end, desiredMaxRows: 2)
           ],
         ));
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -169,25 +168,25 @@ class RTLSeriesLegend extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

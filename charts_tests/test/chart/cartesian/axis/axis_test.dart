@@ -32,12 +32,12 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {
 
 class MockTextElement extends Mock implements TextElement {}
 
-StaticTickProvider<num> _createProvider(List<num> values) =>
-    StaticTickProvider<num>(values.map((v) => TickSpec(v)).toList());
+StaticTickProviderElement<num> _createProvider(List<num> values) =>
+    StaticTickProviderElement<num>(values.map((v) => Tick(v)).toList());
 
 void main() {
   test('changing first tick only', () {
-    var axis = NumericAxis(
+    var axis = NumericAxisElement(
       tickProvider: _createProvider([1, 10]),
     );
 
@@ -61,7 +61,7 @@ void main() {
   });
 
   test('updates max label width on layout change', () {
-    var axis = NumericAxis(
+    var axis = NumericAxisElement(
       tickProvider: _createProvider([1, 10]),
     );
 

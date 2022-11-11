@@ -15,7 +15,7 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 /// This is a line chart with a title text in every margin.
@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 /// A series of [ChartTitle] behaviors are used to render titles, one per
 /// margin.
 class ChartTitleLine extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   ChartTitleLine(this.seriesList, {this.animate = false});
@@ -46,7 +46,7 @@ class ChartTitleLine extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -57,7 +57,7 @@ class ChartTitleLine extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -69,7 +69,7 @@ class ChartTitleLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(
+    return LineChart(
       seriesList,
       animate: animate,
       // Configures four [ChartTitle] behaviors to render titles in each chart
@@ -77,33 +77,30 @@ class ChartTitleLine extends StatelessWidget {
       // of the chart. The other titles are aligned with the middle of the draw
       // area.
       behaviors: [
-        charts.ChartTitle('Top title text',
+        ChartTitle('Top title text',
             subTitle: 'Top sub-title text',
-            behaviorPosition: charts.BehaviorPosition.top,
-            titleOutsideJustification: charts.OutsideJustification.start,
+            behaviorPosition: BehaviorPosition.top,
+            titleOutsideJustification: OutsideJustification.start,
             // Set a larger inner padding than the default (10) to avoid
             // rendering the text too close to the top measure axis tick label.
             // The top tick label may extend upwards into the top margin region
             // if it is located at the top of the draw area.
             innerPadding: 18),
-        charts.ChartTitle('Bottom title text',
-            behaviorPosition: charts.BehaviorPosition.bottom,
-            titleOutsideJustification:
-                charts.OutsideJustification.middleDrawArea),
-        charts.ChartTitle('Start title',
-            behaviorPosition: charts.BehaviorPosition.start,
-            titleOutsideJustification:
-                charts.OutsideJustification.middleDrawArea),
-        charts.ChartTitle('End title',
-            behaviorPosition: charts.BehaviorPosition.end,
-            titleOutsideJustification:
-                charts.OutsideJustification.middleDrawArea),
+        ChartTitle('Bottom title text',
+            behaviorPosition: BehaviorPosition.bottom,
+            titleOutsideJustification: OutsideJustification.middleDrawArea),
+        ChartTitle('Start title',
+            behaviorPosition: BehaviorPosition.start,
+            titleOutsideJustification: OutsideJustification.middleDrawArea),
+        ChartTitle('End title',
+            behaviorPosition: BehaviorPosition.end,
+            titleOutsideJustification: OutsideJustification.middleDrawArea),
       ],
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -112,7 +109,7 @@ class ChartTitleLine extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

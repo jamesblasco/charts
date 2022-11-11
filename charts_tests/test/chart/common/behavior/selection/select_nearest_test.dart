@@ -158,7 +158,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details1.datum)], [_series1]));
+          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
       // Shouldn't be listening to anything else.
@@ -183,7 +183,7 @@ void main() {
 
       // Validate
       verify(_clickSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details1.datum)], [_series1]));
+          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
     });
@@ -231,10 +231,10 @@ void main() {
       // Validate
       // details1 was tripped 2 times (startPoint & updatePoint1)
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details1.datum)], [_series1])).called(2);
+          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1])).called(2);
       // details2 was tripped for updatePoint2
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details2.datum)], [_series1]));
+          [SeriesDatum(series:_series1, datum:_details2.datum)], [_series1]));
       // dragEnd deselects even though we are over details3.
       verify(_hoverSelectionModel.updateSelection([], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
@@ -282,9 +282,9 @@ void main() {
       // Validate
       // details1 was tripped 2 times (longPress & dragStart)
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details1.datum)], [_series1])).called(2);
+          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1])).called(2);
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details2.datum)], [_series1]));
+          [SeriesDatum(series:_series1, datum:_details2.datum)], [_series1]));
       // dragEnd deselects even though we are over details3.
       verify(_hoverSelectionModel.updateSelection([], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
@@ -349,8 +349,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(_series1, _details1.datum),
-        SeriesDatum(_series2, _details1Series2.datum)
+        SeriesDatum(series:_series1, datum:_details1.datum),
+        SeriesDatum(series:_series2, datum:_details1Series2.datum)
       ], [
         _series1
       ]));
@@ -376,7 +376,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection(
-          [SeriesDatum(_series1, _details1.datum)], [_series1]));
+          [SeriesDatum(series:_series1, datum:_details1.datum)], [_series1]));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
     });
@@ -399,8 +399,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(_series1, _details1.datum),
-        SeriesDatum(_series2, _details1Series2.datum)
+        SeriesDatum(series:_series1, datum:_details1.datum),
+        SeriesDatum(series:_series2, datum:_details1Series2.datum)
       ], []));
       verifyNoMoreInteractions(_hoverSelectionModel);
       verifyNoMoreInteractions(_clickSelectionModel);
@@ -426,7 +426,7 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(_series1, _details1.datum),
+        SeriesDatum(series:_series1, datum:_details1.datum),
       ], [
         _series1
       ]));
@@ -494,8 +494,8 @@ void main() {
 
       // Validate
       verify(_hoverSelectionModel.updateSelection([
-        SeriesDatum(series, details1.datum),
-        SeriesDatum(series, details2.datum)
+        SeriesDatum(series:series,datum: details1.datum),
+        SeriesDatum(series:series, datum:details2.datum)
       ], [
         series
       ]));

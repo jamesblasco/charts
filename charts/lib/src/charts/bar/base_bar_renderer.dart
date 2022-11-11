@@ -100,7 +100,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   final _currentGroupsStackKeys = LinkedHashMap<D, Set<String>>();
 
   /// Optimization for getNearest to avoid scanning all data if possible.
-  ImmutableAxis<D>? _prevDomainAxis;
+  ImmutableAxisElement<D>? _prevDomainAxis;
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
@@ -358,9 +358,11 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     final orderedSeriesList = getOrderedSeriesList(seriesList);
 
     for (final series in orderedSeriesList) {
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
       final domainFn = series.domainFn;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final measureAxis =
+          series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
       final measureFn = series.measureFn;
       final colorFn = series.colorFn;
       final dashPatternFn = series.dashPatternFn;
@@ -522,11 +524,11 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     List<int>? dashPattern,
     required R details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     required int numBarGroups,
     Color? fillColor,
@@ -548,11 +550,11 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     List<int>? dashPattern,
     required R details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     required int numBarGroups,
     Color? fillColor,
@@ -627,7 +629,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       return nearest;
     }
 
-    if (_prevDomainAxis is OrdinalAxis) {
+    if (_prevDomainAxis is OrdinalAxisElement) {
       final domainValue = _prevDomainAxis!
           .getDomain(renderingVertically ? chartPoint.x : chartPoint.y);
 

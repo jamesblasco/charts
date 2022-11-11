@@ -25,11 +25,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SelectionUserManaged extends StatefulWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   SelectionUserManaged(this.seriesList, {this.animate = false});
@@ -52,7 +52,7 @@ class SelectionUserManaged extends StatefulWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -63,7 +63,7 @@ class SelectionUserManaged extends StatefulWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -75,7 +75,7 @@ class SelectionUserManaged extends StatefulWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final data = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -84,7 +84,7 @@ class SelectionUserManaged extends StatefulWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -101,16 +101,16 @@ class SelectionUserManaged extends StatefulWidget {
 }
 
 class SelectionUserManagedState extends State<SelectionUserManaged> {
-  final _myState = charts.UserManagedState<String>();
+  final _myState = UserManagedState<String>();
 
   @override
   Widget build(BuildContext context) {
-    final chart = charts.BarChart(
+    final chart = BarChart(
       widget.seriesList,
       animate: false, //widget.animate,
       selectionModels: [
-        charts.SelectionModelConfig(
-            type: charts.SelectionModelType.info,
+        SelectionModelConfig(
+            type: SelectionModelType.info,
             updatedListener: _infoSelectionModelUpdated)
       ],
       // Pass in the state you manage to the chart. This will be used to
@@ -119,9 +119,8 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
       // The initial selection can still be optionally added by adding the
       // initial selection behavior.
       behaviors: [
-        charts.InitialSelection(selectedDataConfig: [
-          charts.SeriesDatumConfig<String>('Sales', '2016')
-        ])
+        InitialSelection(
+            selectedDataConfig: [SeriesDatumConfig<String>('Sales', '2016')])
       ],
     );
 
@@ -132,7 +131,7 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
         children: [SizedBox(height: 150.0, child: chart), clearSelection]);
   }
 
-  void _infoSelectionModelUpdated(charts.SelectionModel<String> model) {
+  void _infoSelectionModelUpdated(SelectionModel<String> model) {
     // If you want to allow the chart to continue to respond to select events
     // that update the selection, add an updatedListener that saves off the
     // selection model each time the selection model is updated, regardless of
@@ -140,8 +139,8 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
     //
     // This also allows you to listen to the selection model update events and
     // alter the selection.
-    _myState.selectionModels[charts.SelectionModelType.info] =
-        charts.UserManagedSelectionModel(model: model);
+    _myState.selectionModels[SelectionModelType.info] =
+        UserManagedSelectionModel(model: model);
   }
 
   void _handleClearSelection() {
@@ -149,8 +148,8 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
     // In this case, passing in an empty [UserManagedSelectionModel] creates a
     // no selection model to clear all selection when rebuilt.
     setState(() {
-      _myState.selectionModels[charts.SelectionModelType.info] =
-          charts.UserManagedSelectionModel();
+      _myState.selectionModels[SelectionModelType.info] =
+          UserManagedSelectionModel();
     });
   }
 }

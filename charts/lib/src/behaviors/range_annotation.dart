@@ -81,8 +81,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
         layoutPaintOrder: layoutPaintOrder,
       );
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+
 
   @override
   String get role => 'RangeAnnotation';

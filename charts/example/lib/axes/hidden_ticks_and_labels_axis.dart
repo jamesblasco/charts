@@ -18,11 +18,11 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of hiding both axis.
 class HiddenTicksAndLabelsAxis extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   HiddenTicksAndLabelsAxis(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = new Random();
 
     final globalSalesData = [
@@ -55,7 +55,7 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      new Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -67,7 +67,7 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.BarChart(
+    return new BarChart(
       seriesList,
       animate: animate,
 
@@ -75,22 +75,21 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
       ///
       /// The NoneRenderSpec can still draw an axis line with
       /// showAxisLine=true.
-      primaryMeasureAxis:
-          new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec()),
+      primaryMeasureAxis: new NumericAxis(decoration: new NoneAxisDecoration()),
 
       /// This is an OrdinalAxisSpec to match up with BarChart's default
       /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
-      /// other charts).
-      domainAxis: new charts.OrdinalAxisSpec(
+      /// other .
+      domainAxis: new OrdinalAxis(
           // Make sure that we draw the domain axis line.
           showAxisLine: true,
           // But don't draw anything else.
-          renderSpec: new charts.NoneRenderSpec()),
+          decoration: new NoneAxisDecoration()),
     );
   }
 
   /// Create series list with single series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
       new OrdinalSales('2014', 5000),
       new OrdinalSales('2015', 25000),
@@ -99,7 +98,7 @@ class HiddenTicksAndLabelsAxis extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      new Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

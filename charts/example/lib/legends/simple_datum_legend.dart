@@ -18,10 +18,10 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 class SimpleDatumLegend extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SimpleDatumLegend(this.seriesList, {this.animate = false});
@@ -43,7 +43,7 @@ class SimpleDatumLegend extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
+  static List<Series<LinearSales, int>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -54,7 +54,7 @@ class SimpleDatumLegend extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -66,17 +66,17 @@ class SimpleDatumLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(
+    return PieChart(
       seriesList,
       animate: animate,
       // Add the series legend behavior to the chart to turn on series legends.
       // By default the legend will display above the chart.
-      behaviors: [charts.DatumLegend()],
+      behaviors: [DatumLegend()],
     );
   }
 
   /// Create series list with one series
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 100),
       LinearSales(1, 75),
@@ -85,7 +85,7 @@ class SimpleDatumLegend extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

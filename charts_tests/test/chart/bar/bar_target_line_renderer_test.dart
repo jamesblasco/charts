@@ -28,7 +28,7 @@ class MyRow {
   MyRow(this.campaign, this.clickCount);
 }
 
-class MockAxis<D> extends Mock implements Axis<D> {}
+class MockAxis<D> extends Mock implements MutableAxisElement<D> {}
 
 class MockCanvas extends Mock implements ChartCanvas {
   final drawLinePointsList = <List<Point>>[];

@@ -18,7 +18,7 @@ import 'package:equatable/equatable.dart';
 
 const String _kDefaultDebugLabel = 'unknown';
 
-class LineStyle extends Equatable implements PaintStyle {
+class LineStyle extends Equatable {
   const LineStyle({
     this.dashPattern,
     this.strokeWidth = 1,
@@ -31,7 +31,6 @@ class LineStyle extends Equatable implements PaintStyle {
 
   final double strokeWidth;
 
-  @override
   final Color? color;
 
   final String? debugLabel;

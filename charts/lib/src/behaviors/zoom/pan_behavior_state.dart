@@ -203,7 +203,9 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     // not to update the location of the measure axes, we get a jittery effect
     // as the measure axes location changes ever so slightly during pan/zoom.
     _chart!.getMeasureAxis().lockAxis = true;
-    _chart!.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = true;
+    _chart!
+        .getMeasureAxis(axisId: MutableAxisElement.secondaryMeasureAxisId)
+        .lockAxis = true;
   }
 
   @protected
@@ -216,7 +218,9 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
 
     final chart = _chart!;
     chart.getMeasureAxis().lockAxis = false;
-    chart.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = false;
+    chart
+        .getMeasureAxis(axisId: MutableAxisElement.secondaryMeasureAxisId)
+        .lockAxis = false;
     chart.redraw();
 
     _panningCompletedCallback?.call();

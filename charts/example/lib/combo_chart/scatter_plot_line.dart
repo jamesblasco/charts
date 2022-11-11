@@ -18,11 +18,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class ScatterPlotComboLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   ScatterPlotComboLineChart(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class ScatterPlotComboLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
@@ -74,7 +74,7 @@ class ScatterPlotComboLineChart extends StatelessWidget {
     final maxMeasure = 100;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
         colorFn: (LinearSales sales, _) {
@@ -95,43 +95,43 @@ class ScatterPlotComboLineChart extends StatelessWidget {
         radiusPxFn: (LinearSales sales, _) => sales.radius,
         data: desktopSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: myRegressionData)
         // Configure our custom line renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customLine'),
+        ..setAttribute(rendererIdKey, 'customLine'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.ScatterPlotChart(seriesList,
+    return ScatterPlotChart(seriesList,
         animate: animate,
         // Configure the default renderer as a point renderer. This will be used
         // for any series that does not define a rendererIdKey.
         //
         // This is the default configuration, but is shown here for
         // illustration.
-        defaultRenderer: charts.PointRendererConfig(),
+        defaultRenderer: PointRendererConfig(),
         // Custom renderer configuration for the line series.
         customSeriesRenderers: [
-          charts.LineRendererConfig(
+          LineRendererConfig(
               // ID used to link series to this renderer.
               customRendererId: 'customLine',
               // Configure the regression line to be painted above the points.
               //
               // By default, series drawn by the point renderer are painted on
               // top of those drawn by a line renderer.
-              layoutPaintOrder: charts.LayoutViewPaintOrder.point + 1)
+              layoutPaintOrder: LayoutViewPaintOrder.point + 1)
         ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final desktopSalesData = [
       LinearSales(0, 5, 3.0),
       LinearSales(10, 25, 5.0),
@@ -155,7 +155,7 @@ class ScatterPlotComboLineChart extends StatelessWidget {
     final maxMeasure = 300;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
         colorFn: (LinearSales sales, _) {
@@ -176,14 +176,14 @@ class ScatterPlotComboLineChart extends StatelessWidget {
         radiusPxFn: (LinearSales sales, _) => sales.radius,
         data: desktopSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.purple,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: myRegressionData)
         // Configure our custom line renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customLine'),
+        ..setAttribute(rendererIdKey, 'customLine'),
     ];
   }
 }

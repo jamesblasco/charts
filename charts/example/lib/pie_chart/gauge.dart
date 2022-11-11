@@ -18,11 +18,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class GaugeChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   GaugeChart(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class GaugeChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<GaugeSegment, String>> _createRandomData() {
+  static List<Series<GaugeSegment, String>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -56,7 +56,7 @@ class GaugeChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<GaugeSegment, String>(
+      Series<GaugeSegment, String>(
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,
@@ -68,17 +68,17 @@ class GaugeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(seriesList,
+    return PieChart(seriesList,
         animate: animate,
         // Configure the width of the pie slices to 30px. The remaining space in
         // the chart will be left as a hole in the center. Adjust the start
         // angle and the arc length of the pie so it resembles a gauge.
-        defaultRenderer: charts.ArcRendererConfig(
+        defaultRenderer: ArcRendererConfig(
             arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<GaugeSegment, String>> _createSampleData() {
+  static List<Series<GaugeSegment, String>> _createSampleData() {
     final data = [
       GaugeSegment('Low', 75),
       GaugeSegment('Acceptable', 100),
@@ -87,7 +87,7 @@ class GaugeChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<GaugeSegment, String>(
+      Series<GaugeSegment, String>(
         id: 'Segments',
         domainFn: (GaugeSegment segment, _) => segment.segment,
         measureFn: (GaugeSegment segment, _) => segment.size,

@@ -17,15 +17,14 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart';
-import 'package:charts/core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of a grouped bar chart with three series, each rendered with
 /// different fill colors.
 class GroupedFillColorBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   GroupedFillColorBarChart(this.seriesList, {this.animate = false});
@@ -47,7 +46,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -73,7 +72,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
 
     return [
       // Blue bars with a lighter center color.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -83,7 +82,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
       ),
       // Solid red bars. Fill color will default to the series color if no
       // fillColorFn is configured.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -91,7 +90,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
         colorFn: (_, __) => Colors.red,
       ),
       // Hollow green bars.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -105,17 +104,17 @@ class GroupedFillColorBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
       // Configure a stroke width to enable borders on the bars.
-      defaultRenderer: charts.BarRendererConfig(
-          groupingType: charts.BarGroupingType.grouped, strokeWidthPx: 2.0),
+      defaultRenderer: BarRendererConfig(
+          groupingType: BarGroupingType.grouped, strokeWidthPx: 2.0),
     );
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -139,7 +138,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
 
     return [
       // Blue bars with a lighter center color.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -149,7 +148,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
       ),
       // Solid red bars. Fill color will default to the series color if no
       // fillColorFn is configured.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesData,
@@ -157,7 +156,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
         domainFn: (OrdinalSales sales, _) => sales.year,
       ),
       // Hollow green bars.
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

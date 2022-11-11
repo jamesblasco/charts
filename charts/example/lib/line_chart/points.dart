@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class PointsLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   PointsLineChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class PointsLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -55,7 +55,7 @@ class PointsLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -68,13 +68,13 @@ class PointsLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList,
+    return LineChart(seriesList,
         animate: animate,
-        defaultRenderer: charts.LineRendererConfig(includePoints: true));
+        defaultRenderer: LineRendererConfig(includePoints: true));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -83,7 +83,7 @@ class PointsLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,

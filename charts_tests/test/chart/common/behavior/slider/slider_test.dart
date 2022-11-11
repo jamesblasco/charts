@@ -52,7 +52,7 @@ class MockChart extends Mock implements CartesianRenderChart {
   }
 }
 
-class MockDomainAxis extends Mock implements NumericAxis {
+class MockDomainAxis extends Mock implements NumericAxisElement {
   @override
   double getDomain(num location) {
     return (location / 20.0).toDouble();

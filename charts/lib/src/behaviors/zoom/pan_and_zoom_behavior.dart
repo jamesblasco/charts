@@ -40,9 +40,6 @@ class PanAndZoomBehavior<D> extends ChartBehavior<D> {
   }
 
   @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
-
-  @override
   String get role => 'PanAndZoom';
 
   @override

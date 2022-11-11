@@ -20,16 +20,16 @@
 ///
 /// In this example, the series list has numeric data from 0 to 10, but we
 /// want to show from 3 to 7.
-/// We can do this by specifying an [NumericExtents] in [NumericAxisSpec].
+/// We can do this by specifying an [NumericExtents] in [NumericAxis].
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class NumericInitialViewport extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   NumericInitialViewport(this.seriesList, {this.animate = false});
@@ -52,7 +52,7 @@ class NumericInitialViewport extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -70,7 +70,7 @@ class NumericInitialViewport extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -83,21 +83,21 @@ class NumericInitialViewport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(
+    return LineChart(
       seriesList,
       animate: animate,
-      domainAxis: charts.NumericAxisSpec(
+      domainAxis: NumericAxis(
           // Set the initial viewport by providing a AxisSpec with the
           // desired viewport, in NumericExtents.
-          viewport: charts.NumericExtents(3.0, 7.0)),
+          viewport: NumericExtents(3.0, 7.0)),
       // Optionally add a pan or pan and zoom behavior.
       // If pan/zoom is not added, the viewport specified remains the viewport.
-      behaviors: [charts.PanAndZoomBehavior()],
+      behaviors: [PanAndZoomBehavior()],
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -113,7 +113,7 @@ class NumericInitialViewport extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,

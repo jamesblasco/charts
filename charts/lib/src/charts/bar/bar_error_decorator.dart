@@ -69,7 +69,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
       if (measureLowerBoundFn != null && measureUpperBoundFn != null) {
         final measureOffsetFn = series.measureOffsetFn!;
         final measureAxis =
-            series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+            series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
         if (renderingVertically) {
           final startY = measureAxis.getLocation(

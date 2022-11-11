@@ -23,10 +23,10 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     super.userManagedState,
     this.flipVerticalAxis,
   });
-  final AxisSpec? domainAxis;
-  final NumericAxisSpec? primaryMeasureAxis;
-  final NumericAxisSpec? secondaryMeasureAxis;
-  final LinkedHashMap<String, NumericAxisSpec>? disjointMeasureAxes;
+  final AxisData? domainAxis;
+  final NumericAxis? primaryMeasureAxis;
+  final NumericAxis? secondaryMeasureAxis;
+  final LinkedHashMap<String, NumericAxis>? disjointMeasureAxes;
   final bool? flipVerticalAxis;
 
   @override
@@ -66,12 +66,12 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   }
 
   @protected
-  LinkedHashMap<String, NumericAxis>? createDisjointMeasureAxes() {
+  LinkedHashMap<String, NumericAxisElement>? createDisjointMeasureAxes() {
     if (disjointMeasureAxes != null) {
-      final disjointAxes = <String, NumericAxis>{};
+      final disjointAxes = <String, NumericAxisElement>{};
 
-      disjointMeasureAxes!.forEach((String axisId, NumericAxisSpec axisSpec) {
-        disjointAxes[axisId] = axisSpec.createAxis();
+      disjointMeasureAxes!.forEach((String axisId, NumericAxis axisSpec) {
+        disjointAxes[axisId] = axisSpec.createElement();
       });
 
       return LinkedHashMap.from(disjointAxes);

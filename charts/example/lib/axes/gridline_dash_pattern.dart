@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class GridlineDashPattern extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   GridlineDashPattern(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class GridlineDashPattern extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<MyRow, DateTime>> _createRandomData() {
+  static List<Series<MyRow, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -62,7 +62,7 @@ class GridlineDashPattern extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,
@@ -74,19 +74,19 @@ class GridlineDashPattern extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(seriesList,
+    return TimeSeriesChart(seriesList,
         animate: animate,
 
         /// Customize the gridlines to use a dash pattern.
-        primaryMeasureAxis: charts.NumericAxisSpec(
-            renderSpec: charts.GridlineRendererSpec(
-                lineStyle: charts.LineStyle(
+        primaryMeasureAxis: NumericAxis(
+            decoration: GridlineAxisDecoration(
+                lineStyle: LineStyle(
           dashPattern: [4, 4],
         ))));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<MyRow, DateTime>> _createSampleData() {
+  static List<Series<MyRow, DateTime>> _createSampleData() {
     final data = [
       MyRow(DateTime(2017, 9, 25), 6),
       MyRow(DateTime(2017, 9, 26), 8),
@@ -102,7 +102,7 @@ class GridlineDashPattern extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,

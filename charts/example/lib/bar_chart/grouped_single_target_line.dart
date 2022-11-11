@@ -18,10 +18,10 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 class GroupedBarSingleTargetLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   GroupedBarSingleTargetLineChart(this.seriesList, {this.animate = false});
@@ -43,7 +43,7 @@ class GroupedBarSingleTargetLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -75,47 +75,47 @@ class GroupedBarSingleTargetLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Tablet',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Mobile',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop Target Line',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: targetLineData)
         // Configure our custom bar target renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customTargetLine'),
+        ..setAttribute(rendererIdKey, 'customTargetLine'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(seriesList,
+    return BarChart(seriesList,
         animate: animate,
-        barGroupingType: charts.BarGroupingType.grouped,
+        barGroupingType: BarGroupingType.grouped,
         customSeriesRenderers: [
-          charts.BarTargetLineRendererConfig(
+          BarTargetLineRendererConfig(
               // ID used to link series to this renderer.
               customRendererId: 'customTargetLine',
-              groupingType: charts.BarGroupingType.grouped)
+              groupingType: BarGroupingType.grouped)
         ]);
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -145,28 +145,28 @@ class GroupedBarSingleTargetLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Tablet',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Mobile',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop Target Line',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: targetLineData)
         // Configure our custom bar target renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customTargetLine'),
+        ..setAttribute(rendererIdKey, 'customTargetLine'),
     ];
   }
 }

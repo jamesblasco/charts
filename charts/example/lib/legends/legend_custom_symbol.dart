@@ -18,12 +18,12 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example custom renderer that renders [IconData].
 ///
 /// This is used to show that legend symbols can be assigned a custom symbol.
-class IconRenderer extends charts.CustomSymbolRenderer {
+class IconRenderer extends CustomSymbolRenderer {
   final IconData iconData;
 
   IconRenderer(this.iconData);
@@ -43,7 +43,7 @@ class IconRenderer extends charts.CustomSymbolRenderer {
 }
 
 class LegendWithCustomSymbol extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   LegendWithCustomSymbol(this.seriesList, {this.animate = false});
@@ -65,7 +65,7 @@ class LegendWithCustomSymbol extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -97,25 +97,25 @@ class LegendWithCustomSymbol extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -127,23 +127,23 @@ class LegendWithCustomSymbol extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
+      barGroupingType: BarGroupingType.grouped,
       // Add the legend behavior to the chart to turn on legends.
       // By default the legend will display above the chart.
       //
       // To change the symbol used in the legend, set the renderer attribute of
       // symbolRendererKey to a SymbolRenderer.
-      behaviors: [charts.SeriesLegend()],
+      behaviors: [SeriesLegend()],
       defaultRenderer:
-          charts.BarRendererConfig(symbolRenderer: IconRenderer(Icons.cloud)),
+          BarRendererConfig(symbolRenderer: IconRenderer(Icons.cloud)),
     );
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -173,25 +173,25 @@ class LegendWithCustomSymbol extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

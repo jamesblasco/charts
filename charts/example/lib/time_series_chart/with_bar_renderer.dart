@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class TimeSeriesBar extends StatelessWidget {
-  final List<charts.Series<TimeSeriesSales, DateTime>> seriesList;
+  final List<Series<TimeSeriesSales, DateTime>> seriesList;
   final bool animate;
 
   TimeSeriesBar(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class TimeSeriesBar extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -72,7 +72,7 @@ class TimeSeriesBar extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -85,24 +85,24 @@ class TimeSeriesBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
+    return TimeSeriesChart(
       seriesList,
       animate: animate,
       // Set the default renderer to a bar renderer.
       // This can also be one of the custom renderers of the time series chart.
-      defaultRenderer: charts.BarRendererConfig<DateTime>(),
+      defaultRenderer: BarRendererConfig<DateTime>(),
       // It is recommended that default interactions be turned off if using bar
       // renderer, because the line point highlighter is the default for time
       // series chart.
       defaultInteractions: false,
       // If default interactions were removed, optionally add select nearest
-      // and the domain highlighter that are typical for bar charts.
-      behaviors: [charts.SelectNearest(), charts.DomainHighlighter()],
+      // and the domain highlighter that are typical for bar
+      behaviors: [SelectNearest(), DomainHighlighter()],
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime(2017, 9, 1), 5),
       TimeSeriesSales(DateTime(2017, 9, 2), 5),
@@ -128,7 +128,7 @@ class TimeSeriesBar extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

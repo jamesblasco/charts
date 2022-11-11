@@ -19,8 +19,8 @@ import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show immutable;
 
 @immutable
-class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
-  const SmallTickRendererSpec({
+class SmallTickAxisDecoration<D> extends BaseAxisDecoration<D> {
+  const SmallTickAxisDecoration({
     super.labelStyle,
     this.lineStyle,
     super.axisLineStyle,
@@ -95,7 +95,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   @override
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int> drawAreaBounds,
@@ -118,7 +118,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       dashPattern: lineStyle.dashPattern,
       fill: lineStyle.color,
       stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      strokeWidthPx: lineStyle.strokeWidth,
     );
 
     drawLabel(
@@ -134,7 +134,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   }
 
   List<Point<num>> calculateTickPositions(
-    Tick<D> tick,
+    TickElement<D> tick,
     AxisOrientation orientation,
     Rectangle<int> axisBounds,
     Rectangle<int> drawAreaBounds,

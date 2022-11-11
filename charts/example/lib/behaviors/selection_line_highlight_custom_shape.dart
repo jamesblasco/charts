@@ -15,11 +15,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SelectionLineHighlightCustomShape extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SelectionLineHighlightCustomShape(this.seriesList, {this.animate = false});
@@ -42,7 +42,7 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -53,7 +53,7 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -74,7 +74,7 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
     //
     // As an alternative, [defaultInteractions] can be set to true to include
     // the default chart interactions, including a LinePointHighlighter.
-    return charts.LineChart(seriesList, animate: animate, behaviors: [
+    return LineChart(seriesList, animate: animate, behaviors: [
       // Optional - Configures a [LinePointHighlighter] behavior with a
       // vertical follow line. A vertical follow line is included by
       // default, but is shown here as an example configuration.
@@ -86,23 +86,21 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
       //
       // The symbol renderer is configured to render a hollow shape, for
       // demonstration.
-      charts.LinePointHighlighter(
-          showHorizontalFollowLine:
-              charts.LinePointHighlighterFollowLineType.none,
-          showVerticalFollowLine:
-              charts.LinePointHighlighterFollowLineType.nearest,
-          symbolRenderer: charts.RectSymbolRenderer(isSolid: false)),
+      LinePointHighlighter(
+          showHorizontalFollowLine: LinePointHighlighterFollowLineType.none,
+          showVerticalFollowLine: LinePointHighlighterFollowLineType.nearest,
+          symbolRenderer: RectSymbolRenderer(isSolid: false)),
       // Optional - By default, select nearest is configured to trigger
       // with tap so that a user can have pan/zoom behavior and line point
       // highlighter. Changing the trigger to tap and drag allows the
       // highlighter to follow the dragging gesture but it is not
       // recommended to be used when pan/zoom behavior is enabled.
-      charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag)
+      SelectNearest(eventTrigger: SelectionTrigger.tapAndDrag)
     ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -111,7 +109,7 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

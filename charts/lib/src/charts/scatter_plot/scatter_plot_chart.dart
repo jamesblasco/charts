@@ -60,7 +60,7 @@ class ScatterPlotRenderChart extends NumericCartesianRenderChart {
 
   @override
   void initDomainAxis() {
-    domainAxis!.tickDrawStrategy = const GridlineRendererSpec<num>()
+    domainAxis!.tickDrawStrategy = const GridlineAxisDecoration<num>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 }

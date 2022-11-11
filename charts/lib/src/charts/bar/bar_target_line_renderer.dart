@@ -74,8 +74,9 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   ) {
     final series = details.series!;
 
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final barGroupIndex = series.getAttr(barGroupIndexKey)!;
     final previousBarGroupWeight = series.getAttr(previousBarGroupWeightKey);
@@ -134,11 +135,11 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     List<int>? dashPattern,
     required _BarTargetLineRendererElement details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -190,11 +191,11 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     List<int>? dashPattern,
     required _BarTargetLineRendererElement details,
     D? domainValue,
-    required ImmutableAxis<D> domainAxis,
+    required ImmutableAxisElement<D> domainAxis,
     required int domainWidth,
     num? measureValue,
     required num measureOffsetValue,
-    required ImmutableAxis<num> measureAxis,
+    required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -255,12 +256,12 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   /// Generates a set of points that describe a bar target line.
   List<Point<int>> _getTargetLinePoints(
     D? domainValue,
-    ImmutableAxis<D> domainAxis,
+    ImmutableAxisElement<D> domainAxis,
     int domainWidth,
     int? maxBarWidthPx,
     num? measureValue,
     num measureOffsetValue,
-    ImmutableAxis<num> measureAxis,
+    ImmutableAxisElement<num> measureAxis,
     int barGroupIndex,
     double? previousBarGroupWeight,
     double? barGroupWeight,

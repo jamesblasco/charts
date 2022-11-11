@@ -178,8 +178,8 @@ abstract class KeyboardDomainNavigatorState<D>
       final seriesList = <MutableSeries<D>>[];
 
       for (final seriesDatum in datumPairs) {
-        seriesDatumList
-            .add(SeriesDatum<D>(seriesDatum.series, seriesDatum.datum));
+        seriesDatumList.add(SeriesDatum<D>(
+            series: seriesDatum.series, datum: seriesDatum.datum));
 
         if (!seriesList.contains(seriesDatum.series)) {
           seriesList.add(seriesDatum.series as MutableSeries<D>);
@@ -268,8 +268,12 @@ abstract class KeyboardDomainNavigatorState<D>
           detailsByDomain[domain] = [];
         }
 
-        detailsByDomain[domain]!
-            .add(SeriesDatum<D>(datumDetails.series!, datumDetails.datum));
+        detailsByDomain[domain]!.add(
+          SeriesDatum<D>(
+            series: datumDetails.series!,
+            datum: datumDetails.datum,
+          ),
+        );
       }
       // LINT.ThenChange(//depot/google3/third_party/dart/charts_web/lib/src/common/behaviors/hovercard/hovercard.dart)
     }

@@ -19,8 +19,8 @@ import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show immutable;
 
 @immutable
-class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
-  const GridlineRendererSpec({
+class GridlineAxisDecoration<D> extends SmallTickAxisDecoration<D> {
+  const GridlineAxisDecoration({
     super.labelStyle,
     super.lineStyle,
     super.axisLineStyle,
@@ -58,13 +58,6 @@ class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
         labelRotation: labelRotation,
         labelCollisionRotation: labelCollisionRotation,
       );
-
-  @override
-  // ignore: hash_and_equals
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is GridlineRendererSpec && super == other);
-  }
 }
 
 /// Draws line across chart draw area for each tick.
@@ -99,7 +92,7 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   @override
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int> drawAreaBounds,
@@ -149,7 +142,7 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       dashPattern: lineStyle.dashPattern,
       fill: lineStyle.color,
       stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      strokeWidthPx: lineStyle.strokeWidth,
     );
 
     drawLabel(

@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class AreaAndLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   AreaAndLineChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class AreaAndLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final myFakeDesktopData = [
@@ -62,14 +62,14 @@ class AreaAndLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -77,26 +77,24 @@ class AreaAndLineChart extends StatelessWidget {
         data: myFakeTabletData,
       )
         // Configure our custom bar target renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customArea'),
+        ..setAttribute(rendererIdKey, 'customArea'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList,
-        animate: animate,
-        customSeriesRenderers: [
-          charts.LineRendererConfig(
-              // ID used to link series to this renderer.
-              customRendererId: 'customArea',
-              includeArea: true,
-              stacked: true),
-        ]);
+    return LineChart(seriesList, animate: animate, customSeriesRenderers: [
+      LineRendererConfig(
+          // ID used to link series to this renderer.
+          customRendererId: 'customArea',
+          includeArea: true,
+          stacked: true),
+    ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final myFakeDesktopData = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -112,7 +110,7 @@ class AreaAndLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -120,8 +118,8 @@ class AreaAndLineChart extends StatelessWidget {
         data: myFakeDesktopData,
       )
         // Configure our custom bar target renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customArea'),
-      charts.Series<LinearSales, int>(
+        ..setAttribute(rendererIdKey, 'customArea'),
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,

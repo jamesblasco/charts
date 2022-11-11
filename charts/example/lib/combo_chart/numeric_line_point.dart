@@ -23,11 +23,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class NumericComboLinePointChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   NumericComboLinePointChart(this.seriesList, {this.animate = false});
@@ -50,7 +50,7 @@ class NumericComboLinePointChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -75,49 +75,49 @@ class NumericComboLinePointChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom point renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customPoint'),
+        ..setAttribute(rendererIdKey, 'customPoint'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.NumericComboChart(seriesList,
+    return NumericComboChart(seriesList,
         animate: animate,
         // Configure the default renderer as a line renderer. This will be used
         // for any series that does not define a rendererIdKey.
-        defaultRenderer: charts.LineRendererConfig(),
+        defaultRenderer: LineRendererConfig(),
         // Custom renderer configuration for the point series.
         customSeriesRenderers: [
-          charts.PointRendererConfig(
+          PointRendererConfig(
               // ID used to link series to this renderer.
               customRendererId: 'customPoint')
         ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final desktopSalesData = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -140,28 +140,28 @@ class NumericComboLinePointChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: tableSalesData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.green,
           domainFn: (LinearSales sales, _) => sales.year,
           measureFn: (LinearSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom point renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customPoint'),
+        ..setAttribute(rendererIdKey, 'customPoint'),
     ];
   }
 }

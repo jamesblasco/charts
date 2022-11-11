@@ -22,18 +22,18 @@
 ///
 /// Note that if a dashPattern or strokeWidth value is not found for a
 /// particular datum, then the chart will fall back to use the value defined in
-/// the [charts.LineRendererConfig]. This could be used, for example, to define
+/// the [LineRendererConfig]. This could be used, for example, to define
 /// a default dash pattern for the series, with only a specific datum called out
 /// with a different pattern.
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
+
 import 'package:charts/charts.dart';
-import 'package:charts/charts.dart' as charts;
 import 'package:flutter/material.dart';
 
 class SegmentsLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SegmentsLineChart(this.seriesList, {this.animate = false});
@@ -56,7 +56,7 @@ class SegmentsLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     // Series of data with static dash pattern and stroke width. The colorFn
@@ -99,7 +99,7 @@ class SegmentsLineChart extends StatelessWidget {
     final green = Colors.green.makeShades(2);
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
@@ -110,7 +110,7 @@ class SegmentsLineChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: colorChangeData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
@@ -121,7 +121,7 @@ class SegmentsLineChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: dashPatternChangeData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
@@ -138,14 +138,13 @@ class SegmentsLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList,
-        defaultRenderer:
-            charts.LineRendererConfig(includeArea: true, stacked: true),
+    return LineChart(seriesList,
+        defaultRenderer: LineRendererConfig(includeArea: true, stacked: true),
         animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     // Series of data with static dash pattern and stroke width. The colorFn
     // accessor will colorize each datum (for all three series).
     final colorChangeData = [
@@ -186,7 +185,7 @@ class SegmentsLineChart extends StatelessWidget {
     final green = Colors.green.makeShades(2);
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
@@ -197,7 +196,7 @@ class SegmentsLineChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: colorChangeData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>
@@ -208,7 +207,7 @@ class SegmentsLineChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: dashPatternChangeData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (LinearSales sales, _) =>

@@ -90,8 +90,7 @@ class DomainA11yExploreBehavior<D> extends ChartBehavior<D> {
     );
   }
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+  
 
   @override
   String get role => 'DomainA11yExplore-$exploreModeTrigger';

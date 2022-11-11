@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 
 class MockContext extends Mock implements ChartContext {}
 
-class MockAxis extends Mock implements Axis<String> {}
+class MockAxis extends Mock implements MutableAxisElement<String> {}
 
 class FakeCartesianRenderChart extends CartesianRenderChart<String> {
   @override

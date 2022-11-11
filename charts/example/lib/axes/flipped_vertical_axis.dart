@@ -18,7 +18,7 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of flipping the vertical measure axis direction so that larger
 /// values render downward instead of the usual rendering up.
@@ -29,7 +29,7 @@ import 'package:charts/charts.dart' as charts;
 /// Note: primary and secondary may flip left and right positioning when
 /// RTL.flipAxisLocations is set.
 class FlippedVerticalAxis extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   FlippedVerticalAxis(this.seriesList, {this.animate = false});
@@ -51,7 +51,7 @@ class FlippedVerticalAxis extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<RunnerRank, String>> _createRandomData() {
+  static List<Series<RunnerRank, String>> _createRandomData() {
     final random = Random();
 
     const runners = ['Smith', 'Jones', 'Brown', 'Doe'];
@@ -65,7 +65,7 @@ class FlippedVerticalAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<RunnerRank, String>(
+      Series<RunnerRank, String>(
         id: 'Race Results',
         domainFn: (RunnerRank row, _) => row.name,
         measureFn: (RunnerRank row, _) => row.place,
@@ -80,7 +80,7 @@ class FlippedVerticalAxis extends StatelessWidget {
   // TODO: Remove this comment
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
       flipVerticalAxis: true,
@@ -88,7 +88,7 @@ class FlippedVerticalAxis extends StatelessWidget {
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<RunnerRank, String>> _createSampleData() {
+  static List<Series<RunnerRank, String>> _createSampleData() {
     final raceData = [
       RunnerRank('Smith', 1),
       RunnerRank('Jones', 2),
@@ -97,7 +97,7 @@ class FlippedVerticalAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<RunnerRank, String>(
+      Series<RunnerRank, String>(
           id: 'Race Results',
           domainFn: (RunnerRank row, _) => row.name,
           measureFn: (RunnerRank row, _) => row.place,

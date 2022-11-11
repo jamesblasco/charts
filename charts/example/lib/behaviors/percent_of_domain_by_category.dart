@@ -22,10 +22,10 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 class PercentOfDomainByCategoryBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   PercentOfDomainByCategoryBarChart(this.seriesList, {this.animate = false});
@@ -47,7 +47,7 @@ class PercentOfDomainByCategoryBarChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesDataA = [
@@ -93,42 +93,42 @@ class PercentOfDomainByCategoryBarChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesDataB,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesDataB,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -141,10 +141,10 @@ class PercentOfDomainByCategoryBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
+      barGroupingType: BarGroupingType.groupedStacked,
       // Configures a [PercentInjector] behavior that will calculate measure
       // values as the percentage of the total of all data that shares both a
       // domain and a series category.
@@ -153,16 +153,16 @@ class PercentOfDomainByCategoryBarChart extends StatelessWidget {
       // total value for each bar stack is 100%. A stacked bar chart that does
       // not group by series category would use the "domain" option.
       behaviors: [
-        charts.PercentInjector(
-            totalType: charts.PercentInjectorTotalType.domainBySeriesCategory)
+        PercentInjector(
+            totalType: PercentInjectorTotalType.domainBySeriesCategory)
       ],
       // Configure the axis spec to show percentage values.
-      primaryMeasureAxis: charts.PercentAxisSpec(),
+      primaryMeasureAxis: PercentAxisSpec(),
     );
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> createSampleData() {
+  static List<Series<OrdinalSales, String>> createSampleData() {
     final desktopSalesDataA = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -206,42 +206,42 @@ class PercentOfDomainByCategoryBarChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile A',
         seriesCategory: 'A',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesDataA,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesDataB,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tableSalesDataB,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile B',
         seriesCategory: 'B',
         domainFn: (OrdinalSales sales, _) => sales.year,

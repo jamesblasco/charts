@@ -15,24 +15,23 @@
 
 import 'package:charts/src/core/render/processed_series.dart'
     show ImmutableSeries;
+import 'package:charts/src/core/render/processed_series.dart';
 import 'package:equatable/equatable.dart';
 
 /// Stores datum and the series the datum originated.
 class SeriesDatum<D> extends Equatable {
-  SeriesDatum(this.series, this.datum);
+  SeriesDatum({
+    required this.datum,
+    required this.series,
+  });
   final ImmutableSeries<D> series;
   final dynamic datum;
 
-  /// This is set after [index] getter is called. So accessing this directly is
-  /// considered unsafe. Always uses [index] getter instead.
-  int? _index;
-
   /// Returns null if-and-only if [datum] is null.
-  int? get index {
+  late final int? index = () {
     if (datum == null) return null;
-    _index ??= series.data.indexOf(datum);
-    return _index;
-  }
+    return series.data.indexOf(datum);
+  }();
 
   @override
   List<Object?> get props => [series, datum];

@@ -22,7 +22,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:charts/charts.dart';
 
-class MockNumericScale extends Mock implements NumericScale {}
+class MockNumericScale extends Mock implements NumericScaleElement {}
 
 /// A fake draw strategy that reports collision and alternate ticks
 ///
@@ -40,7 +40,7 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
       : super(null, FakeGraphicsFactory());
 
   @override
-  CollisionReport<num> collides(List<Tick<num>> ticks, _) {
+  CollisionReport<num> collides(List<TickElement<num>> ticks, _) {
     final ticksCollide = ticks.length >= collidesAfterTickCount;
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 
@@ -51,7 +51,7 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
   }
 
   @override
-  void draw(ChartCanvas canvas, Tick<num> tick,
+  void draw(ChartCanvas canvas, TickElement<num> tick,
       {@required AxisOrientation orientation,
       @required Rectangle<int> axisBounds,
       @required Rectangle<int> drawAreaBounds,
@@ -90,15 +90,15 @@ class CelsiusToFahrenheitConverter implements UnitConverter<num, num> {
 void main() {
   FakeGraphicsFactory graphicsFactory;
   MockNumericScale scale;
-  NumericTickProvider tickProvider;
-  TickFormatter<num> formatter;
+  NumericTickProviderElement tickProvider;
+  TickFormatterElement<num> formatter;
   ChartContext context;
 
   setUp(() {
     graphicsFactory = FakeGraphicsFactory();
     scale = MockNumericScale();
-    tickProvider = NumericTickProvider();
-    formatter = NumericTickFormatter();
+    tickProvider = NumericTickProviderElement();
+    formatter = NumericTickFormatterElement();
     context = MockChartContext();
   });
 

@@ -42,8 +42,7 @@ class InitialSelection<D> extends ChartBehavior<D> {
         shouldPreserveSelectionOnDraw: shouldPreserveSelectionOnDraw,
       );
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+
 
   @override
   String get role => 'InitialSelection-${selectionModelType.toString()}';

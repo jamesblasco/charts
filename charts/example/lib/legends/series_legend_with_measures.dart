@@ -22,14 +22,14 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example that shows how to build a series legend that shows measure values
 /// when a datum is selected.
 ///
 /// Also shows the option to provide a custom measure formatter.
 class LegendWithMeasures extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   LegendWithMeasures(this.seriesList, {this.animate = false});
@@ -51,7 +51,7 @@ class LegendWithMeasures extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -83,25 +83,25 @@ class LegendWithMeasures extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -113,10 +113,10 @@ class LegendWithMeasures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
+      barGroupingType: BarGroupingType.grouped,
       // Add the legend behavior to the chart to turn on legends.
       // This example shows how to optionally show measure and provide a custom
       // formatter.
@@ -125,22 +125,22 @@ class LegendWithMeasures extends StatelessWidget {
         // This section is excluded from being copied to the gallery.
         // This is added in order to generate the image for the gallery to show
         // an initial selection so that measure values are shown in the gallery.
-        charts.InitialSelection(
+        InitialSelection(
           selectedDataConfig: [
-            charts.SeriesDatumConfig('Desktop', '2016'),
-            charts.SeriesDatumConfig('Tablet', '2016'),
-            charts.SeriesDatumConfig('Mobile', '2016'),
-            charts.SeriesDatumConfig('Other', '2016'),
+            SeriesDatumConfig('Desktop', '2016'),
+            SeriesDatumConfig('Tablet', '2016'),
+            SeriesDatumConfig('Mobile', '2016'),
+            SeriesDatumConfig('Other', '2016'),
           ],
         ),
         // EXCLUDE_FROM_GALLERY_DOCS_END
-        charts.SeriesLegend(
+        SeriesLegend(
           // Positions for "start" and "end" will be left and right respectively
           // for widgets with a build context that has directionality ltr.
           // For rtl, "start" and "end" will be right and left respectively.
           // Since this example has directionality of ltr, the legend is
           // positioned on the right side of the chart.
-          position: charts.BehaviorPosition.end,
+          position: BehaviorPosition.end,
           // By default, if the position of the chart is on the left or right of
           // the chart, [horizontalFirst] is set to false. This means that the
           // legend entries will grow as rows first instead of a column.
@@ -161,7 +161,7 @@ class LegendWithMeasures extends StatelessWidget {
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -191,25 +191,25 @@ class LegendWithMeasures extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Desktop',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Other',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

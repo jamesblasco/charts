@@ -206,7 +206,9 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
     // not to update the location of the measure axes, the measure axis will
     // change during the hint animation and make values jump back and forth.
     _chart!.getMeasureAxis().lockAxis = true;
-    _chart!.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = true;
+    _chart!
+        .getMeasureAxis(axisId: MutableAxisElement.secondaryMeasureAxisId)
+        .lockAxis = true;
   }
 
   /// Stop hint animation
@@ -214,8 +216,9 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   void stopHintAnimation() {
     // When panning is completed, unlock the measure axis.
     _chart!.getMeasureAxis().lockAxis = false;
-    _chart!.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis =
-        false;
+    _chart!
+        .getMeasureAxis(axisId: MutableAxisElement.secondaryMeasureAxisId)
+        .lockAxis = false;
   }
 
   /// Animation hint percent, to be returned by the native platform.

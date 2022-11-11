@@ -29,24 +29,24 @@ enum PanningTickProviderMode {
 /// Wraps an existing tick provider to be able to return cached ticks during
 /// zoom in/out, return ticks calculated with locked step size during panning,
 /// or just pass through to the existing tick provider.
-class PanningTickProvider<D> extends TickProvider<D> {
+class PanningTickProvider<D> extends TickStrategyElement<D> {
   PanningTickProvider(this.tickProvider);
-  final TickProvider<D> tickProvider;
+  final TickStrategyElement<D> tickProvider;
 
   PanningTickProviderMode _mode = PanningTickProviderMode.passThrough;
 
-  late List<Tick<D>> _ticks;
+  late List<TickElement<D>> _ticks;
 
   set mode(PanningTickProviderMode mode) {
     _mode = mode;
   }
 
   @override
-  List<Tick<D>> getTicks({
+  List<TickElement<D>> getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
-    required MutableScale<D> scale,
-    required TickFormatter<D> formatter,
+    required MutableScaleElement<D> scale,
+    required TickFormatterElement<D> formatter,
     required Map<D, String> formatterValueCache,
     required TickDrawStrategy<D> tickDrawStrategy,
     required AxisOrientation? orientation,

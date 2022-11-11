@@ -15,6 +15,20 @@
 
 import 'dart:math';
 import 'package:charts/core.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
+@immutable
+abstract class AxisDecoration<D> extends Equatable {
+  const AxisDecoration();
+
+  static const NoneAxisDecoration<dynamic> none = NoneAxisDecoration();
+
+  TickDrawStrategy<D> createDrawStrategy(
+    ChartContext context,
+    GraphicsFactory graphicFactory,
+  );
+}
 
 /// Strategy for drawing ticks and checking for collisions.
 abstract class TickDrawStrategy<D> {
@@ -22,17 +36,17 @@ abstract class TickDrawStrategy<D> {
   ///
   /// This can be used to further modify ticks after they have been generated
   /// with location data and formatted labels.
-  void decorateTicks(List<Tick<D>> ticks);
+  void decorateTicks(List<TickElement<D>> ticks);
 
   /// Returns a [CollisionReport] indicating if there are any collisions.
   CollisionReport<D> collides(
-    List<Tick<D>>? ticks,
+    List<TickElement<D>>? ticks,
     AxisOrientation? orientation,
   );
 
   /// Returns measurement of ticks drawn vertically.
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -40,7 +54,7 @@ abstract class TickDrawStrategy<D> {
 
   /// Returns measurement of ticks drawn horizontally.
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -48,7 +62,7 @@ abstract class TickDrawStrategy<D> {
 
   /// Updates max tick width to match fit max size.
   void updateTickWidth(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight,
     AxisOrientation orientation, {
@@ -64,7 +78,7 @@ abstract class TickDrawStrategy<D> {
   /// avoid colliding into other ticks.
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int> drawAreaBounds,

@@ -18,23 +18,23 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of specifying a custom set of ticks to be used on the domain axis.
 ///
 /// Specifying custom set of ticks allows specifying exactly what ticks are
 /// used in the axis. Each tick is also allowed to have a different style set.
 ///
-/// For an ordinal axis, the [StaticOrdinalTickProviderSpec] is shown in this
-/// example defining ticks to be used with [TickSpec] of String.
+/// For an ordinal axis, the [StaticOrdinalTickProvider] is shown in this
+/// example defining ticks to be used with [Tick] of String.
 ///
-/// For numeric axis, the [StaticNumericTickProviderSpec] can be used by passing
-/// in a list of ticks defined with [TickSpec] of num.
+/// For numeric axis, the [StaticNumericTickProvider] can be used by passing
+/// in a list of ticks defined with [Tick] of num.
 ///
 /// For datetime axis, the [StaticDateTimeTickProviderSpec] can be used by
-/// passing in a list of ticks defined with [TickSpec] of datetime.
+/// passing in a list of ticks defined with [Tick] of datetime.
 class StaticallyProvidedTicks extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   StaticallyProvidedTicks(this.seriesList, {this.animate = false});
@@ -56,7 +56,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final globalSalesData = [
@@ -67,7 +67,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -80,32 +80,31 @@ class StaticallyProvidedTicks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create the ticks to be used the domain axis.
-    final staticTicks = <charts.TickSpec<String>>[
-      charts.TickSpec(
+    final staticTicks = <Tick<String>>[
+      Tick(
           // Value must match the domain value.
           '2014',
           // Optional label for this tick, defaults to domain value if not set.
           label: 'Year 2014',
           // The styling for this tick.
-          style:
-              charts.TextStyle(color: Color.fromARGB(0xFF, 0x4C, 0xAF, 0x50))),
+          style: TextStyle(color: Color.fromARGB(0xFF, 0x4C, 0xAF, 0x50))),
       // If no text style is specified - the style from renderSpec will be used
       // if one is specified.
-      charts.TickSpec('2015'),
-      charts.TickSpec('2016'),
-      charts.TickSpec('2017'),
+      Tick('2015'),
+      Tick('2016'),
+      Tick('2017'),
     ];
 
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
-      domainAxis: charts.OrdinalAxisSpec(
-          tickProviderSpec: charts.StaticOrdinalTickProviderSpec(staticTicks)),
+      domainAxis:
+          OrdinalAxis(tickProvider: StaticOrdinalTickProvider(staticTicks)),
     );
   }
 
   /// Create series list with single series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
       OrdinalSales('2014', 5000),
       OrdinalSales('2015', 25000),
@@ -114,7 +113,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

@@ -26,13 +26,13 @@ class NumericCartesianRenderChart extends CartesianRenderChart<num> {
     super.secondaryMeasureAxis,
     super.disjointMeasureAxes,
   }) : super(
-          domainAxis: NumericAxis(),
+          domainAxis: NumericAxisElement(),
         );
 
   @protected
   @override
   void initDomainAxis() {
-    _domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<num>()
+    _domainAxis!.tickDrawStrategy = const SmallTickAxisDecoration<num>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 }
@@ -45,13 +45,13 @@ class OrdinalCartesianRenderChart extends CartesianRenderChart<String> {
     super.secondaryMeasureAxis,
     super.disjointMeasureAxes,
   }) : super(
-          domainAxis: OrdinalAxis(),
+          domainAxis: OrdinalAxisElement(),
         );
 
   @protected
   @override
   void initDomainAxis() {
-    _domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<String>()
+    _domainAxis!.tickDrawStrategy = const SmallTickAxisDecoration<String>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 }
@@ -60,18 +60,18 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   CartesianRenderChart({
     bool? vertical,
     LayoutConfig? layoutConfig,
-    Axis<D>? domainAxis,
-    NumericAxis? primaryMeasureAxis,
-    NumericAxis? secondaryMeasureAxis,
-    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
+    MutableAxisElement<D>? domainAxis,
+    NumericAxisElement? primaryMeasureAxis,
+    NumericAxisElement? secondaryMeasureAxis,
+    LinkedHashMap<String, NumericAxisElement>? disjointMeasureAxes,
   })  : vertical = vertical ?? true,
         // [domainAxis] will be set to the new axis in [configurationChanged].
         _newDomainAxis = domainAxis,
-        _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
-        _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxis(),
+        _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxisElement(),
+        _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxisElement(),
         _disjointMeasureAxes =
             // ignore: prefer_collection_literals
-            disjointMeasureAxes ?? LinkedHashMap<String, NumericAxis>(),
+            disjointMeasureAxes ?? LinkedHashMap<String, NumericAxisElement>(),
         super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -83,7 +83,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   bool vertical;
 
   /// The current domain axis for this chart.
-  Axis<D>? _domainAxis;
+  MutableAxisElement<D>? _domainAxis;
 
   /// Temporarily stores the new domain axis that is passed in the constructor
   /// and the new domain axis created when [domainAxisSpec] is set to a new
@@ -93,37 +93,37 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   /// [context] is available. [configurationChanged] is called after [context]
   /// is available and [_newDomainAxis] will be set to [_domainAxis] and then
   /// reset back to null.
-  Axis<D>? _newDomainAxis;
+  MutableAxisElement<D>? _newDomainAxis;
 
   /// The current domain axis spec that was used to configure [_domainAxis].
   ///
   /// This is kept to check if the axis spec has changed when [domainAxisSpec]
   /// is set.
-  AxisSpec<D>? _domainAxisSpec;
+  AxisData<D>? _domainAxisSpec;
 
   /// Temporarily stores the new domain axis spec that is passed in when
   /// [domainAxisSpec] is set and is different from [_domainAxisSpec]. This spec
   /// is then applied to the new domain axis when [configurationChanged] is
   /// called.
-  AxisSpec<D>? _newDomainAxisSpec;
+  AxisData<D>? _newDomainAxisSpec;
 
-  NumericAxisSpec? _primaryMeasureAxisSpec;
+  NumericAxis? _primaryMeasureAxisSpec;
 
-  NumericAxisSpec? _newPrimaryMeasureAxisSpec;
+  NumericAxis? _newPrimaryMeasureAxisSpec;
 
-  NumericAxis _primaryMeasureAxis;
+  NumericAxisElement _primaryMeasureAxis;
 
-  NumericAxisSpec? _secondaryMeasureAxisSpec;
+  NumericAxis? _secondaryMeasureAxisSpec;
 
-  NumericAxisSpec? _newSecondaryMeasureAxisSpec;
+  NumericAxis? _newSecondaryMeasureAxisSpec;
 
-  NumericAxis _secondaryMeasureAxis;
+  NumericAxisElement _secondaryMeasureAxis;
 
-  LinkedHashMap<String, NumericAxisSpec>? _disjointMeasureAxesSpec;
+  LinkedHashMap<String, NumericAxis>? _disjointMeasureAxesSpec;
 
-  LinkedHashMap<String, NumericAxisSpec>? _newDisjointMeasureAxesSpec;
+  LinkedHashMap<String, NumericAxis>? _newDisjointMeasureAxesSpec;
 
-  LinkedHashMap<String, NumericAxis> _disjointMeasureAxes;
+  LinkedHashMap<String, NumericAxisElement> _disjointMeasureAxes;
 
   /// If set to true, the vertical axis will render the opposite of the default
   /// direction.
@@ -137,14 +137,14 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     super.init(context, graphicsFactory);
 
     _primaryMeasureAxis.context = context;
-    _primaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
+    _primaryMeasureAxis.tickDrawStrategy = const GridlineAxisDecoration<num>()
         .createDrawStrategy(context, graphicsFactory);
 
     _secondaryMeasureAxis.context = context;
-    _secondaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
+    _secondaryMeasureAxis.tickDrawStrategy = const GridlineAxisDecoration<num>()
         .createDrawStrategy(context, graphicsFactory);
 
-    _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+    _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
       axis.context = context;
       axis.tickDrawStrategy = NoneDrawStrategy<num>(graphicsFactory);
     });
@@ -155,7 +155,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     super.updateConfig(layoutConfig ?? _defaultLayoutConfig);
   }
 
-  Axis<D>? get domainAxis => _domainAxis;
+  MutableAxisElement<D>? get domainAxis => _domainAxis;
 
   /// Allows the chart to configure the domain axis when it is created.
   @protected
@@ -163,7 +163,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
   /// Create a new domain axis and save the new spec to be applied during
   /// [configurationChanged].
-  set domainAxisSpec(AxisSpec<D> axisSpec) {
+  set domainAxisSpec(AxisData<D> axisSpec) {
     if (_domainAxisSpec != axisSpec) {
       _newDomainAxis = createDomainAxisFromSpec(axisSpec);
       _newDomainAxisSpec = axisSpec;
@@ -172,8 +172,8 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
   /// Creates the domain axis from a provided axis spec.
   @protected
-  Axis<D>? createDomainAxisFromSpec(AxisSpec<D> axisSpec) {
-    return axisSpec.createAxis();
+  MutableAxisElement<D>? createDomainAxisFromSpec(AxisData<D> axisSpec) {
+    return axisSpec.createElement();
   }
 
   @override
@@ -209,9 +209,9 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
       removeView(_primaryMeasureAxis);
 
       _primaryMeasureAxis =
-          _primaryMeasureAxisSpec?.createAxis() ?? NumericAxis();
+          _primaryMeasureAxisSpec?.createElement() ?? NumericAxisElement();
 
-      _primaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
+      _primaryMeasureAxis.tickDrawStrategy = const GridlineAxisDecoration<num>()
           .createDrawStrategy(context, graphicsFactory!);
 
       _primaryMeasureAxisSpec?.configure(
@@ -228,10 +228,11 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
       removeView(_secondaryMeasureAxis);
 
       _secondaryMeasureAxis =
-          _secondaryMeasureAxisSpec?.createAxis() ?? NumericAxis();
+          _secondaryMeasureAxisSpec?.createElement() ?? NumericAxisElement();
 
-      _secondaryMeasureAxis.tickDrawStrategy = const GridlineRendererSpec<num>()
-          .createDrawStrategy(context, graphicsFactory!);
+      _secondaryMeasureAxis.tickDrawStrategy =
+          const GridlineAxisDecoration<num>()
+              .createDrawStrategy(context, graphicsFactory!);
 
       _secondaryMeasureAxisSpec?.configure(
         _secondaryMeasureAxis,
@@ -244,14 +245,14 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     if (_disjointMeasureAxesSpec != _newDisjointMeasureAxesSpec) {
       markChartDirty();
       _disjointMeasureAxesSpec = _newDisjointMeasureAxesSpec;
-      _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+      _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
         removeView(axis);
       });
 
       // ignore: prefer_collection_literals, https://github.com/dart-lang/linter/issues/1649
-      _disjointMeasureAxes = LinkedHashMap<String, NumericAxis>();
+      _disjointMeasureAxes = LinkedHashMap<String, NumericAxisElement>();
       _disjointMeasureAxesSpec?.forEach((axisId, axisSpec) {
-        _disjointMeasureAxes[axisId] = axisSpec.createAxis();
+        _disjointMeasureAxes[axisId] = axisSpec.createElement();
         _disjointMeasureAxes[axisId]!.tickDrawStrategy =
             NoneDrawStrategy<num>(graphicsFactory!);
         axisSpec.configure(
@@ -267,11 +268,11 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   /// Gets the measure axis matching the provided id.
   ///
   /// If none is provided, this returns the primary measure axis.
-  NumericAxis getMeasureAxis({String? axisId}) {
-    NumericAxis? axis;
-    if (axisId == Axis.secondaryMeasureAxisId) {
+  NumericAxisElement getMeasureAxis({String? axisId}) {
+    NumericAxisElement? axis;
+    if (axisId == MutableAxisElement.secondaryMeasureAxisId) {
       axis = _secondaryMeasureAxis;
-    } else if (axisId == Axis.primaryMeasureAxisId) {
+    } else if (axisId == MutableAxisElement.primaryMeasureAxisId) {
       axis = _primaryMeasureAxis;
     } else if (axisId != null && _disjointMeasureAxes[axisId] != null) {
       axis = _disjointMeasureAxes[axisId];
@@ -285,13 +286,13 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
 
   /// Sets the primary measure axis for the chart, rendered on the start side of
   /// the domain axis.
-  set primaryMeasureAxisSpec(NumericAxisSpec? axisSpec) {
+  set primaryMeasureAxisSpec(NumericAxis? axisSpec) {
     _newPrimaryMeasureAxisSpec = axisSpec;
   }
 
   /// Sets the secondary measure axis for the chart, rendered on the end side of
   /// the domain axis.
-  set secondaryMeasureAxisSpec(NumericAxisSpec? axisSpec) {
+  set secondaryMeasureAxisSpec(NumericAxis? axisSpec) {
     _newSecondaryMeasureAxisSpec = axisSpec;
   }
 
@@ -313,7 +314,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
   /// A [LinkedHashMap] is used to ensure consistent ordering when painting the
   /// axes.
   set disjointMeasureAxisSpecs(
-    LinkedHashMap<String, NumericAxisSpec>? axisSpecs,
+    LinkedHashMap<String, NumericAxis>? axisSpecs,
   ) {
     _newDisjointMeasureAxesSpec = axisSpecs;
   }
@@ -350,9 +351,10 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     for (final series in seriesList) {
       final measureAxisId = series.getAttr(measureAxisIdKey);
       _usePrimaryMeasureAxis = _usePrimaryMeasureAxis ||
-          (measureAxisId == null || measureAxisId == Axis.primaryMeasureAxisId);
+          (measureAxisId == null ||
+              measureAxisId == MutableAxisElement.primaryMeasureAxisId);
       _useSecondaryMeasureAxis = _useSecondaryMeasureAxis ||
-          (measureAxisId == Axis.secondaryMeasureAxisId);
+          (measureAxisId == MutableAxisElement.secondaryMeasureAxisId);
     }
 
     // Add or remove the primary axis view.
@@ -370,7 +372,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     }
 
     // Add all disjoint axis views so that their range will be configured.
-    _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+    _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
       addView(axis);
     });
 
@@ -381,7 +383,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
     _primaryMeasureAxis.resetDomains();
     _secondaryMeasureAxis.resetDomains();
 
-    _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+    _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
       axis.resetDomains();
     });
 
@@ -404,7 +406,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
             : AxisOrientation.right)
         ..reverseOutputRange = flipVerticalAxisOutput;
 
-      _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+      _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
         axis
           ..axisOrientation = (reverseAxisDirection
               ? AxisOrientation.left
@@ -426,7 +428,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
         ..axisOrientation = AxisOrientation.top
         ..reverseOutputRange = reverseAxisDirection;
 
-      _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+      _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
         axis
           ..axisOrientation = AxisOrientation.top
           ..reverseOutputRange = reverseAxisDirection;
@@ -457,7 +459,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
       _secondaryMeasureAxis.updateTicks();
     }
 
-    _disjointMeasureAxes.forEach((String axisId, NumericAxis axis) {
+    _disjointMeasureAxes.forEach((String axisId, NumericAxisElement axis) {
       axis.updateTicks();
     });
 

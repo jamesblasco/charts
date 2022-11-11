@@ -16,7 +16,7 @@
 import 'dart:collection' show HashMap;
 import 'package:charts/core.dart';
 
-/// A domain processor for [OrdinalScale].
+/// A domain processor for [OrdinalScaleElement].
 ///
 /// [D] domain class type of the values being tracked.
 ///

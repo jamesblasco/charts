@@ -43,8 +43,6 @@ class PanBehavior<D> extends ChartBehavior<D> {
       ..panningCompletedCallback = panningCompletedCallback;
   }
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
 
   @override
   String get role => 'Pan';

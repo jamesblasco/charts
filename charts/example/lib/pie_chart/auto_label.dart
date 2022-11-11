@@ -18,11 +18,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class DonutAutoLabelChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   DonutAutoLabelChart(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class DonutAutoLabelChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
+  static List<Series<LinearSales, int>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -56,7 +56,7 @@ class DonutAutoLabelChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -70,7 +70,7 @@ class DonutAutoLabelChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(seriesList,
+    return PieChart(seriesList,
         animate: animate,
         // Configure the width of the pie slices to 60px. The remaining space in
         // the chart will be left as a hole in the center.
@@ -84,15 +84,15 @@ class DonutAutoLabelChart extends StatelessWidget {
         // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
         //
         // Example configuring different styles for inside/outside:
-        //       charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: charts.TextStyle(...),
-        //          outsideLabelStyleSpec: charts.TextStyle(...)),
-        defaultRenderer: charts.ArcRendererConfig(
-            arcWidth: 60, arcRendererDecorators: [charts.ArcLabelDecorator()]));
+        //       ArcLabelDecorator(
+        //          insideLabelStyleSpec: TextStyle(...),
+        //          outsideLabelStyleSpec: TextStyle(...)),
+        defaultRenderer: ArcRendererConfig(
+            arcWidth: 60, arcRendererDecorators: [ArcLabelDecorator()]));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 100),
       LinearSales(1, 75),
@@ -101,7 +101,7 @@ class DonutAutoLabelChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

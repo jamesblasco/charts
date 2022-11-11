@@ -24,9 +24,10 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
 class MockTextElement extends Mock implements TextElement {}
 
-class MockNumericTickFormatter extends Mock implements TickFormatter<num> {}
+class MockNumericTickFormatter extends Mock
+    implements TickFormatterElement<num> {}
 
-class FakeNumericTickFormatter extends TickFormatter<num> {
+class FakeNumericTickFormatter extends TickFormatterElement<num> {
   int calledTimes = 0;
 
   @override
@@ -47,26 +48,26 @@ class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}
 void main() {
   ChartContext context;
   GraphicsFactory graphicsFactory;
-  TickFormatter<num> formatter;
+  TickFormatterElement<num> formatter;
   BaseTickDrawStrategy<num> drawStrategy;
-  LinearScale scale;
+  LinearScaleElement scale;
 
   setUp(() {
     context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
     formatter = MockNumericTickFormatter();
     drawStrategy = MockDrawStrategy<num>();
-    scale = LinearScale()..range = ScaleOutputExtent(0, 300);
+    scale = LinearScaleElement()..range = ScaleOutputExtent(0, 300);
 
     when(graphicsFactory.createTextElement(any)).thenReturn(MockTextElement());
   });
 
   group('scale is extended with range tick values', () {
     test('values extend existing domain values', () {
-      final tickProvider = RangeTickProvider<num>([
-        TickSpec<num>(20200601, label: '20200601'),
-        TickSpec<num>(20200608, label: '20200608'),
-        TickSpec<num>(20200615, label: '20200615'),
+      final tickProvider = RangeTickProviderElement<num>([
+        Tick<num>(20200601, label: '20200601'),
+        Tick<num>(20200608, label: '20200608'),
+        Tick<num>(20200615, label: '20200615'),
         RangeTickSpec<num>(
           20200531,
           label: 'Week 1',
@@ -107,9 +108,9 @@ void main() {
     });
 
     test('values within data extent', () {
-      final tickProvider = RangeTickProvider<num>([
-        TickSpec<num>(20200601, label: '20200601'),
-        TickSpec<num>(20200608, label: '20200608'),
+      final tickProvider = RangeTickProviderElement<num>([
+        Tick<num>(20200601, label: '20200601'),
+        Tick<num>(20200608, label: '20200608'),
         RangeTickSpec<num>(
           20200531,
           label: 'Week 1',
@@ -146,9 +147,9 @@ void main() {
 
   group('formatter', () {
     test('is not called when all ticks have labels', () {
-      final tickProvider = RangeTickProvider<num>([
-        TickSpec<num>(20200601, label: '20200601'),
-        TickSpec<num>(20200608, label: '20200608'),
+      final tickProvider = RangeTickProviderElement<num>([
+        Tick<num>(20200601, label: '20200601'),
+        Tick<num>(20200608, label: '20200608'),
         RangeTickSpec<num>(
           20200531,
           label: 'Week 1',
@@ -178,9 +179,9 @@ void main() {
     });
 
     test('is called when one ticks does not have label', () {
-      final tickProvider = RangeTickProvider<num>([
-        TickSpec<num>(20200601, label: '20200601'),
-        TickSpec<num>(20200608, label: '20200608'),
+      final tickProvider = RangeTickProviderElement<num>([
+        Tick<num>(20200601, label: '20200601'),
+        Tick<num>(20200608, label: '20200608'),
         RangeTickSpec<num>(
           20200531,
           rangeStartValue: 20200531,
@@ -209,9 +210,9 @@ void main() {
     });
 
     test('is called when all ticks do not have labels', () {
-      final tickProvider = RangeTickProvider<num>([
-        TickSpec<num>(20200601),
-        TickSpec<num>(20200608),
+      final tickProvider = RangeTickProviderElement<num>([
+        Tick<num>(20200601),
+        Tick<num>(20200608),
         RangeTickSpec<num>(
           20200531,
           rangeStartValue: 20200531,

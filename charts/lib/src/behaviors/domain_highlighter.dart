@@ -36,8 +36,7 @@ class DomainHighlighter<D> extends ChartBehavior<D> {
   DomainHighlighterState<D> createBehaviorState() =>
       DomainHighlighterState<D>(selectionModelType);
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+ 
 
   @override
   String get role => 'domainHighlight-${selectionModelType.toString()}';

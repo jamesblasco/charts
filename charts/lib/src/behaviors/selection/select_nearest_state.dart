@@ -217,11 +217,11 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         return details
             .map(
               (datumDetails) =>
-                  SeriesDatum<D>(datumDetails.series!, datumDetails.datum),
+                  SeriesDatum<D>(series:datumDetails.series!, datum:datumDetails.datum),
             )
             .toList();
       case SelectionMode.single:
-        return [SeriesDatum<D>(details.first.series!, details.first.datum)];
+        return [SeriesDatum<D>(series:details.first.series!, datum:details.first.datum)];
     }
   }
 
@@ -240,7 +240,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
   List<SeriesDatum<D>> _expandToDomain(DatumDetails<D> nearestDetails) {
     // Make sure that the "nearest" datum is at the top of the list.
     final data = <SeriesDatum<D>>[
-      SeriesDatum(nearestDetails.series!, nearestDetails.datum)
+      SeriesDatum(series:nearestDetails.series!, datum:nearestDetails.datum)
     ];
     final nearestDomain = nearestDetails.domain;
 
@@ -263,7 +263,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         }
 
         if (domain == nearestDomain) {
-          data.add(SeriesDatum(series, datum));
+          data.add(SeriesDatum(series:series, datum:datum));
         } else if (testBounds) {
           final domainLowerBound = domainLowerBoundFn(i);
           final domainUpperBound = domainUpperBoundFn(i);
@@ -287,7 +287,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
           }
 
           if (addDatum) {
-            data.add(SeriesDatum(series, datum));
+            data.add(SeriesDatum(series:series,datum:datum));
           }
         }
       }

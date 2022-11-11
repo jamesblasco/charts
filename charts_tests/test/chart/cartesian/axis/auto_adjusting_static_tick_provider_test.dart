@@ -25,9 +25,10 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
 class MockTextElement extends Mock implements TextElement {}
 
-class MockNumericTickFormatter extends Mock implements TickFormatter<num> {}
+class MockNumericTickFormatter extends Mock
+    implements TickFormatterElement<num> {}
 
-class FakeNumericTickFormatter extends TickFormatter<num> {
+class FakeNumericTickFormatter extends TickFormatterElement<num> {
   int calledTimes = 0;
 
   @override
@@ -47,26 +48,26 @@ class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}
 void main() {
   ChartContext context;
   GraphicsFactory graphicsFactory;
-  TickFormatter<num> formatter;
+  TickFormatterElement<num> formatter;
   BaseTickDrawStrategy<num> drawStrategy;
-  LinearScale scale;
+  LinearScaleElement scale;
 
   setUp(() {
     context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
     formatter = MockNumericTickFormatter();
     drawStrategy = MockDrawStrategy<num>();
-    scale = LinearScale()..range = ScaleOutputExtent(0, 300);
+    scale = LinearScaleElement()..range = ScaleOutputExtent(0, 300);
 
     when(graphicsFactory.createTextElement(any)).thenReturn(MockTextElement());
   });
 
   group('with tick increment', () {
     test('returns the first increment if there is no collision', () {
-      final tickProvider = AutoAdjustingStaticTickProvider<num>([
-        TickSpec<num>(1, label: '1'),
-        TickSpec<num>(2, label: '2'),
-        TickSpec<num>(3, label: '3')
+      final tickProvider = AutoAdjustingStaticTickProviderElement<num>([
+        Tick<num>(1, label: '1'),
+        Tick<num>(2, label: '2'),
+        Tick<num>(3, label: '3')
       ], [
         1,
         2
@@ -86,10 +87,10 @@ void main() {
     });
 
     test('returns the first non colliding increment', () {
-      final tickProvider = AutoAdjustingStaticTickProvider<num>([
-        TickSpec<num>(1, label: '1'),
-        TickSpec<num>(2, label: '2'),
-        TickSpec<num>(3, label: '3')
+      final tickProvider = AutoAdjustingStaticTickProviderElement<num>([
+        Tick<num>(1, label: '1'),
+        Tick<num>(2, label: '2'),
+        Tick<num>(3, label: '3')
       ], [
         1,
         2

@@ -42,11 +42,11 @@ class MockContext extends Mock implements ChartContext {}
 
 class MockChart extends Mock implements CartesianRenderChart {}
 
-class MockOrdinalAxis extends Mock implements OrdinalAxis {}
+class MockOrdinalAxis extends Mock implements OrdinalAxisElement {}
 
-class MockNumericAxis extends Mock implements Axis<num> {}
+class MockNumericAxis extends Mock implements MutableAxisElement<num> {}
 
-class MockDateTimeAxis extends Mock implements Axis<DateTime> {}
+class MockDateTimeAxis extends Mock implements MutableAxisElement<DateTime> {}
 
 class MockCanvas extends Mock implements ChartCanvas {}
 

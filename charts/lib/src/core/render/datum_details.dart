@@ -16,13 +16,15 @@
 import 'dart:math';
 
 import 'package:charts/core.dart';
+import 'package:flutter/material.dart';
 
 typedef DomainFormatter<D> = String Function(D domain);
 typedef MeasureFormatter = String Function(num? measure);
 
 /// Represents processed rendering details for a data point from a series.
+@immutable
 class DatumDetails<D> {
-  DatumDetails({
+  const DatumDetails({
     this.datum,
     this.index,
     this.domain,
@@ -228,10 +230,10 @@ class DatumDetails<D> {
   final double? strokeWidthPx;
 
   /// Optional formatter for [domain].
-  DomainFormatter<D>? domainFormatter;
+  final DomainFormatter<D>? domainFormatter;
 
   /// Optional formatter for [measure].
-  MeasureFormatter? measureFormatter;
+  final MeasureFormatter? measureFormatter;
 
   String get formattedDomain => (domainFormatter != null)
       ? domainFormatter!(domain as D)

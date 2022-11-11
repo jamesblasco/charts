@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class PieOutsideLabelChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   PieOutsideLabelChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class PieOutsideLabelChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
+  static List<Series<LinearSales, int>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -55,7 +55,7 @@ class PieOutsideLabelChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -69,7 +69,7 @@ class PieOutsideLabelChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(seriesList,
+    return PieChart(seriesList,
         animate: animate,
         // Add an [ArcLabelDecorator] configured to render labels outside of the
         // arc with a leader line.
@@ -78,17 +78,16 @@ class PieOutsideLabelChart extends StatelessWidget {
         // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
         //
         // Example configuring different styles for inside/outside:
-        //       charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: charts.TextStyle(...),
-        //          outsideLabelStyleSpec: charts.TextStyle(...)),
-        defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
-          charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside)
+        //       ArcLabelDecorator(
+        //          insideLabelStyleSpec: TextStyle(...),
+        //          outsideLabelStyleSpec: TextStyle(...)),
+        defaultRenderer: ArcRendererConfig(arcRendererDecorators: [
+          ArcLabelDecorator(labelPosition: ArcLabelPosition.outside)
         ]));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 100),
       LinearSales(1, 75),
@@ -97,7 +96,7 @@ class PieOutsideLabelChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

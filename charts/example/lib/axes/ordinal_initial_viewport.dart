@@ -20,16 +20,16 @@
 ///
 /// In this example, the series list has ordinal data from year 2014 to 2030,
 /// but we want to show starting at 2018 and we only want to show 4 values.
-/// We can do this by specifying an [OrdinalViewport] in [OrdinalAxisSpec].
+/// We can do this by specifying an [OrdinalViewport] in [OrdinalAxis].
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class OrdinalInitialViewport extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   OrdinalInitialViewport(this.seriesList, {this.animate = false});
@@ -52,7 +52,7 @@ class OrdinalInitialViewport extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -76,7 +76,7 @@ class OrdinalInitialViewport extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -89,21 +89,20 @@ class OrdinalInitialViewport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
       // Set the initial viewport by providing a AxisSpec with the
       // desired viewport: a starting domain and the data size.
-      domainAxis:
-          charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('2018', 4)),
+      domainAxis: OrdinalAxis(viewport: OrdinalViewport('2018', 4)),
       // Optionally add a pan or pan and zoom behavior.
       // If pan/zoom is not added, the viewport specified remains the viewport.
-      behaviors: [charts.PanAndZoomBehavior()],
+      behaviors: [PanAndZoomBehavior()],
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final data = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -125,7 +124,7 @@ class OrdinalInitialViewport extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,

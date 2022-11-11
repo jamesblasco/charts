@@ -54,7 +54,7 @@ class MockSelectionModel extends Mock implements MutableSelectionModel {
   }
 }
 
-class MockNumericAxis extends Mock implements NumericAxis {
+class MockNumericAxis extends Mock implements NumericAxisElement {
   @override
   double getLocation(num domain) {
     return 10.0;
@@ -170,13 +170,13 @@ void main() {
       final tester = LinePointHighlighterTester(behavior);
       behavior.attachTo(_chart);
       _setupSelection([
-        SeriesDatum(_series1, _s1D2),
-        SeriesDatum(_series2, _s2D2),
+        SeriesDatum(series: _series1, datum: _s1D2),
+        SeriesDatum(series: _series2, datum: _s2D2),
       ]);
 
       // Mock axes for returning fake domain locations.
-      Axis domainAxis = MockNumericAxis();
-      Axis primaryMeasureAxis = MockNumericAxis();
+      MutableAxisElement domainAxis = MockNumericAxis();
+      MutableAxisElement primaryMeasureAxis = MockNumericAxis();
 
       _series1.setAttr(domainAxisKey, domainAxis);
       _series1.setAttr(measureAxisKey, primaryMeasureAxis);
@@ -250,8 +250,8 @@ void main() {
           selectionModelType: SelectionModelType.info);
       behavior.attachTo(_chart);
       _setupSelection([
-        SeriesDatum(_series1, _s1D2),
-        SeriesDatum(_series2, _s2D2),
+        SeriesDatum(series: _series1, datum: _s1D2),
+        SeriesDatum(series: _series2, datum: _s2D2),
       ]);
 
       // Act

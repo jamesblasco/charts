@@ -117,8 +117,7 @@ class SelectNearest<D> extends ChartBehavior<D> {
     );
   }
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+
 
   // TODO: Explore the performance impact of calculating this once
   // at the constructor for this and common ChartBehaviors.

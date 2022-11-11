@@ -63,7 +63,8 @@ class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
         final domain = series.domainFn(index);
 
         domainSeriesDatum[domain] ??= <SeriesDatum<D>>[];
-        domainSeriesDatum[domain]!.add(SeriesDatum<D>(series, datum));
+        domainSeriesDatum[domain]!
+            .add(SeriesDatum<D>(series: series, datum: datum));
       }
     }
 
@@ -72,7 +73,7 @@ class DomainA11yExploreBehaviorState<D> extends A11yExploreBehaviorState<D> {
 
       final firstSeries = seriesDatums.first.series;
       final domainAxis =
-          firstSeries.getAttr(domainAxisKey)! as ImmutableAxis<D>;
+          firstSeries.getAttr(domainAxisKey)! as ImmutableAxisElement<D>;
       final location = domainAxis.getLocation(domain)!;
 
       /// If the step size is smaller than the minimum width, use minimum.

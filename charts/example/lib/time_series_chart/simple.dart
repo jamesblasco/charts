@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SimpleTimeSeriesChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   SimpleTimeSeriesChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -55,7 +55,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -68,18 +68,18 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
+    return TimeSeriesChart(
       seriesList,
       animate: animate,
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
+      dateTimeFactory: const LocalDateTimeFactory(),
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -88,7 +88,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

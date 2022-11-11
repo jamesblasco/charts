@@ -17,12 +17,12 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomAxisTickFormatters extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   CustomAxisTickFormatters(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<MyRow, DateTime>> _createRandomData() {
+  static List<Series<MyRow, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -63,7 +63,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,
@@ -79,8 +79,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
     ///
     /// This is what is used in the [NumericAxisSpec] below.
     final simpleCurrencyFormatter =
-        charts.BasicNumericTickFormatterSpec.fromNumberFormat(
-            NumberFormat.compactSimpleCurrency());
+        NumericTickFormatter.fromFormat(NumberFormat.compactSimpleCurrency());
 
     /// Formatter for numeric ticks that uses the callback provided.
     ///
@@ -89,13 +88,12 @@ class CustomAxisTickFormatters extends StatelessWidget {
     ///
     /// To see this formatter, change [NumericAxisSpec] to use this formatter.
     // final customTickFormatter =
-    //   charts.BasicNumericTickFormatterSpec((num value) => 'MyValue: $value');
+    //   BasicNumericTickFormatterSpec((num value) => 'MyValue: $value');
 
-    return charts.TimeSeriesChart(seriesList,
+    return TimeSeriesChart(seriesList,
         animate: animate,
         // Sets up a currency formatter for the measure axis.
-        primaryMeasureAxis:
-            charts.NumericAxisSpec(tickFormatterSpec: simpleCurrencyFormatter),
+        primaryMeasureAxis: NumericAxis(tickFormatter: simpleCurrencyFormatter),
 
         /// Customizes the date tick formatter. It will print the day of month
         /// as the default format, but include the month and year if it
@@ -103,14 +101,14 @@ class CustomAxisTickFormatters extends StatelessWidget {
         ///
         /// minute, hour, day, month, and year are all provided by default and
         /// you can override them following this pattern.
-        domainAxis: charts.DateTimeAxisSpec(
-            tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                day: charts.TimeFormatterSpec(
+        domainAxis: DateTimeAxis(
+            tickFormatter: AutoDateTimeTickFormatterSpec(
+                day: TimeFormatterSpec(
                     format: 'd', transitionFormat: 'MM/dd/yyyy'))));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<MyRow, DateTime>> _createSampleData() {
+  static List<Series<MyRow, DateTime>> _createSampleData() {
     final data = [
       MyRow(DateTime(2017, 9, 25), 6),
       MyRow(DateTime(2017, 9, 26), 8),
@@ -126,7 +124,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,

@@ -24,6 +24,7 @@ import 'package:flutter/material.dart'
         LayoutId,
         State,
         TickerProviderStateMixin,
+        VoidCallback,
         Widget;
 
 class BaseChartState<D> extends State<BaseChart<D>>
@@ -41,7 +42,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
   final List<ChartBehavior<D>> autoBehaviorWidgets = <ChartBehavior<D>>[];
   final addedBehaviorWidgets = <ChartBehavior<D>>[];
-  final addedCommonBehaviorsByRole = <String, ChartBehaviorState>{};
+  final addedCommonBehaviorsByRole = <String, ChartBehaviorState<D>>{};
 
   final addedSelectionChangedListenersByType =
       <SelectionModelType, SelectionModelListener<D>>{};
@@ -79,7 +80,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
   bool get chartIsDirty => _configurationChanged;
 
   @override
-  void setState(fn) {
+  void setState(VoidCallback fn) {
     if (mounted) {
       super.setState(fn);
     }

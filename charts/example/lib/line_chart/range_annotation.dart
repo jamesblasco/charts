@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class LineRangeAnnotationChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   LineRangeAnnotationChart(this.seriesList, {this.animate = false});
@@ -48,7 +48,7 @@ class LineRangeAnnotationChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -61,7 +61,7 @@ class LineRangeAnnotationChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -73,21 +73,17 @@ class LineRangeAnnotationChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList, animate: animate, behaviors: [
-      charts.RangeAnnotation([
-        charts.RangeAnnotationSegment(
-            0.5, 1.0, charts.RangeAnnotationAxisType.domain,
+    return LineChart(seriesList, animate: animate, behaviors: [
+      RangeAnnotation([
+        RangeAnnotationSegment(0.5, 1.0, RangeAnnotationAxisType.domain,
             startLabel: 'Domain 1'),
-        charts.RangeAnnotationSegment(
-            2, 4, charts.RangeAnnotationAxisType.domain,
+        RangeAnnotationSegment(2, 4, RangeAnnotationAxisType.domain,
             endLabel: 'Domain 2', color: Colors.grey.shade200),
-        charts.RangeAnnotationSegment(
-            15, 20, charts.RangeAnnotationAxisType.measure,
+        RangeAnnotationSegment(15, 20, RangeAnnotationAxisType.measure,
             startLabel: 'Measure 1 Start',
             endLabel: 'Measure 1 End',
             color: Colors.grey.shade300),
-        charts.RangeAnnotationSegment(
-            35, 65, charts.RangeAnnotationAxisType.measure,
+        RangeAnnotationSegment(35, 65, RangeAnnotationAxisType.measure,
             startLabel: 'Measure 2 Start',
             endLabel: 'Measure 2 End',
             color: Colors.grey.shade400),
@@ -96,7 +92,7 @@ class LineRangeAnnotationChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -105,7 +101,7 @@ class LineRangeAnnotationChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

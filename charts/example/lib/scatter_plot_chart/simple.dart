@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SimpleScatterPlotChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SimpleScatterPlotChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
@@ -67,7 +67,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
     final maxMeasure = 100;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (LinearSales sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
@@ -92,11 +92,11 @@ class SimpleScatterPlotChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.ScatterPlotChart(seriesList, animate: animate);
+    return ScatterPlotChart(seriesList, animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5, 3.0),
       LinearSales(10, 25, 5.0),
@@ -115,7 +115,7 @@ class SimpleScatterPlotChart extends StatelessWidget {
     final maxMeasure = 300;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
         colorFn: (LinearSales sales, _) {

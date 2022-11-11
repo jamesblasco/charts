@@ -15,44 +15,44 @@
 
 import 'dart:math' show Rectangle, min, max;
 
-import 'package:charts/core.dart';
+import 'package:charts/charts.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
+import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart' show protected, visibleForTesting;
 
-export 'auto_adjusting_static_tick_provider.dart';
-export 'axis_tick.dart';
+export 'tick_providers/auto_adjusting_static_tick_provider.dart';
+
 export 'collision_report.dart';
 export 'draw_strategy/draw_strategy.dart';
-export 'end_points_tick_provider.dart';
+
+export 'tick_formatters/formatters.dart';
+export 'tick_providers/tick_providers.dart';
 export 'linear/linear.dart';
-export 'numeric_extents.dart';
-export 'numeric_scale.dart';
-export 'numeric_tick_provider.dart';
-export 'ordinal_extents.dart';
-export 'ordinal_scale.dart';
+export 'tick_providers/numeric_tick_provider.dart';
 export 'ordinal_scale_domain_info.dart';
-export 'ordinal_tick_provider.dart';
-export 'range_axis_tick.dart';
-export 'range_tick.dart';
-export 'range_tick_provider.dart';
-export 'scale.dart';
-export 'simple_ordinal_scale.dart';
+
+export 'scale/extents/extents.dart';
+export 'scale/numeric_scale.dart';
+export 'scale/ordinal_scale.dart';
+export 'scale/scale.dart';
+export 'scale/simple_ordinal_scale.dart';
 export 'spec/spec.dart';
-export 'static_tick_provider.dart';
-export 'tick.dart';
-export 'tick_formatter.dart';
-export 'tick_provider.dart';
+
+export 'tick/tick.dart';
+export 'tick_providers/tick_strategy.dart';
 export 'time/time.dart';
 
 const measureAxisIdKey = AttributeKey<String>('Axis.measureAxisId');
-const measureAxisKey = AttributeKey<Axis<Object>>('Axis.measureAxis');
-const domainAxisKey = AttributeKey<Axis<Object>>('Axis.domainAxis');
+const measureAxisKey =
+    AttributeKey<MutableAxisElement<Object>>('Axis.measureAxis');
+const domainAxisKey =
+    AttributeKey<MutableAxisElement<Object>>('Axis.domainAxis');
 
 /// Orientation of an Axis.
 enum AxisOrientation { top, right, bottom, left }
 
-abstract class ImmutableAxis<D> {
+abstract class ImmutableAxisElement<D> {
   /// Compare domain to the viewport.
   ///
   /// 0 if the domain is in the viewport.
@@ -75,8 +75,10 @@ abstract class ImmutableAxis<D> {
   ScaleOutputExtent? get range;
 }
 
-abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
-  Axis({this.tickProvider, TickFormatter<D>? tickFormatter, this.scale})
+abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
+    implements LayoutView {
+  MutableAxisElement(
+      {this.tickProvider, TickFormatterElement<D>? tickFormatter, this.scale})
       : _defaultScale = scale,
         _defaultTickProvider = tickProvider,
         _defaultTickFormatter = tickFormatter,
@@ -85,32 +87,32 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
   static const _autoViewportDefault = true;
 
-  final MutableScale<D>? _defaultScale;
+  final MutableScaleElement<D>? _defaultScale;
 
-  /// [Scale] of this axis.
-  MutableScale<D>? scale;
+  /// [ScaleElement] of this axis.
+  MutableScaleElement<D>? scale;
 
-  /// Previous [Scale] of this axis, used to calculate tick animation.
-  MutableScale<D>? _previousScale;
+  /// Previous [ScaleElement] of this axis, used to calculate tick animation.
+  MutableScaleElement<D>? _previousScale;
 
-  final TickProvider<D>? _defaultTickProvider;
+  final TickStrategyElement<D>? _defaultTickProvider;
 
-  /// [TickProvider] for this axis.
-  TickProvider<D>? tickProvider;
+  /// [TickStrategyElement] for this axis.
+  TickStrategyElement<D>? tickProvider;
 
-  final TickFormatter<D>? _defaultTickFormatter;
+  final TickFormatterElement<D>? _defaultTickFormatter;
 
-  TickFormatter<D>? _tickFormatter;
+  TickFormatterElement<D>? _tickFormatter;
 
-  set tickFormatter(TickFormatter<D>? formatter) {
+  set tickFormatter(TickFormatterElement<D>? formatter) {
     if (_tickFormatter != formatter) {
       _tickFormatter = formatter;
       _formatterValueCache.clear();
     }
   }
 
-  /// [TickFormatter] for this axis.
-  TickFormatter<D>? get tickFormatter => _tickFormatter;
+  /// [TickFormatterElement] for this axis.
+  TickFormatterElement<D>? get tickFormatter => _tickFormatter;
 
   final _formatterValueCache = <D, String>{};
 
@@ -142,10 +144,10 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   bool lockAxis = false;
 
   /// Ticks provided by the tick provider.
-  List<Tick<D>>? _providedTicks;
+  List<TickElement<D>>? _providedTicks;
 
   /// Ticks used by the axis for drawing.
-  final _axisTicks = <AxisTicks<D>>[];
+  final _axisTicks = <AxisTicksElement<D>>[];
 
   Rectangle<int>? _componentBounds;
   late Rectangle<int>? _drawAreaBounds;
@@ -160,7 +162,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   bool hasTickCollision = false;
 
   @protected
-  MutableScale<D>? get mutableScale => scale;
+  MutableScaleElement<D>? get mutableScale => scale;
 
   /// Rangeband for this axis.
   @override
@@ -334,7 +336,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
       return;
     }
 
-    final providedTicks = List.of(_providedTicks ?? <Tick<D>>[]);
+    final providedTicks = List.of(_providedTicks ?? <TickElement<D>>[]);
 
     final scale = this.scale!;
 
@@ -368,11 +370,11 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
 
     // Add new ticks
     for (final tick in providedTicks) {
-      AxisTicks<D> animatedTick;
-      if (tick is RangeTick<D>) {
+      AxisTicksElement<D> animatedTick;
+      if (tick is RangeTickElement<D>) {
         animatedTick = RangeAxisTicks<D>(tick);
       } else {
-        animatedTick = AxisTicks<D>(tick);
+        animatedTick = AxisTicksElement<D>(tick);
       }
       if (scale.isRangeValueWithinViewport(animatedTick.locationPx!)) {
         if (_previousScale != null) {
@@ -614,36 +616,36 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
   }
 }
 
-class NumericAxis extends Axis<num> {
-  NumericAxis({TickProvider<num>? tickProvider})
+class NumericAxisElement extends MutableAxisElement<num> {
+  NumericAxisElement({TickStrategyElement<num>? tickProvider})
       : super(
-          tickProvider: tickProvider ?? NumericTickProvider(),
-          tickFormatter: NumericTickFormatter(),
-          scale: LinearScale(),
+          tickProvider: tickProvider ?? NumericTickProviderElement(),
+          tickFormatter: NumericTickFormatterElement(),
+          scale: LinearScaleElement(),
         );
 
   void setScaleViewport(NumericExtents viewport) {
     autoViewport = false;
-    (scale as NumericScale).viewportDomain = viewport;
+    (scale as NumericScaleElement).viewportDomain = viewport;
   }
 }
 
-class OrdinalAxis extends Axis<String> {
-  OrdinalAxis({
+class OrdinalAxisElement extends MutableAxisElement<String> {
+  OrdinalAxisElement({
     TickDrawStrategy<String>? tickDrawStrategy,
-    TickProvider<String>? tickProvider,
-    TickFormatter<String>? tickFormatter,
+    TickStrategyElement<String>? tickProvider,
+    TickFormatterElement<String>? tickFormatter,
   }) : super(
-          tickProvider: tickProvider ?? const OrdinalTickProvider(),
-          tickFormatter: tickFormatter ?? const OrdinalTickFormatter(),
-          scale: SimpleOrdinalScale(),
+          tickProvider: tickProvider ?? const OrdinalTickProviderElement(),
+          tickFormatter: tickFormatter ?? const OrdinalTickFormatterElement(),
+          scale: SimpleOrdinalScaleElement(),
         ) {
     this.tickDrawStrategy = tickDrawStrategy;
   }
 
   void setScaleViewport(OrdinalViewport viewport) {
     autoViewport = false;
-    (scale as OrdinalScale)
+    (scale as OrdinalScaleElement)
         .setViewport(viewport.dataSize, viewport.startingDomain);
   }
 
@@ -663,7 +665,7 @@ class OrdinalAxis extends Axis<String> {
     // By resetting the viewport after layout, we guarantee the correct range
     // was used to apply the viewport and behaviors that update the viewport
     // based on translate and scale changes will not be affected (pan/zoom).
-    (scale as OrdinalScale).setViewport(null, null);
+    (scale as OrdinalScaleElement).setViewport(null, null);
   }
 }
 
@@ -680,11 +682,11 @@ class OrdinalViewport extends Equatable {
 @visibleForTesting
 class AxisTester<D> {
   AxisTester(this._axis);
-  final Axis<D> _axis;
+  final MutableAxisElement<D> _axis;
 
-  List<AxisTicks<D>> get axisTicks => _axis._axisTicks;
+  List<AxisTicksElement<D>> get axisTicks => _axis._axisTicks;
 
-  MutableScale<D>? get scale => _axis.scale;
+  MutableScaleElement<D>? get scale => _axis.scale;
 
   List<D> get axisValues => axisTicks.map((t) => t.value).toList();
 }

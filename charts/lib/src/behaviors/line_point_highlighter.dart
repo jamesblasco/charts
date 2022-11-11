@@ -87,8 +87,6 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
         symbolRenderer: symbolRenderer,
       );
 
-  @override
-  void updateBehaviorState(ChartBehaviorState<D> commonBehavior) {}
 
   @override
   String get role => 'LinePointHighlighter-${selectionModelType.toString()}';

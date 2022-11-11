@@ -21,8 +21,8 @@ import 'package:charts/core.dart';
 
 /// A set of styling rules that determines the default look and feel of charts.
 ///
-/// Get or set the [Style] that is used for the app using [StyleFactory.style].
-abstract class Style {
+/// Get or set the [ChartThemeData] that is used for the app using [StyleFactory.style].
+abstract class ChartThemeData {
   Color get black;
 
   Color get transparent;

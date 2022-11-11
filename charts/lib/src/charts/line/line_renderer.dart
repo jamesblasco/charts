@@ -334,7 +334,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     _mergeIntoSeriesMap(seriesList);
 
     for (final series in seriesList) {
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
       final lineKey = series.id;
       final stackIndex = series.getAttr(lineStackIndexKey)!;
 
@@ -593,7 +594,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     List<_DatumPoint<D>>? previousPointList,
     bool initializeFromZero,
   ) {
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final color = styleSegment.color;
     final areaColor = styleSegment.areaColor;
@@ -709,9 +711,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     ImmutableSeries<D> series,
     bool initializeFromZero,
   ) {
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
     final domainFn = series.domainFn;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
     final measureFn = series.measureFn;
     final measureOffsetFn = series.measureOffsetFn!;
 
@@ -904,9 +907,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     ImmutableSeries<D> series,
     bool initializeFromZero,
   ) {
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
     final domainFn = series.domainFn;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final areaPointList = <_DatumPoint<D>>[];
 
@@ -953,7 +957,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     ImmutableSeries<D> series,
     bool initializeFromZero,
   ) {
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
     final areaPointList = <_DatumPoint<D>>[];
 
     // Add all points for upper bounds.
@@ -1001,7 +1006,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     ImmutableSeries<D> series,
     _LineRendererElement<D> details,
   ) {
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
 
     // Convert the domain extent into axis positions.
     // Clamp start position to the beginning of the draw area if it is outside
@@ -1143,10 +1148,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     dynamic datum,
     D? domainValue,
     ImmutableSeries<D> series,
-    ImmutableAxis<D> domainAxis,
+    ImmutableAxisElement<D> domainAxis,
     num? measureValue,
     num? measureOffsetValue,
-    ImmutableAxis<num> measureAxis, {
+    ImmutableAxisElement<num> measureAxis, {
     int? index,
   }) {
     final domainPosition = domainAxis.getLocation(domainValue);
@@ -1318,8 +1323,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   ) {
     final series = details.series!;
 
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final point = _getPoint(
       seriesDatum.datum,

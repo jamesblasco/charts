@@ -24,9 +24,10 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
 class MockTextElement extends Mock implements TextElement {}
 
-class MockNumericTickFormatter extends Mock implements TickFormatter<num> {}
+class MockNumericTickFormatter extends Mock
+    implements TickFormatterElement<num> {}
 
-class FakeNumericTickFormatter extends TickFormatter<num> {
+class FakeNumericTickFormatter extends TickFormatterElement<num> {
   int calledTimes = 0;
 
   @override
@@ -46,26 +47,26 @@ class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}
 void main() {
   ChartContext context;
   GraphicsFactory graphicsFactory;
-  TickFormatter<num> formatter;
+  TickFormatterElement<num> formatter;
   BaseTickDrawStrategy<num> drawStrategy;
-  LinearScale scale;
+  LinearScaleElement scale;
 
   setUp(() {
     context = MockChartContext();
     graphicsFactory = MockGraphicsFactory();
     formatter = MockNumericTickFormatter();
     drawStrategy = MockDrawStrategy<num>();
-    scale = LinearScale()..range = ScaleOutputExtent(0, 300);
+    scale = LinearScaleElement()..range = ScaleOutputExtent(0, 300);
 
     when(graphicsFactory.createTextElement(any)).thenReturn(MockTextElement());
   });
 
   group('scale is extended with static tick values', () {
     test('values extend existing domain values', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50, label: '50'),
-        TickSpec<num>(75, label: '75'),
-        TickSpec<num>(100, label: '100'),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50, label: '50'),
+        Tick<num>(75, label: '75'),
+        Tick<num>(100, label: '100'),
       ]);
 
       scale.addDomain(60);
@@ -88,10 +89,10 @@ void main() {
     });
 
     test('values within data extent', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50, label: '50'),
-        TickSpec<num>(75, label: '75'),
-        TickSpec<num>(100, label: '100'),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50, label: '50'),
+        Tick<num>(75, label: '75'),
+        Tick<num>(100, label: '100'),
       ]);
 
       scale.addDomain(0);
@@ -116,10 +117,10 @@ void main() {
 
   group('formatter', () {
     test('is not called when all ticks have labels', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50, label: '50'),
-        TickSpec<num>(75, label: '75'),
-        TickSpec<num>(100, label: '100'),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50, label: '50'),
+        Tick<num>(75, label: '75'),
+        Tick<num>(100, label: '100'),
       ]);
 
       final fakeFormatter = FakeNumericTickFormatter();
@@ -137,10 +138,10 @@ void main() {
     });
 
     test('is called when one ticks does not have label', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50, label: '50'),
-        TickSpec<num>(75),
-        TickSpec<num>(100, label: '100'),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50, label: '50'),
+        Tick<num>(75),
+        Tick<num>(100, label: '100'),
       ]);
 
       final fakeFormatter = FakeNumericTickFormatter();
@@ -158,10 +159,10 @@ void main() {
     });
 
     test('is called when all ticks do not have labels', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50),
-        TickSpec<num>(75),
-        TickSpec<num>(100),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50),
+        Tick<num>(75),
+        Tick<num>(100),
       ]);
 
       final fakeFormatter = FakeNumericTickFormatter();
@@ -181,12 +182,12 @@ void main() {
 
   group('with tick increment', () {
     test('returns every Nth tick', () {
-      final tickProvider = StaticTickProvider<num>([
-        TickSpec<num>(50, label: '50'),
-        TickSpec<num>(75, label: '75'),
-        TickSpec<num>(100, label: '100'),
-        TickSpec<num>(125, label: '125'),
-        TickSpec<num>(150, label: '150'),
+      final tickProvider = StaticTickProviderElement<num>([
+        Tick<num>(50, label: '50'),
+        Tick<num>(75, label: '75'),
+        Tick<num>(100, label: '100'),
+        Tick<num>(125, label: '125'),
+        Tick<num>(150, label: '150'),
       ], tickIncrement: 2);
 
       final ticks = tickProvider.getTicks(

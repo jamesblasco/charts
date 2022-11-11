@@ -18,11 +18,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   TimeSeriesRangeAnnotationMarginChart(this.seriesList, {this.animate = false});
@@ -45,7 +45,7 @@ class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -58,7 +58,7 @@ class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -70,46 +70,44 @@ class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(seriesList,
+    return TimeSeriesChart(seriesList,
         animate: animate,
 
         // Allow enough space in the left and right chart margins for the
         // annotations.
-        layoutConfig: charts.LayoutConfig(
-            leftSpec: charts.MarginSpec.fixedPixel(60),
-            topSpec: charts.MarginSpec.fixedPixel(20),
-            rightSpec: charts.MarginSpec.fixedPixel(60),
-            bottomSpec: charts.MarginSpec.fixedPixel(20)),
+        layoutConfig: LayoutConfig(
+            leftSpec: MarginSpec.fixedPixel(60),
+            topSpec: MarginSpec.fixedPixel(20),
+            rightSpec: MarginSpec.fixedPixel(60),
+            bottomSpec: MarginSpec.fixedPixel(20)),
         behaviors: [
           // Define one domain and two measure annotations configured to render
           // labels in the chart margins.
-          charts.RangeAnnotation([
-            charts.RangeAnnotationSegment(DateTime(2017, 10, 4),
-                DateTime(2017, 10, 15), charts.RangeAnnotationAxisType.domain,
+          RangeAnnotation([
+            RangeAnnotationSegment(DateTime(2017, 10, 4),
+                DateTime(2017, 10, 15), RangeAnnotationAxisType.domain,
                 startLabel: 'D1 Start',
                 endLabel: 'D1 End',
-                labelAnchor: charts.AnnotationLabelAnchor.end,
+                labelAnchor: AnnotationLabelAnchor.end,
                 color: Colors.grey.shade200,
                 // Override the default vertical direction for domain labels.
-                labelDirection: charts.AnnotationLabelDirection.horizontal),
-            charts.RangeAnnotationSegment(
-                15, 20, charts.RangeAnnotationAxisType.measure,
+                labelDirection: AnnotationLabelDirection.horizontal),
+            RangeAnnotationSegment(15, 20, RangeAnnotationAxisType.measure,
                 startLabel: 'M1 Start',
                 endLabel: 'M1 End',
-                labelAnchor: charts.AnnotationLabelAnchor.end,
+                labelAnchor: AnnotationLabelAnchor.end,
                 color: Colors.grey.shade300),
-            charts.RangeAnnotationSegment(
-                35, 65, charts.RangeAnnotationAxisType.measure,
+            RangeAnnotationSegment(35, 65, RangeAnnotationAxisType.measure,
                 startLabel: 'M2 Start',
                 endLabel: 'M2 End',
-                labelAnchor: charts.AnnotationLabelAnchor.start,
+                labelAnchor: AnnotationLabelAnchor.start,
                 color: Colors.grey.shade300),
-          ], defaultLabelPosition: charts.AnnotationLabelPosition.margin),
+          ], defaultLabelPosition: AnnotationLabelPosition.margin),
         ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -118,7 +116,7 @@ class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

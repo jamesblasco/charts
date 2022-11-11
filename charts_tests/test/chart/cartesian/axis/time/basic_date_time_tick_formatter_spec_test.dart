@@ -47,8 +47,8 @@ void main() {
 
   group(BasicDateTimeTickFormatterSpec, () {
     test('formats ticks with custom formatter', () {
-      final DateTimeTickFormatter dateTimeTickFormatter =
-          dateTimeTickSpec.createTickFormatter(mockContext);
+      final DateTimeTickFormatterElement dateTimeTickFormatter =
+          dateTimeTickSpec.createElement(mockContext);
 
       final ticks = [testDate1, testDate2, testDate3];
       final expectedLabels = [tickLabel, tickLabel, tickLabel];
@@ -59,8 +59,8 @@ void main() {
     });
 
     test('formats ticks with provided DateFormat', () {
-      final DateTimeTickFormatter dateTimeTickFormatter =
-          dateTimeTickSpecWithDateFormat.createTickFormatter(mockContext);
+      final DateTimeTickFormatterElement dateTimeTickFormatter =
+          dateTimeTickSpecWithDateFormat.createElement(mockContext);
 
       final ticks = [testDate1, testDate2, testDate3];
       final expectedLabels = [

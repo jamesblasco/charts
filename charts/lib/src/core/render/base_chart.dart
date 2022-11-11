@@ -328,7 +328,7 @@ abstract class BaseRenderChart<D> {
       for (final dynamic datum in series.data) {
         details.add(
           getSeriesRenderer(rendererId)
-              .getDetailsForSeriesDatum(SeriesDatum<D>(series, datum)),
+              .getDetailsForSeriesDatum(SeriesDatum<D>(series:series, datum:datum)),
         );
       }
     }

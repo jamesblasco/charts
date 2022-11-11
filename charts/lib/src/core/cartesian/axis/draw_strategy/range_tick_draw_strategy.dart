@@ -26,8 +26,8 @@ import 'package:meta/meta.dart' show immutable;
 ///  |   (Individual tick)       |            (Individual tick)    |
 ///  |///////Range Label/////////|///////////Range Label///////////|
 @immutable
-class RangeTickRendererSpec<D> extends SmallTickRendererSpec<D> {
-  RangeTickRendererSpec({
+class RangeTickAxisDecoration<D> extends SmallTickAxisDecoration<D> {
+  RangeTickAxisDecoration({
     super.labelStyle,
     LineStyle? lineStyle,
     super.labelAnchor,
@@ -107,7 +107,7 @@ class RangeTickRendererSpec<D> extends SmallTickRendererSpec<D> {
   // ignore: hash_and_equals
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other is RangeTickRendererSpec && super == other);
+        (other is RangeTickAxisDecoration && super == other);
   }
 }
 
@@ -182,7 +182,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
   @override
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int> drawAreaBounds,
@@ -216,7 +216,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -263,7 +263,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -315,12 +315,12 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     bool isLast,
   ) {
     // Create virtual range start and end ticks for position calculation.
-    final rangeStartTick = Tick<D>(
+    final rangeStartTick = TickElement<D>(
       value: tick.rangeStartValue,
       locationPx: tick.rangeStartLocationPx - rangeTickOffsetPx,
       textElement: null,
     );
-    final rangeEndTick = Tick<D>(
+    final rangeEndTick = TickElement<D>(
       value: tick.rangeEndValue,
       locationPx: isLast
           ? tick.rangeEndLocationPx + rangeTickOffsetPx

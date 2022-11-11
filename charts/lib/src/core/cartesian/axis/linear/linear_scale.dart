@@ -15,9 +15,9 @@
 
 import 'package:charts/core.dart';
 
-/// [NumericScale] that lays out the domain linearly across the range.
+/// [NumericScaleElement] that lays out the domain linearly across the range.
 ///
-/// A [Scale] which converts numeric domain units to a given numeric range units
+/// A [ScaleElement] which converts numeric domain units to a given numeric range units
 /// linearly (as opposed to other methods like log scales).  This is used to map
 /// the domain's values to the available pixel range of the chart using the
 /// apply method.
@@ -41,12 +41,12 @@ import 'package:charts/core.dart';
 /// being auto detected using the minimal distance between two consecutive
 /// datum.  If you don't assign a [RangeBandConfig], then changing the
 /// [stepSizeConfig] is a no-op.
-class LinearScale implements NumericScale {
-  LinearScale()
+class LinearScaleElement implements NumericScaleElement {
+  LinearScaleElement()
       : _domainInfo = LinearScaleDomainInfo(),
         _viewportSettings = LinearScaleViewportSettings();
 
-  LinearScale._copy(LinearScale other)
+  LinearScaleElement._copy(LinearScaleElement other)
       : _domainInfo = LinearScaleDomainInfo.copy(other._domainInfo),
         _viewportSettings =
             LinearScaleViewportSettings.copy(other._viewportSettings),
@@ -65,7 +65,7 @@ class LinearScale implements NumericScale {
   bool _scaleReady = false;
 
   @override
-  LinearScale copy() => LinearScale._copy(this);
+  LinearScaleElement copy() => LinearScaleElement._copy(this);
 
   //
   // Domain methods

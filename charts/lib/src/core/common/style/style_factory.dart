@@ -14,19 +14,19 @@
 // limitations under the License.
 
 import 'package:charts/src/core/common/style/material_style.dart'
-    show MaterialStyle;
-import 'package:charts/src/core/common/style/style.dart' show Style;
+    show MaterialChartTheme;
+import 'package:charts/src/core/common/style/style.dart' show ChartThemeData;
 
 class StyleFactory {
   StyleFactory._internal();
   static final StyleFactory _styleFactory = StyleFactory._internal();
 
-  Style _style = const MaterialStyle();
+  ChartThemeData _style = const MaterialChartTheme();
 
-  /// The [Style] that is used for all the charts in this application.
-  static Style get style => _styleFactory._style;
+  /// The [ChartThemeData] that is used for all the charts in this application.
+  static ChartThemeData get style => _styleFactory._style;
 
-  static set style(Style value) {
+  static set style(ChartThemeData value) {
     _styleFactory._style = value;
   }
 }

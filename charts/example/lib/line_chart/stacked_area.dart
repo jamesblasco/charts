@@ -17,11 +17,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class StackedAreaLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   StackedAreaLineChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class StackedAreaLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final myFakeDesktopData = [
@@ -69,21 +69,21 @@ class StackedAreaLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,
@@ -96,14 +96,13 @@ class StackedAreaLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList,
-        defaultRenderer:
-            charts.LineRendererConfig(includeArea: true, stacked: true),
+    return LineChart(seriesList,
+        defaultRenderer: LineRendererConfig(includeArea: true, stacked: true),
         animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final myFakeDesktopData = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -126,21 +125,21 @@ class StackedAreaLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearSales sales, _) => sales.year,

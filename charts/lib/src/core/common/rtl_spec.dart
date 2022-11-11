@@ -18,12 +18,12 @@ import 'package:flutter/material.dart';
 class RTLSpec {
   /// Creates [RTLSpec]. If no parameters are specified, the defaults are used.
   const RTLSpec({
-    this.axisDirection = AxisDirection.reversed,
+    this.axisDirection = AxisRTLDirection.reversed,
   });
 
   /// Direction of the domain axis when the chart container is configured for
   /// RTL mode.
-  final AxisDirection axisDirection;
+  final AxisRTLDirection axisDirection;
 }
 
 /// Direction of the domain axis when the chart container is configured for
@@ -42,7 +42,7 @@ class RTLSpec {
 /// rendered charts will have the primary measure axis on the top and secondary
 /// measure axis on the left. Measure output range is flipped and grows from the
 /// right to the left.
-enum AxisDirection {
+enum AxisRTLDirection {
   normal,
   reversed,
 }

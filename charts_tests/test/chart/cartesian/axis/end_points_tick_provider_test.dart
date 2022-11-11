@@ -25,9 +25,9 @@ import 'time/simple_date_time_factory.dart' show SimpleDateTimeFactory;
 
 class MockDateTimeScale extends Mock implements DateTimeScale {}
 
-class MockNumericScale extends Mock implements NumericScale {}
+class MockNumericScale extends Mock implements NumericScaleElement {}
 
-class MockOrdinalScale extends Mock implements SimpleOrdinalScale {}
+class MockOrdinalScale extends Mock implements SimpleOrdinalScaleElement {}
 
 /// A fake draw strategy that reports collision and alternate ticks
 ///
@@ -45,7 +45,7 @@ class FakeDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       : super(null, FakeGraphicsFactory());
 
   @override
-  CollisionReport<D> collides(List<Tick<D>> ticks, _) {
+  CollisionReport<D> collides(List<TickElement<D>> ticks, _) {
     final ticksCollide = ticks.length >= collidesAfterTickCount;
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 
@@ -56,7 +56,7 @@ class FakeDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   }
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
+  void draw(ChartCanvas canvas, TickElement<D> tick,
       {@required AxisOrientation orientation,
       @required Rectangle<int> axisBounds,
       @required Rectangle<int> drawAreaBounds,
@@ -84,7 +84,7 @@ class MockChartContext extends Mock implements ChartContext {}
 void main() {
   const dateTimeFactory = SimpleDateTimeFactory();
   FakeGraphicsFactory graphicsFactory;
-  EndPointsTickProvider tickProvider;
+  EndPointsTickProviderElement tickProvider;
   ChartContext context;
 
   setUp(() {
@@ -93,9 +93,9 @@ void main() {
   });
 
   test('dateTime_choosesEndPointTicks', () {
-    final formatter = DateTimeTickFormatter(dateTimeFactory);
+    final formatter = DateTimeTickFormatterElement(dateTimeFactory);
     final scale = MockDateTimeScale();
-    tickProvider = EndPointsTickProvider<DateTime>();
+    tickProvider = EndPointsTickProviderElement<DateTime>();
 
     final drawStrategy = FakeDrawStrategy<DateTime>(10, 10);
     when(scale.viewportDomain).thenReturn(DateTimeExtents(
@@ -118,9 +118,9 @@ void main() {
   });
 
   test('numeric_choosesEndPointTicks', () {
-    final formatter = NumericTickFormatter();
+    final formatter = NumericTickFormatterElement();
     final scale = MockNumericScale();
-    tickProvider = EndPointsTickProvider<num>();
+    tickProvider = EndPointsTickProviderElement<num>();
 
     final drawStrategy = FakeDrawStrategy<num>(10, 10);
     when(scale.viewportDomain).thenReturn(NumericExtents(10.0, 70.0));
@@ -142,13 +142,13 @@ void main() {
   });
 
   test('ordinal_choosesEndPointTicks', () {
-    final formatter = OrdinalTickFormatter();
-    final scale = SimpleOrdinalScale();
+    final formatter = OrdinalTickFormatterElement();
+    final scale = SimpleOrdinalScaleElement();
     scale.addDomain('A');
     scale.addDomain('B');
     scale.addDomain('C');
     scale.addDomain('D');
-    tickProvider = EndPointsTickProvider<String>();
+    tickProvider = EndPointsTickProviderElement<String>();
 
     final drawStrategy = FakeDrawStrategy<String>(10, 10);
 
@@ -167,9 +167,9 @@ void main() {
   });
 
   test('dateTime_emptySeriesChoosesNoTicks', () {
-    final formatter = DateTimeTickFormatter(dateTimeFactory);
+    final formatter = DateTimeTickFormatterElement(dateTimeFactory);
     final scale = MockDateTimeScale();
-    tickProvider = EndPointsTickProvider<DateTime>();
+    tickProvider = EndPointsTickProviderElement<DateTime>();
 
     final drawStrategy = FakeDrawStrategy<DateTime>(10, 10);
     when(scale.viewportDomain).thenReturn(DateTimeExtents(
@@ -193,9 +193,9 @@ void main() {
   });
 
   test('numeric_emptySeriesChoosesNoTicks', () {
-    final formatter = NumericTickFormatter();
+    final formatter = NumericTickFormatterElement();
     final scale = MockNumericScale();
-    tickProvider = EndPointsTickProvider<num>();
+    tickProvider = EndPointsTickProviderElement<num>();
 
     final drawStrategy = FakeDrawStrategy<num>(10, 10);
     when(scale.viewportDomain).thenReturn(NumericExtents(10.0, 70.0));

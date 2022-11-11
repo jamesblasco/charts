@@ -16,7 +16,7 @@
 /// Example of a scatter plot chart using custom symbols for the points and a
 /// behavior that highlights selected points.
 ///
-/// An optional [charts.LinePointHighlighter] behavior has been added to enable
+/// An optional [LinePointHighlighter] behavior has been added to enable
 /// a highlighting effect. This behavior will draw a larger symbol on top of the
 /// point nearest to the point where a user taps on the chart. It will also draw
 /// follow lines.
@@ -24,7 +24,7 @@
 /// The series has been configured to draw each point as a square by default.
 ///
 /// Some data will be drawn as a circle, indicated by defining a custom "circle"
-/// value referenced by [charts.pointSymbolRendererFnKey].
+/// value referenced by [pointSymbolRendererFnKey].
 ///
 /// Some other data have will be drawn as a hollow circle. In addition to the
 /// custom renderer key, these data also have stroke and fillColor values
@@ -34,11 +34,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SelectionScatterPlotHighlight extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SelectionScatterPlotHighlight(this.seriesList, {this.animate = false});
@@ -61,7 +61,7 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
@@ -99,7 +99,7 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
     final maxMeasure = 100;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (LinearSales sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
@@ -122,16 +122,16 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+            pointSymbolRendererFnKey, (int index) => data[index].shape)
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(pointSymbolRendererIdKey, 'rect')
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.ScatterPlotChart(seriesList,
+    return ScatterPlotChart(seriesList,
         animate: animate,
         behaviors: [
           // Optional - Configures a [LinePointHighlighter] behavior with
@@ -143,30 +143,28 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
           // in an empty list. An empty list is necessary because passing in a
           // null value will be treated the same as not passing in a value at
           // all.
-          charts.LinePointHighlighter(
+          LinePointHighlighter(
               showHorizontalFollowLine:
-                  charts.LinePointHighlighterFollowLineType.nearest,
+                  LinePointHighlighterFollowLineType.nearest,
               showVerticalFollowLine:
-                  charts.LinePointHighlighterFollowLineType.nearest),
+                  LinePointHighlighterFollowLineType.nearest),
           // Optional - By default, select nearest is configured to trigger
           // with tap so that a user can have pan/zoom behavior and line point
           // highlighter. Changing the trigger to tap and drag allows the
           // highlighter to follow the dragging gesture but it is not
           // recommended to be used when pan/zoom behavior is enabled.
-          charts.SelectNearest(
-              eventTrigger: charts.SelectionTrigger.tapAndDrag),
+          SelectNearest(eventTrigger: SelectionTrigger.tapAndDrag),
         ],
         // Configure the point renderer to have a map of custom symbol
         // renderers.
-        defaultRenderer:
-            charts.PointRendererConfig<num>(customSymbolRenderers: {
-          'circle': charts.CircleSymbolRenderer(),
-          'rect': charts.RectSymbolRenderer(),
+        defaultRenderer: PointRendererConfig<num>(customSymbolRenderers: {
+          'circle': CircleSymbolRenderer(),
+          'rect': RectSymbolRenderer(),
         }));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5, 3.0, 'circle', null, null),
       LinearSales(10, 25, 5.0, null, null, null),
@@ -188,7 +186,7 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
     final maxMeasure = 300;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
         colorFn: (LinearSales sales, _) {
@@ -212,9 +210,9 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+            pointSymbolRendererFnKey, (int index) => data[index].shape)
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(pointSymbolRendererIdKey, 'rect')
     ];
   }
 }

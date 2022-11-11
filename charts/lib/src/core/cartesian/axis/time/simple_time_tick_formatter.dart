@@ -14,12 +14,12 @@
 // limitations under the License.
 
 import 'package:charts/src/core/cartesian/axis/time/time_tick_formatter.dart'
-    show TimeTickFormatter;
+    show TimeTickFormatterElement;
 
 typedef DateTimeFormatterFunction = String Function(DateTime datetime);
 
 /// Formatter that formats all ticks using a single [DateTimeFormatterFunction].
-class SimpleTimeTickFormatter implements TimeTickFormatter {
+class SimpleTimeTickFormatter implements TimeTickFormatterElement {
   SimpleTimeTickFormatter({required this.formatter});
   DateTimeFormatterFunction formatter;
 

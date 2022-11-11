@@ -14,7 +14,7 @@
 // limitations under the License.
 
 /// Formatter of [DateTime] ticks
-abstract class TimeTickFormatter {
+abstract class TimeTickFormatterElement {
   /// Format for tick that is the first in a set of ticks.
   String formatFirstTick(DateTime date);
 

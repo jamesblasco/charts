@@ -50,8 +50,7 @@ class InitialHintBehavior<D> extends ChartBehavior<D> {
     return behavior;
   }
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+
 
   @override
   String get role => 'InitialHint';

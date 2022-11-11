@@ -15,13 +15,13 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
-import 'package:flutter/material.dart';
+import 'package:charts/charts.dart';
+import 'package:flutter/material.dart' hide Slider;
 import 'package:flutter/scheduler.dart';
 
 /// This is just a simple line chart with a behavior that adds slider controls.
 ///
-/// A [Slider] behavior is added manually to enable slider controls, with an
+/// A [SliderBehavior] behavior is added manually to enable slider controls, with an
 /// initial position at 1 along the domain axis.
 ///
 /// An onChange event handler has been configured to demonstrate updating a div
@@ -29,10 +29,10 @@ import 'package:flutter/scheduler.dart';
 /// will be fired when the chart is drawn because an initial domain value is
 /// set.
 ///
-/// [Slider.moveSliderToDomain] can be called to programmatically position the
+/// [SliderBehavior.moveSliderToDomain] can be called to programmatically position the
 /// slider. This is useful for synchronizing the slider with external elements.
 class SliderLine extends StatefulWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   SliderLine(this.seriesList, {this.animate = false});
@@ -55,7 +55,7 @@ class SliderLine extends StatefulWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -66,7 +66,7 @@ class SliderLine extends StatefulWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -82,7 +82,7 @@ class SliderLine extends StatefulWidget {
   State<StatefulWidget> createState() => _SliderCallbackState();
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5),
       LinearSales(1, 25),
@@ -91,7 +91,7 @@ class SliderLine extends StatefulWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -108,7 +108,7 @@ class _SliderCallbackState extends State<SliderLine> {
 
   // Handles callbacks when the user drags the slider.
   _onSliderChange(Point<int> point, dynamic domain, String roleId,
-      charts.SliderListenerDragState dragState) {
+      SliderListenerDragState dragState) {
     // Request a build.
     void rebuild(_) {
       setState(() {
@@ -127,7 +127,7 @@ class _SliderCallbackState extends State<SliderLine> {
     final children = <Widget>[
       SizedBox(
           height: 150.0,
-          child: charts.LineChart(
+          child: LineChart(
             widget.seriesList,
             animate: widget.animate,
             // Configures a [Slider] behavior.
@@ -158,7 +158,7 @@ class _SliderCallbackState extends State<SliderLine> {
             // [style] takes in a [SliderStyle] configuration object, and
             // configures the color and sizing of the slider line and handle.
             behaviors: [
-              charts.Slider(
+              SliderBehavior(
                   initialDomainValue: 1.0, onChangeCallback: _onSliderChange),
             ],
           )),

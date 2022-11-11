@@ -29,16 +29,16 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class SelectionCallbackExample extends StatefulWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   SelectionCallbackExample(this.seriesList, {this.animate = false});
 
-  /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
+  /// Creates a [TimeSeriesChart] with sample data and no transition.
   factory SelectionCallbackExample.withSampleData() {
     return SelectionCallbackExample(
       _createSampleData(),
@@ -56,7 +56,7 @@ class SelectionCallbackExample extends StatefulWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final us_data = [
@@ -74,13 +74,13 @@ class SelectionCallbackExample extends StatefulWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'US Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: us_data,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'UK Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -96,7 +96,7 @@ class SelectionCallbackExample extends StatefulWidget {
   State<StatefulWidget> createState() => _SelectionCallbackState();
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final us_data = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -112,13 +112,13 @@ class SelectionCallbackExample extends StatefulWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'US Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: us_data,
       ),
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'UK Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -135,7 +135,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   // Listens to the underlying selection changes, and updates the information
   // relevant to building the primitive legend like information under the
   // chart.
-  _onSelectionChanged(charts.SelectionModel model) {
+  _onSelectionChanged(SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 
     DateTime? time;
@@ -148,7 +148,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     // series name for each selection point.
     if (selectedDatum.isNotEmpty) {
       time = selectedDatum.first.datum.time;
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+      selectedDatum.forEach((SeriesDatum datumPair) {
         measures[datumPair.series.displayName!] = datumPair.datum.sales;
       });
     }
@@ -166,12 +166,12 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     final children = <Widget>[
       SizedBox(
           height: 150.0,
-          child: charts.TimeSeriesChart(
+          child: TimeSeriesChart(
             widget.seriesList,
             animate: widget.animate,
             selectionModels: [
-              charts.SelectionModelConfig(
-                type: charts.SelectionModelType.info,
+              SelectionModelConfig(
+                type: SelectionModelType.info,
                 changedListener: _onSelectionChanged,
               )
             ],

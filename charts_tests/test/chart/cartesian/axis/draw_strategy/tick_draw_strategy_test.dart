@@ -55,7 +55,7 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
   @override
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     @required AxisOrientation orientation,
     @required Rectangle<int> axisBounds,
     @required Rectangle<int> drawAreaBounds,
@@ -67,7 +67,7 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
   @override
   void drawLabel(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     @required AxisOrientation orientation,
     @required Rectangle<int> axisBounds,
     @required Rectangle<int> drawAreaBounds,
@@ -125,13 +125,13 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 
 class MockChartCanvas extends Mock implements ChartCanvas {}
 
-/// Helper function to create [Tick] for testing.
-Tick<String> createTick(String value, double locationPx,
+/// Helper function to create [TickElement] for testing.
+TickElement<String> createTick(String value, double locationPx,
     {double horizontalWidth,
     double verticalWidth,
     TextDirectionAligment textDirection,
     bool collision = false}) {
-  return Tick<String>(
+  return TickElement<String>(
       value: value,
       locationPx: locationPx,
       textElement: FakeTextElement(
@@ -456,7 +456,7 @@ void main() {
         ));
 
     BaseTickDrawStrategyImpl drawStrategy;
-    List<Tick> ticks;
+    List<TickElement> ticks;
 
     setUp(() {
       drawStrategy = BaseTickDrawStrategyImpl(chartContext, graphicsFactory);
@@ -568,7 +568,7 @@ void main() {
         ));
 
     BaseTickDrawStrategyImpl drawStrategy;
-    List<Tick> ticks;
+    List<TickElement> ticks;
 
     setUp(() {
       drawStrategy = BaseTickDrawStrategyImpl(chartContext, graphicsFactory,
@@ -693,7 +693,7 @@ void main() {
         ));
 
     BaseTickDrawStrategyImpl drawStrategy;
-    List<Tick> ticks;
+    List<TickElement> ticks;
 
     setUp(() {
       ticks = [

@@ -104,14 +104,16 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
         continue;
       }
 
-      final domainAxis = series.getAttr(domainAxisKey) as Axis<D>?;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as MutableAxisElement<D>?;
       final domainFn = series.domainFn;
 
       if (domainAxis == null) {
         continue;
       }
 
-      final measureAxis = series.getAttr(measureAxisKey) as Axis<num>?;
+      final measureAxis =
+          series.getAttr(measureAxisKey) as MutableAxisElement<num>?;
       if (measureAxis == null) {
         continue;
       }
@@ -129,7 +131,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   void addMeasureValuesFor(
     MutableSeries<D> series,
-    Axis<num> measureAxis,
+    MutableAxisElement<num> measureAxis,
     int startIndex,
     int endIndex,
   ) {
@@ -157,7 +159,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   @visibleForTesting
   int findNearestViewportStart(
-    Axis<D> domainAxis,
+    MutableAxisElement<D> domainAxis,
     AccessorFn<D> domainFn,
     List<Object?> data,
   ) {
@@ -214,7 +216,7 @@ abstract class BaseCartesianRenderer<D> extends BaseSeriesRenderer<D>
 
   @visibleForTesting
   int findNearestViewportEnd(
-    Axis<D> domainAxis,
+    MutableAxisElement<D> domainAxis,
     AccessorFn<D> domainFn,
     List<Object?> data,
   ) {

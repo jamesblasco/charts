@@ -197,11 +197,13 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
     for (final series in seriesList) {
       sortedSeriesIds.add(series.id);
 
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
+      final domainAxis =
+          series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
       final domainFn = series.domainFn;
       final domainLowerBoundFn = series.domainLowerBoundFn;
       final domainUpperBoundFn = series.domainUpperBoundFn;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final measureAxis =
+          series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
       final measureFn = series.measureFn;
       final measureLowerBoundFn = series.measureLowerBoundFn;
       final measureUpperBoundFn = series.measureUpperBoundFn;
@@ -438,12 +440,12 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
     D? domainLowerBoundValue,
     D? domainUpperBoundValue,
     ImmutableSeries<D> series,
-    ImmutableAxis<D> domainAxis,
+    ImmutableAxisElement<D> domainAxis,
     num? measureValue,
     num? measureLowerBoundValue,
     num? measureUpperBoundValue,
     num? measureOffsetValue,
-    ImmutableAxis<num> measureAxis,
+    ImmutableAxisElement<num> measureAxis,
   ) {
     final domainPosition = domainAxis.getLocation(domainValue);
 
@@ -652,8 +654,9 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   ) {
     final series = details.series!;
 
-    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-    final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+    final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxisElement<D>;
+    final measureAxis =
+        series.getAttr(measureAxisKey) as ImmutableAxisElement<num>;
 
     final point = getPoint(
       seriesDatum.datum,

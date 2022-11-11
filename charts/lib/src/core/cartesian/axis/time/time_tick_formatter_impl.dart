@@ -16,7 +16,7 @@ import 'package:charts/core.dart';
 import 'package:intl/intl.dart';
 
 /// Formatter that can format simple and transition time ticks differently.
-class TimeTickFormatterImpl implements TimeTickFormatter {
+class TimeTickFormatterImplElement implements TimeTickFormatterElement {
   /// Create time tick formatter.
   ///
   /// [dateTimeFactory] factory to use to generate the [DateFormat].
@@ -24,7 +24,7 @@ class TimeTickFormatterImpl implements TimeTickFormatter {
   /// [transitionFormat] format to use when the time unit transitions.
   /// For example showing the month with the date for Jan 1.
   /// [transitionField] the calendar field that indicates transition.
-  TimeTickFormatterImpl({
+  TimeTickFormatterImplElement({
     required DateTimeFactory dateTimeFactory,
     required String? simpleFormat,
     required String? transitionFormat,

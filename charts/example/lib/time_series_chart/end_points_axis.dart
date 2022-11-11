@@ -19,11 +19,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class EndPointsAxisTimeSeriesChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   EndPointsAxisTimeSeriesChart(this.seriesList, {this.animate = false});
@@ -46,7 +46,7 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -57,7 +57,7 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -70,19 +70,19 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
+    return TimeSeriesChart(
       seriesList,
       animate: animate,
       // Configures an axis spec that is configured to render one tick at each
       // end of the axis range, anchored "inside" the axis. The start tick label
       // will be left-aligned with its tick mark, and the end tick label will be
       // right-aligned with its tick mark.
-      domainAxis: charts.EndPointsTimeAxisSpec(),
+      domainAxis: EndPointsTimeAxis(),
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -91,7 +91,7 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

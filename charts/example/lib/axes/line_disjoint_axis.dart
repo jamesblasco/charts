@@ -24,11 +24,11 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class DisjointMeasureAxisLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   DisjointMeasureAxisLineChart(this.seriesList, {this.animate = false});
@@ -51,7 +51,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearClicks, num>> _createRandomData() {
+  static List<Series<LinearClicks, num>> _createRandomData() {
     final random = Random();
 
     // The first three series contain similar data with different magnitudes.
@@ -93,12 +93,12 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
       // We render an empty series on the primary measure axis to ensure that
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
-      charts.Series<LinearClicks, int>(
+      Series<LinearClicks, int>(
           id: 'Fake Series',
           domainFn: (LinearClicks clickCount, _) => clickCount.year,
           measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
           data: []),
-      charts.Series<LinearClicks, int>(
+      Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -106,8 +106,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeDesktopData,
       )
         // Set the 'Desktop' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 1'),
+      Series<LinearClicks, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -115,8 +115,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeTabletData,
       )
         // Set the 'Tablet' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 2'),
+      Series<LinearClicks, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -124,8 +124,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeMobileData,
       )
         // Set the 'Mobile' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 3'),
+      Series<LinearClicks, int>(
         id: 'Click Rate',
         colorFn: (_, __) => Colors.purple,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -133,14 +133,14 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeClickRateData,
       )
         // Set the 'Click Rate' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 4'),
+        ..setAttribute(measureAxisIdKey, 'axis 4'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.LineChart(seriesList,
+    return LineChart(seriesList,
         animate: animate,
         // Configure a primary measure axis that will render gridlines across
         // the chart. This axis uses fake ticks with no labels to ensure that we
@@ -148,32 +148,31 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         //
         // We do this because disjoint measure axes do not draw any tick
         // elements on the chart.
-        primaryMeasureAxis: charts.NumericAxisSpec(
-            tickProviderSpec: charts.StaticNumericTickProviderSpec(
+        primaryMeasureAxis: NumericAxis(
+            tickProvider: StaticNumericTickProvider(
           // Create the ticks to be used the domain axis.
-          <charts.TickSpec<num>>[
-            charts.TickSpec(0, label: ''),
-            charts.TickSpec(1, label: ''),
-            charts.TickSpec(2, label: ''),
-            charts.TickSpec(3, label: ''),
-            charts.TickSpec(4, label: ''),
+          <Tick<num>>[
+            Tick(0, label: ''),
+            Tick(1, label: ''),
+            Tick(2, label: ''),
+            Tick(3, label: ''),
+            Tick(4, label: ''),
           ],
         )),
         // Create one disjoint measure axis per series on the chart.
         //
         // Disjoint measure axes will be used to scale the rendered data,
         // without drawing any tick elements on either side of the chart.
-        disjointMeasureAxes:
-            LinkedHashMap<String, charts.NumericAxisSpec>.from({
-          'axis 1': charts.NumericAxisSpec(),
-          'axis 2': charts.NumericAxisSpec(),
-          'axis 3': charts.NumericAxisSpec(),
-          'axis 4': charts.NumericAxisSpec(),
+        disjointMeasureAxes: LinkedHashMap<String, NumericAxis>.from({
+          'axis 1': NumericAxis(),
+          'axis 2': NumericAxis(),
+          'axis 3': NumericAxis(),
+          'axis 4': NumericAxis(),
         }));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearClicks, int>> _createSampleData() {
+  static List<Series<LinearClicks, int>> _createSampleData() {
     // The first three series contain similar data with different magnitudes.
     // This demonstrates the ability to graph the trends in each series relative
     // to each other, without the largest magnitude series compressing the
@@ -213,12 +212,12 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
       // We render an empty series on the primary measure axis to ensure that
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
-      charts.Series<LinearClicks, int>(
+      Series<LinearClicks, int>(
           id: 'Fake Series',
           domainFn: (LinearClicks clickCount, _) => clickCount.year,
           measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
           data: []),
-      charts.Series<LinearClicks, int>(
+      Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => Colors.blue,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -226,8 +225,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeDesktopData,
       )
         // Set the 'Desktop' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 1'),
+      Series<LinearClicks, int>(
         id: 'Tablet',
         colorFn: (_, __) => Colors.red,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -235,8 +234,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeTabletData,
       )
         // Set the 'Tablet' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 2'),
+      Series<LinearClicks, int>(
         id: 'Mobile',
         colorFn: (_, __) => Colors.green,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -244,8 +243,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeMobileData,
       )
         // Set the 'Mobile' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
-      charts.Series<LinearClicks, int>(
+        ..setAttribute(measureAxisIdKey, 'axis 3'),
+      Series<LinearClicks, int>(
         id: 'Click Rate',
         colorFn: (_, __) => Colors.purple,
         domainFn: (LinearClicks clickCount, _) => clickCount.year,
@@ -253,7 +252,7 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         data: myFakeClickRateData,
       )
         // Set the 'Click Rate' series to use a disjoint axis.
-        ..setAttribute(charts.measureAxisIdKey, 'axis 4'),
+        ..setAttribute(measureAxisIdKey, 'axis 4'),
     ];
   }
 }

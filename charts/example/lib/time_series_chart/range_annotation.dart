@@ -24,11 +24,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class TimeSeriesRangeAnnotationChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   TimeSeriesRangeAnnotationChart(this.seriesList, {this.animate = false});
@@ -51,7 +51,7 @@ class TimeSeriesRangeAnnotationChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -62,7 +62,7 @@ class TimeSeriesRangeAnnotationChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -74,16 +74,16 @@ class TimeSeriesRangeAnnotationChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(seriesList, animate: animate, behaviors: [
-      charts.RangeAnnotation([
-        charts.RangeAnnotationSegment(DateTime(2017, 10, 4),
-            DateTime(2017, 10, 15), charts.RangeAnnotationAxisType.domain),
+    return TimeSeriesChart(seriesList, animate: animate, behaviors: [
+      RangeAnnotation([
+        RangeAnnotationSegment(DateTime(2017, 10, 4), DateTime(2017, 10, 15),
+            RangeAnnotationAxisType.domain),
       ]),
     ]);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+  static List<Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime(2017, 9, 19), 5),
       TimeSeriesSales(DateTime(2017, 9, 26), 25),
@@ -92,7 +92,7 @@ class TimeSeriesRangeAnnotationChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<TimeSeriesSales, DateTime>(
+      Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

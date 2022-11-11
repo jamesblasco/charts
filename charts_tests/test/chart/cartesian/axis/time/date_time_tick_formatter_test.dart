@@ -23,7 +23,7 @@ const EPSILON = 0.001;
 typedef IsTransitionFunction = bool Function(
     DateTime tickValue, DateTime prevTickValue);
 
-class FakeTimeTickFormatter implements TimeTickFormatter {
+class FakeTimeTickFormatter implements TimeTickFormatterElement {
   static const firstTick = '-firstTick-';
   static const simpleTick = '-simpleTick-';
   static const transitionTick = '-transitionTick-';
@@ -53,9 +53,9 @@ class FakeTimeTickFormatter implements TimeTickFormatter {
 }
 
 void main() {
-  TimeTickFormatter timeFormatter1;
-  TimeTickFormatter timeFormatter2;
-  TimeTickFormatter timeFormatter3;
+  TimeTickFormatterElement timeFormatter1;
+  TimeTickFormatterElement timeFormatter2;
+  TimeTickFormatterElement timeFormatter3;
 
   setUp(() {
     timeFormatter1 = FakeTimeTickFormatter('fake1');
@@ -65,7 +65,7 @@ void main() {
 
   group('Uses formatter', () {
     test('with largest interval less than diff between tickValues', () {
-      final formatter = DateTimeTickFormatter.withFormatters(
+      final formatter = DateTimeTickFormatterElement.withFormatters(
           {10: timeFormatter1, 100: timeFormatter2, 1000: timeFormatter3});
       final formatterCache = <DateTime, String>{};
 
@@ -141,7 +141,7 @@ void main() {
     });
 
     test('with smallest interval when no smaller one exists', () {
-      final formatter = DateTimeTickFormatter.withFormatters(
+      final formatter = DateTimeTickFormatterElement.withFormatters(
           {10: timeFormatter1, 100: timeFormatter2});
       final formatterCache = <DateTime, String>{};
 
@@ -161,7 +161,7 @@ void main() {
     });
 
     test('with smallest interval for single tick input', () {
-      final formatter = DateTimeTickFormatter.withFormatters(
+      final formatter = DateTimeTickFormatterElement.withFormatters(
           {10: timeFormatter1, 100: timeFormatter2});
       final formatterCache = <DateTime, String>{};
 
@@ -173,7 +173,7 @@ void main() {
 
     test('on empty input doesnt break', () {
       final formatter =
-          DateTimeTickFormatter.withFormatters({10: timeFormatter1});
+          DateTimeTickFormatterElement.withFormatters({10: timeFormatter1});
       final formatterCache = <DateTime, String>{};
 
       final actualLabels =
@@ -188,7 +188,7 @@ void main() {
       final formatterCache = <DateTime, String>{};
 
       final formatter =
-          DateTimeTickFormatter.withFormatters({10: timeFormatter});
+          DateTimeTickFormatterElement.withFormatters({10: timeFormatter});
 
       final ticks = [
         DateTime.fromMillisecondsSinceEpoch(0),
@@ -214,19 +214,19 @@ void main() {
     test('throws arugment error if time resolution key is not positive', () {
       // -1 is reserved for any, if there is only one formatter, -1 is allowed.
       expect(
-          () => DateTimeTickFormatter.withFormatters(
+          () => DateTimeTickFormatterElement.withFormatters(
               {-1: timeFormatter1, 2: timeFormatter2}),
           throwsArgumentError);
     });
 
     test('throws argument error if formatters is  empty', () {
-      expect(
-          () => DateTimeTickFormatter.withFormatters({}), throwsArgumentError);
+      expect(() => DateTimeTickFormatterElement.withFormatters({}),
+          throwsArgumentError);
     });
 
     test('throws arugment error if formatters are not sorted', () {
       expect(
-          () => DateTimeTickFormatter.withFormatters({
+          () => DateTimeTickFormatterElement.withFormatters({
                 3: timeFormatter1,
                 1: timeFormatter2,
                 2: timeFormatter3,
@@ -234,7 +234,7 @@ void main() {
           throwsArgumentError);
 
       expect(
-          () => DateTimeTickFormatter.withFormatters({
+          () => DateTimeTickFormatterElement.withFormatters({
                 1: timeFormatter1,
                 3: timeFormatter2,
                 2: timeFormatter3,
@@ -242,7 +242,7 @@ void main() {
           throwsArgumentError);
 
       expect(
-          () => DateTimeTickFormatter.withFormatters({
+          () => DateTimeTickFormatterElement.withFormatters({
                 2: timeFormatter1,
                 3: timeFormatter2,
                 1: timeFormatter3,

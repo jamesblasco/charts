@@ -6,7 +6,6 @@ export 'line_style.dart';
 export 'material_palette.dart';
 export 'material_palette.dart';
 export 'math.dart';
-export 'paint_style.dart';
 export 'performance.dart';
 export 'proxy_gesture_listener.dart';
 export 'rate_limit_utils.dart';
@@ -17,6 +16,6 @@ export 'style/style_factory.dart';
 export 'symbol_renderer.dart';
 export 'text_element.dart';
 export 'text_measurement.dart';
-export 'text_style.dart';
+
 export 'text_utils.dart';
 export 'typed_registry.dart';

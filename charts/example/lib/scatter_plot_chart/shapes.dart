@@ -28,11 +28,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class ShapesScatterPlotChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   ShapesScatterPlotChart(this.seriesList, {this.animate = false});
@@ -55,7 +55,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, num>> _createRandomData() {
+  static List<Series<LinearSales, num>> _createRandomData() {
     final random = Random();
 
     final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
@@ -93,7 +93,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
     final maxMeasure = 100;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (LinearSales sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
@@ -116,28 +116,27 @@ class ShapesScatterPlotChart extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+            pointSymbolRendererFnKey, (int index) => data[index].shape)
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(pointSymbolRendererIdKey, 'rect')
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.ScatterPlotChart(seriesList,
+    return ScatterPlotChart(seriesList,
         animate: animate,
         // Configure the point renderer to have a map of custom symbol
         // renderers.
-        defaultRenderer:
-            charts.PointRendererConfig<num>(customSymbolRenderers: {
-          'circle': charts.CircleSymbolRenderer(),
-          'rect': charts.RectSymbolRenderer(),
+        defaultRenderer: PointRendererConfig<num>(customSymbolRenderers: {
+          'circle': CircleSymbolRenderer(),
+          'rect': RectSymbolRenderer(),
         }));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 5, 3.0, 'circle', null, null),
       LinearSales(10, 25, 5.0, null, null, null),
@@ -159,7 +158,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
     final maxMeasure = 300;
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
         colorFn: (LinearSales sales, _) {
@@ -183,9 +182,9 @@ class ShapesScatterPlotChart extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+            pointSymbolRendererFnKey, (int index) => data[index].shape)
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(pointSymbolRendererIdKey, 'rect')
     ];
   }
 }

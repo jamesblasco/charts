@@ -21,11 +21,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class CustomMeasureTickCount extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   CustomMeasureTickCount(this.seriesList, {this.animate = false});
@@ -48,7 +48,7 @@ class CustomMeasureTickCount extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<MyRow, DateTime>> _createRandomData() {
+  static List<Series<MyRow, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -66,7 +66,7 @@ class CustomMeasureTickCount extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,
@@ -78,17 +78,16 @@ class CustomMeasureTickCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(seriesList,
+    return TimeSeriesChart(seriesList,
         animate: animate,
 
         /// Customize the measure axis to have 2 ticks,
-        primaryMeasureAxis: charts.NumericAxisSpec(
-            tickProviderSpec:
-                charts.BasicNumericTickProviderSpec(desiredTickCount: 2)));
+        primaryMeasureAxis: NumericAxis(
+            tickProvider: BasicNumericTickProvider(desiredTickCount: 2)));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<MyRow, DateTime>> _createSampleData() {
+  static List<Series<MyRow, DateTime>> _createSampleData() {
     final data = [
       MyRow(DateTime(2017, 9, 25), 6),
       MyRow(DateTime(2017, 9, 26), 8),
@@ -104,7 +103,7 @@ class CustomMeasureTickCount extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Cost',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.cost,

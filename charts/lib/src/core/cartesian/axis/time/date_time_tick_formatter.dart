@@ -14,7 +14,7 @@
 // limitations under the License.
 import 'package:charts/core.dart';
 
-/// A [TickFormatter] that formats date/time values based on minimum difference
+/// A [TickFormatterElement] that formats date/time values based on minimum difference
 /// between subsequent ticks.
 ///
 /// This formatter assumes that the Tick values passed in are sorted in
@@ -23,48 +23,48 @@ import 'package:charts/core.dart';
 /// This class is setup with a list of formatters that format the input ticks at
 /// a given time resolution. The time resolution which will accurately display
 /// the difference between 2 subsequent ticks is picked. Each time resolution
-/// can be setup with a [TimeTickFormatter], which is used to format ticks as
+/// can be setup with a [TimeTickFormatterElement], which is used to format ticks as
 /// regular or transition ticks based on whether the tick has crossed the time
-/// boundary defined in the [TimeTickFormatter].
-class DateTimeTickFormatter extends TickFormatter<DateTime> {
-  /// Creates a [DateTimeTickFormatter] that works well with time tick provider
+/// boundary defined in the [TimeTickFormatterElement].
+class DateTimeTickFormatterElement extends TickFormatterElement<DateTime> {
+  /// Creates a [DateTimeTickFormatterElement] that works well with time tick provider
   /// classes.
   ///
   /// The default formatter makes assumptions on border cases that time tick
   /// providers will still provide ticks that make sense. Example: Tick provider
   /// does not provide ticks with 23 hour intervals.  For custom tick providers
   /// where these assumptions are not correct, please create a custom
-  /// [TickFormatter].
-  factory DateTimeTickFormatter(
+  /// [TickFormatterElement].
+  factory DateTimeTickFormatterElement(
     DateTimeFactory dateTimeFactory, {
-    Map<int, TimeTickFormatter>? overrides,
+    Map<int, TimeTickFormatterElement>? overrides,
   }) {
-    final map = <int, TimeTickFormatter>{
-      MINUTE: TimeTickFormatterImpl(
+    final map = <int, TimeTickFormatterElement>{
+      MINUTE: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'mm',
         transitionFormat: 'h mm',
         transitionField: CalendarField.hourOfDay,
       ),
-      HOUR: HourTickFormatter(
+      HOUR: HourTickFormatterElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'h',
         transitionFormat: 'MMM d ha',
         noonFormat: 'ha',
       ),
-      23 * HOUR: TimeTickFormatterImpl(
+      23 * HOUR: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'd',
         transitionFormat: 'MMM d',
         transitionField: CalendarField.month,
       ),
-      28 * DAY: TimeTickFormatterImpl(
+      28 * DAY: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'MMM',
         transitionFormat: 'MMM yyyy',
         transitionField: CalendarField.year,
       ),
-      364 * DAY: TimeTickFormatterImpl(
+      364 * DAY: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'yyyy',
         transitionFormat: 'yyyy',
@@ -77,25 +77,26 @@ class DateTimeTickFormatter extends TickFormatter<DateTime> {
       map.addAll(overrides);
     }
 
-    return DateTimeTickFormatter._internal(map);
+    return DateTimeTickFormatterElement._internal(map);
   }
 
-  /// Creates a [DateTimeTickFormatter] without the time component.
-  factory DateTimeTickFormatter.withoutTime(DateTimeFactory dateTimeFactory) {
-    return DateTimeTickFormatter._internal({
-      23 * HOUR: TimeTickFormatterImpl(
+  /// Creates a [DateTimeTickFormatterElement] without the time component.
+  factory DateTimeTickFormatterElement.withoutTime(
+      DateTimeFactory dateTimeFactory) {
+    return DateTimeTickFormatterElement._internal({
+      23 * HOUR: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'd',
         transitionFormat: 'MMM d',
         transitionField: CalendarField.month,
       ),
-      28 * DAY: TimeTickFormatterImpl(
+      28 * DAY: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'MMM',
         transitionFormat: 'MMM yyyy',
         transitionField: CalendarField.year,
       ),
-      365 * DAY: TimeTickFormatterImpl(
+      365 * DAY: TimeTickFormatterImplElement(
         dateTimeFactory: dateTimeFactory,
         simpleFormat: 'yyyy',
         transitionFormat: 'yyyy',
@@ -104,31 +105,32 @@ class DateTimeTickFormatter extends TickFormatter<DateTime> {
     });
   }
 
-  /// Creates a [DateTimeTickFormatter] that formats all ticks the same.
+  /// Creates a [DateTimeTickFormatterElement] that formats all ticks the same.
   ///
   /// Only use this formatter for data with fixed intervals, otherwise use the
   /// default, or build from scratch.
   ///
   /// [formatter] The format for all ticks.
-  factory DateTimeTickFormatter.uniform(TimeTickFormatter formatter) {
-    return DateTimeTickFormatter._internal({ANY: formatter});
+  factory DateTimeTickFormatterElement.uniform(
+      TimeTickFormatterElement formatter) {
+    return DateTimeTickFormatterElement._internal({ANY: formatter});
   }
 
-  /// Creates a [DateTimeTickFormatter] that formats ticks with [formatters].
+  /// Creates a [DateTimeTickFormatterElement] that formats ticks with [formatters].
   ///
   /// The formatters are expected to be provided with keys in increasing order.
-  factory DateTimeTickFormatter.withFormatters(
-    Map<int, TimeTickFormatter> formatters,
+  factory DateTimeTickFormatterElement.withFormatters(
+    Map<int, TimeTickFormatterElement> formatters,
   ) {
     // Formatters must be non empty.
     if (formatters.isEmpty) {
       throw ArgumentError('At least one TimeTickFormatter is required.');
     }
 
-    return DateTimeTickFormatter._internal(formatters);
+    return DateTimeTickFormatterElement._internal(formatters);
   }
 
-  DateTimeTickFormatter._internal(this._timeFormatters) {
+  DateTimeTickFormatterElement._internal(this._timeFormatters) {
     // If there is only one formatter, just use this one and skip this check.
     if (_timeFormatters.length == 1) {
       return;
@@ -143,7 +145,7 @@ class DateTimeTickFormatter extends TickFormatter<DateTime> {
   /// Used for the case when there is only one formatter.
   static const int ANY = -1;
 
-  final Map<int, TimeTickFormatter> _timeFormatters;
+  final Map<int, TimeTickFormatterElement> _timeFormatters;
 
   @override
   List<String> format(

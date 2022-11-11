@@ -20,7 +20,8 @@ import 'package:flutter/widgets.dart';
 @immutable
 abstract class BaseChart<D> extends StatefulWidget {
   const BaseChart(
-    this.seriesList, {
+    this.series, {
+    super.key,
     bool? animate,
     Duration? animationDuration,
     this.defaultRenderer,
@@ -36,7 +37,7 @@ abstract class BaseChart<D> extends StatefulWidget {
             animationDuration ?? const Duration(milliseconds: 300);
 
   /// Series list to draw.
-  final List<Series<dynamic, D>> seriesList;
+  final List<Series<dynamic, D>> series;
 
   /// Animation transitions.
   final bool animate;
@@ -114,7 +115,10 @@ abstract class BaseChart<D> extends StatefulWidget {
     chart.transition = animate ? animationDuration : Duration.zero;
   }
 
-  void _updateBehaviors(BaseRenderChart chart, BaseChartState<D> chartState) {
+  void _updateBehaviors(
+    BaseRenderChart<D> chart,
+    BaseChartState<D> chartState,
+  ) {
     final behaviorList = List<ChartBehavior<D>>.from(behaviors ?? []);
 
     // Insert automatic behaviors to the front of the behavior list.
@@ -171,10 +175,10 @@ abstract class BaseChart<D> extends StatefulWidget {
     );
   }
 
-  bool _notACustomBehavior(ChartBehavior behavior) {
+  bool _notACustomBehavior(ChartBehavior<D> behavior) {
     return behaviors == null ||
         !behaviors!.any(
-          (ChartBehavior userBehavior) => userBehavior.role == behavior.role,
+          (ChartBehavior<D> userBehavior) => userBehavior.role == behavior.role,
         );
   }
 
@@ -233,7 +237,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// gestures we need to listen to and it must wrap [ChartContainer] widget.
   /// Gestures are then setup to be proxied in [BaseRenderChart] and that is
   /// held by [ChartContainerRenderObject].
-  Set<GestureType> getDesiredGestures(BaseChartState chartState) {
+  Set<GestureType> getDesiredGestures(BaseChartState<D> chartState) {
     final types = <GestureType>{};
     behaviors?.forEach((ChartBehavior<D> behavior) {
       types.addAll(behavior.desiredGestures);

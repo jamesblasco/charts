@@ -99,7 +99,8 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable
 
       seriesAndMeasure[seriesId] = (seriesAndMeasure[seriesId] ?? 0) + measure;
 
-      if (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId) {
+      if (series.getAttr(measureAxisIdKey) ==
+          MutableAxisElement.secondaryMeasureAxisId) {
         secondaryAxisSeriesIDs.add(seriesId);
       }
     }
@@ -177,10 +178,10 @@ class PerSeriesLegendEntryGenerator<D> extends Equatable
       }
 
       seriesAndMeasure[seriesId] = calculatedMeasure?.toDouble();
-      seriesAndFormattedMeasure[seriesId] =
-          (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId)
-              ? secondaryMeasureFormatter!(calculatedMeasure)
-              : measureFormatter!(calculatedMeasure);
+      seriesAndFormattedMeasure[seriesId] = (series.getAttr(measureAxisIdKey) ==
+              MutableAxisElement.secondaryMeasureAxisId)
+          ? secondaryMeasureFormatter!(calculatedMeasure)
+          : measureFormatter!(calculatedMeasure);
     }
 
     for (final entry in legendEntries) {

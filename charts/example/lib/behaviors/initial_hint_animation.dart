@@ -18,8 +18,8 @@
 /// To see the animation, please run the example app and select
 /// "Initial hint animation".
 ///
-/// This behavior is intended to be used with charts that also have pan/zoom
-/// behaviors added and/or the initial viewport set in [AxisSpec].
+/// This behavior is intended to be used with that also have pan/zoom
+/// behaviors added and/or the initial viewport set in [Axis].
 ///
 /// Adding this behavior will cause the chart to animate from a scale and/or
 /// offset of the desired final viewport. If the user taps the widget prior
@@ -35,7 +35,7 @@
 ///
 /// In this example, the series list has ordinal data from year 2014 to 2030,
 /// and we have the initial viewport set to start at 2018 that shows 4 values by
-/// specifying an [OrdinalViewport] in [OrdinalAxisSpec]. We can add the hint
+/// specifying an [OrdinalViewport] in [OrdinalAxis]. We can add the hint
 /// animation by adding behavior [InitialHintBehavior] with [maxHintTranslate]
 /// of 4. When the chart is drawn for the first time, the viewport will show
 /// 2022 as the first value and the viewport will animate by panning values to
@@ -44,11 +44,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class InitialHintAnimation extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   InitialHintAnimation(this.seriesList, {this.animate = false});
@@ -71,7 +71,7 @@ class InitialHintAnimation extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -95,7 +95,7 @@ class InitialHintAnimation extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -108,7 +108,7 @@ class InitialHintAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
       // Optionally turn off the animation that animates values up from the
@@ -117,23 +117,22 @@ class InitialHintAnimation extends StatelessWidget {
       animationDuration: Duration.zero,
       // Set the initial viewport by providing a AxisSpec with the
       // desired viewport: a starting domain and the data size.
-      domainAxis:
-          charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('2018', 4)),
+      domainAxis: OrdinalAxis(viewport: OrdinalViewport('2018', 4)),
       behaviors: [
         // Add this behavior to show initial hint animation that will pan to the
         // final desired viewport.
         // The duration of the animation can be adjusted by pass in
         // [hintDuration]. By default this is 3000ms.
-        charts.InitialHintBehavior(maxHintTranslate: 4.0),
+        InitialHintBehavior(maxHintTranslate: 4.0),
         // Optionally add a pan or pan and zoom behavior.
         // If pan/zoom is not added, the viewport specified remains the viewport
-        charts.PanAndZoomBehavior(),
+        PanAndZoomBehavior(),
       ],
     );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final data = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -155,7 +154,7 @@ class InitialHintAnimation extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,

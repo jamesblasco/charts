@@ -22,8 +22,8 @@ import 'package:meta/meta.dart' show immutable;
 /// Renders no ticks no labels, and claims no space in layout.
 /// However, it does render the axis line if asked to by the axis.
 @immutable
-class NoneRenderSpec<D> extends RenderSpec<D> {
-  const NoneRenderSpec({this.axisLineStyle});
+class NoneAxisDecoration<D> extends AxisDecoration<D> {
+  const NoneAxisDecoration({this.axisLineStyle});
   final LineStyle? axisLineStyle;
 
   @override
@@ -51,7 +51,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   void updateTickWidth(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight,
     AxisOrientation orientation, {
@@ -60,13 +60,13 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   CollisionReport<D> collides(
-    List<Tick<D>>? ticks,
+    List<TickElement<D>>? ticks,
     AxisOrientation? orientation,
   ) =>
       CollisionReport(ticksCollide: false, ticks: ticks);
 
   @override
-  void decorateTicks(List<Tick<D>> ticks) {
+  void decorateTicks(List<TickElement<D>> ticks) {
     // Even though no text is rendered, the text style for each element should
     // still be set to handle the case of the draw strategy being switched to
     // a different draw strategy. The new draw strategy will try to animate
@@ -117,7 +117,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   @override
   void draw(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int> drawAreaBounds,
@@ -128,7 +128,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -138,7 +138,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,

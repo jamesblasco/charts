@@ -34,7 +34,7 @@ class MyRow {
       this.boundsRadius, this.shape);
 }
 
-class MockNumericAxis extends Mock implements Axis<num> {}
+class MockNumericAxis extends Mock implements MutableAxisElement<num> {}
 
 class MockCanvas extends Mock implements ChartCanvas {}
 

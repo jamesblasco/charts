@@ -22,11 +22,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class IntegerOnlyMeasureAxis extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final List<Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
   IntegerOnlyMeasureAxis(this.seriesList, {this.animate = false});
@@ -49,7 +49,7 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<MyRow, DateTime>> _createRandomData() {
+  static List<Series<MyRow, DateTime>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -67,7 +67,7 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Headcount',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.headcount,
@@ -79,12 +79,12 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.TimeSeriesChart(
+    return TimeSeriesChart(
       seriesList,
       animate: animate,
       // Provides a custom axis ensuring that the ticks are in whole numbers.
-      primaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+      primaryMeasureAxis: NumericAxis(
+          tickProvider: BasicNumericTickProvider(
               // Make sure we don't have values less than 1 as ticks
               // (ie: counts).
               dataIsInWholeNumbers: true,
@@ -95,7 +95,7 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<MyRow, DateTime>> _createSampleData() {
+  static List<Series<MyRow, DateTime>> _createSampleData() {
     final data = [
       MyRow(DateTime(2017, 9, 25), 0),
       MyRow(DateTime(2017, 9, 26), 0),
@@ -111,7 +111,7 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
     ];
 
     return [
-      charts.Series<MyRow, DateTime>(
+      Series<MyRow, DateTime>(
         id: 'Headcount',
         domainFn: (MyRow row, _) => row.timeStamp,
         measureFn: (MyRow row, _) => row.headcount,

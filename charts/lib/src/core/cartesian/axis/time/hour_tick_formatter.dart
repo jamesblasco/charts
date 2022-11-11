@@ -17,8 +17,8 @@ import 'package:charts/core.dart';
 import 'package:intl/intl.dart';
 
 /// Hour specific tick formatter which will format noon differently.
-class HourTickFormatter extends TimeTickFormatterImpl {
-  HourTickFormatter({
+class HourTickFormatterElement extends TimeTickFormatterImplElement {
+  HourTickFormatterElement({
     required DateTimeFactory dateTimeFactory,
     required super.simpleFormat,
     required super.transitionFormat,

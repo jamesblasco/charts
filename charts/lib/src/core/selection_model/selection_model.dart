@@ -80,7 +80,7 @@ class SelectionModel<D> extends Equatable {
             final Object? datum = series.data[i];
 
             if (selectedDataMap[series.id]!.contains(domainFn(i))) {
-              _selectedDatum.add(SeriesDatum(series, datum));
+              _selectedDatum.add(SeriesDatum(series: series, datum: datum));
             }
           }
         }
@@ -113,7 +113,7 @@ class SelectionModel<D> extends Equatable {
 
   bool isDatumSelected(ImmutableSeries<D> series, int? index) {
     final Object? datum = index == null ? null : series.data[index];
-    return _selectedDatum.contains(SeriesDatum(series, datum));
+    return _selectedDatum.contains(SeriesDatum(series: series, datum: datum));
   }
 
   /// Returns the selected [SeriesDatum] for this [SelectionModel].

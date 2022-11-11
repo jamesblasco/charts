@@ -33,9 +33,9 @@ class MyRow {
 
 class MockChart extends Mock implements CartesianRenderChart {}
 
-class MockDomainAxis extends Mock implements Axis<int> {}
+class MockDomainAxis extends Mock implements MutableAxisElement<int> {}
 
-class MockMeasureAxis extends Mock implements Axis<num> {}
+class MockMeasureAxis extends Mock implements MutableAxisElement<num> {}
 
 class MockCanvas extends Mock implements ChartCanvas {}
 

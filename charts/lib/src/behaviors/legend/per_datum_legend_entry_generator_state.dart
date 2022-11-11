@@ -134,7 +134,8 @@ class PerDatumLegendEntryGenerator<D> extends Equatable
   /// Formats the measure value using the appropriate measure formatter
   /// function for the series.
   String _getFormattedMeasureValue(ImmutableSeries<D> series, num measure) {
-    return (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId)
+    return (series.getAttr(measureAxisIdKey) ==
+            MutableAxisElement.secondaryMeasureAxisId)
         ? secondaryMeasureFormatter!(measure)
         : measureFormatter!(measure);
   }

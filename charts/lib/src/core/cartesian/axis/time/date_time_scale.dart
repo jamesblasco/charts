@@ -15,17 +15,17 @@
 
 import 'package:charts/core.dart';
 
-/// [DateTimeScale] is a wrapper for [LinearScale].
+/// [DateTimeScale] is a wrapper for [LinearScaleElement].
 /// [DateTime] values are converted to millisecondsSinceEpoch and passed to the
-/// [LinearScale].
-class DateTimeScale extends MutableScale<DateTime> {
-  DateTimeScale(this.dateTimeFactory) : _linearScale = LinearScale();
+/// [LinearScaleElement].
+class DateTimeScale extends MutableScaleElement<DateTime> {
+  DateTimeScale(this.dateTimeFactory) : _linearScale = LinearScaleElement();
 
   DateTimeScale._copy(DateTimeScale other)
       : dateTimeFactory = other.dateTimeFactory,
         _linearScale = other._linearScale.copy();
   final DateTimeFactory dateTimeFactory;
-  final LinearScale _linearScale;
+  final LinearScaleElement _linearScale;
 
   @override
   num operator [](DateTime domainValue) =>

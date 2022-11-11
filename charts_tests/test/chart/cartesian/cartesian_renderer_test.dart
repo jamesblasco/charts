@@ -51,7 +51,7 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
   }
 }
 
-class MockAxis extends Mock implements Axis {}
+class MockAxis extends Mock implements MutableAxisElement {}
 
 void main() {
   BaseCartesianRenderer renderer;

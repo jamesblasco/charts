@@ -22,10 +22,10 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 class DatumLegendOptions extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
+  final List<Series<dynamic, num>> seriesList;
   final bool animate;
 
   DatumLegendOptions(this.seriesList, {this.animate = false});
@@ -47,7 +47,7 @@ class DatumLegendOptions extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
+  static List<Series<LinearSales, int>> _createRandomData() {
     final random = Random();
 
     final data = [
@@ -58,7 +58,7 @@ class DatumLegendOptions extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
@@ -70,24 +70,24 @@ class DatumLegendOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.PieChart(
+    return PieChart(
       seriesList,
       animate: animate,
       // Add the legend behavior to the chart to turn on legends.
       // This example shows how to change the position and justification of
       // the legend, in addition to altering the max rows and padding.
       behaviors: [
-        charts.DatumLegend(
+        DatumLegend(
           // Positions for "start" and "end" will be left and right respectively
           // for widgets with a build context that has directionality ltr.
           // For rtl, "start" and "end" will be right and left respectively.
           // Since this example has directionality of ltr, the legend is
           // positioned on the right side of the chart.
-          position: charts.BehaviorPosition.end,
+          position: BehaviorPosition.end,
           // For a legend that is positioned on the left or right of the chart,
           // setting the justification for [endDrawArea] is aligned to the
           // bottom of the chart draw area.
-          outsideJustification: charts.OutsideJustification.endDrawArea,
+          outsideJustification: OutsideJustification.endDrawArea,
           // By default, if the position of the chart is on the left or right of
           // the chart, [horizontalFirst] is set to false. This means that the
           // legend entries will grow as rows first instead of a column.
@@ -98,7 +98,7 @@ class DatumLegendOptions extends StatelessWidget {
           // This defines the padding around each legend entry.
           cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
           // Render the legend entry text with custom styles.
-          entryTextStyle: charts.TextStyle(
+          entryTextStyle: TextStyle(
               color: Colors.purple, fontFamily: 'Georgia', fontSize: 11),
         )
       ],
@@ -106,7 +106,7 @@ class DatumLegendOptions extends StatelessWidget {
   }
 
   /// Create series list with one series
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<Series<LinearSales, int>> _createSampleData() {
     final data = [
       LinearSales(0, 100),
       LinearSales(1, 75),
@@ -115,7 +115,7 @@ class DatumLegendOptions extends StatelessWidget {
     ];
 
     return [
-      charts.Series<LinearSales, int>(
+      Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,

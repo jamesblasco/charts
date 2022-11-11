@@ -48,8 +48,8 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
     // use its default types (usually a numeric axis).
     return TimeSeriesRenderChart(
       layoutConfig: layoutConfig,
-      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+      primaryMeasureAxis: primaryMeasureAxis?.createElement(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createElement(),
       disjointMeasureAxes: createDisjointMeasureAxes(),
       dateTimeFactory: dateTimeFactory ?? const LocalDateTimeFactory(),
     );
@@ -72,13 +72,13 @@ class TimeSeriesRenderChart extends CartesianRenderChart<DateTime> {
     super.disjointMeasureAxes,
     this.dateTimeFactory = const LocalDateTimeFactory(),
   }) : super(
-          domainAxis: DateTimeAxis(dateTimeFactory),
+          domainAxis: DateTimeAxisElement(dateTimeFactory),
         );
   final DateTimeFactory dateTimeFactory;
 
   @override
   void initDomainAxis() {
-    domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<DateTime>()
+    domainAxis!.tickDrawStrategy = const SmallTickAxisDecoration<DateTime>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 
@@ -89,7 +89,8 @@ class TimeSeriesRenderChart extends CartesianRenderChart<DateTime> {
   }
 
   @override
-  Axis<DateTime> createDomainAxisFromSpec(AxisSpec<DateTime> axisSpec) {
-    return (axisSpec as DateTimeAxisSpec).createDateTimeAxis(dateTimeFactory);
+  MutableAxisElement<DateTime> createDomainAxisFromSpec(
+      AxisData<DateTime> axisSpec) {
+    return (axisSpec as DateTimeAxis).createDateTimeAxis(dateTimeFactory);
   }
 }

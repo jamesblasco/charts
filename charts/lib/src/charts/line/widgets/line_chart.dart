@@ -44,8 +44,8 @@ class LineChart extends CartesianChart<num> {
     // use its default types (usually a numeric axis).
     return LineRenderChart(
       layoutConfig: layoutConfig,
-      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+      primaryMeasureAxis: primaryMeasureAxis?.createElement(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createElement(),
       disjointMeasureAxes: createDisjointMeasureAxes(),
     );
   }

@@ -19,10 +19,10 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 class OrdinalComboBarLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   OrdinalComboBarLineChart(this.seriesList, {this.animate = false});
@@ -44,7 +44,7 @@ class OrdinalComboBarLineChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final desktopSalesData = [
@@ -69,48 +69,48 @@ class OrdinalComboBarLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop',
           colorFn: (_, __) => Colors.blue,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Tablet',
           colorFn: (_, __) => Colors.red,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Mobile',
           colorFn: (_, __) => Colors.green,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom line renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customLine'),
+        ..setAttribute(rendererIdKey, 'customLine'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
   Widget build(BuildContext context) {
-    return charts.OrdinalComboChart(seriesList,
+    return OrdinalComboChart(seriesList,
         animate: animate,
         // Configure the default renderer as a bar renderer.
-        defaultRenderer: charts.BarRendererConfig(
-            groupingType: charts.BarGroupingType.grouped),
+        defaultRenderer:
+            BarRendererConfig(groupingType: BarGroupingType.grouped),
         // Custom renderer configuration for the line series. This will be used for
         // any series that does not define a rendererIdKey.
         customSeriesRenderers: [
-          charts.LineRendererConfig(
+          LineRendererConfig(
               // ID used to link series to this renderer.
               customRendererId: 'customLine')
         ]);
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -133,26 +133,26 @@ class OrdinalComboBarLineChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Desktop',
           colorFn: (_, __) => Colors.blue,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: desktopSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Tablet',
           colorFn: (_, __) => Colors.red,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: tableSalesData),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
           id: 'Mobile ',
           colorFn: (_, __) => Colors.green,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: mobileSalesData)
         // Configure our custom line renderer for this series.
-        ..setAttribute(charts.rendererIdKey, 'customLine'),
+        ..setAttribute(rendererIdKey, 'customLine'),
     ];
   }
 }

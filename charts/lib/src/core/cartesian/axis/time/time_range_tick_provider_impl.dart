@@ -16,8 +16,9 @@
 import 'package:charts/core.dart';
 
 // Contains all the common code for the time range tick providers.
-class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
-  TimeRangeTickProviderImpl(this.timeStepper, {this.requiredMinimumTicks = 3});
+class TimeRangeTickProviderImplElement extends TimeRangeTickProviderElement {
+  TimeRangeTickProviderImplElement(this.timeStepper,
+      {this.requiredMinimumTicks = 3});
   final int requiredMinimumTicks;
   final TimeStepper timeStepper;
 
@@ -53,18 +54,18 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
   }
 
   @override
-  List<Tick<DateTime>> getTicks({
+  List<TickElement<DateTime>> getTicks({
     required ChartContext? context,
     required GraphicsFactory graphicsFactory,
     required DateTimeScale scale,
-    required TickFormatter<DateTime> formatter,
+    required TickFormatterElement<DateTime> formatter,
     required Map<DateTime, String> formatterValueCache,
     required TickDrawStrategy<DateTime> tickDrawStrategy,
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
     TickHint<DateTime>? tickHint,
   }) {
-    late List<Tick<DateTime>> currentTicks;
+    late List<TickElement<DateTime>> currentTicks;
     final tickValues = <DateTime>[];
     final timeStepIt = timeStepper.getSteps(scale.viewportDomain).iterator;
 

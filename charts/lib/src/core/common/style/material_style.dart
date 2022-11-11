@@ -15,8 +15,8 @@
 
 import 'package:charts/core.dart';
 
-class MaterialStyle implements Style {
-  const MaterialStyle();
+class MaterialChartTheme implements ChartThemeData {
+  const MaterialChartTheme();
 
   @override
   Color get black => Colors.black;

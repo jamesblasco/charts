@@ -17,11 +17,10 @@ import 'dart:math';
 
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart' show immutable, protected;
 
 @immutable
-abstract class BaseRenderSpec<D> extends RenderSpec<D> {
-  const BaseRenderSpec({
+abstract class BaseAxisDecoration<D> extends AxisDecoration<D> {
+  const BaseAxisDecoration({
     this.labelStyle,
     this.labelAnchor,
     this.labelJustification,
@@ -164,7 +163,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
           : _defaultTickLabelAnchor;
 
   @override
-  void decorateTicks(List<Tick<D>> ticks) {
+  void decorateTicks(List<TickElement<D>> ticks) {
     for (final tick in ticks) {
       final textElement = tick.textElement;
       if (textElement == null) {
@@ -184,14 +183,14 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   void updateTickWidth(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight,
     AxisOrientation orientation, {
     bool collision = false,
   }) {
-    final isVertical = orientation == AxisOrientation.right ||
-        orientation == AxisOrientation.left;
+    final isVertical =
+        orientation == AxisOrientation.right || orientation == AxisOrientation.left;
     final rotationRelativeToAxis =
         labelRotation(collision: collision).toDouble();
     final rotationRads =
@@ -215,37 +214,38 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   CollisionReport<D> collides(
-    List<Tick<D>>? ticks,
+    List<TickElement<D>>? ticks,
     AxisOrientation? orientation,
   ) {
+    List<TickElement<D>>? effectiveTicks = ticks;
     // TODO: Collision analysis for rotated labels are not
     // supported yet.
 
     // If there are no ticks, they do not collide.
-    if (ticks == null) {
+    if (effectiveTicks == null) {
       return CollisionReport(
         ticksCollide: false,
-        ticks: ticks,
+        ticks: effectiveTicks,
         alternateTicksUsed: false,
       );
     }
 
-    final vertical = orientation == AxisOrientation.left ||
-        orientation == AxisOrientation.right;
+    final vertical =
+        orientation == AxisOrientation.left || orientation == AxisOrientation.right;
 
-    ticks = [
-      for (var tick in ticks)
+    effectiveTicks = [
+      for (var tick in effectiveTicks)
         if (tick.locationPx != null) tick,
     ];
 
     // First sort ticks by smallest locationPx first (NOT sorted by value).
     // This allows us to only check if a tick collides with the previous tick.
-    ticks.sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
+    effectiveTicks.sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
 
     var previousEnd = double.negativeInfinity;
     var collides = false;
 
-    for (final tick in ticks) {
+    for (final tick in effectiveTicks) {
       final tickSize = tick.textElement?.measurement;
       final tickLocationPx = tick.locationPx!;
 
@@ -254,11 +254,11 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
             minimumPaddingBetweenLabelsPx;
 
         if (_defaultTickLabelAnchor == TickLabelAnchor.inside) {
-          if (identical(tick, ticks.first)) {
+          if (identical(tick, effectiveTicks.first)) {
             // Top most tick draws down from the location
             collides = false;
             previousEnd = tickLocationPx + adjustedHeight;
-          } else if (identical(tick, ticks.last)) {
+          } else if (identical(tick, effectiveTicks.last)) {
             // Bottom most tick draws up from the location
             collides = previousEnd > tickLocationPx - adjustedHeight;
             previousEnd = tickLocationPx;
@@ -282,8 +282,8 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
         final textDirection = _normalizeHorizontalAnchor(
           _defaultTickLabelAnchor,
           chartContext.isRtl,
-          identical(tick, ticks.first),
-          identical(tick, ticks.last),
+          identical(tick, effectiveTicks.first),
+          identical(tick, effectiveTicks.last),
         );
         final adjustedWidth = (tickSize?.horizontalSliceWidth ?? 0.0) +
             minimumPaddingBetweenLabelsPx;
@@ -308,7 +308,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
       if (collides) {
         return CollisionReport(
           ticksCollide: true,
-          ticks: ticks,
+          ticks: effectiveTicks,
           alternateTicksUsed: false,
         );
       }
@@ -316,14 +316,14 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
     return CollisionReport(
       ticksCollide: false,
-      ticks: ticks,
+      ticks: effectiveTicks,
       alternateTicksUsed: false,
     );
   }
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -354,7 +354,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<Tick<D>> ticks,
+    List<TickElement<D>> ticks,
     int maxWidth,
     int maxHeight, {
     bool collision = false,
@@ -422,7 +422,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   @protected
   void drawLabel(
     ChartCanvas canvas,
-    Tick<D> tick, {
+    TickElement<D> tick, {
     required AxisOrientation orientation,
     required Rectangle<int> axisBounds,
     required Rectangle<int>? drawAreaBounds,

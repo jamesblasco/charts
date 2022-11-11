@@ -58,8 +58,8 @@ class BarChart extends CartesianChart<String> {
     return BarRenderChart(
       vertical: vertical,
       layoutConfig: layoutConfig,
-      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+      primaryMeasureAxis: primaryMeasureAxis?.createElement(),
+      secondaryMeasureAxis: secondaryMeasureAxis?.createElement(),
       disjointMeasureAxes: createDisjointMeasureAxes(),
     );
   }

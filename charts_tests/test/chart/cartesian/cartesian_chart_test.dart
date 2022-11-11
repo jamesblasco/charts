@@ -67,7 +67,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = OrdinalAxisSpec();
+      chart.domainAxisSpec = OrdinalAxis();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
@@ -79,7 +79,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = NumericAxisSpec();
+      chart.domainAxisSpec = NumericAxis();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
@@ -91,7 +91,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = DateTimeAxisSpec();
+      chart.domainAxisSpec = DateTimeAxis();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));

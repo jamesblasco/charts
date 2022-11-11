@@ -13,15 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts/src/core/cartesian/axis/tick.dart' show Tick;
+import 'package:charts/charts.dart';
 
 /// A report that contains a list of ticks and if they collide.
+
 class CollisionReport<D> {
-  CollisionReport({
+  const CollisionReport({
     required this.ticksCollide,
-    required List<Tick<D>>? ticks,
+    required List<TickElement<D>>? ticks,
     bool? alternateTicksUsed,
-  })  : ticks = ticks ?? [],
+  })  : ticks = ticks ?? const [],
         alternateTicksUsed = alternateTicksUsed ?? false;
 
   CollisionReport.empty()
@@ -32,7 +33,7 @@ class CollisionReport<D> {
   /// If [ticks] collide.
   final bool ticksCollide;
 
-  final List<Tick<D>> ticks;
+  final List<TickElement<D>> ticks;
 
   final bool alternateTicksUsed;
 }

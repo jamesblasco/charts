@@ -151,8 +151,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
         subTitleStyleSpec: subTitleStyleSpec,
       );
 
-  @override
-  void updateBehaviorState(ChartBehaviorState commonBehavior) {}
+
 
   @override
   String get role => 'ChartTitle-${behaviorPosition.toString()}';

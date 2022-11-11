@@ -30,8 +30,8 @@ import 'package:meta/meta.dart';
 ///   longPressHold - Mouse/Touch for a while on the handle, then drag across
 ///       the data.
 @immutable
-class Slider<D> extends ChartBehavior<D> {
-  /// Constructs a [Slider].
+class SliderBehavior<D> extends ChartBehavior<D> {
+  /// Constructs a [SliderBehavior].
   ///
   /// [eventTrigger] sets the type of gesture handled by the slider.
   ///
@@ -52,7 +52,7 @@ class Slider<D> extends ChartBehavior<D> {
   /// [layoutPaintOrder] configures the order in which the behavior should be
   /// painted. This value should be relative to LayoutPaintViewOrder.slider.
   /// (e.g. LayoutViewPaintOrder.slider + 1).
-  factory Slider({
+  factory SliderBehavior({
     SelectionTrigger? eventTrigger,
     SymbolRenderer? handleRenderer,
     dynamic? initialDomainValue,
@@ -66,7 +66,7 @@ class Slider<D> extends ChartBehavior<D> {
     handleRenderer ??= const RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.
     style ??= SliderStyle(handleSize: const Rectangle<int>(0, 0, 20, 30));
-    return Slider._internal(
+    return SliderBehavior._internal(
       eventTrigger: eventTrigger,
       handleRenderer: handleRenderer,
       initialDomainValue: initialDomainValue,
@@ -74,12 +74,12 @@ class Slider<D> extends ChartBehavior<D> {
       roleId: roleId,
       snapToDatum: snapToDatum,
       style: style,
-      desiredGestures: Slider._getDesiredGestures(eventTrigger),
+      desiredGestures: SliderBehavior._getDesiredGestures(eventTrigger),
       layoutPaintOrder: layoutPaintOrder,
     );
   }
 
-  Slider._internal({
+  SliderBehavior._internal({
     required this.eventTrigger,
     this.onChangeCallback,
     this.initialDomainValue,
@@ -165,8 +165,6 @@ class Slider<D> extends ChartBehavior<D> {
         style: style,
       );
 
-  @override
-  void updateBehaviorState(ChartBehaviorState<D> behaviorState) {}
 
   @override
   String get role => 'Slider-${eventTrigger.toString()}';

@@ -156,7 +156,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
     if (extendAxis) {
       for (final annotation in annotations) {
         // Either an Axis<D> and Axis<num>.
-        Axis<Object?> axis;
+        MutableAxisElement<Object?> axis;
 
         switch (annotation.axisType) {
           case RangeAnnotationAxisType.domain:
@@ -185,7 +185,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
     // The values (T) can match the data type of the domain (D) or measure axis
     // (num).
     void updateAnnotation<T>(
-      Axis<T> axis,
+      MutableAxisElement<T> axis,
       AnnotationSegment<Object> annotation,
     ) {
       final key = annotation.key;
@@ -327,7 +327,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   _DatumAnnotation _getAnnotationDatum<T>(
     T startValue,
     T endValue,
-    Axis<T> axis,
+    MutableAxisElement<T> axis,
     RangeAnnotationAxisType axisType,
   ) {
     // Remove floating point rounding errors by rounding to 2 decimal places of

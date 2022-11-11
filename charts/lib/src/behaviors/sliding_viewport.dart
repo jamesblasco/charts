@@ -42,6 +42,5 @@ class SlidingViewport<D> extends ChartBehavior<D> {
   @override
   List<Object?> get props => [selectionModelType];
 
-  @override
-  void updateBehaviorState(ChartBehaviorState<D> behaviorState) {}
+
 }

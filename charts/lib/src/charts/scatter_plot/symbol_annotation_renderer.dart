@@ -121,12 +121,12 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     D? domainLowerBoundValue,
     D? domainUpperBoundValue,
     ImmutableSeries<D> series,
-    ImmutableAxis<D> domainAxis,
+    ImmutableAxisElement<D> domainAxis,
     num? measureValue,
     num? measureLowerBoundValue,
     num? measureUpperBoundValue,
     num? measureOffsetValue,
-    ImmutableAxis<num> measureAxis,
+    ImmutableAxisElement<num> measureAxis,
   ) {
     final domainPosition = domainAxis.getLocation(domainValue);
 

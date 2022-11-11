@@ -360,9 +360,13 @@ void main() {
     chart.callConfigureSeries();
     chart.callOnPreProcess();
     chart.callOnPostProcess();
-    chart.getSelectionModel(selectionType).updateSelection(
-        [SeriesDatum(series1, s1D1), SeriesDatum(series2, s2D1)],
-        [series1, series2]);
+    chart.getSelectionModel(selectionType).updateSelection([
+      SeriesDatum(series: series1, datum: s1D1),
+      SeriesDatum(series: series2, datum: s2D1)
+    ], [
+      series1,
+      series2
+    ]);
 
     final legendEntries = legend.legendState.legendEntries;
     expect(legendEntries, hasLength(2));

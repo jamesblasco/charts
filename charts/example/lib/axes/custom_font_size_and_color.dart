@@ -18,7 +18,7 @@
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 
 /// Example of using a custom primary measure and domain axis replacing the
 /// renderSpec with one with a custom font size and a custom color.
@@ -26,7 +26,7 @@ import 'package:charts/charts.dart' as charts;
 /// There are many axis styling options in the SmallTickRenderer allowing you
 /// to customize the font, tick lengths, and offsets.
 class CustomFontSizeAndColor extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   CustomFontSizeAndColor(this.seriesList, {this.animate = false});
@@ -48,7 +48,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final globalSalesData = [
@@ -59,7 +59,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
@@ -71,7 +71,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return charts.BarChart(
+    return BarChart(
       seriesList,
       animate: animate,
 
@@ -79,34 +79,34 @@ class CustomFontSizeAndColor extends StatelessWidget {
       ///
       /// This is an OrdinalAxisSpec to match up with BarChart's default
       /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
-      /// other charts).
-      domainAxis: charts.OrdinalAxisSpec(
-          renderSpec: charts.SmallTickRendererSpec(
+      /// other .
+      domainAxis: OrdinalAxis(
+          decoration: SmallTickAxisDecoration(
 
               // Tick and Label styling here.
-              labelStyle: charts.TextStyle(
+              labelStyle: TextStyle(
                   fontSize: 18, // size in Pts.
                   color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: charts.LineStyle(color: Colors.black))),
+              lineStyle: LineStyle(color: Colors.black))),
 
       /// Assign a custom style for the measure axis.
-      primaryMeasureAxis: charts.NumericAxisSpec(
-          renderSpec: charts.GridlineRendererSpec(
+      primaryMeasureAxis: NumericAxis(
+          decoration: GridlineAxisDecoration(
 
               // Tick and Label styling here.
-              labelStyle: charts.TextStyle(
+              labelStyle: TextStyle(
                   fontSize: 18, // size in Pts.
                   color: Colors.black),
 
               // Change the line colors to match text color.
-              lineStyle: charts.LineStyle(color: Colors.black))),
+              lineStyle: LineStyle(color: Colors.black))),
     );
   }
 
   /// Create series list with single series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
       OrdinalSales('2014', 5000),
       OrdinalSales('2015', 25000),
@@ -115,7 +115,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Global Revenue',
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,

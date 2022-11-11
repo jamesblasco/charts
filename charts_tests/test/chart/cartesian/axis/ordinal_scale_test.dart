@@ -19,16 +19,16 @@ import 'package:test/test.dart';
 
 const EPSILON = 0.001;
 
-class TestStyle extends MaterialStyle {
+class TestStyle extends MaterialChartTheme {
   @override
   double rangeBandSize;
 }
 
 void main() {
-  SimpleOrdinalScale scale;
+  SimpleOrdinalScaleElement scale;
 
   setUp(() {
-    scale = SimpleOrdinalScale();
+    scale = SimpleOrdinalScaleElement();
     scale.addDomain('a');
     scale.addDomain('b');
     scale.addDomain('c');

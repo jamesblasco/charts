@@ -34,11 +34,11 @@
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:charts/charts.dart' as charts;
+import 'package:charts/charts.dart';
 import 'package:flutter/material.dart';
 
 class DomainA11yExploreBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
+  final List<Series<dynamic, String>> seriesList;
   final bool animate;
 
   DomainA11yExploreBarChart(this.seriesList, {this.animate = false});
@@ -61,7 +61,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   }
 
   /// Create random data.
-  static List<charts.Series<OrdinalSales, String>> _createRandomData() {
+  static List<Series<OrdinalSales, String>> _createRandomData() {
     final random = Random();
 
     final mobileData = [
@@ -79,14 +79,14 @@ class DomainA11yExploreBarChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet Sales',
         colorFn: (_, __) => Colors.red,
         domainFn: (OrdinalSales sales, _) => sales.year,
@@ -105,14 +105,14 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   /// This example vocalizes the domain, then for each series that has that
   /// domain, it vocalizes the series display name and the measure and a
   /// description of that measure.
-  String vocalizeDomainAndMeasures(List<charts.SeriesDatum> seriesDatums) {
+  String vocalizeDomainAndMeasures(List<SeriesDatum> seriesDatums) {
     final buffer = StringBuffer();
 
     // The datum's type in this case is [OrdinalSales].
     // So we can access year and sales information here.
     buffer.write(seriesDatums.first.datum.year);
 
-    for (charts.SeriesDatum seriesDatum in seriesDatums) {
+    for (SeriesDatum seriesDatum in seriesDatums) {
       final series = seriesDatum.series;
       final datum = seriesDatum.datum;
 
@@ -131,7 +131,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
         // Optionally provide a hint for the user to know how to trigger
         // explore mode.
         hint: 'Press and hold to enable explore',
-        child: charts.BarChart(
+        child: BarChart(
           seriesList,
           animate: animate,
           // To prevent conflict with the select nearest behavior that uses the
@@ -140,7 +140,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
           // with the application.
           defaultInteractions: !MediaQuery.of(context).accessibleNavigation,
           behaviors: [
-            charts.DomainA11yExploreBehavior(
+            DomainA11yExploreBehavior(
               // Callback for generating the message that is vocalized.
               // An example of how to use is in [vocalizeDomainAndMeasures].
               // If none is set, the default only vocalizes the domain value.
@@ -149,7 +149,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
               // demonstration purchases.
               // [exploreModeTrigger] Default is press and hold, can be
               // changed to tap.
-              exploreModeTrigger: charts.ExploreModeTrigger.pressHold,
+              exploreModeTrigger: ExploreModeTrigger.pressHold,
               // [exploreModeEnabledAnnouncement] Optionally notify the OS
               // when explore mode is enabled.
               exploreModeEnabledAnnouncement: 'Explore mode enabled',
@@ -166,13 +166,13 @@ class DomainA11yExploreBarChart extends StatelessWidget {
             // This behavior is included in this example to show that when an
             // a11y node has focus, the chart's internal selection model is
             // also updated.
-            charts.DomainHighlighter(charts.SelectionModelType.info),
+            DomainHighlighter(SelectionModelType.info),
           ],
         ));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+  static List<Series<OrdinalSales, String>> _createSampleData() {
     final mobileData = [
       OrdinalSales('2014', 5),
       OrdinalSales('2015', 25),
@@ -188,14 +188,14 @@ class DomainA11yExploreBarChart extends StatelessWidget {
     ];
 
     return [
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Mobile Sales',
         colorFn: (_, __) => Colors.blue,
         domainFn: (OrdinalSales sales, _) => sales.year,
         measureFn: (OrdinalSales sales, _) => sales.sales,
         data: mobileData,
       ),
-      charts.Series<OrdinalSales, String>(
+      Series<OrdinalSales, String>(
         id: 'Tablet Sales',
         colorFn: (_, __) => Colors.red,
         domainFn: (OrdinalSales sales, _) => sales.year,
