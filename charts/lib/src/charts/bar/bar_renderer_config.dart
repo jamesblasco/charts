@@ -56,16 +56,16 @@ abstract class CornerStrategy extends Equatable {
   const CornerStrategy();
 
   /// Returns the radius of the rounded corners in pixels.
-  int getRadius(int barWidth);
+  double getRadius(double barWidth);
 }
 
 /// Strategy for constant corner radius.
 class ConstCornerStrategy extends CornerStrategy {
   const ConstCornerStrategy(this.radius);
-  final int radius;
+  final double radius;
 
   @override
-  int getRadius(_) => radius;
+  double getRadius(_) => radius;
 
   @override
   bool operator ==(Object other) {

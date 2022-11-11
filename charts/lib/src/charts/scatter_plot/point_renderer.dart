@@ -486,7 +486,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {

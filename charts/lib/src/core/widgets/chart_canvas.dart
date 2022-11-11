@@ -286,8 +286,8 @@ class FlutterChartCanvas implements ChartCanvas {
   @override
   void drawText(
     TextElement textElement,
-    int offsetX,
-    int offsetY, {
+    double offsetX,
+    double offsetY, {
     double rotation = 0.0,
   }) {
     // Must be Flutter TextElement.
@@ -331,7 +331,7 @@ class FlutterChartCanvas implements ChartCanvas {
   }
 
   @override
-  void setClipBounds(Rectangle<int> clipBounds) {
+  void setClipBounds(Rectangle<double> clipBounds) {
     canvas
       ..save()
       ..clipRect(_getRect(clipBounds));

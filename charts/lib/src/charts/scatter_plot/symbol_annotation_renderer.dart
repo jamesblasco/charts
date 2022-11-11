@@ -35,14 +35,14 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     String? rendererId,
     SymbolAnnotationRendererConfig<D>? config,
   }) : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
-  late Rectangle<int> _componentBounds;
+  late Rectangle<double> _componentBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
 
   late CartesianRenderChart<D> _chart;
 
-  var _currentHeight = 0;
+  var _currentHeight = 0.0;
 
   // ignore: prefer_collection_literals, https://github.com/dart-lang/linter/issues/1649
   final _seriesInfo = LinkedHashMap<String, _SeriesInfo<D>>();
@@ -109,7 +109,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
       offset += rowHeight;
     }
 
-    _currentHeight = offset.ceil();
+    _currentHeight = offset;
 
     super.preprocessSeries(seriesList);
   }
@@ -197,9 +197,9 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
         final y = componentBounds.top + seriesInfo.rowStart;
 
         final domainAxis = _chart.domainAxis!;
-        final bounds = Rectangle<int>(
+        final bounds = Rectangle<double>(
           componentBounds.left,
-          y.round(),
+          y,
           componentBounds.width,
           0,
         );
@@ -223,7 +223,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   }
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes measure(double maxWidth, double maxHeight) {
     // The sizing of component is not flexible. It's height is always a multiple
     // of the number of series rendered, even if that ends up taking all of the
     // available margin space.
@@ -234,14 +234,15 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
 
     super.layout(componentBounds, drawAreaBounds);
   }
 
   @override
-  Rectangle<int> get componentBounds => _componentBounds;
+  Rectangle<double> get componentBounds => _componentBounds;
 }
 
 class _SeriesInfo<D> {

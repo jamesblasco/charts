@@ -39,7 +39,7 @@ class MockNumericAxis extends Mock implements MutableAxisElement<num> {}
 class MockCanvas extends Mock implements ChartCanvas {}
 
 void main() {
-  Rectangle<int> layout;
+  Rectangle<double> layout;
 
   MutableSeries<num> _makeSeries({String id, String seriesCategory}) {
     final data = <MyRow>[];
@@ -74,7 +74,7 @@ void main() {
   }
 
   setUp(() {
-    layout = Rectangle<int>(0, 0, 200, 100);
+    layout = Rectangle<double>(0, 0, 200, 100);
   });
 
   group('getNearestDatumDetailPerSeries', () {

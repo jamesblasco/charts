@@ -67,7 +67,7 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   GridlineTickDrawStrategy(
     super.chartContext,
     super.graphicsFactory, {
-    int? tickLengthPx,
+    double? tickLengthPx,
     LineStyle? lineStyle,
     super.labelStyleSpec,
     LineStyle? axisLineStyle,
@@ -80,13 +80,13 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     super.minimumPaddingBetweenLabelsPx,
     super.labelRotation,
     super.labelCollisionRotation,
-  })  : tickLength = tickLengthPx ?? 0,
+  })  : tickLength = tickLengthPx ?? 0.0,
         lineStyle =
             StyleFactory.style.createGridlineStyle(graphicsFactory, lineStyle),
         super(
           axisLineStyle: axisLineStyle ?? lineStyle,
         );
-  int tickLength;
+  double tickLength;
   LineStyle lineStyle;
 
   @override
@@ -94,8 +94,8 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<int> axisBounds,
-    required Rectangle<int> drawAreaBounds,
+    required Rectangle<double> axisBounds,
+    required Rectangle<double> drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,

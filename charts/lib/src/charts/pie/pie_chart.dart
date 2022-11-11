@@ -83,7 +83,7 @@ class PieRenderChart<D> extends BaseRenderChart<D> {
     return entries;
   }
 
-  Rectangle<int>? get centerContentBounds {
+  Rectangle<double>? get centerContentBounds {
     final defaultRenderer = this.defaultRenderer;
     if (defaultRenderer is ArcRenderer<D>) {
       return defaultRenderer.centerContentBounds;

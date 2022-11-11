@@ -188,8 +188,8 @@ class ViewMeasuredSizes {
   const ViewMeasuredSizes({
     required this.preferredWidth,
     required this.preferredHeight,
-    int? minWidth,
-    int? minHeight,
+    double? minWidth,
+    double? minHeight,
   })  : minWidth = minWidth ?? 0,
         minHeight = minHeight ?? 0;
 
@@ -201,10 +201,10 @@ class ViewMeasuredSizes {
     minHeight: 0,
   );
 
-  final int preferredWidth;
-  final int preferredHeight;
-  final int minWidth;
-  final int minHeight;
+  final double preferredWidth;
+  final double preferredHeight;
+  final double minWidth;
+  final double minHeight;
 }
 
 /// A component that measures its size and accepts bounds to complete layout.
@@ -220,16 +220,16 @@ abstract class LayoutView {
   ///
   /// This measurement is without the [ComponentBuffer], which is added by the
   /// layout manager.
-  ViewMeasuredSizes? measure(int maxWidth, int maxHeight);
+  ViewMeasuredSizes? measure(double maxWidth, double maxHeight);
 
   /// Layout this component.
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds);
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds);
 
   /// Draw this component on the canvas.
   void paint(ChartCanvas canvas, double animationPercent);
 
   /// Bounding box for drawing this component.
-  Rectangle<int>? get componentBounds;
+  Rectangle<double>? get componentBounds;
 
   /// Whether or not this component is a series renderer that draws series
   /// data.

@@ -53,8 +53,8 @@ abstract class LegendBehaviorState<D>
   late BaseRenderChart<D> _chart;
   late final LifecycleListener<D> _lifecycleListener;
 
-  Rectangle<int>? _componentBounds;
-  Rectangle<int>? _drawAreaBounds;
+  Rectangle<double>? _componentBounds;
+  Rectangle<double>? _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -250,14 +250,14 @@ abstract class LegendBehaviorState<D>
   }
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes measure(double maxWidth, double maxHeight) {
     // Native child classes should override this method to return real
     // measurements.
     return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -268,14 +268,14 @@ abstract class LegendBehaviorState<D>
   void paint(ChartCanvas canvas, double animationPercent) {}
 
   @override
-  Rectangle<int>? get componentBounds => _componentBounds;
+  Rectangle<double>? get componentBounds => _componentBounds;
 
   @override
   bool get isSeriesRenderer => false;
 
   // Gets the draw area bounds for native legend content to position itself
   // accordingly.
-  Rectangle<int>? get drawAreaBounds => _drawAreaBounds;
+  Rectangle<double>? get drawAreaBounds => _drawAreaBounds;
 }
 
 /// Stores legend data used by native legend content builder.

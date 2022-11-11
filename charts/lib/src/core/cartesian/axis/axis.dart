@@ -149,8 +149,8 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   /// Ticks used by the axis for drawing.
   final _axisTicks = <AxisTicksElement<D>>[];
 
-  Rectangle<int>? _componentBounds;
-  late Rectangle<int>? _drawAreaBounds;
+  Rectangle<double>? _componentBounds;
+  late Rectangle<double>? _drawAreaBounds;
 
   /// Order for chart layout painting.
   ///
@@ -268,7 +268,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
     return scale!.compareDomainValueToViewport(domain);
   }
 
-  void setOutputRange(int start, int end) {
+  void setOutputRange(double start, double end) {
     scale!.range = ScaleOutputExtent(start, end);
   }
 
@@ -318,7 +318,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   }
 
   /// Updates the current provided tick labels with a max width.
-  void _updateProvidedTickWidth(int maxWidth, int maxHeight) {
+  void _updateProvidedTickWidth(double maxWidth, double maxHeight) {
     if (axisOrientation != null) {
       tickDrawStrategy!.updateTickWidth(
         _providedTicks!,
@@ -410,8 +410,8 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   void setViewportSettings(
     double viewportScale,
     double viewportTranslatePx, {
-    int? drawAreaWidth,
-    int? drawAreaHeight,
+    double? drawAreaWidth,
+    double? drawAreaHeight,
   }) {
     // Don't let the viewport be panned beyond the bounds of the data.
     final clampedViewportTranslatePx = _clampTranslatePx(
@@ -444,8 +444,8 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   double _clampTranslatePx(
     double viewportScalingFactor,
     double viewportTranslatePx, {
-    int? drawAreaWidth,
-    int? drawAreaHeight,
+    double? drawAreaWidth,
+    double? drawAreaHeight,
   }) {
     if (isVertical) {
       if (drawAreaHeight == null) {
@@ -514,13 +514,13 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
       axisOrientation == AxisOrientation.right;
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes measure(double maxWidth, double maxHeight) {
     return isVertical
         ? _measureVerticalAxis(maxWidth, maxHeight)
         : _measureHorizontalAxis(maxWidth, maxHeight);
   }
 
-  ViewMeasuredSizes _measureVerticalAxis(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes _measureVerticalAxis(double maxWidth, double maxHeight) {
     setOutputRange(maxHeight, 0);
     _updateProvidedTicks();
 
@@ -532,7 +532,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
     );
   }
 
-  ViewMeasuredSizes _measureHorizontalAxis(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes _measureHorizontalAxis(double maxWidth, double maxHeight) {
     setOutputRange(0, maxWidth);
     _updateProvidedTicks();
 
@@ -546,7 +546,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
 
   /// Layout this component.
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -579,7 +579,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   bool get isSeriesRenderer => false;
 
   @override
-  Rectangle<int>? get componentBounds => _componentBounds;
+  Rectangle<double>? get componentBounds => _componentBounds;
 
   bool get drawAxisLine {
     if (forceDrawAxisLine != null) {
@@ -650,7 +650,7 @@ class OrdinalAxisElement extends MutableAxisElement<String> {
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     // We are purposely clearing the viewport starting domain and data size

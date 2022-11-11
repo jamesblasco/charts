@@ -31,7 +31,7 @@ class FakeTextElement implements TextElement {
   TextStyle textStyle;
 
   @override
-  int maxWidth;
+  double maxWidth;
 
   @override
   MaxWidthStrategy maxWidthStrategy;

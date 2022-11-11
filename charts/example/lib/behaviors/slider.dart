@@ -104,10 +104,10 @@ class SliderLine extends StatefulWidget {
 class _SliderCallbackState extends State<SliderLine> {
   num? _sliderDomainValue;
   String? _sliderDragState;
-  Point<int>? _sliderPosition;
+  Point<double>? _sliderPosition;
 
   // Handles callbacks when the user drags the slider.
-  _onSliderChange(Point<int> point, dynamic domain, String roleId,
+  _onSliderChange(Point<double> point, dynamic domain, String roleId,
       SliderListenerDragState dragState) {
     // Request a build.
     void rebuild(_) {

@@ -289,9 +289,9 @@ class _LinePointLayoutView<D> extends LayoutView {
 
   final List<int>? dashPattern;
 
-  late Rectangle<int> _drawAreaBounds;
+  late Rectangle<double> _drawAreaBounds;
 
-  Rectangle<int> get drawBounds => _drawAreaBounds;
+  Rectangle<double> get drawBounds => _drawAreaBounds;
 
   final bool drawFollowLinesAcrossChart;
 
@@ -311,12 +311,13 @@ class _LinePointLayoutView<D> extends LayoutView {
   }
 
   @override
-  ViewMeasuredSizes? measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes? measure(double maxWidth, double maxHeight) {
     return null;
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
@@ -347,8 +348,8 @@ class _LinePointLayoutView<D> extends LayoutView {
 
     // Build maps of the position where the follow lines should stop for each
     // selected data point.
-    final endPointPerValueVertical = <int, int>{};
-    final endPointPerValueHorizontal = <int, int>{};
+    final endPointPerValueVertical = <double, double>{};
+    final endPointPerValueHorizontal = <double, double>{};
 
     for (final pointElement in points) {
       if (pointElement.point.x == null || pointElement.point.y == null) {
@@ -356,8 +357,8 @@ class _LinePointLayoutView<D> extends LayoutView {
       }
       final point = pointElement.point.toPoint();
 
-      final roundedX = point.x.round();
-      final roundedY = point.y.round();
+      final roundedX = point.x;
+      final roundedY = point.y;
 
       // Get the Y value closest to the top of the chart for this X position.
       if (endPointPerValueVertical[roundedX] == null) {
@@ -418,8 +419,8 @@ class _LinePointLayoutView<D> extends LayoutView {
       // Draw the horizontal follow line.
       if (shouldShowHorizontalFollowLine &&
           !paintedHorizontalLinePositions.contains(roundedY)) {
-        int leftBound;
-        int rightBound;
+        double leftBound;
+        double rightBound;
 
         if (drawFollowLinesAcrossChart) {
           // RTL and LTR both go across the whole draw area.
@@ -509,7 +510,7 @@ class _LinePointLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<int> get componentBounds => _drawAreaBounds;
+  Rectangle<double> get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;

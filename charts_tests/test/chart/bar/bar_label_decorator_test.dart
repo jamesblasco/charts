@@ -46,7 +46,7 @@ class FakeTextElement implements TextElement {
   TextStyle textStyle;
 
   @override
-  int maxWidth;
+  double maxWidth;
 
   @override
   MaxWidthStrategy maxWidthStrategy;
@@ -75,7 +75,7 @@ class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final String datum;
 
   @override
-  final Rectangle<int> bounds;
+  final Rectangle<double> bounds;
 
   @override
   int index;
@@ -97,7 +97,7 @@ class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {}
 void main() {
   ChartCanvas canvas;
   GraphicsFactory graphicsFactory;
-  Rectangle<int> drawBounds;
+  Rectangle<double> drawBounds;
 
   setUpAll(() {
     canvas = MockCanvas();
@@ -108,15 +108,15 @@ void main() {
   group('vertical bar chart', () {
     test('Paint labels with default settings', () {
       final data = ['A', 'B', 'C'];
-      final leftPositionA = 0;
-      final leftPositionB = 25;
-      final leftPositionC = 50;
-      final topPositionA = 50;
-      final topPositionB = 95;
-      final topPositionC = 50;
-      final barWidthA = 20;
-      final barWidthB = 20;
-      final barWidthC = 4;
+      final leftPositionA = 0.0;
+      final leftPositionB = 25.0;
+      final leftPositionC = 50.0;
+      final topPositionA = 50.0;
+      final topPositionB = 95.0;
+      final topPositionC = 50.0;
+      final barWidthA = 20.0;
+      final barWidthB = 20.0;
+      final barWidthC = 4.0;
       final barElements = [
         // 'LabelA' fits, default to inside end.
         // 'LabelB' does not fit because of the height, default to outside.
@@ -154,8 +154,8 @@ void main() {
       expect(captured, hasLength(9));
       // Bar 'A' checks.
       var textElement = captured[0] as TextElement;
-      var offsetX = captured[1] as int;
-      var offsetY = captured[2] as int;
+      var offsetX = captured[1] as double;
+      var offsetY = captured[2] as double;
       var labelWidth = textElement.measurement.horizontalSliceWidth;
       var labelHeight = textElement.measurement.verticalSliceWidth;
       expect(labelWidth, equals(6));
@@ -165,8 +165,8 @@ void main() {
       expect(offsetY, equals(topPositionA + decorator.labelPadding));
       // Bar 'B' checks.
       textElement = captured[3] as TextElement;
-      offsetX = captured[4] as int;
-      offsetY = captured[5] as int;
+      offsetX = captured[4] as double;
+      offsetY = captured[5] as double;
       labelWidth = textElement.measurement.horizontalSliceWidth;
       labelHeight = textElement.measurement.verticalSliceWidth;
       expect(labelWidth, equals(6));
@@ -177,8 +177,8 @@ void main() {
           offsetY, equals(topPositionB - decorator.labelPadding - labelHeight));
       // Bar 'C' checks.
       textElement = captured[6] as TextElement;
-      offsetX = captured[7] as int;
-      offsetY = captured[8] as int;
+      offsetX = captured[7] as double;
+      offsetY = captured[8] as double;
       labelWidth = textElement.measurement.horizontalSliceWidth;
       labelHeight = textElement.measurement.verticalSliceWidth;
       expect(labelWidth, equals(6));
@@ -519,7 +519,7 @@ void main() {
             'A', Rectangle(0, 0, 8, 20), (_) => 'LabelABC', ['A']),
       ];
       // Draw bounds with width of 14 means that space inside the bar is larger.
-      final smallDrawBounds = Rectangle(0, 0, 14, 20);
+      final smallDrawBounds = Rectangle<double>(0, 0, 14, 20);
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.
@@ -574,7 +574,7 @@ void main() {
 
       // Draw bounds with width of 12 means that label can fit neither inside
       // nor outside.
-      final smallDrawBounds = Rectangle(0, 0, 12, 20);
+      final smallDrawBounds = Rectangle<double>(0, 0, 12, 20);
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.

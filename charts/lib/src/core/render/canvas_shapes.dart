@@ -27,7 +27,7 @@ class CanvasRect {
     this.stroke,
     this.strokeWidthPx,
   });
-  final Rectangle<int> bounds;
+  final Rectangle<double> bounds;
   final List<int>? dashPattern;
   final Color? fill;
   final FillPatternType? pattern;
@@ -39,8 +39,8 @@ class CanvasRect {
 class CanvasBarStack {
   factory CanvasBarStack(
     List<CanvasRect> segments, {
-    int? radius,
-    int stackedBarPadding = 1,
+    double? radius,
+    double stackedBarPadding = 1,
     bool roundTopLeft = false,
     bool roundTopRight = false,
     bool roundBottomLeft = false,
@@ -65,7 +65,7 @@ class CanvasBarStack {
 
     final width = right - left;
     final height = bottom - top;
-    final fullStackRect = Rectangle(left, top, width, height);
+    final fullStackRect = Rectangle<double>(left, top, width, height);
 
     return CanvasBarStack._internal(
       segments,
@@ -90,13 +90,13 @@ class CanvasBarStack {
     required this.fullStackRect,
   });
   final List<CanvasRect> segments;
-  final int? radius;
-  final int stackedBarPadding;
+  final double? radius;
+  final double stackedBarPadding;
   final bool roundTopLeft;
   final bool roundTopRight;
   final bool roundBottomLeft;
   final bool roundBottomRight;
-  final Rectangle<int> fullStackRect;
+  final Rectangle<double> fullStackRect;
 }
 
 /// A list of [CanvasPieSlice]s to be painted by [ChartCanvas].

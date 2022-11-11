@@ -135,23 +135,23 @@ class _DomainA11yNode extends A11yNode implements Comparable<_DomainA11yNode> {
     String label, {
     required double location,
     required double stepSize,
-    required Rectangle<int> chartDrawBounds,
+    required Rectangle<double> chartDrawBounds,
     required bool isRtl,
     required bool renderVertically,
     OnFocus? onFocus,
   }) {
-    Rectangle<int> boundingBox;
+    Rectangle<double> boundingBox;
     if (renderVertically) {
-      final left = (location - stepSize / 2).round();
+      final left = location - stepSize / 2;
       final top = chartDrawBounds.top;
-      final width = stepSize.round();
+      final width = stepSize;
       final height = chartDrawBounds.height;
       boundingBox = Rectangle(left, top, width, height);
     } else {
       final left = chartDrawBounds.left;
-      final top = (location - stepSize / 2).round();
+      final top = location - stepSize / 2;
       final width = chartDrawBounds.width;
-      final height = stepSize.round();
+      final height = stepSize;
       boundingBox = Rectangle(left, top, width, height);
     }
 

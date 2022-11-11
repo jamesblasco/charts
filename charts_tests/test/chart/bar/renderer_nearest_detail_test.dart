@@ -69,8 +69,8 @@ void main() {
     renderer.onAttach(verticalChart);
 
     final layoutBounds = vertical
-        ? Rectangle<int>(70, 20, 230, 100)
-        : Rectangle<int>(70, 20, 100, 230);
+        ? Rectangle<double>(70, 20, 230, 100)
+        : Rectangle<double>(70, 20, 100, 230);
     renderer.layout(layoutBounds, layoutBounds);
     return renderer;
   }

@@ -102,7 +102,7 @@ abstract class SeriesRenderer<D> extends LayoutView {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   });
@@ -145,9 +145,9 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   @override
   SymbolRenderer? symbolRenderer;
 
-  Rectangle<int>? _drawAreaBounds;
+  Rectangle<double>? _drawAreaBounds;
 
-  Rectangle<int>? get drawBounds => _drawAreaBounds;
+  Rectangle<double>? get drawBounds => _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -285,17 +285,17 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   }
 
   @override
-  ViewMeasuredSizes? measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes? measure(double maxWidth, double maxHeight) {
     return null;
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
   @override
-  Rectangle<int>? get componentBounds => _drawAreaBounds;
+  Rectangle<double>? get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => true;
@@ -398,7 +398,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   /// [bounds] optional override for component bounds. If this is passed, then
   /// we will check whether the point is within these bounds instead of the
   /// component bounds.
-  bool isPointWithinBounds(Point<double> chartPoint, Rectangle<int>? bounds) {
+  bool isPointWithinBounds(Point<double> chartPoint, Rectangle<double>? bounds) {
     // Was it even in the drawArea?
     if (bounds != null) {
       if (!bounds.containsPoint(chartPoint)) {

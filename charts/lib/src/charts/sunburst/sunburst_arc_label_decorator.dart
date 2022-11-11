@@ -156,8 +156,8 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
   ArcLabelPosition calculateLabelPosition(
     TextElement labelElement,
     TextStyle labelStyle,
-    int insideArcWidth,
-    int outsideArcWidth,
+    double insideArcWidth,
+    double outsideArcWidth,
     ArcRendererElement arcRendererElement,
     ArcLabelPosition labelPosition,
   ) {

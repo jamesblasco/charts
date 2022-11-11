@@ -48,7 +48,7 @@ class MaterialChartTheme implements ChartThemeData {
   }
 
   @override
-  int get tickLength => 3;
+  double get tickLength => 3.0;
 
   @override
   Color get tickColor => Colors.grey.shade800;

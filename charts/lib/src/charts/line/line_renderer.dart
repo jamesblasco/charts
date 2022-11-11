@@ -72,7 +72,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   final _currentKeys = <String>[];
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     if (config.includePoints) {
@@ -1174,7 +1174,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {

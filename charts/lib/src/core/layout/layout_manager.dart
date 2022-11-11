@@ -31,33 +31,33 @@ abstract class LayoutManager {
 
   /// Walk through the child views and determine their desired sizes storing
   /// off the information for layout.
-  void measure(int width, int height);
+  void measure(double width, double height);
 
   /// Walk through the child views and set their bounds from the perspective
   /// of the canvas origin.
-  void layout(int width, int height);
+  void layout(double width, double height);
 
   /// Updates the layout configuration.
   void updateConfig(LayoutConfig layoutConfig);
 
   /// Returns the bounds of the drawArea. Must be called after layout().
-  Rectangle<int> get drawAreaBounds;
+  Rectangle<double> get drawAreaBounds;
 
   /// Returns the combined bounds of the drawArea, and all components that
   /// function as series draw areas. Must be called after layout().
-  Rectangle<int> get drawableLayoutAreaBounds;
+  Rectangle<double> get drawableLayoutAreaBounds;
 
   /// Gets the measured size of the bottom margin, available after layout.
-  int get marginBottom;
+  double get marginBottom;
 
   /// Gets the measured size of the left margin, available after layout.
-  int get marginLeft;
+  double get marginLeft;
 
   /// Gets the measured size of the right margin, available after layout.
-  int get marginRight;
+  double get marginRight;
 
   /// Gets the measured size of the top margin, available after layout.
-  int get marginTop;
+  double get marginTop;
 
   /// Returns whether or not [point] is within the draw area bounds.
   bool withinDrawArea(Point<num> point);

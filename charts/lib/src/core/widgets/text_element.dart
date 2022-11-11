@@ -34,7 +34,7 @@ class FlutterTextElement implements TextElement {
   TextStyle? _textStyle;
   TextDirectionAligment _textDirection = TextDirectionAligment.ltr;
 
-  int? _maxWidth;
+  double? _maxWidth;
   MaxWidthStrategy? _maxWidthStrategy;
 
   late TextPainter _textPainter;
@@ -68,10 +68,10 @@ class FlutterTextElement implements TextElement {
   TextDirectionAligment get textDirection => _textDirection;
 
   @override
-  int? get maxWidth => _maxWidth;
+  double? get maxWidth => _maxWidth;
 
   @override
-  set maxWidth(int? value) {
+  set maxWidth(double? value) {
     if (_maxWidth == value) {
       return;
     }

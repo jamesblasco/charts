@@ -163,15 +163,15 @@ abstract class ChartCanvas {
 
   void drawText(
     TextElement textElement,
-    int offsetX,
-    int offsetY, {
+    double offsetX,
+    double offsetY, {
     double rotation = 0.0,
   });
 
   /// Request the canvas to clip to [clipBounds].
   ///
   /// Applies to all operations until [restClipBounds] is called.
-  void setClipBounds(Rectangle<int> clipBounds);
+  void setClipBounds(Rectangle<double> clipBounds);
 
   /// Restore
   void resetClipBounds();

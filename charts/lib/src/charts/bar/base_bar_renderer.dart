@@ -172,7 +172,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         final details = getBaseDetails(datum, barIndex);
 
         details.barStackIndex = 0;
-        details.measureOffset = measureOffsetFn!(barIndex);
+        details.measureOffset = measureOffsetFn!(barIndex)?.toDouble();
 
         if (fillPatternFn != null) {
           details.fillPattern = fillPatternFn(barIndex);
@@ -215,7 +215,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
           details.cumulativeTotal = measure ?? 0;
 
           // Get the previous series' measure offset.
-          var measureOffset = measureOffsetFn(barIndex)!;
+          var measureOffset = measureOffsetFn(barIndex)!.toDouble();
           if (prevDetail != null) {
             measureOffset += prevDetail.measureOffsetPlusMeasure!;
 
@@ -385,7 +385,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         final details = elementsList![barIndex];
         final domainValue = domainFn(barIndex);
 
-        final measureValue = measureFn(barIndex);
+        final measureValue = measureFn(barIndex)?.toDouble();
         // TODO: remove this explicit `bool` type when no longer
         // needed to work around
         // https://github.com/dart-lang/language/issues/1785
@@ -434,7 +434,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
               details: details as R,
               domainValue: domainFn(barIndex),
               domainAxis: domainAxis,
-              domainWidth: domainAxis.rangeBand.round(),
+              domainWidth: domainAxis.rangeBand,
               fillColor: fillColorFn!(barIndex),
               fillPattern: details.fillPattern,
               measureValue: 0.0,
@@ -481,7 +481,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
           details: details as R,
           domainValue: domainFn(barIndex),
           domainAxis: domainAxis,
-          domainWidth: domainAxis.rangeBand.round(),
+          domainWidth: domainAxis.rangeBand,
           fillColor: fillColorFn!(barIndex),
           fillPattern: details.fillPattern,
           measureValue: measureValue,
@@ -525,9 +525,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     required R details,
     D? domainValue,
     required ImmutableAxisElement<D> domainAxis,
-    required int domainWidth,
-    num? measureValue,
-    required num measureOffsetValue,
+    required double domainWidth,
+    double? measureValue,
+    required double measureOffsetValue,
     required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     required int numBarGroups,
@@ -551,9 +551,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     required R details,
     D? domainValue,
     required ImmutableAxisElement<D> domainAxis,
-    required int domainWidth,
-    num? measureValue,
-    required num measureOffsetValue,
+    required double domainWidth,
+    double? measureValue,
+    required double measureOffsetValue,
     required ImmutableAxisElement<num> measureAxis,
     double? measureAxisPosition,
     required int numBarGroups,
@@ -618,7 +618,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {
@@ -683,7 +683,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   }
 
   @protected
-  Rectangle<int>? getBoundsForBar(R bar);
+  Rectangle<double>? getBoundsForBar(R bar);
 
   @protected
   List<BaseAnimatedBar<D, R>> _getSegmentsForDomainValue(
@@ -725,9 +725,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       ).map<DatumDetails<D>>((BaseAnimatedBar<D, R> bar) {
         final barBounds = getBoundsForBar(bar.currentBar!)!;
         final segmentDomainDistance =
-            _getDistance(chartPoint.x.round(), barBounds.left, barBounds.right);
+            _getDistance(chartPoint.x, barBounds.left, barBounds.right);
         final segmentMeasureDistance =
-            _getDistance(chartPoint.y.round(), barBounds.top, barBounds.bottom);
+            _getDistance(chartPoint.y, barBounds.top, barBounds.bottom);
 
         final nearestPoint = Point<double>(
           chartPoint.x.clamp(barBounds.left, barBounds.right).toDouble(),
@@ -759,9 +759,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       ).map<DatumDetails<D>>((BaseAnimatedBar<D, R> bar) {
         final barBounds = getBoundsForBar(bar.currentBar!)!;
         final segmentDomainDistance =
-            _getDistance(chartPoint.y.round(), barBounds.top, barBounds.bottom);
+            _getDistance(chartPoint.y, barBounds.top, barBounds.bottom);
         final segmentMeasureDistance =
-            _getDistance(chartPoint.x.round(), barBounds.left, barBounds.right);
+            _getDistance(chartPoint.x, barBounds.left, barBounds.right);
 
         return DatumDetails<D>(
           series: bar.series,
@@ -774,11 +774,11 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
     );
   }
 
-  double _getDistance(int point, int min, int max) {
+  double _getDistance(double point, double min, double max) {
     if (max >= point && min <= point) {
       return 0;
     }
-    return (point > max ? (point - max) : (min - point)).toDouble();
+    return point > max ? (point - max) : (min - point);
   }
 
   /// Gets the iterator for the series based grouped/stacked and orientation.

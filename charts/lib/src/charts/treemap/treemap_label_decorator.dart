@@ -25,7 +25,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
     this.enableMultiline = false,
   }) : labelStyleSpec = labelStyleSpec ?? _defaultLabelStyle;
   // Default configuration
-  static const _defaultLabelPadding = 4;
+  static const _defaultLabelPadding = 4.0;
   static const _defaultFontSize = 12.0;
   static const _defaultLabelStyle =
       TextStyle(fontSize: _defaultFontSize, color: Colors.black);
@@ -37,7 +37,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   final TextStyle labelStyleSpec;
 
   /// Padding of the label text.
-  final int labelPadding;
+  final double labelPadding;
 
   /// Whether or not to allow labels to draw outside of their bounding box.
   final bool allowLabelOverflow;
@@ -151,8 +151,8 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
     bool rtl = false,
     bool rotate = false,
   }) {
-    num xOffset;
-    num yOffset;
+    double xOffset;
+    double yOffset;
 
     // Set x offset for each line.
     if (rotate) {
@@ -178,8 +178,8 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
 
     return _TreeMapLabelSegment(
       labelElement,
-      xOffset.toInt(),
-      yOffset.toInt(),
+      xOffset,
+      yOffset,
       rotate ? k90DegreeClockwise : 0.0,
     );
   }
@@ -198,10 +198,10 @@ class _TreeMapLabelSegment {
   final TextElement text;
 
   /// x-coordinate offset for [text].
-  final int xOffet;
+  final double xOffet;
 
   /// y-coordinate offset for [text].
-  final int yOffset;
+  final double yOffset;
 
   /// Rotation angle for drawing [text].
   final double rotationAngle;

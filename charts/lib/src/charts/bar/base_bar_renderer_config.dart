@@ -51,7 +51,7 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
   }) : symbolRenderer = symbolRenderer ?? const RoundedRectSymbolRenderer();
 
   /// Spacing between the bars in a group.
-  final int barGroupInnerPaddingPx;
+  final double barGroupInnerPaddingPx;
 
   @override
   final String? customRendererId;
@@ -68,16 +68,16 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
   /// The order to paint this renderer on the canvas.
   final int? layoutPaintOrder;
 
-  final int minBarLengthPx;
+  final double minBarLengthPx;
 
   // The maximum bar group width in pixels, or null if bars can be arbitrarily
   // wide.
-  final int? maxBarWidthPx;
+  final double? maxBarWidthPx;
 
   final FillPatternType? fillPattern;
 
   /// The padding between bar stacks.
-  final int stackedBarPaddingPx;
+  final double stackedBarPaddingPx;
 
   /// Stroke width of the target line.
   final double strokeWidthPx;

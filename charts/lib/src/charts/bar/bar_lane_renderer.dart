@@ -188,7 +188,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             details: BarRendererElement<D>(),
             domainValue: domainValue,
             domainAxis: domainAxis,
-            domainWidth: domainAxis.rangeBand.round(),
+            domainWidth: domainAxis.rangeBand,
             fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
             measureValue: maxMeasureValue,
             measureOffsetValue: 0.0,
@@ -219,7 +219,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
           details: BarRendererElement<D>(),
           domainValue: domainValue,
           domainAxis: domainAxis,
-          domainWidth: domainAxis.rangeBand.round(),
+          domainWidth: domainAxis.rangeBand,
           fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
           measureValue: maxMeasureValue,
           measureOffsetValue: 0.0,
@@ -299,7 +299,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
               details: BarRendererElement<D>(),
               domainValue: domainValue,
               domainAxis: domainAxis,
-              domainWidth: domainAxis.rangeBand.round(),
+              domainWidth: domainAxis.rangeBand,
               fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
               measureValue: maxMeasureValue,
               measureOffsetValue: 0.0,
@@ -329,7 +329,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             details: BarRendererElement<D>(),
             domainValue: domainValue,
             domainAxis: domainAxis,
-            domainWidth: domainAxis.rangeBand.round(),
+            domainWidth: domainAxis.rangeBand,
             fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
             measureValue: maxMeasureValue,
             measureOffsetValue: 0.0,
@@ -350,7 +350,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
   }
 
   /// Gets the maximum measure value that will fit in the draw area.
-  num _getMaxMeasureValue(
+  double _getMaxMeasureValue(
       ImmutableAxisElement<num> measureAxis, bool laneIsNegative) {
     final pos = chart.vertical
         ? chart.drawAreaBounds.top
@@ -358,7 +358,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             ? chart.drawAreaBounds.left
             : chart.drawAreaBounds.right;
 
-    return measureAxis.getDomain(pos.toDouble());
+    return measureAxis.getDomain(pos).toDouble();
   }
 
   /// Paints the current bar data on the canvas.

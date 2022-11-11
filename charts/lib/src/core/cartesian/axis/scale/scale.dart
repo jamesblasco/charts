@@ -172,11 +172,11 @@ abstract class MutableScaleElement<D> extends ScaleElement<D> {
 @immutable
 class ScaleOutputExtent extends Equatable {
   const ScaleOutputExtent(this.start, this.end);
-  final int start;
-  final int end;
+  final double start;
+  final double end;
 
-  int get min => math.min(start, end);
-  int get max => math.max(start, end);
+  double get min => math.min(start, end);
+  double get max => math.max(start, end);
 
   bool containsValue(double value) => withinBounds(value, min, max);
 
@@ -184,10 +184,10 @@ class ScaleOutputExtent extends Equatable {
   ///
   /// If the [end] is less than the [start] (think vertical measure axis), then
   /// this will correctly return a negative value.
-  int get diff => end - start;
+  double get diff => end - start;
 
   /// Returns the width of the extent.
-  int get width => diff.abs();
+  double get width => diff.abs();
 
   @override
   List<Object?> get props => [start, end];

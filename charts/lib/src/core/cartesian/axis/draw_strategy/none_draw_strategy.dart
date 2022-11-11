@@ -52,8 +52,8 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   @override
   void updateTickWidth(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight,
+    double maxWidth,
+    double maxHeight,
     AxisOrientation orientation, {
     bool collision = false,
   }) {}
@@ -80,7 +80,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   void drawAxisLine(
     ChartCanvas canvas,
     AxisOrientation orientation,
-    Rectangle<int> axisBounds,
+    Rectangle<double> axisBounds,
   ) {
     Point<num> start;
     Point<num> end;
@@ -110,7 +110,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
       dashPattern: axisLineStyle.dashPattern,
       fill: axisLineStyle.color,
       stroke: axisLineStyle.color,
-      strokeWidthPx: axisLineStyle.strokeWidth.toDouble(),
+      strokeWidthPx: axisLineStyle.strokeWidth,
     );
   }
 
@@ -119,8 +119,8 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<int> axisBounds,
-    required Rectangle<int> drawAreaBounds,
+    required Rectangle<double> axisBounds,
+    required Rectangle<double> drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -129,8 +129,8 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight, {
+    double maxWidth,
+    double maxHeight, {
     bool collision = false,
   }) {
     return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
@@ -139,8 +139,8 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight, {
+    double maxWidth,
+    double maxHeight, {
     bool collision = false,
   }) {
     return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);

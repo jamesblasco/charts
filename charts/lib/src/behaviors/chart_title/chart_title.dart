@@ -70,14 +70,14 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// If the legend is positioned in the top or bottom margin, then this
   /// configures the legend's height. If positioned in the start or end
   /// position, this configures the legend's width.
-  final int? layoutMinSize;
+  final double? layoutMinSize;
 
   /// Preferred size of the legend component. Defaults to 0.
   ///
   /// If the legend is positioned in the top or bottom margin, then this
   /// configures the legend's height. If positioned in the start or end
   /// position, this configures the legend's width.
-  final int? layoutPreferredSize;
+  final double? layoutPreferredSize;
 
   /// Strategy for handling title text that is too large to fit. Defaults to
   /// truncating the text with ellipses.
@@ -99,7 +99,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// Space between the title and sub-title text, if defined.
   ///
   /// This padding is not used if no sub-title is provided.
-  final int? titlePadding;
+  final double? titlePadding;
 
   /// Style of the [title] text.
   final TextStyle? titleStyleSpec;
@@ -123,7 +123,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// If a sub-title is defined, this is the space between the sub-title text
   /// and the inside of the chart. Otherwise, it is the space between the title
   /// text and the inside of chart.
-  final int? innerPadding;
+  final double? innerPadding;
 
   /// Space between the "outside" of the chart, and the title behavior itself.
   ///
@@ -131,7 +131,7 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// direction of the draw area. For a top positioned title, this is applied
   /// to the top, left, and right edges. [innerPadding] is applied to the
   /// bottom edge.
-  final int? outerPadding;
+  final double? outerPadding;
 
   @override
   ChartTitleBehaviorState<D> createBehaviorState() =>

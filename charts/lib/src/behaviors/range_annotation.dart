@@ -62,7 +62,7 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   final bool? extendAxis;
 
   /// Space before and after label text.
-  final int? labelPadding;
+  final double? labelPadding;
 
   /// Configures the order in which the behavior should be painted.
   /// This value should be relative to LayoutPaintViewOrder.rangeAnnotation.
@@ -80,8 +80,6 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
         labelPadding: labelPadding,
         layoutPaintOrder: layoutPaintOrder,
       );
-
-
 
   @override
   String get role => 'RangeAnnotation';

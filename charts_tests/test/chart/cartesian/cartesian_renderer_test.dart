@@ -28,7 +28,7 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
   List<DatumDetails> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int> boundsOverride, {
+    Rectangle<double> boundsOverride, {
     selectOverlappingPoints = false,
     selectExactEventLocation = false,
   }) =>

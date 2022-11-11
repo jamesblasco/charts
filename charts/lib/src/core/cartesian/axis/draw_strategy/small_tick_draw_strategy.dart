@@ -36,7 +36,7 @@ class SmallTickAxisDecoration<D> extends BaseAxisDecoration<D> {
     super.labelCollisionRotation,
   });
   final LineStyle? lineStyle;
-  final int? tickLengthPx;
+  final double? tickLengthPx;
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
@@ -70,7 +70,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   SmallTickDrawStrategy(
     super.chartContext,
     super.graphicsFactory, {
-    int? tickLengthPx,
+    double? tickLengthPx,
     LineStyle? lineStyle,
     super.labelStyleSpec,
     LineStyle? axisLineStyle,
@@ -89,7 +89,7 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
         super(
           axisLineStyle: lineStyle?.merge(axisLineStyle) ?? axisLineStyle,
         );
-  int tickLength;
+  double tickLength;
   LineStyle lineStyle;
 
   @override
@@ -97,8 +97,8 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<int> axisBounds,
-    required Rectangle<int> drawAreaBounds,
+    required Rectangle<double> axisBounds,
+    required Rectangle<double> drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -136,9 +136,9 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   List<Point<num>> calculateTickPositions(
     TickElement<D> tick,
     AxisOrientation orientation,
-    Rectangle<int> axisBounds,
-    Rectangle<int> drawAreaBounds,
-    int tickLength,
+    Rectangle<double> axisBounds,
+    Rectangle<double> drawAreaBounds,
+    double tickLength,
   ) {
     Point<num> tickStart;
     Point<num> tickEnd;

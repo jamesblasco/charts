@@ -32,13 +32,13 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
       LineStyle axisLineStyle,
       TickLabelAnchor labelAnchor,
       TickLabelJustification labelJustification,
-      int labelOffsetFromAxisPx,
-      int labelCollisionOffsetFromAxisPx,
-      int labelOffsetFromTickPx,
-      int labelCollisionOffsetFromTickPx,
-      int minimumPaddingBetweenLabelsPx,
-      int labelRotation,
-      int labelCollisionRotation})
+      double labelOffsetFromAxisPx,
+      double labelCollisionOffsetFromAxisPx,
+      double labelOffsetFromTickPx,
+      double labelCollisionOffsetFromTickPx,
+      double minimumPaddingBetweenLabelsPx,
+      double labelRotation,
+      double labelCollisionRotation})
       : super(chartContext, graphicsFactory,
             labelStyleSpec: labelStyleSpec,
             axisLineStyle: axisLineStyle,
@@ -57,8 +57,8 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     @required AxisOrientation orientation,
-    @required Rectangle<int> axisBounds,
-    @required Rectangle<int> drawAreaBounds,
+    @required Rectangle<double> axisBounds,
+    @required Rectangle<double> drawAreaBounds,
     @required bool isFirst,
     @required bool isLast,
     bool collision = false,
@@ -69,8 +69,8 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     @required AxisOrientation orientation,
-    @required Rectangle<int> axisBounds,
-    @required Rectangle<int> drawAreaBounds,
+    @required Rectangle<double> axisBounds,
+    @required Rectangle<double> drawAreaBounds,
     bool isFirst = false,
     bool isLast = false,
     bool collision = false,
@@ -101,7 +101,7 @@ class FakeTextElement implements TextElement {
   var textStyle = TextStyle();
 
   @override
-  int maxWidth;
+  double maxWidth;
 
   @override
   MaxWidthStrategy maxWidthStrategy;
@@ -493,7 +493,7 @@ void main() {
     });
 
     test('measureVerticallyDrawnTicks - negative labelOffsetFromAxisPx', () {
-      final offset = -500;
+      final offset = -500.0;
       drawStrategy = BaseTickDrawStrategyImpl(chartContext, graphicsFactory,
           labelOffsetFromAxisPx: offset);
       final sizes = drawStrategy.measureVerticallyDrawnTicks(ticks, 250, 500);
@@ -504,7 +504,7 @@ void main() {
 
     test('Draw multiline label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<int>(0, 0, 1000, 1000);
+      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -536,7 +536,7 @@ void main() {
 
     test('Draw single line label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<int>(0, 0, 1000, 1000);
+      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -555,7 +555,7 @@ void main() {
   });
 
   group('Draw Label with collision', () {
-    const collisionRotationDegrees = 45;
+    const collisionRotationDegrees = 45.0;
     const collisionRotationRadians = 0.7853981633974483;
 
     void setUpLabel(String text, {double width}) =>
@@ -613,12 +613,12 @@ void main() {
           collision: true);
 
       // Width of the longest line + offset.
-      expect(sizes.preferredWidth, 60.0 + offset);
+      expect(sizes.preferredWidth, closeTo(59.75 + offset, 0.001));
       expect(sizes.preferredHeight, 500);
     });
 
     test('measureVerticallyDrawnTicks - negativate labelOffsetFromAxisPx', () {
-      final offset = -500;
+      final offset = -500.0;
       drawStrategy = BaseTickDrawStrategyImpl(chartContext, graphicsFactory,
           labelCollisionRotation: 45, labelCollisionOffsetFromAxisPx: offset);
       final sizes = drawStrategy.measureVerticallyDrawnTicks(ticks, 250, 500,
@@ -630,7 +630,7 @@ void main() {
 
     test('Draw multiline label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<int>(0, 0, 1000, 1000);
+      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -663,7 +663,7 @@ void main() {
 
     test('Draw single line label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<int>(0, 0, 1000, 1000);
+      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -740,10 +740,10 @@ void main() {
           labelRotation: 45);
 
       drawStrategy.updateTickWidth(ticks, 25, 500, AxisOrientation.left);
-      expect(ticks.first.textElement.maxWidth, 35);
+      expect(ticks.first.textElement.maxWidth, closeTo(35.355, 0.001));
       expect(
           ticks.first.textElement.maxWidthStrategy, MaxWidthStrategy.ellipsize);
-      expect(ticks.last.textElement.maxWidth, 35);
+      expect(ticks.last.textElement.maxWidth, closeTo(35.355, 0.001));
       expect(
           ticks.last.textElement.maxWidthStrategy, MaxWidthStrategy.ellipsize);
     });
@@ -793,10 +793,10 @@ void main() {
       );
 
       drawStrategy.updateTickWidth(ticks, 500, 25, AxisOrientation.bottom);
-      expect(ticks.first.textElement.maxWidth, 35);
+      expect(ticks.first.textElement.maxWidth, closeTo(35.355, 0.001));
       expect(
           ticks.first.textElement.maxWidthStrategy, MaxWidthStrategy.ellipsize);
-      expect(ticks.last.textElement.maxWidth, 35);
+      expect(ticks.last.textElement.maxWidth, closeTo(35.355, 0.001));
       expect(
           ticks.last.textElement.maxWidthStrategy, MaxWidthStrategy.ellipsize);
     });

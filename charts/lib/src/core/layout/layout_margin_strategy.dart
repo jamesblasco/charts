@@ -17,21 +17,21 @@ import 'dart:math' show Rectangle;
 import 'package:charts/src/core/layout/layout_view.dart';
 
 class SizeList {
-  final _sizes = <int>[];
-  int _total = 0;
+  final _sizes = <double>[];
+  double _total = 0;
 
-  int operator [](int i) => _sizes[i];
+  double operator [](int i) => _sizes[i];
 
-  int get total => _total;
+  double get total => _total;
 
   int get length => _sizes.length;
 
-  void add(int size) {
+  void add(double size) {
     _sizes.add(size);
     _total += size;
   }
 
-  void adjust(int index, int amount) {
+  void adjust(int index, double amount) {
     _sizes[index] += amount;
     _total += amount;
   }
@@ -41,12 +41,12 @@ class _DesiredViewSizes {
   final preferredSizes = SizeList();
   final minimumSizes = SizeList();
 
-  void add(int preferred, int minimum) {
+  void add(double preferred, double minimum) {
     preferredSizes.add(preferred);
     minimumSizes.add(minimum);
   }
 
-  void adjustedTo(int maxSize) {
+  void adjustedTo(double maxSize) {
     if (maxSize < preferredSizes.total) {
       var delta = preferredSizes.total - maxSize;
       for (var i = preferredSizes.length - 1; i >= 0; i--) {
@@ -71,9 +71,9 @@ class _DesiredViewSizes {
 abstract class VerticalMarginStrategy {
   SizeList measure(
     Iterable<LayoutView> views, {
-    required int maxWidth,
-    required int height,
-    required int fullHeight,
+    required double maxWidth,
+    required double height,
+    required double fullHeight,
   }) {
     final measuredWidths = _DesiredViewSizes();
     var remainingWidth = maxWidth;
@@ -110,8 +110,8 @@ abstract class VerticalMarginStrategy {
   void layout(
     List<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   );
 }
 
@@ -121,8 +121,8 @@ class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   ) {
     var prevBoundsRight = drawAreaBounds.left;
 
@@ -155,8 +155,8 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   ) {
     var prevBoundsLeft = drawAreaBounds.right;
 
@@ -187,9 +187,9 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
 abstract class HorizontalMarginStrategy {
   SizeList measure(
     Iterable<LayoutView> views, {
-    required int maxHeight,
-    required int width,
-    required int fullWidth,
+    required double maxHeight,
+    required double width,
+    required double fullWidth,
   }) {
     final measuredHeights = _DesiredViewSizes();
     var remainingHeight = maxHeight;
@@ -226,8 +226,8 @@ abstract class HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   );
 }
 
@@ -237,8 +237,8 @@ class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   ) {
     var prevBoundsBottom = drawAreaBounds.top;
 
@@ -272,8 +272,8 @@ class BottomMarginLayoutStrategy extends HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<int> fullBounds,
-    Rectangle<int> drawAreaBounds,
+    Rectangle<double> fullBounds,
+    Rectangle<double> drawAreaBounds,
   ) {
     var prevBoundsTop = drawAreaBounds.bottom;
 

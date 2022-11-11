@@ -168,7 +168,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {
@@ -312,7 +312,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
   /// Gets the area of a [Rectangle].
   @protected
-  num areaForRectangle(Rectangle rect) => rect.height * rect.width;
+  double areaForRectangle(Rectangle rect) => rect.height.toDouble() * rect.width;
 
   /// Gets the area for a tree [node].
   @protected
@@ -354,7 +354,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.top + boundingRect.height - top,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left, top, length, height);
+        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(), length.toDouble(), height.toDouble());
         top += height;
       }
       boundingRect.left += length;
@@ -368,7 +368,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.left + boundingRect.width - left,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left, top, width, length);
+        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(), width.toDouble(), length.toDouble());
         left += width;
       }
       boundingRect.top += length;
@@ -414,7 +414,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   }) =>
       TreeMapRendererElement<D>(
         domain: series.domainFn(index),
-        measure: series.measureFn(index)!,
+        measure: series.measureFn(index)!.toDouble(),
         isLeaf: isLeaf,
         index: index,
         series: series,

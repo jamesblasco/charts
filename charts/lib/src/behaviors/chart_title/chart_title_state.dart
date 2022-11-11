@@ -16,6 +16,7 @@
 import 'dart:math';
 
 import 'package:charts/core.dart';
+import 'package:flutter/cupertino.dart';
 
 /// Chart behavior that adds title text to a chart. An optional second line of
 /// text may be rendered as a sub-title.
@@ -29,14 +30,14 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   ChartTitleBehaviorState(
     String title, {
     BehaviorPosition? behaviorPosition,
-    int? innerPadding,
-    int? layoutMinSize,
-    int? layoutPreferredSize,
-    int? outerPadding,
+    double? innerPadding,
+    double? layoutMinSize,
+    double? layoutPreferredSize,
+    double? outerPadding,
     MaxWidthStrategy? maxWidthStrategy,
     ChartTitleDirection? titleDirection,
     OutsideJustification? titleOutsideJustification,
-    int? titlePadding,
+    double? titlePadding,
     TextStyle? titleStyleSpec,
     String? subTitle,
     TextStyle? subTitleStyleSpec,
@@ -67,9 +68,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
       TextStyle(fontSize: 18, color: StyleFactory.style.tickColor);
   static final _defaultSubTitleStyle =
       TextStyle(fontSize: 14, color: StyleFactory.style.tickColor);
-  static const _defaultInnerPadding = 10;
-  static const _defaultTitlePadding = 18;
-  static const _defaultOuterPadding = 10;
+  static const _defaultInnerPadding = 10.0;
+  static const _defaultTitlePadding = 18.0;
+  static const _defaultOuterPadding = 10.0;
 
   /// Stores all of the configured properties of the behavior.
   final _ChartTitleConfig _config;
@@ -92,9 +93,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   /// If the legend is positioned in the top or bottom margin, then this
   /// configures the legend's height. If positioned in the start or end
   /// position, this configures the legend's width.
-  int? get layoutMinSize => _config.layoutMinSize;
+  double? get layoutMinSize => _config.layoutMinSize;
 
-  set layoutMinSize(int? layoutMinSize) {
+  set layoutMinSize(double? layoutMinSize) {
     _config.layoutMinSize = layoutMinSize;
   }
 
@@ -103,9 +104,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   /// If the legend is positioned in the top or bottom margin, then this
   /// configures the legend's height. If positioned in the start or end
   /// position, this configures the legend's width.
-  int? get layoutPreferredSize => _config.layoutPreferredSize;
+  double? get layoutPreferredSize => _config.layoutPreferredSize;
 
-  set layoutPreferredSize(int? layoutPreferredSize) {
+  set layoutPreferredSize(double? layoutPreferredSize) {
     _config.layoutPreferredSize = layoutPreferredSize;
   }
 
@@ -148,9 +149,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   /// Space between the title and sub-title text, if defined.
   ///
   /// This padding is not used if no sub-title is provided.
-  int get titlePadding => _config.titlePadding;
+  double get titlePadding => _config.titlePadding;
 
-  set titlePadding(int titlePadding) {
+  set titlePadding(double titlePadding) {
     _config.titlePadding = titlePadding;
   }
 
@@ -188,9 +189,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   /// If a sub-title is defined, this is the space between the sub-title text
   /// and the inside of the chart. Otherwise, it is the space between the title
   /// text and the inside of chart.
-  int get innerPadding => _config.innerPadding;
+  double get innerPadding => _config.innerPadding;
 
-  set innerPadding(int innerPadding) {
+  set innerPadding(double innerPadding) {
     _config.innerPadding = innerPadding;
   }
 
@@ -200,9 +201,9 @@ class ChartTitleBehaviorState<D> implements ChartBehaviorState<D> {
   /// direction of the draw area. For a top positioned title, this is applied
   /// to the top, left, and right edges. [innerPadding] is applied to the
   /// bottom edge.
-  int get outerPadding => _config.outerPadding;
+  double get outerPadding => _config.outerPadding;
 
-  set outerPadding(int outerPadding) {
+  set outerPadding(double outerPadding) {
     _config.outerPadding = outerPadding;
   }
 
@@ -263,8 +264,8 @@ class _ChartTitleLayoutView<D> extends LayoutView {
 
   bool get isRtl => chart?.context.isRtl ?? false;
 
-  late Rectangle<int> _componentBounds;
-  late Rectangle<int> _drawAreaBounds;
+  late Rectangle<double> _componentBounds;
+  late Rectangle<double> _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -290,11 +291,11 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
-    int? minWidth;
-    int? minHeight;
-    var preferredWidth = 0;
-    var preferredHeight = 0;
+  ViewMeasuredSizes measure(double maxWidth, double maxHeight) {
+    double? minWidth;
+    double? minHeight;
+    var preferredWidth = 0.0;
+    var preferredHeight = 0.0;
 
     // Always assume that we need outer padding and title padding, but only add
     // in the sub-title padding if we have one. Title is required, but sub-title
@@ -340,8 +341,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
                 .round()
             : 0;
 
-        final measuredHeight =
-            (textHeight + subTitleTextHeight + totalPadding).round();
+        final measuredHeight = textHeight + subTitleTextHeight + totalPadding;
         minHeight = _config.layoutMinSize != null
             ? min(_config.layoutMinSize!, measuredHeight)
             : measuredHeight;
@@ -368,8 +368,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
                 .round()
             : 0;
 
-        final measuredWidth =
-            (textWidth + subTitleTextWidth + totalPadding).round();
+        final measuredWidth = textWidth + subTitleTextWidth + totalPadding;
         minWidth = _config.layoutMinSize != null
             ? min(_config.layoutMinSize!, measuredWidth)
             : measuredWidth;
@@ -404,7 +403,8 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -552,7 +552,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a label element.
-  Point<int>? _getLabelPosition(
+  Point<double>? _getLabelPosition(
     bool isPrimaryTitle,
     Rectangle<num> bounds,
     ChartTitleDirection titleDirection,
@@ -589,7 +589,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a title in the top or bottom margin.
-  Point<int> _getHorizontalLabelPosition(
+  Point<double> _getHorizontalLabelPosition(
     bool isPrimaryTitle,
     Rectangle<num> bounds,
     ChartTitleDirection titleDirection,
@@ -597,15 +597,15 @@ class _ChartTitleLayoutView<D> extends LayoutView {
     double titleHeight,
     double subTitleHeight,
   ) {
-    var labelX = 0;
-    var labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     switch (_config.titleOutsideJustification) {
       case OutsideJustification.middle:
       case OutsideJustification.middleDrawArea:
         final textWidth =
             (isRtl ? 1 : -1) * textElement.measurement.horizontalSliceWidth / 2;
-        labelX = (bounds.left + bounds.width / 2 + textWidth).round();
+        labelX = bounds.left + bounds.width / 2 + textWidth;
 
         textElement.textDirection =
             isRtl ? TextDirectionAligment.rtl : TextDirectionAligment.ltr;
@@ -633,10 +633,10 @@ class _ChartTitleLayoutView<D> extends LayoutView {
             : _config.outerPadding;
 
         if (alignLeft) {
-          labelX = (bounds.left + padding).round();
+          labelX = bounds.left + padding;
           textElement.textDirection = TextDirectionAligment.ltr;
         } else {
-          labelX = (bounds.right - padding).round();
+          labelX = bounds.right - padding;
           textElement.textDirection = TextDirectionAligment.rtl;
         }
         break;
@@ -647,7 +647,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       final padding = _config.innerPadding +
           (isPrimaryTitle ? 0 : _config.titlePadding + titleHeight);
 
-      labelY = (bounds.top + padding).round();
+      labelY = bounds.top + padding;
     } else {
       var padding = 0.0 + _config.innerPadding;
       if (isPrimaryTitle) {
@@ -658,14 +658,14 @@ class _ChartTitleLayoutView<D> extends LayoutView {
         padding += subTitleHeight;
       }
 
-      labelY = (bounds.bottom - padding).round();
+      labelY = bounds.bottom - padding;
     }
 
-    return Point<int>(labelX, labelY);
+    return Point<double>(labelX, labelY);
   }
 
   /// Gets the resolved location for a title in the left or right margin.
-  Point<int> _getVerticalLabelPosition(
+  Point<double> _getVerticalLabelPosition(
     bool isPrimaryTitle,
     Rectangle<num> bounds,
     ChartTitleDirection titleDirection,
@@ -673,15 +673,15 @@ class _ChartTitleLayoutView<D> extends LayoutView {
     double titleHeight,
     double subTitleHeight,
   ) {
-    var labelX = 0;
-    var labelY = 0;
+    var labelX = 0.0;
+    var labelY = 0.0;
 
     switch (_config.titleOutsideJustification) {
       case OutsideJustification.middle:
       case OutsideJustification.middleDrawArea:
         final textWidth =
             (isRtl ? -1 : 1) * textElement.measurement.horizontalSliceWidth / 2;
-        labelY = (bounds.top + bounds.height / 2 + textWidth).round();
+        labelY = bounds.top + bounds.height / 2 + textWidth;
 
         textElement.textDirection =
             isRtl ? TextDirectionAligment.rtl : TextDirectionAligment.ltr;
@@ -709,10 +709,10 @@ class _ChartTitleLayoutView<D> extends LayoutView {
             : _config.outerPadding;
 
         if (alignLeft) {
-          labelY = (bounds.bottom - padding).round();
+          labelY = bounds.bottom - padding;
           textElement.textDirection = TextDirectionAligment.ltr;
         } else {
-          labelY = (bounds.top + padding).round();
+          labelY = bounds.top + padding;
           textElement.textDirection = TextDirectionAligment.rtl;
         }
         break;
@@ -724,7 +724,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       final padding = _config.outerPadding +
           (isPrimaryTitle ? 0 : _config.titlePadding + titleHeight);
 
-      labelX = (bounds.left + padding).round();
+      labelX = bounds.left + padding;
     } else {
       final padding = _config.outerPadding +
           titleHeight +
@@ -732,10 +732,10 @@ class _ChartTitleLayoutView<D> extends LayoutView {
               ? (subTitleHeight > 0 ? _config.titlePadding + subTitleHeight : 0)
               : 0.0);
 
-      labelX = (bounds.right - padding).round();
+      labelX = bounds.right - padding;
     }
 
-    return Point<int>(labelX, labelY);
+    return Point<double>(labelX, labelY);
   }
 
   // Helper function that converts [TextStyle] to [TextStyle].
@@ -752,7 +752,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<int> get componentBounds => _drawAreaBounds;
+  Rectangle<double> get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;
@@ -778,8 +778,8 @@ class _ChartTitleConfig {
 
   BehaviorPosition behaviorPosition;
 
-  int? layoutMinSize;
-  int? layoutPreferredSize;
+  double? layoutMinSize;
+  double? layoutPreferredSize;
 
   MaxWidthStrategy maxWidthStrategy;
 
@@ -791,9 +791,9 @@ class _ChartTitleConfig {
   String? subTitle;
   TextStyle subTitleStyleSpec;
 
-  int innerPadding;
-  int titlePadding;
-  int outerPadding;
+  double innerPadding;
+  double titlePadding;
+  double outerPadding;
 }
 
 /// Direction of the title text on the chart.

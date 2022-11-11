@@ -55,7 +55,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
   /// [ArcRendererConfig.minHoleWidthForCenterContent], this will return a
   /// rectangle of 0 width and height to indicate that no card can fit inside
   /// the chart.
-  Rectangle<int> get centerContentBounds {
+  Rectangle<double> get centerContentBounds {
     // Grab the first arcList from the animated set.
     final arcLists = getArcLists();
     final arcList = arcLists.isNotEmpty ? arcLists.first : null;
@@ -65,9 +65,9 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         arcList.innerRadius! < config.minHoleWidthForCenterContent) {
       // Return default bounds of 0 size.
       final bounds = chart!.drawAreaBounds;
-      return Rectangle<int>(
-        (bounds.left + bounds.width / 2).round(),
-        (bounds.top + bounds.height / 2).round(),
+      return Rectangle<double>(
+        bounds.left + bounds.width / 2,
+        bounds.top + bounds.height / 2,
         0,
         0,
       );
@@ -77,9 +77,9 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
     // size that will fit within the pie's inner radius.
     final width = (_cosPIOver4 * arcList.innerRadius!).floor();
 
-    return Rectangle<int>(
-      (arcList.center!.x - width).round(),
-      (arcList.center!.y - width).round(),
+    return Rectangle<double>(
+      arcList.center!.x - width,
+      arcList.center!.y - width,
       width * 2,
       width * 2,
     );
@@ -239,7 +239,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<int>? boundsOverride, {
+    Rectangle<double>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {

@@ -20,7 +20,10 @@ class LayoutConfig extends Equatable {
   /// Create a new [LayoutConfig] used by [DynamicLayoutManager].
   LayoutConfig({
     LayoutMargin? margin,
-  }) : margin = margin ?? LayoutMargin.all(LayoutValue(50));
+  }) : margin = margin ??
+            LayoutMargin.all(
+              LayoutValue.relativeBetween(maxPercent: 50),
+            );
 
   final LayoutMargin margin;
 
@@ -64,17 +67,17 @@ class LayoutValue extends Equatable {
   /// Create [LayoutValue] with a fixed pixel size [pixels].
   ///
   /// [pixels] if set must be greater than or equal to 0.
-  factory LayoutValue(int? pixels) {
+  factory LayoutValue(double? pixels) {
     // Require require or higher setting if set
     assert(pixels == null || pixels >= 0);
     return LayoutValue._internal(pixels, pixels, null, null);
   }
 
   const LayoutValue._internal(
-    int? minPixel,
-    int? maxPixel,
-    int? minPercent,
-    int? maxPercent,
+    double? minPixel,
+    double? maxPixel,
+    double? minPercent,
+    double? maxPercent,
   )   : _minPixel = minPixel,
         _maxPixel = maxPixel,
         _minPercent = minPercent,
@@ -85,7 +88,7 @@ class LayoutValue extends Equatable {
   /// [minPixel] if set must be greater than or equal to 0 and less than max if
   /// it is also set.
   /// [maxPixel] if set must be greater than or equal to 0.
-  factory LayoutValue.between({int? minPixel, int? maxPixel}) {
+  factory LayoutValue.between({double? minPixel, double? maxPixel}) {
     // Require zero or higher settings if set
     assert(minPixel == null || minPixel >= 0);
     assert(maxPixel == null || maxPixel >= 0);
@@ -103,7 +106,8 @@ class LayoutValue extends Equatable {
   /// [minPercent] if set must be between 0 and 100 inclusive. If [maxPercent]
   /// is also set, then must be less than [maxPercent].
   /// [maxPercent] if set must be between 0 and 100 inclusive.
-  factory LayoutValue.relativeBetween({int? minPercent, int? maxPercent}) {
+  factory LayoutValue.relativeBetween(
+      {double? minPercent, double? maxPercent}) {
     // Percent must be within 0 to 100
     assert(minPercent == null || (minPercent >= 0 && minPercent <= 100));
     assert(maxPercent == null || (maxPercent >= 0 && maxPercent <= 100));
@@ -116,34 +120,34 @@ class LayoutValue extends Equatable {
     return LayoutValue._internal(null, null, minPercent, maxPercent);
   }
 
-  final int? _minPixel;
-  final int? _maxPixel;
-  final int? _minPercent;
-  final int? _maxPercent;
+  final double? _minPixel;
+  final double? _maxPixel;
+  final double? _minPercent;
+  final double? _maxPercent;
 
   /// Get the min pixels, given the [totalPixels].
-  int getMinPixels(int totalPixels) {
+  double getMinPixels(double totalPixels) {
     final minPixel = _minPixel;
     final minPercent = _minPercent;
     if (minPixel != null) {
       assert(minPixel < totalPixels);
       return minPixel;
     } else if (minPercent != null) {
-      return (totalPixels * (minPercent / 100)).round();
+      return totalPixels * (minPercent / 100);
     } else {
       return 0;
     }
   }
 
   /// Get the max pixels, given the [totalPixels].
-  int getMaxPixels(int totalPixels) {
+  double getMaxPixels(double totalPixels) {
     final maxPixel = _maxPixel;
     final maxPercent = _maxPercent;
     if (maxPixel != null) {
       assert(maxPixel < totalPixels);
       return maxPixel;
     } else if (maxPercent != null) {
-      return (totalPixels * (maxPercent / 100)).round();
+      return totalPixels * (maxPercent / 100);
     } else {
       return totalPixels;
     }

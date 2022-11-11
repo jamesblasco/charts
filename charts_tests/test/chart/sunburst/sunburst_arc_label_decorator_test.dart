@@ -45,7 +45,7 @@ class FakeTextElement implements TextElement {
   TextStyle textStyle;
 
   @override
-  int maxWidth;
+  double maxWidth;
 
   @override
   MaxWidthStrategy maxWidthStrategy;
@@ -89,7 +89,7 @@ class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {}
 void main() {
   ChartCanvas canvas;
   GraphicsFactory graphicsFactory;
-  Rectangle<int> drawBounds;
+  Rectangle<double> drawBounds;
 
   setUpAll(() {
     canvas = MockCanvas();

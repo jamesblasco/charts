@@ -29,8 +29,8 @@ const _defaultlabelDelimiter = ' ';
 List<TextElement> wrapLabelLines(
   TextElement labelElement,
   GraphicsFactory graphicsFactory,
-  num maxWidth,
-  num maxHeight, {
+  double maxWidth,
+  double maxHeight, {
   required bool allowLabelOverflow,
   required bool multiline,
   String labelDelimiter = _defaultlabelDelimiter,
@@ -52,7 +52,7 @@ List<TextElement> wrapLabelLines(
   if (!multiline) {
     labelElement
       ..maxWidthStrategy = maxWidthStrategy
-      ..maxWidth = maxWidth.toInt();
+      ..maxWidth = maxWidth;
 
     final labelFits = _doesLabelFit(
       allowLabelOverflow,
@@ -108,7 +108,7 @@ List<TextElement> wrapLabelLines(
         currentLineString += currentElement.text;
         final truncatedLabelElement = createTextElement(currentLineString)
           ..maxWidthStrategy = maxWidthStrategy
-          ..maxWidth = maxWidth.toInt();
+          ..maxWidth = maxWidth;
 
         if (_doesLabelFit(
           allowLabelOverflow,

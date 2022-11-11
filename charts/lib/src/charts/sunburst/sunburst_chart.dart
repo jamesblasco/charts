@@ -50,7 +50,7 @@ class SunburstRenderChart<D> extends BaseRenderChart<D> {
     return entries;
   }
 
-  Rectangle<int>? get centerContentBounds {
+  Rectangle<double>? get centerContentBounds {
     assert(defaultRenderer is SunburstArcRenderer<D>);
     return (defaultRenderer as SunburstArcRenderer<D>).centerContentBounds;
   }

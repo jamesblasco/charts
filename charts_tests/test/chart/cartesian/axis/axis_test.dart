@@ -74,10 +74,10 @@ void main() {
     var axisOrientation = AxisOrientation.left;
     axis.axisOrientation = axisOrientation;
 
-    var maxWidth = 100;
-    var maxHeight = 500;
-    var componentBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
-    var drawBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
+    var maxWidth = 100.0;
+    var maxHeight = 500.0;
+    var componentBounds = Rectangle<double>(0, 0, maxWidth, maxHeight);
+    var drawBounds = Rectangle<double>(0, 0, maxWidth, maxHeight);
     axis.layout(componentBounds, drawBounds);
 
     verify(drawStrategy.updateTickWidth(

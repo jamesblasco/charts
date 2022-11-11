@@ -31,7 +31,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
             outsideLabelStyleSpec ?? _defaultOutsideLabelStyle;
   // Default configuration
   static const _defaultLabelPosition = BarLabelPosition.auto;
-  static const _defaultLabelPadding = 5;
+  static const _defaultLabelPadding = 5.0;
   static const _defaultLabelPlacement = BarLabelPlacement.followMeasureAxis;
   static const _defaultHorizontalLabelAnchor = BarLabelAnchor.start;
   static const _defaultVerticalLabelAnchor = BarLabelAnchor.end;
@@ -62,14 +62,14 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   final BarLabelVerticalPosition? labelVerticalPosition;
 
   /// Space before and after the label text.
-  final int labelPadding;
+  final double labelPadding;
 
   @override
   void decorate(
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle<int> drawBounds,
+    required Rectangle<double> drawBounds,
     required double animationPercent,
     required bool renderingVertically,
     bool rtl = false,
@@ -102,7 +102,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory,
-    Rectangle<int> drawBounds,
+    Rectangle<double> drawBounds,
     bool rtl,
   ) {
     // Create [TextStyle] from [TextStyle] to be used by all the elements.
@@ -189,7 +189,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       var labelsDrawn = 0;
       for (final labelElement in labelElements) {
         // Calculate the start position of label based on [labelAnchor].
-        final int labelY;
+        final double labelY;
         final labelHeight = labelElement.measurement.verticalSliceWidth.round();
         final offsetHeight =
             (labelHeight + _defaultMultiLineLabelPadding) * labelsDrawn;
@@ -204,11 +204,10 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
               labelY = bounds.top + labelPadding + offsetHeight;
               break;
             case BarLabelAnchor.middle:
-              labelY = (bounds.bottom -
+              labelY = bounds.bottom -
                       bounds.height / 2 -
                       totalLabelHeight / 2 +
-                      offsetHeight)
-                  .round();
+                      offsetHeight;
               break;
             case BarLabelAnchor.start:
               labelY = bounds.bottom -
@@ -229,10 +228,9 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
         }
 
         // Center the label inside the bar.
-        final labelX = (bounds.left +
+        final labelX = bounds.left +
                 bounds.width / 2 -
-                labelElement.measurement.horizontalSliceWidth / 2)
-            .round();
+                labelElement.measurement.horizontalSliceWidth / 2;
 
         canvas.drawText(labelElement, labelX, labelY);
         labelsDrawn += 1;
@@ -244,7 +242,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory,
-    Rectangle<int> drawBounds,
+    Rectangle<double> drawBounds,
     bool rtl,
   ) {
     // Create [TextStyle] from [TextStyle] to be used by all the elements.
@@ -326,7 +324,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       }
 
       // Calculate the start position of label based on [labelAnchor].
-      final int labelX;
+      final double labelX;
       if (calculatedLabelPosition == BarLabelPosition.inside) {
         final anchor = _resolveLabelAnchor(
           measure,
@@ -335,10 +333,9 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
 
         switch (anchor) {
           case BarLabelAnchor.middle:
-            labelX = (bounds.left +
-                    bounds.width / 2 -
-                    labelElement.measurement.horizontalSliceWidth / 2)
-                .round();
+            labelX = bounds.left +
+                bounds.width / 2 -
+                labelElement.measurement.horizontalSliceWidth / 2;
             labelElement.textDirection =
                 rtl ? TextDirectionAligment.rtl : TextDirectionAligment.ltr;
             break;
@@ -370,31 +367,26 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
       } else {
         // calculatedLabelPosition == BarLabelPosition.right
         if (measure < 0) {
-          labelX =
-              (bounds.right - labelElement.measurement.horizontalSliceWidth)
-                  .round();
+          labelX = bounds.right - labelElement.measurement.horizontalSliceWidth;
         } else {
-          labelX = (bounds.left +
-                  drawBounds.width -
-                  labelElement.measurement.horizontalSliceWidth)
-              .round();
+          labelX = bounds.left +
+              drawBounds.width -
+              labelElement.measurement.horizontalSliceWidth;
         }
       }
 
       // Calculate label's y position based on BarLabelVerticalPosition.
-      final int labelY;
+      final double labelY;
       if (labelVerticalPosition == BarLabelVerticalPosition.middle) {
         // Center the label inside the bar.
-        labelY = (bounds.top +
-                (bounds.bottom - bounds.top) / 2 -
-                labelElement.measurement.verticalSliceWidth / 2)
-            .round();
+        labelY = bounds.top +
+            (bounds.bottom - bounds.top) / 2 -
+            labelElement.measurement.verticalSliceWidth / 2;
       } else {
         /// labelVerticalPosition == BarLabelVerticalPosition.top
-        labelY = (bounds.top -
-                labelElement.measurement.verticalSliceWidth -
-                labelPadding)
-            .round();
+        labelY = bounds.top -
+            labelElement.measurement.verticalSliceWidth -
+            labelPadding;
       }
 
       canvas.drawText(labelElement, labelX, labelY);
@@ -403,7 +395,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
 
   /// Helper function to get the total height for a group of labels.
   /// This includes the padding in between the labels.
-  int _getTotalLabelHeight(Iterable<TextElement> labelElements) =>
+  double _getTotalLabelHeight(Iterable<TextElement> labelElements) =>
       (labelElements.first.measurement.verticalSliceWidth *
               labelElements.length)
           .round() +

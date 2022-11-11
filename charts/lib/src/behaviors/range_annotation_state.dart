@@ -38,7 +38,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
     AnnotationLabelPosition? defaultLabelPosition,
     TextStyle? defaultLabelStyleSpec,
     bool? extendAxis,
-    int? labelPadding,
+    double? labelPadding,
     double? defaultStrokeWidthPx,
     int? layoutPaintOrder,
   })  : defaultColor = StyleFactory.style.rangeAnnotationColor,
@@ -59,7 +59,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   static const _defaultLabelAnchor = AnnotationLabelAnchor.end;
   static const _defaultLabelDirection = AnnotationLabelDirection.auto;
   static const _defaultLabelPosition = AnnotationLabelPosition.auto;
-  static const _defaultLabelPadding = 5;
+  static const _defaultLabelPadding = 5.0;
   static const _defaultLabelStyle =
       TextStyle(fontSize: 12, color: Colors.black);
 
@@ -89,7 +89,7 @@ class RangeAnnotationState<D> implements ChartBehaviorState<D> {
   final bool extendAxis;
 
   /// Space before and after label text.
-  final int labelPadding;
+  final double labelPadding;
 
   /// Configures the order in which the behavior should be painted.
   /// This value should be relative to LayoutPaintViewOrder.rangeAnnotation.
@@ -363,7 +363,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   final Color defaultColor;
 
-  final int labelPadding;
+  final double labelPadding;
 
   final RangeAnnotationState<D> rangeAnnotation;
 
@@ -373,9 +373,9 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   bool get isRtl => chart!.context.isRtl;
 
-  late Rectangle<int> _drawAreaBounds;
+  late Rectangle<double> _drawAreaBounds;
 
-  Rectangle<int> get drawBounds => _drawAreaBounds;
+  Rectangle<double> get drawBounds => _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -391,12 +391,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   @override
-  ViewMeasuredSizes? measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes? measure(double maxWidth, double maxHeight) {
     return null;
   }
 
   @override
-  void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {
+  void layout(
+      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
@@ -499,12 +500,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Calculates the bounds of the annotation.
-  Rectangle<num> _getAnnotationBounds(_AnnotationElement<D> annotationElement) {
-    Rectangle<num> bounds;
+  Rectangle<double> _getAnnotationBounds(
+      _AnnotationElement<D> annotationElement) {
+    Rectangle<double> bounds;
 
     switch (annotationElement.annotation.axisType) {
       case RangeAnnotationAxisType.domain:
-        bounds = Rectangle<num>(
+        bounds = Rectangle<double>(
           annotationElement.annotation.startPosition,
           _drawAreaBounds.top,
           annotationElement.annotation.endPosition -
@@ -514,7 +516,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
 
       case RangeAnnotationAxisType.measure:
-        bounds = Rectangle<num>(
+        bounds = Rectangle<double>(
           _drawAreaBounds.left,
           annotationElement.annotation.endPosition,
           _drawAreaBounds.width,
@@ -569,12 +571,12 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Measures the max label width of the annotation.
-  int _getLabelMaxWidth(
-    Rectangle<num> bounds,
+  double _getLabelMaxWidth(
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    num maxWidth = 0;
+    double maxWidth = 0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -615,13 +617,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
       }
     }
 
-    return maxWidth.round();
+    return maxWidth;
   }
 
   /// Gets the resolved location for a label element.
-  Point<int>? _getLabelPosition(
+  Point<double>? _getLabelPosition(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
@@ -645,9 +647,9 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a domain annotation label element.
-  Point<int> _getDomainLabelPosition(
+  Point<double> _getDomainLabelPosition(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
@@ -670,14 +672,14 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Gets the resolved location for a horizontal domain annotation label
   /// element.
-  Point<int> _getDomainLabelPositionHorizontal(
+  Point<double> _getDomainLabelPositionHorizontal(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    num labelX = 0;
-    num labelY = 0;
+    double labelX = 0;
+    double labelY = 0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -759,18 +761,18 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<int>(labelX.round(), labelY.round());
+    return Point<double>(labelX, labelY);
   }
 
   /// Gets the resolved location for a vertical domain annotation label element.
-  Point<int> _getDomainLabelPositionVertical(
+  Point<double> _getDomainLabelPositionVertical(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    num labelX = 0;
-    num labelY = 0;
+    double labelX = 0;
+    double labelY = 0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -854,13 +856,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<int>(labelX.round(), labelY.round());
+    return Point<double>(labelX, labelY);
   }
 
   /// Gets the resolved location for a measure annotation label element.
-  Point<int> _getMeasureLabelPosition(
+  Point<double> _getMeasureLabelPosition(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
@@ -883,14 +885,14 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Gets the resolved location for a horizontal measure annotation label
   /// element.
-  Point<int> _getMeasureLabelPositionHorizontal(
+  Point<double> _getMeasureLabelPositionHorizontal(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    num labelX = 0;
-    num labelY = 0;
+    double labelX = 0;
+    double labelY = 0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -976,19 +978,19 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<int>(labelX.round(), labelY.round());
+    return Point<double>(labelX, labelY);
   }
 
   /// Gets the resolved location for a vertical measure annotation label
   /// element.
-  Point<int> _getMeasureLabelPositionVertical(
+  Point<double> _getMeasureLabelPositionVertical(
     _AnnotationLabelType labelType,
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
-    num labelX = 0;
-    num labelY = 0;
+    double labelX = 0;
+    double labelY = 0;
 
     final calculatedLabelPosition =
         _resolveAutoLabelPosition(bounds, annotationElement, labelElement);
@@ -1080,14 +1082,14 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<int>(labelX.round(), labelY.round());
+    return Point<double>(labelX, labelY);
   }
 
   /// Resolves [AnnotationLabelPosition.auto] configuration for an annotation
   /// into an inside or outside position, depending on the size of the
   /// annotation and the chart draw area.
   AnnotationLabelPosition _resolveAutoLabelPosition(
-    Rectangle<num> bounds,
+    Rectangle<double> bounds,
     _AnnotationElement<D> annotationElement,
     TextElement labelElement,
   ) {
@@ -1129,7 +1131,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<int> get componentBounds => _drawAreaBounds;
+  Rectangle<double> get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;
@@ -1309,7 +1311,7 @@ class RangeAnnotationTester<D> {
     behavior._view.graphicsFactory = value;
   }
 
-  void mockLayout(Rectangle<int> bounds) {
+  void mockLayout(Rectangle<double> bounds) {
     behavior._view.layout(bounds, bounds);
   }
 

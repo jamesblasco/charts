@@ -39,7 +39,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         leaderLineStyle = leaderLineStyle ?? _defaultLeaderLineStyle;
   // Default configuration
   static const _defaultLabelPosition = ArcLabelPosition.auto;
-  static const _defaultLabelPadding = 5;
+  static const _defaultLabelPadding = 5.0;
   static const _defaultInsideLabelStyle =
       TextStyle(fontSize: 12, color: Colors.white);
   static const _defaultOutsideLabelStyle =
@@ -65,7 +65,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   final ArcLabelPosition labelPosition;
 
   /// Space before and after the label text.
-  final int labelPadding;
+  final double labelPadding;
 
   /// Whether or not to draw leader lines for labels placed outside the arcs.
   final bool showLeaderLines;
@@ -148,18 +148,17 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         // Get space available inside and outside the arc.
         final totalPadding = labelPadding * 2;
         final insideArcWidth = min(
-          (((arcAngle * 180 / pi) / 360) * (2 * pi * centerRadius)).round(),
+          ((arcAngle * 180 / pi) / 360) * (2 * pi * centerRadius),
           (arcElements.radius - arcElements.innerRadius) - labelPadding,
-        ).round();
+        );
 
-        final leaderLineLength = showLeaderLines ? leaderLineStyle.length : 0;
+        final leaderLineLength = showLeaderLines ? leaderLineStyle.length : 0.0;
 
-        final outsideArcWidth = ((drawBounds.width / 2) -
-                bounds.width -
-                totalPadding -
-                // Half of the leader line is drawn inside the arc
-                leaderLineLength / 2)
-            .round();
+        final outsideArcWidth = (drawBounds.width / 2) -
+            bounds.width -
+            totalPadding -
+            // Half of the leader line is drawn inside the arc
+            leaderLineLength / 2;
 
         final labelElement = graphicsFactory.createTextElement(label)
           ..maxWidthStrategy = MaxWidthStrategy.ellipsize;
@@ -211,8 +210,8 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   ArcLabelPosition calculateLabelPosition(
     TextElement labelElement,
     TextStyle labelStyle,
-    int insideArcWidth,
-    int outsideArcWidth,
+    double insideArcWidth,
+    double outsideArcWidth,
     ArcRendererElement arcRendererelement,
     ArcLabelPosition labelPosition,
   ) {
@@ -268,13 +267,11 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
     final labelRadius = arcElements.innerRadius +
         (arcElements.radius - arcElements.innerRadius) / 2;
 
-    final labelX =
-        (arcElements.center.x + labelRadius * cos(centerAngle)).round();
+    final labelX = arcElements.center.x + labelRadius * cos(centerAngle);
 
-    final labelY = (arcElements.center.y +
-            labelRadius * sin(centerAngle) -
-            insideLabelStyleSpec.fontSize! / 2)
-        .round();
+    final labelY = arcElements.center.y +
+        labelRadius * sin(centerAngle) -
+        insideLabelStyleSpec.fontSize! / 2;
 
     labelElement.textDirection = TextDirectionAligment.center;
 
@@ -285,7 +282,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   void updateCollisionDetectionParams(List<Object> params) {
     // List destructuring.
     _previousLabelLeftOfChart = params[0] as bool;
-    _previousOutsideLabelY = params[1] as int;
+    _previousOutsideLabelY = params[1] as double;
   }
 
   double getLabelRadius(ArcRendererElementList<D> arcElements) =>
@@ -313,11 +310,11 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
     // Shift the label horizontally away from the center of the chart.
     var labelX = labelLeftOfChart
-        ? (labelPoint.x - labelPadding).round()
-        : (labelPoint.x + labelPadding).round();
+        ? labelPoint.x - labelPadding
+        : labelPoint.x + labelPadding;
 
     // Shift the label up by the size of the font.
-    final labelY = (labelPoint.y - outsideLabelStyleSpec.fontSize! / 2).round();
+    final labelY = labelPoint.y - outsideLabelStyleSpec.fontSize! / 2;
 
     // Outside labels should flow away from the center of the chart
     labelElement.textDirection = labelLeftOfChart
@@ -345,9 +342,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
       );
 
       // Shift the label horizontally by the length of the leader line.
-      labelX = (labelX + tailX).round();
+      labelX = labelX + tailX;
 
-      labelElement.maxWidth = (labelElement.maxWidth! - tailX.abs()).round();
+      labelElement.maxWidth = labelElement.maxWidth! - tailX.abs();
     }
 
     canvas.drawText(labelElement, labelX, labelY);

@@ -39,7 +39,7 @@ void main() {
 
   setUp(() {
     decorator = TestComparisonPointsDecorator<num>();
-    bounds = Rectangle<int>(0, 0, 100, 100);
+    bounds = Rectangle<double>(0, 0, 100, 100);
   });
 
   group('compute bounded points', () {

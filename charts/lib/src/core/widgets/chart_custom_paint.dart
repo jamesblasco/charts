@@ -153,8 +153,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   void performLayout() {
     Performance.time('chartsLayout');
     _chart!
-        .measure(constraints.maxWidth.toInt(), constraints.maxHeight.toInt());
-    _chart!.layout(constraints.maxWidth.toInt(), constraints.maxHeight.toInt());
+        .measure(constraints.maxWidth, constraints.maxHeight);
+    _chart!.layout(constraints.maxWidth, constraints.maxHeight);
     Performance.timeEnd('chartsLayout');
     size = constraints.biggest;
 

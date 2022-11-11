@@ -30,8 +30,8 @@ abstract class BaseRenderChart<D> {
 
   final LayoutManager _layoutManager;
 
-  int? _chartWidth;
-  int? _chartHeight;
+  double? _chartWidth;
+  double? _chartHeight;
 
   Duration transition = const Duration(milliseconds: 300);
 
@@ -143,9 +143,9 @@ abstract class BaseRenderChart<D> {
   /// chart first calling init with the context.
   void configurationChanged() {}
 
-  int? get chartWidth => _chartWidth;
+  double? get chartWidth => _chartWidth;
 
-  int? get chartHeight => _chartHeight;
+  double? get chartHeight => _chartHeight;
 
   //
   // Gesture proxy methods
@@ -419,13 +419,13 @@ abstract class BaseRenderChart<D> {
   //
   // Layout methods
   //
-  void measure(int width, int height) {
+  void measure(double width, double height) {
     if (_rendererToSeriesList != null) {
       _layoutManager.measure(width, height);
     }
   }
 
-  void layout(int width, int height) {
+  void layout(double width, double height) {
     if (_rendererToSeriesList != null) {
       layoutInternal(width, height);
 
@@ -433,7 +433,7 @@ abstract class BaseRenderChart<D> {
     }
   }
 
-  void layoutInternal(int width, int height) {
+  void layoutInternal(double width, double height) {
     _chartWidth = width;
     _chartHeight = height;
     _layoutManager.layout(width, height);
@@ -456,19 +456,19 @@ abstract class BaseRenderChart<D> {
   }
 
   /// Returns the bounds of the chart draw area.
-  Rectangle<int> get drawAreaBounds => _layoutManager.drawAreaBounds;
+  Rectangle<double> get drawAreaBounds => _layoutManager.drawAreaBounds;
 
-  int get marginBottom => _layoutManager.marginBottom;
+  double get marginBottom => _layoutManager.marginBottom;
 
-  int get marginLeft => _layoutManager.marginLeft;
+  double get marginLeft => _layoutManager.marginLeft;
 
-  int get marginRight => _layoutManager.marginRight;
+  double get marginRight => _layoutManager.marginRight;
 
-  int get marginTop => _layoutManager.marginTop;
+  double get marginTop => _layoutManager.marginTop;
 
   /// Returns the combined bounds of the chart draw area and all layout
   /// components that draw series data.
-  Rectangle<int> get drawableLayoutAreaBounds =>
+  Rectangle<double> get drawableLayoutAreaBounds =>
       _layoutManager.drawableLayoutAreaBounds;
 
   //

@@ -25,8 +25,8 @@ import 'package:charts/src/core/layout/layout_view.dart'
 class LayoutManagerImpl implements LayoutManager {
   /// Create a new [LayoutManager].
   LayoutManagerImpl({LayoutConfig? config}) : config = config ?? LayoutConfig();
-  static const _minDrawWidth = 20;
-  static const _minDrawHeight = 20;
+  static const _minDrawWidth = 20.0;
+  static const _minDrawHeight = 20.0;
 
   // Allow [Layoutconfig] to be mutable so it can be modified without requiring
   // a new copy of [DefaultLayoutManager] to be created.
@@ -47,7 +47,7 @@ class LayoutManagerImpl implements LayoutManager {
 
   late _MeasuredSizes _measurements;
 
-  late Rectangle<int> _drawAreaBounds;
+  late Rectangle<double> _drawAreaBounds;
   bool _drawAreaBoundsOutdated = true;
   bool _viewsNeedPaintSort = true;
   bool _viewsNeedPositionSort = true;
@@ -113,13 +113,13 @@ class LayoutManagerImpl implements LayoutManager {
   }
 
   @override
-  Rectangle<int> get drawAreaBounds {
+  Rectangle<double> get drawAreaBounds {
     assert(_drawAreaBoundsOutdated == false);
     return _drawAreaBounds;
   }
 
   @override
-  Rectangle<int> get drawableLayoutAreaBounds {
+  Rectangle<double> get drawableLayoutAreaBounds {
     assert(_drawAreaBoundsOutdated == false);
 
     final drawableViews =
@@ -143,25 +143,25 @@ class LayoutManagerImpl implements LayoutManager {
   }
 
   @override
-  int get marginBottom {
+  double get marginBottom {
     assert(_drawAreaBoundsOutdated == false);
     return _measurements.bottomHeight;
   }
 
   @override
-  int get marginLeft {
+  double get marginLeft {
     assert(_drawAreaBoundsOutdated == false);
     return _measurements.leftWidth;
   }
 
   @override
-  int get marginRight {
+  double get marginRight {
     assert(_drawAreaBoundsOutdated == false);
     return _measurements.rightWidth;
   }
 
   @override
-  int get marginTop {
+  double get marginTop {
     assert(_drawAreaBoundsOutdated == false);
     return _measurements.topHeight;
   }
@@ -173,7 +173,7 @@ class LayoutManagerImpl implements LayoutManager {
 
   /// Measure and layout with given [width] and [height].
   @override
-  void measure(int width, int height) {
+  void measure(double width, double height) {
     final topViews =
         _viewsForPositions(LayoutPosition.top, LayoutPosition.fullTop);
     final rightViews =
@@ -245,7 +245,7 @@ class LayoutManagerImpl implements LayoutManager {
     );
 
     // Bounds for the draw area.
-    _drawAreaBounds = Rectangle(
+    _drawAreaBounds = Rectangle<double>(
       measurements.leftWidth,
       measurements.topHeight,
       drawAreaWidth,
@@ -255,7 +255,7 @@ class LayoutManagerImpl implements LayoutManager {
   }
 
   @override
-  void layout(int width, int height) {
+  void layout(double width, double height) {
     final topViews =
         _viewsForPositions(LayoutPosition.top, LayoutPosition.fullTop);
     final rightViews =
@@ -266,7 +266,7 @@ class LayoutManagerImpl implements LayoutManager {
         _viewsForPositions(LayoutPosition.left, LayoutPosition.fullLeft);
     final drawAreaViews = _viewsForPositions(LayoutPosition.drawArea);
 
-    final fullBounds = Rectangle(0, 0, width, height);
+    final fullBounds = Rectangle<double>(0, 0, width, height);
 
     // Layout the margins.
     LeftMarginLayoutStrategy()
@@ -307,8 +307,8 @@ class LayoutManagerImpl implements LayoutManager {
   /// [width] full width of chart
   /// [height] full height of chart
   _MeasuredSizes _measure(
-    int width,
-    int height, {
+    double width,
+    double height, {
     required Iterable<LayoutView> topViews,
     required Iterable<LayoutView> rightViews,
     required Iterable<LayoutView> bottomViews,
@@ -399,15 +399,15 @@ class _MeasuredSizes {
     required this.bottomHeight,
     required this.bottomSizes,
   });
-  final int leftWidth;
+  final double leftWidth;
   final SizeList leftSizes;
 
-  final int rightWidth;
+  final double rightWidth;
   final SizeList rightSizes;
 
-  final int topHeight;
+  final double topHeight;
   final SizeList topSizes;
 
-  final int bottomHeight;
+  final double bottomHeight;
   final SizeList bottomSizes;
 }

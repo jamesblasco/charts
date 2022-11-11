@@ -40,8 +40,8 @@ abstract class BaseBarRendererElement {
   Color? fillColor;
   FillPatternType? fillPattern;
   double? measureAxisPosition;
-  num? measureOffset;
-  num? measureOffsetPlusMeasure;
+  double? measureOffset;
+  double? measureOffsetPlusMeasure;
   double? strokeWidthPx;
   bool? measureIsNull;
   bool? measureIsNegative;

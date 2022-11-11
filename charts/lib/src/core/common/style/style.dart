@@ -49,7 +49,7 @@ abstract class ChartThemeData {
   );
 
   /// Default tick length.
-  int get tickLength;
+  double get tickLength;
 
   /// Default tick color.
   Color get tickColor;

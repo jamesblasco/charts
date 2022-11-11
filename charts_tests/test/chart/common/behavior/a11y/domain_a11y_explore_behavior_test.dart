@@ -26,7 +26,7 @@ class MockAxis extends Mock implements MutableAxisElement<String> {}
 
 class FakeCartesianRenderChart extends CartesianRenderChart<String> {
   @override
-  Rectangle<int> drawAreaBounds;
+  Rectangle<double> drawAreaBounds;
 
   void callFireOnPostprocess(List<MutableSeries<String>> seriesList) {
     fireOnPostprocess(seriesList);

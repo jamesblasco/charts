@@ -47,24 +47,24 @@ abstract class TickDrawStrategy<D> {
   /// Returns measurement of ticks drawn vertically.
   ViewMeasuredSizes measureVerticallyDrawnTicks(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight, {
+    double maxWidth,
+    double maxHeight, {
     bool collision = false,
   });
 
   /// Returns measurement of ticks drawn horizontally.
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight, {
+    double maxWidth,
+    double maxHeight, {
     bool collision = false,
   });
 
   /// Updates max tick width to match fit max size.
   void updateTickWidth(
     List<TickElement<D>> ticks,
-    int maxWidth,
-    int maxHeight,
+    double maxWidth,
+    double maxHeight,
     AxisOrientation orientation, {
     bool collision = false,
   });
@@ -80,8 +80,8 @@ abstract class TickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<int> axisBounds,
-    required Rectangle<int> drawAreaBounds,
+    required Rectangle<double> axisBounds,
+    required Rectangle<double> drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -90,6 +90,6 @@ abstract class TickDrawStrategy<D> {
   void drawAxisLine(
     ChartCanvas canvas,
     AxisOrientation orientation,
-    Rectangle<int> axisBounds,
+    Rectangle<double> axisBounds,
   );
 }
