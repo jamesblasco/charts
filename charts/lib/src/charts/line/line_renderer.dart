@@ -1128,7 +1128,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     final drawBounds = this.drawBounds!;
     final left = isRtl
         ? extent.end.clamp(drawBounds.left, drawBounds.right)
-        : extent.end.clamp(drawBounds.left, drawBounds.right);
+        : extent.start.clamp(drawBounds.left, drawBounds.right);
 
     final right = isRtl
         ? extent.start.clamp(drawBounds.left, drawBounds.right)
