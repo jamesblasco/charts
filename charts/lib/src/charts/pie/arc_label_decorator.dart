@@ -138,13 +138,13 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         final centerRadius = arcElements.innerRadius +
             ((arcElements.radius - arcElements.innerRadius) / 2);
 
-        final outerPoint = Point<double>(
-          arcElements.center.x + arcElements.radius * cos(centerAngle),
-          arcElements.center.y + arcElements.radius * sin(centerAngle),
+        final outerPoint = Offset(
+          arcElements.center.dx + arcElements.radius * cos(centerAngle),
+          arcElements.center.dy + arcElements.radius * sin(centerAngle),
         );
 
         final bounds =
-            Rect.fromPoints(arcElements.center.offset, outerPoint.offset);
+            Rect.fromPoints(arcElements.center, outerPoint);
 
         // Get space available inside and outside the arc.
         final totalPadding = labelPadding * 2;
@@ -268,9 +268,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
     final labelRadius = arcElements.innerRadius +
         (arcElements.radius - arcElements.innerRadius) / 2;
 
-    final labelX = arcElements.center.x + labelRadius * cos(centerAngle);
+    final labelX = arcElements.center.dx + labelRadius * cos(centerAngle);
 
-    final labelY = arcElements.center.y +
+    final labelY = arcElements.center.dy +
         labelRadius * sin(centerAngle) -
         insideLabelStyleSpec.fontSize! / 2;
 
@@ -299,9 +299,9 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   ) {
     final labelRadius = getLabelRadius(arcElements);
 
-    final labelPoint = Point<double>(
-      arcElements.center.x + labelRadius * cos(centerAngle),
-      arcElements.center.y + labelRadius * sin(centerAngle),
+    final labelPoint = Offset(
+      arcElements.center.dx + labelRadius * cos(centerAngle),
+      arcElements.center.dy + labelRadius * sin(centerAngle),
     );
 
     // Use the label's chart quandrant to determine whether it's rendered to the
@@ -311,11 +311,11 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
     // Shift the label horizontally away from the center of the chart.
     var labelX = labelLeftOfChart
-        ? labelPoint.x - labelPadding
-        : labelPoint.x + labelPadding;
+        ? labelPoint.dx - labelPadding
+        : labelPoint.dx + labelPadding;
 
     // Shift the label up by the size of the font.
-    final labelY = labelPoint.y - outsideLabelStyleSpec.fontSize! / 2;
+    final labelY = labelPoint.dy - outsideLabelStyleSpec.fontSize! / 2;
 
     // Outside labels should flow away from the center of the chart
     labelElement.textDirection = labelLeftOfChart
@@ -388,20 +388,19 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   double _drawLeaderLine(
     ChartCanvas canvas,
     bool labelLeftOfChart,
-    Point<double> labelPoint,
+    Offset labelPoint,
     double radius,
-    Point<double> arcCenterPoint,
+    Offset arcCenterPoint,
     double centerAngle,
   ) {
     final tailX = (labelLeftOfChart ? -1 : 1) * leaderLineStyle.length;
 
-    final leaderLineTailPoint =
-        Point<double>(labelPoint.x + tailX, labelPoint.y);
+    final leaderLineTailPoint = Offset(labelPoint.dx + tailX, labelPoint.dy);
 
     final centerRadius = radius - leaderLineStyle.length / 2;
-    final leaderLineStartPoint = Point<double>(
-      arcCenterPoint.x + centerRadius * cos(centerAngle),
-      arcCenterPoint.y + centerRadius * sin(centerAngle),
+    final leaderLineStartPoint = Offset(
+      arcCenterPoint.dx + centerRadius * cos(centerAngle),
+      arcCenterPoint.dy + centerRadius * sin(centerAngle),
     );
 
     canvas.drawLine(

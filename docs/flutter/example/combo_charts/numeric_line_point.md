@@ -1,4 +1,4 @@
-# Numeric Line Point Combo Chart Example
+# Numeric Line Offset Combo Chart Example
 
 ![](numeric_line_point_full.png)
 

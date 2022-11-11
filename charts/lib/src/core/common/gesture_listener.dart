@@ -15,6 +15,8 @@
 
 import 'dart:math' show Point;
 
+import 'package:charts/charts.dart';
+
 /// Listener to touch gestures.
 ///
 /// [GestureListeners] can override only the gestures it is interested in.
@@ -104,15 +106,15 @@ class GestureListener {
 
 typedef GestureCancelCallback = void Function();
 typedef GestureCallback = bool Function();
-typedef GestureSinglePointCallback = bool Function(Point<double> localPosition);
+typedef GestureSinglePointCallback = bool Function(Offset localPosition);
 
-typedef GestureDragStartCallback = bool Function(Point<double> localPosition);
+typedef GestureDragStartCallback = bool Function(Offset localPosition);
 typedef GestureDragUpdateCallback = bool Function(
-  Point<double> localPosition,
+  Offset localPosition,
   double scale,
 );
 typedef GestureDragEndCallback = bool Function(
-  Point<double> localPosition,
+  Offset localPosition,
   double scale,
   double pixelsPerSec,
 );

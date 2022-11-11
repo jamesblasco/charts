@@ -138,7 +138,7 @@ class _SliderCallbackState extends State<SliderLine> {
       children.add(new Padding(
           padding: new EdgeInsets.only(top: 5.0),
           child: new Text(
-              'Slider position: ${_sliderPosition.x}, ${_sliderPosition.y}')));
+              'Slider position: ${_sliderPosition.dx}, ${_sliderPosition.dy}')));
     }
     if (_sliderDragState != null) {
       children.add(new Padding(

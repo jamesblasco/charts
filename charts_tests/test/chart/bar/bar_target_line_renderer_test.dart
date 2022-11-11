@@ -31,11 +31,11 @@ class MyRow {
 class MockAxis<D> extends Mock implements MutableAxisElement<D> {}
 
 class MockCanvas extends Mock implements ChartCanvas {
-  final drawLinePointsList = <List<Point>>[];
+  final drawLinePointsList = <List<Offset>>[];
 
   @override
   void drawLine(
-      {List<Point> points,
+      {List<Offset> points,
       Rect clipBounds,
       Color fill,
       Color stroke,

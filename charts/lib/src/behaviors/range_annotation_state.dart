@@ -488,8 +488,8 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
           if (labelPoint != null) {
             canvas.drawText(
               labelElement,
-              labelPoint.x,
-              labelPoint.y,
+              labelPoint.dx,
+              labelPoint.dy,
               rotation: rotation,
             );
           }
@@ -528,21 +528,21 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Calculates the bounds of the annotation.
-  List<Point> _getLineAnnotationPoints(
+  List<Offset> _getLineAnnotationPoints(
     _AnnotationElement<D> annotationElement,
   ) {
-    final points = <Point>[];
+    final points = <Offset>[];
 
     switch (annotationElement.annotation.axisType) {
       case RangeAnnotationAxisType.domain:
         points.add(
-          Point<num>(
+          Offset(
             annotationElement.annotation.startPosition,
             _drawAreaBounds.top,
           ),
         );
         points.add(
-          Point<num>(
+          Offset(
             annotationElement.annotation.endPosition,
             _drawAreaBounds.bottom,
           ),
@@ -551,13 +551,13 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
       case RangeAnnotationAxisType.measure:
         points.add(
-          Point<num>(
+          Offset(
             _drawAreaBounds.left,
             annotationElement.annotation.startPosition,
           ),
         );
         points.add(
-          Point<num>(
+          Offset(
             _drawAreaBounds.right,
             annotationElement.annotation.endPosition,
           ),
@@ -619,7 +619,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a label element.
-  Point<double>? _getLabelPosition(
+  Offset? _getLabelPosition(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -645,7 +645,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a domain annotation label element.
-  Point<double> _getDomainLabelPosition(
+  Offset _getDomainLabelPosition(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -670,7 +670,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Gets the resolved location for a horizontal domain annotation label
   /// element.
-  Point<double> _getDomainLabelPositionHorizontal(
+  Offset _getDomainLabelPositionHorizontal(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -759,11 +759,11 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   /// Gets the resolved location for a vertical domain annotation label element.
-  Point<double> _getDomainLabelPositionVertical(
+  Offset _getDomainLabelPositionVertical(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -854,11 +854,11 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   /// Gets the resolved location for a measure annotation label element.
-  Point<double> _getMeasureLabelPosition(
+  Offset _getMeasureLabelPosition(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -883,7 +883,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
   /// Gets the resolved location for a horizontal measure annotation label
   /// element.
-  Point<double> _getMeasureLabelPositionHorizontal(
+  Offset _getMeasureLabelPositionHorizontal(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -976,12 +976,12 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   /// Gets the resolved location for a vertical measure annotation label
   /// element.
-  Point<double> _getMeasureLabelPositionVertical(
+  Offset _getMeasureLabelPositionVertical(
     _AnnotationLabelType labelType,
     Rect bounds,
     _AnnotationElement<D> annotationElement,
@@ -1080,7 +1080,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
         break;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   /// Resolves [AnnotationLabelPosition.auto] configuration for an annotation

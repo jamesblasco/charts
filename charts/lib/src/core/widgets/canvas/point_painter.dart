@@ -23,7 +23,7 @@ class PointPainter {
   static void draw({
     required Canvas canvas,
     required Paint paint,
-    required Point point,
+    required Offset point,
     required double radius,
     Color? fill,
     Color? stroke,
@@ -38,7 +38,7 @@ class PointPainter {
       paint.style = PaintingStyle.fill;
 
       canvas.drawCircle(
-        Offset(point.x.toDouble(), point.y.toDouble()),
+        Offset(point.dx.toDouble(), point.dy.toDouble()),
         radius,
         paint,
       );
@@ -53,7 +53,7 @@ class PointPainter {
       paint.style = PaintingStyle.stroke;
 
       canvas.drawCircle(
-        Offset(point.x.toDouble(), point.y.toDouble()),
+        Offset(point.dx.toDouble(), point.dy.toDouble()),
         radius,
         paint,
       );

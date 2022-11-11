@@ -27,7 +27,7 @@ class MyRow {
 }
 
 class TestComparisonPointsDecorator<D> extends ComparisonPointsDecorator<D> {
-  List<Point<double>> testComputeBoundedPointsForElement(
+  List<Offset> testComputeBoundedPointsForElement(
       PointRendererElement<D> pointElement, Rect drawBounds) {
     return computeBoundedPointsForElement(pointElement, drawBounds);
   }
@@ -45,7 +45,7 @@ void main() {
   group('compute bounded points', () {
     test('with line inside bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 10.0,
             xLower: 5.0,
             xUpper: 50.0,
@@ -62,16 +62,16 @@ void main() {
 
       expect(points.length, equals(2));
 
-      expect(points[0].x, equals(5.0));
-      expect(points[0].y, equals(20.0));
+      expect(points[0].dx, equals(5.0));
+      expect(points[0].dy, equals(20.0));
 
-      expect(points[1].x, equals(50.0));
-      expect(points[1].y, equals(20.0));
+      expect(points[1].dx, equals(50.0));
+      expect(points[1].dy, equals(20.0));
     });
 
     test('with line entirely above bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 10.0,
             xLower: 5.0,
             xUpper: 50.0,
@@ -91,7 +91,7 @@ void main() {
 
     test('with line entirely below bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 10.0,
             xLower: 5.0,
             xUpper: 50.0,
@@ -111,7 +111,7 @@ void main() {
 
     test('with line entirely left of bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: -10.0,
             xLower: -5.0,
             xUpper: -50.0,
@@ -131,7 +131,7 @@ void main() {
 
     test('with line entirely right of bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 110.0,
             xLower: 105.0,
             xUpper: 150.0,
@@ -151,7 +151,7 @@ void main() {
 
     test('with horizontal line extending beyond bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 10.0,
             xLower: -10.0,
             xUpper: 110.0,
@@ -168,16 +168,16 @@ void main() {
 
       expect(points.length, equals(2));
 
-      expect(points[0].x, equals(0.0));
-      expect(points[0].y, equals(20.0));
+      expect(points[0].dx, equals(0.0));
+      expect(points[0].dy, equals(20.0));
 
-      expect(points[1].x, equals(100.0));
-      expect(points[1].y, equals(20.0));
+      expect(points[1].dx, equals(100.0));
+      expect(points[1].dy, equals(20.0));
     });
 
     test('with vertical line extending beyond bounds', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 20.0,
             xLower: 20.0,
             xUpper: 20.0,
@@ -194,16 +194,16 @@ void main() {
 
       expect(points.length, equals(2));
 
-      expect(points[0].x, equals(20.0));
-      expect(points[0].y, equals(0.0));
+      expect(points[0].dx, equals(20.0));
+      expect(points[0].dy, equals(0.0));
 
-      expect(points[1].x, equals(20.0));
-      expect(points[1].y, equals(100.0));
+      expect(points[1].dx, equals(20.0));
+      expect(points[1].dy, equals(100.0));
     });
 
     test('with diagonal from top left to bottom right', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 50.0,
             xLower: -50.0,
             xUpper: 150.0,
@@ -220,16 +220,16 @@ void main() {
 
       expect(points.length, equals(2));
 
-      expect(points[0].x, equals(0.0));
-      expect(points[0].y, equals(0.0));
+      expect(points[0].dx, equals(0.0));
+      expect(points[0].dy, equals(0.0));
 
-      expect(points[1].x, equals(100.0));
-      expect(points[1].y, equals(100.0));
+      expect(points[1].dx, equals(100.0));
+      expect(points[1].dy, equals(100.0));
     });
 
     test('with diagonal from bottom left to top right', () {
       final element = PointRendererElement<num>(
-        point: DatumPoint<num>(
+        point: DatumPoint(
             x: 50.0,
             xLower: -50.0,
             xUpper: 150.0,
@@ -246,11 +246,11 @@ void main() {
 
       expect(points.length, equals(2));
 
-      expect(points[0].x, equals(0.0));
-      expect(points[0].y, equals(100.0));
+      expect(points[0].dx, equals(0.0));
+      expect(points[0].dy, equals(100.0));
 
-      expect(points[1].x, equals(100.0));
-      expect(points[1].y, equals(0.0));
+      expect(points[1].dx, equals(100.0));
+      expect(points[1].dy, equals(0.0));
     });
   });
 }

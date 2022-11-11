@@ -132,7 +132,7 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
 
     final bounds = chart!.drawAreaBounds;
 
-    final center = Point<double>(
+    final center = Offset(
       bounds.left + bounds.width / 2,
       bounds.top + bounds.height / 2,
     );

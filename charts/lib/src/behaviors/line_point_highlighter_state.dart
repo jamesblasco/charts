@@ -227,8 +227,8 @@ class LinePointHighlighterState<D> implements ChartBehaviorState<D> {
         datum: datum,
         domain: detail.domain,
         series: series,
-        x: detail.chartPosition!.x,
-        y: detail.chartPosition!.y,
+        x: detail.chartPosition!.dx,
+        y: detail.chartPosition!.dy,
       );
 
       // Update the set of points that still exist in the series data.
@@ -351,13 +351,13 @@ class _LinePointLayoutView<D> extends LayoutView {
     final endPointPerValueHorizontal = <double, double>{};
 
     for (final pointElement in points) {
-      if (pointElement.point.x == null || pointElement.point.y == null) {
+      if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
       final point = pointElement.point.toPoint();
 
-      final roundedX = point.x;
-      final roundedY = point.y;
+      final roundedX = point.dx;
+      final roundedY = point.dy;
 
       // Get the Y value closest to the top of the chart for this X position.
       if (endPointPerValueVertical[roundedX] == null) {
@@ -407,13 +407,13 @@ class _LinePointLayoutView<D> extends LayoutView {
 
     // Draw the follow lines first, below all of the highlight shapes.
     for (final pointElement in points) {
-      if (pointElement.point.x == null || pointElement.point.y == null) {
+      if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
       final point = pointElement.point.toPoint();
 
-      final roundedX = point.x.round();
-      final roundedY = point.y.round();
+      final roundedX = point.dx.round();
+      final roundedY = point.dy.round();
 
       // Draw the horizontal follow line.
       if (shouldShowHorizontalFollowLine &&
@@ -436,8 +436,8 @@ class _LinePointLayoutView<D> extends LayoutView {
 
         canvas.drawLine(
           points: [
-            Point<num>(leftBound, point.y),
-            Point<num>(rightBound, point.y),
+            Offset(leftBound, point.dy),
+            Offset(rightBound, point.dy),
           ],
           stroke: StyleFactory.style.linePointHighlighterColor,
           strokeWidth: 1,
@@ -461,8 +461,8 @@ class _LinePointLayoutView<D> extends LayoutView {
 
         canvas.drawLine(
           points: [
-            Point<num>(point.x, topBound),
-            Point<num>(point.x, drawBounds.top + drawBounds.height),
+            Offset(point.dx, topBound),
+            Offset(point.dx, drawBounds.top + drawBounds.height),
           ],
           stroke: StyleFactory.style.linePointHighlighterColor,
           strokeWidth: 1,
@@ -484,14 +484,14 @@ class _LinePointLayoutView<D> extends LayoutView {
 
     // Draw the highlight shapes on top of all follow lines.
     for (final pointElement in points) {
-      if (pointElement.point.x == null || pointElement.point.y == null) {
+      if (pointElement.point.dx == null || pointElement.point.dy == null) {
         continue;
       }
       final point = pointElement.point.toPoint();
 
       final bounds = Rect.fromLTWH(
-        point.x - pointElement.radius,
-        point.y - pointElement.radius,
+        point.dx - pointElement.radius,
+        point.dy - pointElement.radius,
         pointElement.radius * 2,
         pointElement.radius * 2,
       );
@@ -529,8 +529,8 @@ class _DatumPoint<D> extends NullablePoint {
       datum: other.datum,
       domain: other.domain,
       series: other.series,
-      x: x ?? other.x,
-      y: y ?? other.y,
+      x: x ?? other.dx,
+      y: y ?? other.dy,
     );
   }
   final dynamic datum;
@@ -576,9 +576,9 @@ class _PointRendererElement<D> {
     final targetPoint = target.point;
     final previousPoint = previous.point;
 
-    final x = _lerpDouble(previousPoint.x, targetPoint.x, animationPercent);
+    final x = _lerpDouble(previousPoint.dx, targetPoint.dx, animationPercent);
 
-    final y = _lerpDouble(previousPoint.y, targetPoint.y, animationPercent);
+    final y = _lerpDouble(previousPoint.dy, targetPoint.dy, animationPercent);
 
     point = _DatumPoint<D>.from(targetPoint, x, y);
 
@@ -641,7 +641,7 @@ class _AnimatedPoint<D> {
 
     final newPoint = _DatumPoint<D>.from(
       targetPoint,
-      targetPoint.x,
+      targetPoint.dx,
       newTarget.measureAxisPosition!.roundToDouble(),
     );
 

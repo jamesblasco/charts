@@ -116,7 +116,7 @@ void main() {
             ..startAngle = -pi / 2
             ..endAngle = pi / 2,
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,
@@ -167,7 +167,7 @@ void main() {
             ..startAngle = -pi / 2
             ..endAngle = pi / 2,
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,
@@ -206,7 +206,7 @@ void main() {
             ..startAngle = pi / 2
             ..endAngle = 3 * pi / 2
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,
@@ -251,7 +251,7 @@ void main() {
             ..endAngle = 3 * pi / 2
             ..isLeaf = true
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,
@@ -306,7 +306,7 @@ void main() {
             ..startAngle = -pi / 2
             ..endAngle = pi / 2,
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,
@@ -330,7 +330,7 @@ void main() {
             ..startAngle = pi / 2
             ..endAngle = 3 * pi / 2,
         ],
-        center: Point(100.0, 100.0),
+        center: Offset(100.0, 100.0),
         innerRadius: 30.0,
         radius: 40.0,
         startAngle: -pi / 2,

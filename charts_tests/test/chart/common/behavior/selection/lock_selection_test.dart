@@ -56,7 +56,7 @@ void main() {
     return behavior;
   }
 
-  void _setupChart({Point<double> forPoint, bool isWithinRenderer}) {
+  void _setupChart({Offset forPoint, bool isWithinRenderer}) {
     if (isWithinRenderer != null) {
       when(_chart.pointWithinRenderer(forPoint)).thenReturn(isWithinRenderer);
     }
@@ -77,7 +77,7 @@ void main() {
     test('can lock model with a selection', () {
       // Setup chart matches point with single domain single series.
       _makeLockSelectionBehavior(SelectionModelType.info);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true);
 
       when(_hoverSelectionModel.hasAnySelection).thenReturn(true);
@@ -96,7 +96,7 @@ void main() {
     test('can lock and unlock model', () {
       // Setup chart matches point with single domain single series.
       _makeLockSelectionBehavior(SelectionModelType.info);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true);
 
       when(_hoverSelectionModel.hasAnySelection).thenReturn(true);
@@ -123,7 +123,7 @@ void main() {
     test('does not lock model with empty selection', () {
       // Setup chart matches point with single domain single series.
       _makeLockSelectionBehavior(SelectionModelType.info);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true);
 
       when(_hoverSelectionModel.hasAnySelection).thenReturn(false);
@@ -144,7 +144,7 @@ void main() {
     test('detach removes listener', () {
       // Setup
       final behavior = _makeLockSelectionBehavior(SelectionModelType.info);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true);
       expect(_chart.lastListener, isNotNull);
 

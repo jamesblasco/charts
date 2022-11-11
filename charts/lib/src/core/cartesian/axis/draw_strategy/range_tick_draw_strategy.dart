@@ -357,26 +357,26 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
       case AxisOrientation.top:
       case AxisOrientation.bottom:
         rangeShade = Rect.fromLTWH(
-          rangeStartTickStart.x.toDouble(),
-          rangeStartTickStart.y + rangeShadeOffsetFromAxis,
-          rangeEndTickStart.x.toDouble() - rangeStartTickStart.x,
+          rangeStartTickStart.dx.toDouble(),
+          rangeStartTickStart.dy + rangeShadeOffsetFromAxis,
+          rangeEndTickStart.dx.toDouble() - rangeStartTickStart.dx,
           rangeShadeHeight,
         );
         break;
       case AxisOrientation.right:
         rangeShade = Rect.fromLTWH(
-          rangeEndTickStart.x + rangeShadeOffsetFromAxis,
-          rangeEndTickStart.y.toDouble(),
+          rangeEndTickStart.dx + rangeShadeOffsetFromAxis,
+          rangeEndTickStart.dy.toDouble(),
           rangeShadeHeight,
-          rangeEndTickStart.y.toDouble() - rangeEndTickStart.y,
+          rangeEndTickStart.dy.toDouble() - rangeEndTickStart.dy,
         );
         break;
       case AxisOrientation.left:
         rangeShade = Rect.fromLTWH(
-          rangeEndTickStart.x - rangeShadeOffsetFromAxis - rangeShadeHeight,
-          rangeEndTickStart.y.toDouble(),
+          rangeEndTickStart.dx - rangeShadeOffsetFromAxis - rangeShadeHeight,
+          rangeEndTickStart.dy.toDouble(),
           rangeShadeHeight,
-          rangeEndTickStart.y.toDouble() - rangeEndTickStart.y,
+          rangeEndTickStart.dy.toDouble() - rangeEndTickStart.dy,
         );
         break;
     }
@@ -418,10 +418,10 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
 
       if (orientation == AxisOrientation.bottom ||
           orientation == AxisOrientation.top) {
-        y = rangeStartTickStart.y + rangeShadeOffsetFromAxis - 1;
+        y = rangeStartTickStart.dy + rangeShadeOffsetFromAxis - 1;
 
-        x = rangeStartTickStart.x +
-            (rangeEndTickStart.x - rangeStartTickStart.x - labelWidth) / 2;
+        x = rangeStartTickStart.dx +
+            (rangeEndTickStart.dx - rangeStartTickStart.dx - labelWidth) / 2;
       }
       // TODO: add support for orientation left and right.
       canvas.drawText(line, x, y + multiLineLabelOffset);

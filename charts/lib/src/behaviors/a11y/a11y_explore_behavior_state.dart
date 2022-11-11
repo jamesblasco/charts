@@ -64,7 +64,7 @@ abstract class A11yExploreBehaviorState<D> implements ChartBehaviorState<D> {
   late GestureListener _listener;
   bool _exploreModeOn = false;
 
-  bool _toggleExploreMode(Point<double> _) {
+  bool _toggleExploreMode(Offset _) {
     if (_exploreModeOn) {
       _exploreModeOn = false;
       // Ask native platform to turn off explore mode.

@@ -1,4 +1,4 @@
-# Date Time Line Point Combo Chart Example
+# Date Time Line Offset Combo Chart Example
 
 ![](date_time_line_point_full.png)
 

@@ -34,7 +34,7 @@ class LinePainter {
   static void draw({
     required Canvas canvas,
     required Paint paint,
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -71,11 +71,7 @@ class LinePainter {
     if (points.length == 1) {
       final point = points.first;
       paint.style = PaintingStyle.fill;
-      canvas.drawCircle(
-        Offset(point.x.toDouble(), point.y.toDouble()),
-        strokeWidth ?? 0,
-        paint,
-      );
+      canvas.drawCircle(point, strokeWidth ?? 0, paint);
     } else {
       if (strokeWidth != null) {
         paint.strokeWidth = strokeWidth;
@@ -100,14 +96,13 @@ class LinePainter {
   }
 
   /// Draws solid lines between each point.
-  static void _drawSolidLine(Canvas canvas, Paint paint, List<Point> points) {
+  static void _drawSolidLine(Canvas canvas, Paint paint, List<Offset> points) {
     // TODO: Extract a native line component which constructs the
     // appropriate underlying data structures to avoid conversion.
-    final path = Path()
-      ..moveTo(points.first.x.toDouble(), points.first.y.toDouble());
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
 
     for (final point in points) {
-      path.lineTo(point.x.toDouble(), point.y.toDouble());
+      path.lineTo(point.dx, point.dy);
     }
 
     canvas.drawPath(path, paint);
@@ -117,7 +112,7 @@ class LinePainter {
   static void _drawDashedLine(
     Canvas canvas,
     Paint paint,
-    List<Point> points,
+    List<Offset> points,
     List<int> dashPattern,
   ) {
     final localDashPattern = List<int>.from(dashPattern);
@@ -129,7 +124,7 @@ class LinePainter {
     }
 
     // Stores the previous point in the series.
-    var previousSeriesPoint = _getOffset(points.first);
+    var previousSeriesPoint = points.first;
 
     var remainder = 0;
     var solid = true;
@@ -151,7 +146,7 @@ class LinePainter {
     // Draw the path through all the rest of the points in the series.
     for (var pointIndex = 1; pointIndex < points.length; pointIndex++) {
       // Stores the current point in the series.
-      final seriesPoint = _getOffset(points[pointIndex]);
+      final seriesPoint = points[pointIndex];
 
       if (previousSeriesPoint == seriesPoint) {
         // Bypass dash pattern handling if the points are the same.
@@ -242,14 +237,8 @@ class LinePainter {
     }
   }
 
-  /// Converts a [Point] into an [Offset].
-  static Offset _getOffset(Point point) =>
-      Offset(point.x.toDouble(), point.y.toDouble());
-
   /// Computes the distance between two [Offset]s, as if they were [Point]s.
-  static num _getOffsetDistance(Offset o1, Offset o2) {
-    final p1 = Point(o1.dx, o1.dy);
-    final p2 = Point(o2.dx, o2.dy);
-    return p1.distanceTo(p2);
+  static double _getOffsetDistance(Offset o1, Offset o2) {
+    return (o2 - o1).distance;
   }
 }

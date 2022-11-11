@@ -87,7 +87,7 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
   }
 
   @override
-  bool onTapTest(Point<double> chartPoint) {
+  bool onTapTest(Offset chartPoint) {
     super.onTapTest(chartPoint);
 
     stopFlingAnimation();
@@ -97,7 +97,7 @@ mixin FlutterPanBehaviorMixin<D> on PanBehaviorState<D>
 
   @override
   bool onDragEnd(
-    Point<double> localPosition,
+    Offset localPosition,
     double scale,
     double pixelsPerSec,
   ) {

@@ -167,7 +167,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   /// Datum details of nearest rectangles in the treemap.
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -185,7 +185,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
       final node = queue.removeFirst();
       final element = _getRendererElement(node);
 
-      if (element.boundingRect.containsPoint(chartPoint.offset)) {
+      if (element.boundingRect.containsPoint(chartPoint)) {
         nearest.add(
           DatumDetails<D>(
             index: element.index,
@@ -222,7 +222,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   ) {
     final bounds =
         _getRendererElement(seriesDatum.datum as TreeNode<Object>).boundingRect;
-    final chartPosition = Point<double>(
+    final chartPosition = Offset(
       (isRtl ? bounds.left : bounds.right).toDouble(),
       (bounds.top + (bounds.height / 2)).toDouble(),
     );

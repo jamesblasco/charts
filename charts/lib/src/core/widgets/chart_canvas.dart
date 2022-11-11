@@ -32,7 +32,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawCircleSector(
-    Point center,
+    Offset center,
     double radius,
     double innerRadius,
     double startAngle,
@@ -55,7 +55,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawLine({
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -83,7 +83,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawPoint({
-    required Point point,
+    required Offset point,
     required double radius,
     Color? fill,
     Color? stroke,
@@ -103,7 +103,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawPolygon({
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -447,8 +447,8 @@ class FlutterChartCanvas implements ChartCanvas {
         canvas: canvas,
         paint: _paint,
         points: [
-          Point(x0 + modifier, y0),
-          Point(x1 + modifier, y1),
+          Offset(x0 + modifier, y0),
+          Offset(x1 + modifier, y1),
         ],
         stroke: fill,
         strokeWidth: fillWidth,

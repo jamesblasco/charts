@@ -59,10 +59,10 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
 
   /// Last position of the mouse/tap that was used to adjust the scale translate
   /// factor.
-  Point<double>? _lastPosition;
+  Offset? _lastPosition;
 
   @protected
-  Point<double>? get lastPosition => _lastPosition;
+  Offset? get lastPosition => _lastPosition;
 
   /// Optional callback that is invoked at the end of panning ([onPanEnd]).
   PanningCompletedCallback? _panningCompletedCallback;
@@ -114,7 +114,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   }
 
   @protected
-  bool onTapTest(Point<double> localPosition) {
+  bool onTapTest(Offset localPosition) {
     if (_chart == null) {
       return false;
     }
@@ -123,7 +123,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   }
 
   @protected
-  bool onDragStart(Point<double> localPosition) {
+  bool onDragStart(Offset localPosition) {
     if (_chart == null) {
       return false;
     }
@@ -136,7 +136,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
   }
 
   @protected
-  bool onDragUpdate(Point<double> localPosition, double scale) {
+  bool onDragUpdate(Offset localPosition, double scale) {
     if (!_isPanning || _lastPosition == null || _chart == null) {
       return false;
     }
@@ -165,10 +165,10 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
     var domainChange = 0.0;
     if (domainAxis.isVertical) {
       domainChange =
-          domainAxis.viewportTranslate + localPosition.y - _lastPosition!.y;
+          domainAxis.viewportTranslate + localPosition.dy - _lastPosition!.dy;
     } else {
       domainChange =
-          domainAxis.viewportTranslate + localPosition.x - _lastPosition!.x;
+          domainAxis.viewportTranslate + localPosition.dx - _lastPosition!.dx;
     }
 
     final chart = this.chart!;
@@ -187,7 +187,7 @@ class PanBehaviorState<D> implements ChartBehaviorState<D> {
 
   @protected
   bool onDragEnd(
-    Point<double> localPosition,
+    Offset localPosition,
     double scale,
     double pixelsPerSec,
   ) {

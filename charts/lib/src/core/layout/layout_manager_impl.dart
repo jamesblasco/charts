@@ -164,8 +164,8 @@ class LayoutManagerImpl implements LayoutManager {
   }
 
   @override
-  bool withinDrawArea(Point<num> point) {
-    return _drawAreaBounds.containsPoint(point.offset);
+  bool withinDrawArea(Offset point) {
+    return _drawAreaBounds.containsPoint(point);
   }
 
   /// Measure and layout with given [width] and [height].

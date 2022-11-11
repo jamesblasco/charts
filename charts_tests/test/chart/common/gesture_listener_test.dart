@@ -22,10 +22,10 @@ import 'package:charts/charts.dart';
 
 void main() {
   ProxyGestureListener _proxy;
-  Point<double> _point;
+  Offset _point;
   setUp(() {
     _proxy = ProxyGestureListener();
-    _point = Point<double>(10.0, 12.0);
+    _point = Offset(10.0, 12.0);
   });
 
   group('Tap gesture', () {

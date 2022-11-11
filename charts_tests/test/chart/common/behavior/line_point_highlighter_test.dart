@@ -72,7 +72,7 @@ class MockSeriesRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect boundsOverride, {
     selectOverlappingPoints = false,

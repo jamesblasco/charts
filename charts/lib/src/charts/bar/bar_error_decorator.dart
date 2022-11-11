@@ -132,7 +132,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
 
             // Draw vertical whisker line.
             canvas.drawLine(
-              points: [Point(x, startY), Point(x, endY)],
+              points: [Offset(x, startY), Offset(x, endY)],
               stroke: strokeColor,
               strokeWidth: strokeWidth,
             );
@@ -140,8 +140,8 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             // Draw horizontal whisker line for the lower bound.
             canvas.drawLine(
               points: [
-                Point(x - endpointLength / 2, startY),
-                Point(x + endpointLength / 2, startY)
+                Offset(x - endpointLength / 2, startY),
+                Offset(x + endpointLength / 2, startY)
               ],
               stroke: strokeColor,
               strokeWidth: strokeWidth,
@@ -150,8 +150,8 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             // Draw horizontal whisker line for the upper bound.
             canvas.drawLine(
               points: [
-                Point(x - endpointLength / 2, endY),
-                Point(x + endpointLength / 2, endY)
+                Offset(x - endpointLength / 2, endY),
+                Offset(x + endpointLength / 2, endY)
               ],
               stroke: strokeColor,
               strokeWidth: strokeWidth,
@@ -217,7 +217,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
 
             // Draw horizontal whisker line.
             canvas.drawLine(
-              points: [Point(startX, y), Point(endX, y)],
+              points: [Offset(startX, y), Offset(endX, y)],
               stroke: strokeColor,
               strokeWidth: strokeWidth,
             );
@@ -225,8 +225,8 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             // Draw vertical whisker line for the lower bound.
             canvas.drawLine(
               points: [
-                Point(startX, y - endpointLength / 2),
-                Point(startX, y + endpointLength / 2)
+                Offset(startX, y - endpointLength / 2),
+                Offset(startX, y + endpointLength / 2)
               ],
               stroke: strokeColor,
               strokeWidth: strokeWidth,
@@ -235,8 +235,8 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             // Draw vertical whisker line for the upper bound.
             canvas.drawLine(
               points: [
-                Point(endX, y - endpointLength / 2),
-                Point(endX, y + endpointLength / 2)
+                Offset(endX, y - endpointLength / 2),
+                Offset(endX, y + endpointLength / 2)
               ],
               stroke: strokeColor,
               strokeWidth: strokeWidth,

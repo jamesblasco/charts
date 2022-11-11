@@ -32,7 +32,7 @@ class PolygonPainter {
   static void draw({
     required Canvas canvas,
     required Paint paint,
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -68,7 +68,7 @@ class PolygonPainter {
       }
       paint.style = PaintingStyle.fill;
       canvas.drawCircle(
-        Offset(point.x.toDouble(), point.y.toDouble()),
+        point,
         strokeWidth!,
         paint,
       );
@@ -85,10 +85,10 @@ class PolygonPainter {
       }
 
       final path = Path()
-        ..moveTo(points.first.x.toDouble(), points.first.y.toDouble());
+        ..moveTo(points.first.dx, points.first.dy);
 
       for (final point in points) {
-        path.lineTo(point.x.toDouble(), point.y.toDouble());
+        path.lineTo(point.dx, point.dy);
       }
 
       canvas.drawPath(path, paint);

@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:math' show max, min, sqrt, Point;
+import 'package:charts/charts.dart';
 import 'package:equatable/equatable.dart';
 import 'package:vector_math/vector_math.dart' show Vector2;
 
@@ -35,7 +36,6 @@ bool withinBounds(
 }) {
   return value + epsilon >= lowerBound && value - epsilon <= upperBound;
 }
-
 
 /// Returns the minimum distance between point p and the line segment vw.
 ///
@@ -75,15 +75,15 @@ double distanceBetweenPointAndLineSegmentSquared(
 /// values.
 class NullablePoint extends Equatable {
   /// Creates a point with the provided [x] and [y] coordinates.
-  const NullablePoint(this.x, this.y);
+  const NullablePoint(this.dx, this.dy);
 
   /// Creates a [NullablePoint] from a [Point].
-  NullablePoint.from(Point<double>? point) : this(point?.x, point?.y);
-  final double? x;
-  final double? y;
+  NullablePoint.from(Offset? point) : this(point?.dx, point?.dy);
+  final double? dx;
+  final double? dy;
 
   @override
-  String toString() => 'NullablePoint($x, $y)';
+  String toString() => 'NullablePoint($dx, $dy)';
 
   /// Whether [other] is a point with the same coordinates as this point.
   ///
@@ -92,15 +92,15 @@ class NullablePoint extends Equatable {
   /// and `false` otherwise.
 
   @override
-  List<Object?> get props => [x, y];
+  List<Object?> get props => [dx, dy];
 
   /// Converts this to a [Point].
   ///
   /// Throws if [x] or [y] is null.
-  Point<double> toPoint() {
-    assert(x != null);
-    assert(y != null);
-    return Point<double>(x!, y!);
+  Offset toPoint() {
+    assert(dx != null);
+    assert(dy != null);
+    return Offset(dx!, dy!);
   }
 }
 
@@ -108,10 +108,10 @@ extension NullablePointsToPoints on Iterable<NullablePoint> {
   /// Converts an [Iterable] of [NullablePoint]s to a [List] of [Point]s.
   ///
   /// Any [NullablePoint]s that have null values will be filtered out.
-  List<Point<double>> toPoints() {
+  List<Offset> toPoints() {
     return [
       for (final nullablePoint in this)
-        if (nullablePoint.x != null && nullablePoint.y != null)
+        if (nullablePoint.dx != null && nullablePoint.dy != null)
           nullablePoint.toPoint(),
     ];
   }

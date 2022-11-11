@@ -51,12 +51,12 @@ class LockSelectionState<D> implements ChartBehaviorState<D> {
 
   BaseRenderChart<D>? _chart;
 
-  bool _onTapTest(Point<double> chartPoint) {
+  bool _onTapTest(Offset chartPoint) {
     // If the tap is within the drawArea, then claim the event from others.
     return _chart!.pointWithinRenderer(chartPoint);
   }
 
-  bool _onSelect(Point<double> chartPoint, [double? ignored]) {
+  bool _onSelect(Offset chartPoint, [double? ignored]) {
     // Skip events that occur outside the drawArea for any series renderer.
     if (!_chart!.pointWithinRenderer(chartPoint)) {
       return false;

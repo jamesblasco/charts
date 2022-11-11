@@ -784,7 +784,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     for (var index = 0; index < pointList.length; index++) {
       final point = pointList[index];
 
-      if (point.y == null) {
+      if (point.dy == null) {
         if (startPointIndex == null) {
           continue;
         }
@@ -966,9 +966,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       pointList.map(
         (datumPoint) => _DatumPoint.from(
           datumPoint,
-          datumPoint.x,
+          datumPoint.dx,
           initializeFromZero
-              ? datumPoint.y
+              ? datumPoint.dy
               : measureAxis.getLocation(
                   (series.measureUpperBoundFn!(datumPoint.index) ?? 0) +
                       series.measureOffsetFn!(datumPoint.index)!,
@@ -982,9 +982,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       pointList.reversed.map(
         (datumPoint) => _DatumPoint.from(
           datumPoint,
-          datumPoint.x,
+          datumPoint.dx,
           initializeFromZero
-              ? datumPoint.y
+              ? datumPoint.dy
               : measureAxis.getLocation(
                   (series.measureLowerBoundFn!(datumPoint.index) ?? 0) +
                       series.measureOffsetFn!(datumPoint.index)!,
@@ -1134,7 +1134,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         ? extent.start.clamp(drawBounds.left, drawBounds.right)
         : extent.end.clamp(drawBounds.left, drawBounds.right);
 
-    return  Rect.fromLTWH(
+    return Rect.fromLTWH(
       left.toDouble(),
       drawBounds.top - drawBoundTopExtension,
       right - left.toDouble(),
@@ -1172,7 +1172,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -1200,7 +1200,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
         for (final p in segment.allPoints) {
           // Don't look at points not in the drawArea.
-          if (p.x! < componentBounds!.left || p.x! > componentBounds!.right) {
+          if (p.dx! < componentBounds!.left || p.dx! > componentBounds!.right) {
             continue;
           }
 
@@ -1208,10 +1208,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           double relativeDistance;
           double domainDistance;
 
-          if (p.y != null) {
-            measureDistance = (p.y! - chartPoint.y).abs();
-            domainDistance = (p.x! - chartPoint.x).abs();
-            relativeDistance = chartPoint.distanceTo(p.toPoint());
+          if (p.dy != null) {
+            measureDistance = (p.dy! - chartPoint.dy).abs();
+            domainDistance = (p.dx! - chartPoint.dx).abs();
+            relativeDistance = (p.toPoint() - chartPoint).distance;
           } else {
             // Null measures have no real position, so make them the farthest
             // away by real distance.
@@ -1257,7 +1257,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       if (nearestPoint != null) {
         nearest.add(
           DatumDetails<D>(
-            chartPosition: NullablePoint(nearestPoint.x, nearestPoint.y),
+            chartPosition: NullablePoint(nearestPoint.dx, nearestPoint.dy),
             datum: nearestPoint.datum,
             domain: nearestPoint.domain,
             series: nearestPoint.series,
@@ -1281,7 +1281,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   /// [nearestPoint] is the point in [allPointsForSeries] that is closest to
   /// [chartPoint].
   bool _isPointBelowSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     _DatumPoint<D> nearestPoint,
     List<_DatumPoint<D>> allPointsForSeries,
   ) {
@@ -1289,7 +1289,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     _DatumPoint<D>? rightPoint;
     final nearestPointIdx =
         allPointsForSeries.indexWhere((p) => p == nearestPoint);
-    if (chartPoint.x < nearestPoint.x!) {
+    if (chartPoint.dx < nearestPoint.dx!) {
       leftPoint =
           nearestPointIdx > 0 ? allPointsForSeries[nearestPointIdx - 1] : null;
       rightPoint = nearestPoint;
@@ -1299,21 +1299,21 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           ? allPointsForSeries[nearestPointIdx + 1]
           : null;
     }
-    var limit = chartPoint.y;
+    var limit = chartPoint.dy;
     if (leftPoint != null &&
-        leftPoint.y != null &&
+        leftPoint.dy != null &&
         rightPoint != null &&
-        rightPoint.y != null) {
+        rightPoint.dy != null) {
       final slope =
-          (rightPoint.y! - leftPoint.y!) / (rightPoint.x! - leftPoint.x!);
-      limit = (chartPoint.x - leftPoint.x!) * slope + leftPoint.y!;
-    } else if (leftPoint != null && leftPoint.y != null) {
-      limit = leftPoint.y!;
-    } else if (rightPoint != null && rightPoint.y != null) {
-      limit = rightPoint.y!;
+          (rightPoint.dy! - leftPoint.dy!) / (rightPoint.dx! - leftPoint.dx!);
+      limit = (chartPoint.dx - leftPoint.dx!) * slope + leftPoint.dy!;
+    } else if (leftPoint != null && leftPoint.dy != null) {
+      limit = leftPoint.dy!;
+    } else if (rightPoint != null && rightPoint.dy != null) {
+      limit = rightPoint.dy!;
     }
 
-    return chartPoint.y >= limit;
+    return chartPoint.dy >= limit;
   }
 
   @override
@@ -1336,7 +1336,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
       details.measureOffset,
       measureAxis,
     );
-    final chartPosition = NullablePoint(point.x, point.y);
+    final chartPosition = NullablePoint(point.dx, point.dy);
 
     return DatumDetails.from(details, chartPosition: chartPosition);
   }
@@ -1358,8 +1358,8 @@ class _DatumPoint<D> extends NullablePoint {
       domain: other.domain,
       series: other.series,
       index: other.index,
-      x: x ?? other.x,
-      y: y ?? other.y,
+      x: x ?? other.dx,
+      y: y ?? other.dy,
     );
   }
   final dynamic datum;
@@ -1430,18 +1430,18 @@ class _LineRendererElement<D> {
         lastPoint = previousPoint;
       } else {
         previousPoint =
-            _DatumPoint<D>.from(targetPoint, targetPoint.x, lastPoint.y);
+            _DatumPoint<D>.from(targetPoint, targetPoint.dx, lastPoint.dy);
       }
 
-      final x = ((targetPoint.x! - previousPoint.x!) * animationPercent) +
-          previousPoint.x!;
+      final x = ((targetPoint.dx! - previousPoint.dx!) * animationPercent) +
+          previousPoint.dx!;
 
       double? y;
-      if (targetPoint.y != null && previousPoint.y != null) {
-        y = ((targetPoint.y! - previousPoint.y!) * animationPercent) +
-            previousPoint.y!;
-      } else if (targetPoint.y != null) {
-        y = targetPoint.y;
+      if (targetPoint.dy != null && previousPoint.dy != null) {
+        y = ((targetPoint.dy! - previousPoint.dy!) * animationPercent) +
+            previousPoint.dy!;
+      } else if (targetPoint.dy != null) {
+        y = targetPoint.dy;
       } else {
         y = null;
       }
@@ -1506,7 +1506,7 @@ class _AnimatedLine<D> {
       newPoints.add(
         _DatumPoint<D>.from(
           targetPoint,
-          targetPoint.x,
+          targetPoint.dx,
           newTarget.measureAxisPosition!.roundToDouble(),
         ),
       );
@@ -1598,18 +1598,18 @@ class _AreaRendererElement<D> {
         lastPoint = previousPoint;
       } else {
         previousPoint =
-            _DatumPoint<D>.from(targetPoint, targetPoint.x, lastPoint.y);
+            _DatumPoint<D>.from(targetPoint, targetPoint.dx, lastPoint.dy);
       }
 
-      final x = ((targetPoint.x! - previousPoint.x!) * animationPercent) +
-          previousPoint.x!;
+      final x = ((targetPoint.dx! - previousPoint.dx!) * animationPercent) +
+          previousPoint.dx!;
 
       double? y;
-      if (targetPoint.y != null && previousPoint.y != null) {
-        y = ((targetPoint.y! - previousPoint.y!) * animationPercent) +
-            previousPoint.y!;
-      } else if (targetPoint.y != null) {
-        y = targetPoint.y;
+      if (targetPoint.dy != null && previousPoint.dy != null) {
+        y = ((targetPoint.dy! - previousPoint.dy!) * animationPercent) +
+            previousPoint.dy!;
+      } else if (targetPoint.dy != null) {
+        y = targetPoint.dy;
       } else {
         y = null;
       }
@@ -1670,7 +1670,7 @@ class _AnimatedArea<D> {
       newPoints.add(
         _DatumPoint<D>.from(
           targetPoint,
-          targetPoint.x,
+          targetPoint.dx,
           newTarget.measureAxisPosition.roundToDouble(),
         ),
       );

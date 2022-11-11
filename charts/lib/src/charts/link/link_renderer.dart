@@ -83,7 +83,7 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
     DatumDetails<D> details,
     SeriesDatum<D> seriesDatum,
   ) {
-    const chartPosition = Point<double>(0, 0);
+    const chartPosition = Offset(0, 0);
     return DatumDetails.from(
       details,
       chartPosition: NullablePoint.from(chartPosition),
@@ -93,7 +93,7 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
   /// Datum details of nearest link.
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,

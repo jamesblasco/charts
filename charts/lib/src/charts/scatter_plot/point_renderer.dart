@@ -379,11 +379,11 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         // Skip points whose center lies outside the draw bounds. Those that lie
         // near the edge will be allowed to render partially outside. This
         // prevents harshly clipping off half of the shape.
-        if (point.point!.y != null &&
-            componentBounds!.containsPoint(point.point!.toPoint().offset)) {
+        if (point.point!.dy != null &&
+            componentBounds!.containsPoint(point.point!.toPoint())) {
           final bounds = Rect.fromLTWH(
-            point.point!.x! - point.radius,
-            point.point!.y! - point.radius,
+            point.point!.dx! - point.radius,
+            point.point!.dy! - point.radius,
             point.radius * 2,
             point.radius * 2,
           );
@@ -484,7 +484,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -515,7 +515,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         final p = point._currentPoint!.point!;
 
         // Don't look at points not in the drawArea.
-        if (p.x! < componentBounds!.left || p.x! > componentBounds!.right) {
+        if (p.dx! < componentBounds!.left || p.dx! > componentBounds!.right) {
           continue;
         }
 
@@ -596,21 +596,21 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   /// a datum and a point within the chart.
   _Distances _getDatumDistance(
     AnimatedPoint<D> point,
-    Point<double> chartPoint,
+    Offset chartPoint,
   ) {
     final datumPoint = point._currentPoint!.point!;
     final radius = point._currentPoint!.radius;
     final boundsLineRadius = point._currentPoint!.boundsLineRadius;
 
     // Compute distances from [chartPoint] to the primary point of the datum.
-    final domainDistance = (chartPoint.x - datumPoint.x!).abs();
+    final domainDistance = (chartPoint.dx - datumPoint.dx!).abs();
 
-    final measureDistance = datumPoint.y != null
-        ? (chartPoint.y - datumPoint.y!).abs()
+    final measureDistance = datumPoint.dy != null
+        ? (chartPoint.dy - datumPoint.dy!).abs()
         : _maxInitialDistance;
 
-    var relativeDistance = datumPoint.y != null
-        ? chartPoint.distanceTo(datumPoint.toPoint())
+    var relativeDistance = datumPoint.dy != null
+        ?  (datumPoint.toPoint() -  chartPoint).distance
         : _maxInitialDistance;
 
     var insidePoint = false;
@@ -624,7 +624,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
       // use the smaller of this distance and the distance from the primary
       // point as the relativeDistance from this datum.
       final relativeDistanceBounds = distanceBetweenPointAndLineSegment(
-        Vector2(chartPoint.x, chartPoint.y),
+        Vector2(chartPoint.dx, chartPoint.dy),
         Vector2(datumPoint.xLower!, datumPoint.yLower!),
         Vector2(datumPoint.xUpper!, datumPoint.yUpper!),
       );
@@ -699,7 +699,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
 
     return DatumDetails.from(
       details,
-      chartPosition: NullablePoint(point.x, point.y),
+      chartPosition: NullablePoint(point.dx, point.dy),
       chartPositionLower: NullablePoint(point.xLower, point.yLower),
       chartPositionUpper: NullablePoint(point.xUpper, point.yUpper),
       symbolRenderer: nearestSymbolRenderer,
@@ -733,10 +733,10 @@ class DatumPoint<D> extends NullablePoint {
       datum: other.datum,
       domain: other.domain,
       series: other.series,
-      x: x ?? other.x,
+      x: x ?? other.dx,
       xLower: xLower ?? other.xLower,
       xUpper: xUpper ?? other.xUpper,
-      y: y ?? other.y,
+      y: y ?? other.dy,
       yLower: yLower ?? other.yLower,
       yUpper: yUpper ?? other.yUpper,
     );
@@ -798,8 +798,8 @@ class PointRendererElement<D> {
     final targetPoint = target.point!;
     final previousPoint = previous.point!;
 
-    final x = ((targetPoint.x! - previousPoint.x!) * animationPercent) +
-        previousPoint.x!;
+    final x = ((targetPoint.dx! - previousPoint.dx!) * animationPercent) +
+        previousPoint.dx!;
 
     final xLower = targetPoint.xLower != null && previousPoint.xLower != null
         ? ((targetPoint.xLower! - previousPoint.xLower!) * animationPercent) +
@@ -812,11 +812,11 @@ class PointRendererElement<D> {
         : null;
 
     double? y;
-    if (targetPoint.y != null && previousPoint.y != null) {
-      y = ((targetPoint.y! - previousPoint.y!) * animationPercent) +
-          previousPoint.y!;
-    } else if (targetPoint.y != null) {
-      y = targetPoint.y;
+    if (targetPoint.dy != null && previousPoint.dy != null) {
+      y = ((targetPoint.dy! - previousPoint.dy!) * animationPercent) +
+          previousPoint.dy!;
+    } else if (targetPoint.dy != null) {
+      y = targetPoint.dy;
     } else {
       y = null;
     }
@@ -889,7 +889,7 @@ class AnimatedPoint<D> {
     final y = newTarget.measureAxisPosition!.roundToDouble();
     newTarget.point = DatumPoint<D>.from(
       targetPoint,
-      x: targetPoint.x,
+      x: targetPoint.dx,
       y: y,
       yLower: y,
       yUpper: y,

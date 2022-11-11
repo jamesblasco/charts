@@ -15,6 +15,7 @@
 
 import 'dart:math' show Point;
 
+import 'package:charts/charts.dart';
 import 'package:charts/src/core/common/gesture_listener.dart'
     show GestureListener;
 import 'package:collection/collection.dart' show IterableExtension;
@@ -34,12 +35,12 @@ class ProxyGestureListener {
     _activeListeners.clear();
   }
 
-  bool onTapTest(Point<double> localPosition) {
+  bool onTapTest(Offset localPosition) {
     _activeListeners.clear();
     return _populateActiveListeners(localPosition);
   }
 
-  bool onLongPress(Point<double> localPosition) {
+  bool onLongPress(Offset localPosition) {
     // Walk through listeners stopping at the first handled listener.
     final claimingListener = _activeListeners.firstWhereOrNull(
       (GestureListener listener) =>
@@ -55,7 +56,7 @@ class ProxyGestureListener {
     return false;
   }
 
-  bool onTap(Point<double> localPosition) {
+  bool onTap(Offset localPosition) {
     // Walk through listeners stopping at the first handled listener.
     final claimingListener = _activeListeners.firstWhereOrNull(
       (GestureListener listener) =>
@@ -72,7 +73,7 @@ class ProxyGestureListener {
     return false;
   }
 
-  bool onHover(Point<double> localPosition) {
+  bool onHover(Offset localPosition) {
     // Cancel any previously active long lived gestures.
     _activeListeners = <GestureListener>[];
 
@@ -83,7 +84,7 @@ class ProxyGestureListener {
     );
   }
 
-  bool onDragStart(Point<double> localPosition) {
+  bool onDragStart(Offset localPosition) {
     // In Flutter, a tap test may not be triggered because a tap down event
     // may not be registered if the the drag gesture happens without any pause.
     if (_activeListeners.isEmpty) {
@@ -104,7 +105,7 @@ class ProxyGestureListener {
     return false;
   }
 
-  bool onDragUpdate(Point<double> localPosition, double scale) {
+  bool onDragUpdate(Offset localPosition, double scale) {
     return _activeListeners.any(
       (GestureListener listener) =>
           listener.onDragUpdate?.call(localPosition, scale) ?? false,
@@ -112,7 +113,7 @@ class ProxyGestureListener {
   }
 
   bool onDragEnd(
-    Point<double> localPosition,
+    Offset localPosition,
     double scale,
     double pixelsPerSecond,
   ) {
@@ -145,7 +146,7 @@ class ProxyGestureListener {
     return keep;
   }
 
-  bool _populateActiveListeners(Point<double> localPosition) {
+  bool _populateActiveListeners(Offset localPosition) {
     final localListeners = List.of(_listeners);
 
     var previouslyClaimed = false;

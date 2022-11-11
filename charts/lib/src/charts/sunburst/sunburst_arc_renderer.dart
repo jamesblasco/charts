@@ -200,7 +200,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
     final bounds = chart!.drawAreaBounds;
 
-    final center = Point<double>(
+    final center = Offset(
       (bounds.left + bounds.width / 2).toDouble(),
       (bounds.top + bounds.height / 2).toDouble(),
     );

@@ -100,40 +100,40 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     required bool isLast,
     bool collision = false,
   }) {
-    Point<num> lineStart;
-    Point<num> lineEnd;
+    Offset lineStart;
+    Offset lineEnd;
     final tickLocation = tick.location!;
     switch (orientation) {
       case AxisOrientation.top:
         final x = tickLocation;
-        lineStart = Point(x, axisBounds.bottom - tickLength);
-        lineEnd = Point(x, drawAreaBounds.bottom);
+        lineStart = Offset(x, axisBounds.bottom - tickLength);
+        lineEnd = Offset(x, drawAreaBounds.bottom);
         break;
       case AxisOrientation.bottom:
         final x = tickLocation;
-        lineStart = Point(x, drawAreaBounds.top + tickLength);
-        lineEnd = Point(x, axisBounds.top);
+        lineStart = Offset(x, drawAreaBounds.top + tickLength);
+        lineEnd = Offset(x, axisBounds.top);
         break;
       case AxisOrientation.right:
         final y = tickLocation;
         if (tickLabelAnchor(collision: collision) == TickLabelAnchor.after ||
             tickLabelAnchor(collision: collision) == TickLabelAnchor.before) {
-          lineStart = Point(axisBounds.right, y);
+          lineStart = Offset(axisBounds.right, y);
         } else {
-          lineStart = Point(axisBounds.left + tickLength, y);
+          lineStart = Offset(axisBounds.left + tickLength, y);
         }
-        lineEnd = Point(drawAreaBounds.left, y);
+        lineEnd = Offset(drawAreaBounds.left, y);
         break;
       case AxisOrientation.left:
         final y = tickLocation;
 
         if (tickLabelAnchor(collision: collision) == TickLabelAnchor.after ||
             tickLabelAnchor(collision: collision) == TickLabelAnchor.before) {
-          lineStart = Point(axisBounds.left, y);
+          lineStart = Offset(axisBounds.left, y);
         } else {
-          lineStart = Point(axisBounds.right - tickLength, y);
+          lineStart = Offset(axisBounds.right - tickLength, y);
         }
-        lineEnd = Point(drawAreaBounds.right, y);
+        lineEnd = Offset(drawAreaBounds.right, y);
         break;
     }
 

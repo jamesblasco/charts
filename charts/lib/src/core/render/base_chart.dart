@@ -224,11 +224,11 @@ abstract class BaseRenderChart<D> {
 
   SeriesRenderer<D> makeDefaultRenderer();
 
-  bool pointWithinRenderer(Point<double> chartPosition) {
+  bool pointWithinRenderer(Offset chartPosition) {
     return _usingRenderers.any(
       (String rendererId) => getSeriesRenderer(rendererId)
           .componentBounds!
-          .contains(chartPosition.offset),
+          .contains(chartPosition),
     );
   }
 
@@ -241,7 +241,7 @@ abstract class BaseRenderChart<D> {
   /// selection should be done across the combined draw area of all components
   /// with series draw areas, or just the chart's primary draw area bounds.
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> drawAreaPoint,
+    Offset drawAreaPoint,
     bool selectAcrossAllDrawAreaComponents,
   ) {
     // Optionally grab the combined draw area bounds of all components. If this
@@ -452,7 +452,7 @@ abstract class BaseRenderChart<D> {
   }
 
   /// Returns whether or not [point] is within the draw area bounds.
-  bool withinDrawArea(Point<num> point) {
+  bool withinDrawArea(Offset point) {
     return _layoutManager.withinDrawArea(point);
   }
 

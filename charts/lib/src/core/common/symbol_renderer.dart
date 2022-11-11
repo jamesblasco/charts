@@ -71,9 +71,9 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
 abstract class PointSymbolRenderer extends BaseSymbolRenderer {
   void paint(
     ChartCanvas canvas,
-    Point<double> p1,
+    Offset p1,
     double radius, {
-    required Point<double> p2,
+    required Offset p2,
     Color? fillColor,
     Color? strokeColor,
   });
@@ -174,7 +174,7 @@ class LineSymbolRenderer extends SymbolRenderer {
     // TODO: Pass in strokeWidth, roundEndCaps, and dashPattern from
     // line renderer config.
     canvas.drawLine(
-      points: [Point(left, centerHeight), Point(right, centerHeight)],
+      points: [Offset(left, centerHeight), Offset(right, centerHeight)],
       dashPattern: localDashPattern,
       fill: getSolidFillColor(fillColor),
       roundEndCaps: roundEndCaps,
@@ -206,7 +206,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
     Color? strokeColor,
     double? strokeWidth,
   }) {
-    final center = Point(
+    final center = Offset(
       bounds.left + (bounds.width / 2),
       bounds.top + (bounds.height / 2),
     );
@@ -279,9 +279,9 @@ class TriangleSymbolRenderer extends SymbolRenderer {
     final centerX = (bounds.left + bounds.right) / 2;
     canvas.drawPolygon(
       points: [
-        Point(bounds.left, bounds.top + dy),
-        Point(bounds.right, bounds.top + dy),
-        Point(centerX, bounds.top),
+        Offset(bounds.left, bounds.top + dy),
+        Offset(bounds.right, bounds.top + dy),
+        Offset(centerX, bounds.top),
       ],
       fill: getSolidFillColor(fillColor),
       stroke: strokeColor,
@@ -302,9 +302,9 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Point<double> p1,
+    Offset p1,
     double radius, {
-    required Point<double> p2,
+    required Offset p2,
     Color? fillColor,
     Color? strokeColor,
     double? strokeWidth,
@@ -317,8 +317,8 @@ class CylinderSymbolRenderer extends PointSymbolRenderer {
       throw ArgumentError('Invalid point p2 "$p2"');
     }
 
-    final adjustedP1 = Point<double>(p1.x, p1.y);
-    final adjustedP2 = Point<double>(p2.x, p2.y);
+    final adjustedP1 = Offset(p1.dx, p1.dy);
+    final adjustedP2 = Offset(p2.dx, p2.dy);
 
     canvas.drawLine(
       points: [adjustedP1, adjustedP2],
@@ -344,9 +344,9 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Point<double> p1,
+    Offset p1,
     double radius, {
-    required Point<double> p2,
+    required Offset p2,
     Color? fillColor,
     Color? strokeColor,
     double? strokeWidth,
@@ -359,8 +359,8 @@ class RectangleRangeSymbolRenderer extends PointSymbolRenderer {
       throw ArgumentError('Invalid point p2 "$p2"');
     }
 
-    final adjustedP1 = Point<double>(p1.x, p1.y);
-    final adjustedP2 = Point<double>(p2.x, p2.y);
+    final adjustedP1 = Offset(p1.dx, p1.dy);
+    final adjustedP2 = Offset(p2.dx, p2.dy);
 
     canvas.drawLine(
       points: [adjustedP1, adjustedP2],

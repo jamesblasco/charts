@@ -237,17 +237,17 @@ abstract class KeyboardDomainNavigatorState<D>
       final localChart = _chart as CartesianRenderChart;
       if (localChart.vertical) {
         allSeriesDatum.sort((a, b) {
-          if (a.chartPosition!.x == b.chartPosition!.x) {
+          if (a.chartPosition!.dx == b.chartPosition!.dx) {
             return a.series!.seriesIndex.compareTo(b.series!.seriesIndex);
           }
-          return a.chartPosition!.x!.compareTo(b.chartPosition!.x!);
+          return a.chartPosition!.dx!.compareTo(b.chartPosition!.dx!);
         });
       } else {
         allSeriesDatum.sort((a, b) {
-          if (a.chartPosition!.y == b.chartPosition!.y) {
+          if (a.chartPosition!.dy == b.chartPosition!.dy) {
             return a.series!.seriesIndex.compareTo(b.series!.seriesIndex);
           }
-          return a.chartPosition!.y!.compareTo(b.chartPosition!.y!);
+          return a.chartPosition!.dy!.compareTo(b.chartPosition!.dy!);
         });
       }
     }

@@ -30,7 +30,7 @@ class ArcRendererElementList<D> {
     this.strokeWidth,
   });
   final List<ArcRendererElement<D>> arcs;
-  final Point<double> center;
+  final Offset center;
   final double innerRadius;
   final double radius;
   final double startAngle;
@@ -90,7 +90,7 @@ class ArcRendererElement<D> {
 @protected
 class AnimatedArcList<D> {
   final arcs = <AnimatedArc<D>>[];
-  Point<double>? center;
+  Offset? center;
   double? innerRadius;
   double? radius;
   ImmutableSeries<D>? series;

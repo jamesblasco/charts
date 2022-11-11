@@ -139,7 +139,7 @@ abstract class InitialHintBehaviorState<D> implements ChartBehaviorState<D> {
   }
 
   @protected
-  bool onTapTest(Point<double> localPosition) {
+  bool onTapTest(Offset localPosition) {
     if (_chart == null) {
       return false;
     }

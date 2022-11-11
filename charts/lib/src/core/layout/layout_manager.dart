@@ -61,7 +61,7 @@ abstract class LayoutManager {
   double get marginTop;
 
   /// Returns whether or not [point] is within the draw area bounds.
-  bool withinDrawArea(Point<num> point);
+  bool withinDrawArea(Offset point);
 
   /// Walk through the child views and apply the function passed in.
   void applyToViews(void Function(LayoutView view) apply);

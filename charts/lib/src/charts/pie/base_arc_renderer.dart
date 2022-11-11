@@ -65,7 +65,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         arcList.innerRadius! < config.minHoleWidthForCenterContent) {
       // Return default bounds of 0 size.
       final bounds = chart!.drawAreaBounds;
-      return  Rect.fromLTWH(
+      return Rect.fromLTWH(
         bounds.left + bounds.width / 2,
         bounds.top + bounds.height / 2,
         0,
@@ -77,9 +77,9 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
     // size that will fit within the pie's inner radius.
     final width = (_cosPIOver4 * arcList.innerRadius!).floor();
 
-    return  Rect.fromLTWH(
-      arcList.center!.x - width,
-      arcList.center!.y - width,
+    return Rect.fromLTWH(
+      arcList.center!.dx - width,
+      arcList.center!.dy - width,
       width * 2,
       width * 2,
     );
@@ -119,8 +119,8 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
   /// [seriesId] the series ID.
   ///
   /// [key] the key in the current animated arc list.
-  Point<double>? _getChartPosition(String seriesId, String key) {
-    Point<double>? chartPosition;
+  Offset? _getChartPosition(String seriesId, String key) {
+    Offset? chartPosition;
 
     final arcLists = getArcLists(seriesId: seriesId);
 
@@ -140,9 +140,9 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
           final centerPointRadius = arcList.innerRadius! +
               (arcList.radius! - arcList.innerRadius!) / 2;
 
-          chartPosition = Point<double>(
-            centerPointRadius * cos(centerAngle) + arcList.center!.x,
-            centerPointRadius * sin(centerAngle) + arcList.center!.y,
+          chartPosition = Offset(
+            centerPointRadius * cos(centerAngle) + arcList.center!.dx,
+            centerPointRadius * sin(centerAngle) + arcList.center!.dy,
           );
 
           break;
@@ -237,7 +237,7 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -261,11 +261,11 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
       final innerRadius = arcList.innerRadius!;
       final radius = arcList.radius!;
 
-      final distance = center.distanceTo(chartPoint);
+      final distance = (chartPoint -center).distance;
 
       // Calculate the angle of [chartPoint] from the center of the arcs.
       var chartPointAngle =
-          atan2(chartPoint.y - center.y, chartPoint.x - center.x);
+          atan2(chartPoint.dy - center.dy, chartPoint.dx - center.dx);
 
       // atan2 returns NaN if we are at the exact center of the circle.
       if (chartPointAngle.isNaN) {

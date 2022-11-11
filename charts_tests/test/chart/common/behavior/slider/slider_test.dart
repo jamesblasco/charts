@@ -76,7 +76,7 @@ void main() {
   SliderTester tester;
 
   SliderState _makeBehavior(SelectionTrigger eventTrigger,
-      {Point<double> handleOffset,
+      {Offset handleOffset,
       Rect handleSize,
       double initialDomainValue,
       SliderListenerCallback onChangeCallback,
@@ -101,7 +101,7 @@ void main() {
   }
 
   void _setupChart(
-      {Point<double> forPoint,
+      {Offset forPoint,
       bool isWithinRenderer,
       List<DatumDetails> respondWithDetails}) {
     when(_chart.domainAxis).thenReturn(_domainAxis);
@@ -156,28 +156,28 @@ void main() {
     test('can listen to tap and drag', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 100.0);
+      Offset updatePoint1 = Offset(50.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 100.0);
+      Offset updatePoint2 = Offset(100.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 100.0);
+      Offset endPoint = Offset(120.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -224,29 +224,29 @@ void main() {
     test('slider handle can render at top', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20),
           handlePosition: SliderHandlePosition.top);
 
-      Point<double> startPoint = Point(100.0, 0.0);
+      Offset startPoint = Offset(100.0, 0.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 0.0);
+      Offset updatePoint1 = Offset(50.0, 0.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 0.0);
+      Offset updatePoint2 = Offset(100.0, 0.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 0.0);
+      Offset endPoint = Offset(120.0, 0.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -288,28 +288,28 @@ void main() {
     test('can listen to press hold', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.pressHold,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 100.0);
+      Offset updatePoint1 = Offset(50.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 100.0);
+      Offset updatePoint2 = Offset(100.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 100.0);
+      Offset endPoint = Offset(120.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -356,28 +356,28 @@ void main() {
     test('can listen to long press hold', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.longPressHold,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 100.0);
+      Offset updatePoint1 = Offset(50.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 100.0);
+      Offset updatePoint2 = Offset(100.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 100.0);
+      Offset endPoint = Offset(120.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -424,28 +424,28 @@ void main() {
     test('no position update before long press', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.longPressHold,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 100.0);
+      Offset updatePoint1 = Offset(50.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 100.0);
+      Offset updatePoint2 = Offset(100.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 100.0);
+      Offset endPoint = Offset(120.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -479,29 +479,29 @@ void main() {
     test('can snap to datum', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20),
           snapToDatum: true);
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1]);
 
-      Point<double> updatePoint1 = Point(50.0, 100.0);
+      Offset updatePoint1 = Offset(50.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2]);
 
-      Point<double> updatePoint2 = Point(100.0, 100.0);
+      Offset updatePoint2 = Offset(100.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details3]);
 
-      Point<double> endPoint = Point(120.0, 100.0);
+      Offset endPoint = Offset(120.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -541,7 +541,7 @@ void main() {
       // Simulate onDragEnd. This is where we expect the snap to occur.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
-      expect(tester.domainCenterPoint, equals(Point<int>(90, 100)));
+      expect(tester.domainCenterPoint, equals(Offset(90, 100)));
       expect(tester.domainValue, equals(4.5));
       expect(tester.handleBounds, equals(Rect.fromLTWH(85, 90, 10, 20)));
     });
@@ -551,7 +551,7 @@ void main() {
     test('can set domain position', () {
       // Setup chart matches point with single domain single series.
       final slider = _makeBehavior(SelectionTrigger.tapAndDrag,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20),
           initialDomainValue: 1.0);
 
@@ -561,25 +561,25 @@ void main() {
       _chart.lastLifecycleListener.onAxisConfigured();
 
       // Verify initial position.
-      expect(tester.domainCenterPoint, equals(Point(20.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(20.0, 100.0)));
       expect(tester.domainValue, equals(1.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(15, 90, 10, 20)));
 
       // Move to first domain value.
       slider.moveSliderToDomain(2);
-      expect(tester.domainCenterPoint, equals(Point(40.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(40.0, 100.0)));
       expect(tester.domainValue, equals(2.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(35, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(5);
-      expect(tester.domainCenterPoint, equals(Point(100.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(100.0, 100.0)));
       expect(tester.domainValue, equals(5.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(7.5);
-      expect(tester.domainCenterPoint, equals(Point(150.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(150.0, 100.0)));
       expect(tester.domainValue, equals(7.5));
       expect(tester.handleBounds, equals(Rect.fromLTWH(145, 90, 10, 20)));
     });
@@ -588,7 +588,7 @@ void main() {
         () {
       // Setup chart matches point with single domain single series.
       final slider = _makeBehavior(SelectionTrigger.tapAndDrag,
-          handleOffset: Point<double>(0.0, 0.0),
+          handleOffset: Offset(0.0, 0.0),
           handleSize: Rect.fromLTWH(0, 0, 10, 20),
           initialDomainValue: 1.0,
           handlePosition: SliderHandlePosition.manual);
@@ -599,25 +599,25 @@ void main() {
       _chart.lastLifecycleListener.onAxisConfigured();
 
       // Verify initial position.
-      expect(tester.domainCenterPoint, equals(Point(20.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(20.0, 100.0)));
       expect(tester.domainValue, equals(1.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(15, 190, 10, 20)));
 
       // Move to first domain value.
       slider.moveSliderToDomain(2, measure: 5);
-      expect(tester.domainCenterPoint, equals(Point(40.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(40.0, 100.0)));
       expect(tester.domainValue, equals(2.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(35, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(5, measure: 7);
-      expect(tester.domainCenterPoint, equals(Point(100.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(100.0, 100.0)));
       expect(tester.domainValue, equals(5.0));
       expect(tester.handleBounds, equals(Rect.fromLTWH(95, 130, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(7.5, measure: 3);
-      expect(tester.domainCenterPoint, equals(Point(150.0, 100.0)));
+      expect(tester.domainCenterPoint, equals(Offset(150.0, 100.0)));
       expect(tester.domainValue, equals(7.5));
       expect(tester.handleBounds, equals(Rect.fromLTWH(145, 50, 10, 20)));
     });
@@ -628,7 +628,7 @@ void main() {
       // Setup
       SliderState behavior = _makeBehavior(SelectionTrigger.tapAndDrag);
 
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(
           forPoint: point,
           isWithinRenderer: true,

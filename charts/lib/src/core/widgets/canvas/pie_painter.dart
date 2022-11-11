@@ -51,33 +51,33 @@ class PiePainter {
       final path = Path();
 
       for (final slice in canvasPie.slices) {
-        final innerRadiusStartPoint = Point<double>(
-          innerRadius * cos(slice.startAngle) + center.x,
-          innerRadius * sin(slice.startAngle) + center.y,
+        final innerRadiusStartPoint = Offset(
+          innerRadius * cos(slice.startAngle) + center.dx,
+          innerRadius * sin(slice.startAngle) + center.dy,
         );
 
-        final innerRadiusEndPoint = Point<double>(
-          innerRadius * cos(slice.endAngle) + center.x,
-          innerRadius * sin(slice.endAngle) + center.y,
+        final innerRadiusEndPoint = Offset(
+          innerRadius * cos(slice.endAngle) + center.dx,
+          innerRadius * sin(slice.endAngle) + center.dy,
         );
 
-        final radiusStartPoint = Point<double>(
-          radius * cos(slice.startAngle) + center.x,
-          radius * sin(slice.startAngle) + center.y,
+        final radiusStartPoint = Offset(
+          radius * cos(slice.startAngle) + center.dx,
+          radius * sin(slice.startAngle) + center.dy,
         );
 
-        final radiusEndPoint = Point<double>(
-          radius * cos(slice.endAngle) + center.x,
-          radius * sin(slice.endAngle) + center.y,
+        final radiusEndPoint = Offset(
+          radius * cos(slice.endAngle) + center.dx,
+          radius * sin(slice.endAngle) + center.dy,
         );
 
-        path.moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
+        path.moveTo(innerRadiusStartPoint.dx, innerRadiusStartPoint.dy);
 
-        path.lineTo(radiusStartPoint.x, radiusStartPoint.y);
+        path.lineTo(radiusStartPoint.dx, radiusStartPoint.dy);
 
-        path.moveTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y);
+        path.moveTo(innerRadiusEndPoint.dx, innerRadiusEndPoint.dy);
 
-        path.lineTo(radiusEndPoint.x, radiusEndPoint.y);
+        path.lineTo(radiusEndPoint.dx, radiusEndPoint.dy);
       }
 
       canvas.drawPath(path, paint);

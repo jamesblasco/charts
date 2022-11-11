@@ -16,6 +16,7 @@
 import 'dart:collection' show LinkedHashMap, HashSet;
 import 'dart:math' show Point, Rectangle, max;
 
+import 'package:charts/charts.dart';
 import 'package:charts/charts/bar.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -616,7 +617,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -631,7 +632,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
     if (_prevDomainAxis is OrdinalAxisElement) {
       final domainValue = _prevDomainAxis!
-          .getDomain(renderingVertically ? chartPoint.x : chartPoint.y);
+          .getDomain(renderingVertically ? chartPoint.dx : chartPoint.dy);
 
       // If we have a domainValue for the event point, then find all segments
       // that match it.
@@ -716,7 +717,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   // we can't use the optimized comparison for [OrdinalAxis].
   List<DatumDetails<D>> _getVerticalDetailsForDomainValue(
     D? domainValue,
-    Point<double> chartPoint,
+    Offset chartPoint,
   ) {
     return List<DatumDetails<D>>.from(
       _getSegmentsForDomainValue(
@@ -725,13 +726,13 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       ).map<DatumDetails<D>>((BaseAnimatedBar<D, R> bar) {
         final barBounds = getBoundsForBar(bar.currentBar!)!;
         final segmentDomainDistance =
-            _getDistance(chartPoint.x, barBounds.left, barBounds.right);
+            _getDistance(chartPoint.dx, barBounds.left, barBounds.right);
         final segmentMeasureDistance =
-            _getDistance(chartPoint.y, barBounds.top, barBounds.bottom);
+            _getDistance(chartPoint.dy, barBounds.top, barBounds.bottom);
 
-        final nearestPoint = Point<double>(
-          chartPoint.x.clamp(barBounds.left, barBounds.right).toDouble(),
-          chartPoint.y.clamp(barBounds.top, barBounds.bottom).toDouble(),
+        final nearestPoint = Offset(
+          chartPoint.dx.clamp(barBounds.left, barBounds.right).toDouble(),
+          chartPoint.dy.clamp(barBounds.top, barBounds.bottom).toDouble(),
         );
 
         final relativeDistance = chartPoint.distanceTo(nearestPoint);
@@ -750,7 +751,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
   List<DatumDetails<D>> _getHorizontalDetailsForDomainValue(
     D? domainValue,
-    Point<double> chartPoint,
+    Offset chartPoint,
   ) {
     return List<DatumDetails<D>>.from(
       _getSegmentsForDomainValue(
@@ -759,9 +760,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
       ).map<DatumDetails<D>>((BaseAnimatedBar<D, R> bar) {
         final barBounds = getBoundsForBar(bar.currentBar!)!;
         final segmentDomainDistance =
-            _getDistance(chartPoint.y, barBounds.top, barBounds.bottom);
+            _getDistance(chartPoint.dy, barBounds.top, barBounds.bottom);
         final segmentMeasureDistance =
-            _getDistance(chartPoint.x, barBounds.left, barBounds.right);
+            _getDistance(chartPoint.dx, barBounds.left, barBounds.right);
 
         return DatumDetails<D>(
           series: bar.series,

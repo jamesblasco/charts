@@ -82,26 +82,26 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     AxisOrientation orientation,
     Rect axisBounds,
   ) {
-    Point<num> start;
-    Point<num> end;
+    Offset start;
+    Offset end;
 
     switch (orientation) {
       case AxisOrientation.top:
-        start = axisBounds.bottomLeft.point;
-        end = axisBounds.bottomRight.point;
+        start = axisBounds.bottomLeft;
+        end = axisBounds.bottomRight;
 
         break;
       case AxisOrientation.bottom:
-        start = axisBounds.topLeft.point;
-        end = axisBounds.topRight.point;
+        start = axisBounds.topLeft;
+        end = axisBounds.topRight;
         break;
       case AxisOrientation.right:
-        start = axisBounds.topLeft.point;
-        end = axisBounds.bottomLeft.point;
+        start = axisBounds.topLeft;
+        end = axisBounds.bottomLeft;
         break;
       case AxisOrientation.left:
-        start = axisBounds.topRight.point;
-        end = axisBounds.bottomRight.point;
+        start = axisBounds.topRight;
+        end = axisBounds.bottomRight;
         break;
     }
 

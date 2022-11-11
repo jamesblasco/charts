@@ -101,7 +101,7 @@ abstract class SeriesRenderer<D> extends LayoutView {
   /// will use its own component bounds for filtering out selection events
   /// (usually the chart draw area).
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
-    Point<double> chartPoint,
+    Offset chartPoint,
     bool byDomain,
     Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
@@ -399,14 +399,14 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   /// [bounds] optional override for component bounds. If this is passed, then
   /// we will check whether the point is within these bounds instead of the
   /// component bounds.
-  bool isPointWithinBounds(Point<double> chartPoint, Rect? bounds) {
+  bool isPointWithinBounds(Offset chartPoint, Rect? bounds) {
     // Was it even in the drawArea?
     if (bounds != null) {
-      if (!bounds.containsPoint(chartPoint.offset)) {
+      if (!bounds.containsPoint(chartPoint)) {
         return false;
       }
     } else if (componentBounds == null ||
-        !componentBounds!.containsPoint(chartPoint.offset)) {
+        !componentBounds!.containsPoint(chartPoint)) {
       return false;
     }
 

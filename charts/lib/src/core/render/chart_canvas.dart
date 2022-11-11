@@ -36,7 +36,7 @@ abstract class ChartCanvas {
   /// [stroke] Stroke color of the arc and radius lines.
   /// [strokeWidth] Stroke width of the arc and radius lines.
   void drawCircleSector(
-    Point center,
+    Offset center,
     double radius,
     double innerRadius,
     double startAngle,
@@ -64,7 +64,7 @@ abstract class ChartCanvas {
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
   void drawLine({
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -90,7 +90,7 @@ abstract class ChartCanvas {
   ///
   /// [blendMode] Blend mode to be used when drawing this point on canvas.
   void drawPoint({
-    required Point point,
+    required Offset point,
     required double radius,
     Color? fill,
     Color? stroke,
@@ -109,7 +109,7 @@ abstract class ChartCanvas {
   /// [stroke] and [strokeWidth] configure the color and thickness of the
   /// edges of the polygon. Both must be provided together for a line to appear.
   void drawPolygon({
-    required List<Point> points,
+    required List<Offset> points,
     Rect? clipBounds,
     Color? fill,
     Color? stroke,
@@ -245,8 +245,8 @@ enum LinkOrientation { horizontal, vertical }
 /// [targetLower] The location of the lower link at the target node.
 class Link {
   Link(this.sourceUpper, this.sourceLower, this.targetUpper, this.targetLower);
-  final Point sourceUpper;
-  final Point sourceLower;
-  final Point targetUpper;
-  final Point targetLower;
+  final Offset sourceUpper;
+  final Offset sourceLower;
+  final Offset targetUpper;
+  final Offset targetLower;
 }

@@ -99,7 +99,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(10, 20), false, layout,
+          Offset(10, 20), false, layout,
           selectExactEventLocation: false, selectOverlappingPoints: false);
 
       // Only the point nearest to the event location returned.
@@ -128,7 +128,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(13, 23), false, layout,
+          Offset(13, 23), false, layout,
           selectExactEventLocation: true, selectOverlappingPoints: true);
 
       // Return only points inside the event location and skip other.
@@ -158,7 +158,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(5, 10), false, layout,
+          Offset(5, 10), false, layout,
           selectExactEventLocation: true, selectOverlappingPoints: true);
 
       // Since there are no points inside event, empty list is returned.
@@ -187,7 +187,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(13, 23), false, layout,
+          Offset(13, 23), false, layout,
           selectExactEventLocation: false, selectOverlappingPoints: true);
 
       // Points inside the event location are returned.
@@ -218,7 +218,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(5, 10), false, layout,
+          Offset(5, 10), false, layout,
           selectExactEventLocation: false, selectOverlappingPoints: true);
 
       // There are no points inside, so single nearest point is returned.
@@ -248,7 +248,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(13, 23), false, layout,
+          Offset(13, 23), false, layout,
           selectExactEventLocation: true, selectOverlappingPoints: false);
 
       // Only the nearest point from inside event location is returned.
@@ -278,7 +278,7 @@ void main() {
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
-          Point(5, 10), false, layout,
+          Offset(5, 10), false, layout,
           selectExactEventLocation: true, selectOverlappingPoints: false);
 
       // No points inside event, so empty list is returned.

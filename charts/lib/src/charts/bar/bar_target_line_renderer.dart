@@ -103,13 +103,13 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
 
     if (renderingVertically) {
       chartPosition = NullablePoint(
-        (points[0].x + (points[1].x - points[0].x) / 2).toDouble(),
-        points[0].y.toDouble(),
+        (points[0].dx + (points[1].dx - points[0].dx) / 2).toDouble(),
+        points[0].dy.toDouble(),
       );
     } else {
       chartPosition = NullablePoint(
-        points[0].x.toDouble(),
-        (points[0].y + (points[1].y - points[0].y) / 2).toDouble(),
+        points[0].dx.toDouble(),
+        (points[0].dy + (points[1].dy - points[0].dy) / 2).toDouble(),
       );
     }
 
@@ -254,7 +254,7 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   }
 
   /// Generates a set of points that describe a bar target line.
-  List<Point<double>> _getTargetLinePoints(
+  List<Offset> _getTargetLinePoints(
     D? domainValue,
     ImmutableAxisElement<D> domainAxis,
     double domainWidth,
@@ -333,16 +333,16 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
     final measureStart =
         measureAxis.getLocation(measureValue + measureOffsetValue)!;
 
-    List<Point<double>> points;
+    List<Offset> points;
     if (renderingVertically) {
       points = [
-        Point<double>(domainStart, measureStart),
-        Point<double>(domainEnd, measureStart)
+        Offset(domainStart, measureStart),
+        Offset(domainEnd, measureStart)
       ];
     } else {
       points = [
-        Point<double>(measureStart, domainStart),
-        Point<double>(measureStart, domainEnd)
+        Offset(measureStart, domainStart),
+        Offset(measureStart, domainEnd)
       ];
     }
     return points;
@@ -352,17 +352,17 @@ class BarTargetLineRenderer<D> extends BaseBarRenderer<D,
   Rect getBoundsForBar(_BarTargetLineRendererElement bar) {
     final points = bar.points;
     assert(points.isNotEmpty);
-    var top = points.first.y;
-    var bottom = points.first.y;
-    var left = points.first.x;
-    var right = points.first.x;
+    var top = points.first.dy;
+    var bottom = points.first.dy;
+    var left = points.first.dx;
+    var right = points.first.dx;
     for (final point in points.skip(1)) {
-      top = min(top, point.y);
-      left = min(left, point.x);
-      bottom = max(bottom, point.y);
-      right = max(right, point.x);
+      top = min(top, point.dy);
+      left = min(left, point.dx);
+      bottom = max(bottom, point.dy);
+      right = max(right, point.dx);
     }
-    return  Rect.fromLTWH(left, top, right - left, bottom - top);
+    return Rect.fromLTWH(left, top, right - left, bottom - top);
   }
 }
 
@@ -373,7 +373,7 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
       : points = List.of(other.points),
         roundEndCaps = other.roundEndCaps,
         super.clone();
-  late List<Point<double>> points;
+  late List<Offset> points;
 
   bool roundEndCaps;
 
@@ -389,7 +389,7 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
     final previousPoints = localPrevious.points;
     final targetPoints = localTarget.points;
 
-    late Point<double> lastPoint;
+    late Offset lastPoint;
 
     int pointIndex;
     for (pointIndex = 0; pointIndex < targetPoints.length; pointIndex++) {
@@ -397,24 +397,24 @@ class _BarTargetLineRendererElement extends BaseBarRendererElement {
 
       // If we have more points than the previous line, animate in the new point
       // by starting its measure position at the last known official point.
-      Point<double> previousPoint;
+      Offset previousPoint;
       if (previousPoints.length - 1 >= pointIndex) {
         previousPoint = previousPoints[pointIndex];
         lastPoint = previousPoint;
       } else {
-        previousPoint = Point<double>(targetPoint.x, lastPoint.y);
+        previousPoint = Offset(targetPoint.dx, lastPoint.dy);
       }
 
-      final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
-          previousPoint.x;
+      final x = ((targetPoint.dx - previousPoint.dx) * animationPercent) +
+          previousPoint.dx;
 
-      final y = ((targetPoint.y - previousPoint.y) * animationPercent) +
-          previousPoint.y;
+      final y = ((targetPoint.dy - previousPoint.dy) * animationPercent) +
+          previousPoint.dy;
 
       if (points.length - 1 >= pointIndex) {
-        points[pointIndex] = Point<double>(x, y);
+        points[pointIndex] = Offset(x, y);
       } else {
-        points.add(Point<double>(x, y));
+        points.add(Offset(x, y));
       }
     }
 
@@ -446,12 +446,12 @@ class _AnimatedBarTargetLine<D>
   void animateElementToMeasureAxisPosition(BaseBarRendererElement target) {
     final localTarget = target as _BarTargetLineRendererElement;
 
-    final newPoints = <Point<double>>[];
+    final newPoints = <Offset>[];
     for (var index = 0; index < localTarget.points.length; index++) {
       final targetPoint = localTarget.points[index];
 
       newPoints.add(
-        Point<double>(targetPoint.x, localTarget.measureAxisPosition!),
+        Offset(targetPoint.dx, localTarget.measureAxisPosition!),
       );
     }
     localTarget.points = newPoints;

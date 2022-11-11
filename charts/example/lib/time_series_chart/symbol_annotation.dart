@@ -23,7 +23,7 @@
 /// annotations are drawn at the location of the domain along the chart's domain
 /// axis, in the row for its series. Range annotations are drawn as a range
 /// shape between the domainLowerBound and domainUpperBound positions along the
-/// chart's domain axis. Point annotations are drawn on top of range
+/// chart's domain axis. Offset annotations are drawn on top of range
 /// annotations.
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';

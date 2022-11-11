@@ -164,13 +164,13 @@ class SliderState<D> implements ChartBehaviorState<D> {
   bool _handleDrag = false;
 
   /// Current location of the slider line.
-  Point<double>? _domainCenterPoint;
+  Offset? _domainCenterPoint;
 
   /// Previous location of the slider line.
   ///
   /// This is used to track changes in the position of the slider caused by new
   /// data being drawn on the chart.
-  Point<double>? _previousDomainCenterPoint;
+  Offset? _previousDomainCenterPoint;
 
   /// Bounding box for the slider drag handle.
   Rect? _handleBounds;
@@ -186,18 +186,18 @@ class SliderState<D> implements ChartBehaviorState<D> {
   /// This should be set any time the state of the slider has changed.
   SliderListenerDragState? _dragStateToFireOnPostRender;
 
-  bool _onTapTest(Point<double> chartPoint) {
+  bool _onTapTest(Offset chartPoint) {
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
     _handleDrag = _sliderContainsPoint(chartPoint);
     return _handleDrag;
   }
 
-  bool _onLongPressSelect(Point<double> chartPoint) {
+  bool _onLongPressSelect(Offset chartPoint) {
     _delaySelect = false;
     return _onSelect(chartPoint);
   }
 
-  bool _onSelect(Point<double> chartPoint, [double? ignored]) {
+  bool _onSelect(Offset chartPoint, [double? ignored]) {
     // Skip events that occur outside the drawArea for any series renderer.
     // If the selection is delayed (waiting for long press), then quit early.
     if (!_handleDrag || _delaySelect) {
@@ -217,7 +217,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     return true;
   }
 
-  bool _onDragEnd(Point<double> chartPoint, double __, double ___) {
+  bool _onDragEnd(Offset chartPoint, double __, double ___) {
     // If the selection is delayed (waiting for long press), then quit early.
     if (_delaySelect) {
       return false;
@@ -229,7 +229,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     // instead of the mouse point.
     if (snapToDatum) {
       final details = _chart!.getNearestDatumDetailPerSeries(chartPoint, true);
-      if (details.isNotEmpty && details[0].chartPosition!.x != null) {
+      if (details.isNotEmpty && details[0].chartPosition!.dx != null) {
         // Only trigger an animating draw cycle if we need to move the slider.
         if (_domainValue != details[0].domain) {
           _moveSliderToDomain(details[0].domain);
@@ -256,8 +256,8 @@ class SliderState<D> implements ChartBehaviorState<D> {
     return false;
   }
 
-  bool _sliderContainsPoint(Point<double> chartPoint) {
-    return _handleBounds!.containsPoint(chartPoint.offset);
+  bool _sliderContainsPoint(Offset chartPoint) {
+    return _handleBounds!.containsPoint(chartPoint);
   }
 
   /// Sets the drag state to "initial" when new data is drawn on the chart.
@@ -286,8 +286,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     final handleBounds = _handleBounds!;
     final domainCenterPoint = _domainCenterPoint!;
     final element = _SliderElement<D>(
-      domainCenterPoint:
-          Point<double>(domainCenterPoint.x, domainCenterPoint.y),
+      domainCenterPoint: Offset(domainCenterPoint.dx, domainCenterPoint.dy),
       buttonBounds: handleBounds,
       fill: _style.fillColor,
       stroke: _style.strokeColor,
@@ -327,7 +326,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
 
     // Fire the event.
     _sliderEventListener.onChange!(
-      Point<double>(_domainCenterPoint!.x, _domainCenterPoint!.y),
+      Offset(_domainCenterPoint!.dx, _domainCenterPoint!.dy),
       _domainValue,
       _roleId,
       dragState,
@@ -350,23 +349,23 @@ class SliderState<D> implements ChartBehaviorState<D> {
   ///
   /// Returns whether or not the position actually changed. This will generally
   /// be false if the mouse was dragged outside of the domain axis viewport.
-  bool _moveSliderToPoint(Point<double> point) {
+  bool _moveSliderToPoint(Offset point) {
     var positionChanged = false;
 
     if (_chart != null) {
       final viewBounds = _view.componentBounds;
 
       // Clamp the position to the edge of the viewport.
-      final positionX = point.x.clamp(viewBounds.left, viewBounds.right);
+      final positionX = point.dx.clamp(viewBounds.left, viewBounds.right);
 
       final previousYPosition = _handleBounds == null
           ? 0.0
           : _handleBounds!.top +
               _style.handleSize.height / 2 -
-              _style.handleOffset.y;
+              _style.handleOffset.dy;
 
-      var positionY = point.y;
-      if (point.y == 0) {
+      var positionY = point.dy;
+      if (point.dy == 0) {
         if (_handleBounds == null) {
           positionY = viewBounds.bottom.toDouble();
         } else {
@@ -378,7 +377,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       positionY = positionY.clamp(viewBounds.top, viewBounds.bottom).toDouble();
 
       final positionXChanged = _previousDomainCenterPoint != null &&
-          positionX != _previousDomainCenterPoint!.x;
+          positionX != _previousDomainCenterPoint!.dx;
 
       final positionYChanged =
           _style.handlePosition == SliderHandlePosition.manual &&
@@ -391,9 +390,9 @@ class SliderState<D> implements ChartBehaviorState<D> {
       _domainValue = _chart!.domainAxis!.getDomain(positionX);
 
       if (_domainCenterPoint != null) {
-        _domainCenterPoint = Point<double>(positionX, _domainCenterPoint!.y);
+        _domainCenterPoint = Offset(positionX, _domainCenterPoint!.dy);
       } else {
-        _domainCenterPoint = Point<double>(
+        _domainCenterPoint = Offset(
           positionX,
           viewBounds.top + viewBounds.height / 2,
         );
@@ -402,7 +401,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       num handleReferenceY;
       switch (_style.handlePosition) {
         case SliderHandlePosition.middle:
-          handleReferenceY = _domainCenterPoint!.y;
+          handleReferenceY = _domainCenterPoint!.dy;
           break;
         case SliderHandlePosition.top:
           handleReferenceY = viewBounds.top;
@@ -417,10 +416,12 @@ class SliderState<D> implements ChartBehaviorState<D> {
 
       // Move the slider handle along the domain axis.
       _handleBounds = Rect.fromLTWH(
-        _domainCenterPoint!.x -
+        _domainCenterPoint!.dx -
             _style.handleSize.width / 2 +
-            _style.handleOffset.x,
-        handleReferenceY - _style.handleSize.height / 2 + _style.handleOffset.y,
+            _style.handleOffset.dx,
+        handleReferenceY -
+            _style.handleSize.height / 2 +
+            _style.handleOffset.dy,
         _style.handleSize.width,
         _style.handleSize.height,
       );
@@ -450,7 +451,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     final y =
         measure != null ? _chart!.getMeasureAxis().getLocation(measure)! : 0.0;
 
-    return _moveSliderToPoint(Point<double>(x, y));
+    return _moveSliderToPoint(Offset(x, y));
   }
 
   /// Programmatically moves the slider to the location of [domain] on the
@@ -528,7 +529,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
 class SliderStyle extends Equatable {
   SliderStyle({
     Color? fillColor,
-    this.handleOffset = const Point<double>(0, 0),
+    this.handleOffset = const Offset(0, 0),
     this.handleSize = const Rect.fromLTWH(0, 0, 10, 20),
     Color? strokeColor,
     this.handlePosition = SliderHandlePosition.middle,
@@ -543,7 +544,7 @@ class SliderStyle extends Equatable {
   /// determines where the slider handle will be rendered. The offset will be
   /// calculated relative to its default position at the vertical and horizontal
   /// center of the slider line.
-  Point<double> handleOffset;
+  Offset handleOffset;
 
   /// The vertical position for the slider handle.
   SliderHandlePosition handlePosition;
@@ -626,8 +627,8 @@ class _SliderLayoutView<D> extends LayoutView {
 
     canvas.drawLine(
       points: [
-        Point<num>(sliderElement.domainCenterPoint.x, _drawAreaBounds.top),
-        Point<num>(sliderElement.domainCenterPoint.x, _drawAreaBounds.bottom),
+        Offset(sliderElement.domainCenterPoint.dx, _drawAreaBounds.top),
+        Offset(sliderElement.domainCenterPoint.dx, _drawAreaBounds.bottom),
       ],
       stroke: sliderElement.stroke,
       strokeWidth: sliderElement.strokeWidth,
@@ -658,7 +659,7 @@ class _SliderElement<D> {
     required this.stroke,
     required this.strokeWidth,
   });
-  Point<double> domainCenterPoint;
+  Offset domainCenterPoint;
   Rect buttonBounds;
   Color fill;
   Color stroke;
@@ -682,13 +683,13 @@ class _SliderElement<D> {
     final previousPoint = previous.domainCenterPoint;
     final targetPoint = target.domainCenterPoint;
 
-    final x = ((targetPoint.x - previousPoint.x) * animationPercent) +
-        previousPoint.x;
+    final x = ((targetPoint.dx - previousPoint.dx) * animationPercent) +
+        previousPoint.dx;
 
-    final y = ((targetPoint.y - previousPoint.y) * animationPercent) +
-        previousPoint.y;
+    final y = ((targetPoint.dy - previousPoint.dy) * animationPercent) +
+        previousPoint.dy;
 
-    domainCenterPoint = Point<double>(x, y);
+    domainCenterPoint = Offset(x, y);
 
     final previousBounds = previous.buttonBounds;
     final targetBounds = target.buttonBounds;
@@ -788,15 +789,15 @@ class SliderEventListener<D> {
 
 /// Callback function for [SliderState] drag events.
 ///
-/// [point] is the current position of the slider line. [point.x] is the domain
-/// position, and [point.y] is the position of the center of the line on the
+/// [point] is the current position of the slider line. [point.dx] is the domain
+/// position, and [point.dy] is the position of the center of the line on the
 /// measure axis.
 ///
 /// [domain] is the domain value at the slider position.
 ///
 /// [dragState] indicates the current state of a drag event.
 typedef SliderListenerCallback<D> = void Function(
-  Point<double> point,
+  Offset point,
   D? domain,
   String roleId,
   SliderListenerDragState dragState,
@@ -825,7 +826,7 @@ class SliderTester<D> {
   SliderTester(this.behavior);
   final SliderState<D> behavior;
 
-  Point<double>? get domainCenterPoint => behavior._domainCenterPoint;
+  Offset? get domainCenterPoint => behavior._domainCenterPoint;
 
   D? get domainValue => behavior._domainValue;
 

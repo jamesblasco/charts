@@ -70,7 +70,7 @@ void main() {
   }
 
   void _setupChart(
-      {Point<double> forPoint,
+      {Offset forPoint,
       bool isWithinRenderer,
       List<DatumDetails<String>> respondWithDetails,
       List<MutableSeries<String>> seriesList}) {
@@ -146,7 +146,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(
           forPoint: point,
           isWithinRenderer: true,
@@ -170,7 +170,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.action, SelectionTrigger.tap,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(
           forPoint: point,
           isWithinRenderer: true,
@@ -193,28 +193,28 @@ void main() {
       _makeBehavior(SelectionModelType.info, SelectionTrigger.pressHold,
           selectClosestSeries: true);
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1],
           seriesList: [_series1]);
 
-      Point<double> updatePoint1 = Point(200.0, 100.0);
+      Offset updatePoint1 = Offset(200.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details1],
           seriesList: [_series1]);
 
-      Point<double> updatePoint2 = Point(300.0, 100.0);
+      Offset updatePoint2 = Offset(300.0, 100.0);
       _setupChart(
           forPoint: updatePoint2,
           isWithinRenderer: true,
           respondWithDetails: [_details2],
           seriesList: [_series1]);
 
-      Point<double> endPoint = Point(400.0, 100.0);
+      Offset endPoint = Offset(400.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -247,21 +247,21 @@ void main() {
       _makeBehavior(SelectionModelType.info, SelectionTrigger.longPressHold,
           selectClosestSeries: true);
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1],
           seriesList: [_series1]);
 
-      Point<double> updatePoint1 = Point(200.0, 100.0);
+      Offset updatePoint1 = Offset(200.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2],
           seriesList: [_series1]);
 
-      Point<double> endPoint = Point(400.0, 100.0);
+      Offset endPoint = Offset(400.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -298,21 +298,21 @@ void main() {
       _makeBehavior(SelectionModelType.info, SelectionTrigger.longPressHold,
           selectClosestSeries: true);
 
-      Point<double> startPoint = Point(100.0, 100.0);
+      Offset startPoint = Offset(100.0, 100.0);
       _setupChart(
           forPoint: startPoint,
           isWithinRenderer: true,
           respondWithDetails: [_details1],
           seriesList: [_series1]);
 
-      Point<double> updatePoint1 = Point(200.0, 100.0);
+      Offset updatePoint1 = Offset(200.0, 100.0);
       _setupChart(
           forPoint: updatePoint1,
           isWithinRenderer: true,
           respondWithDetails: [_details2],
           seriesList: [_series1]);
 
-      Point<double> endPoint = Point(400.0, 100.0);
+      Offset endPoint = Offset(400.0, 100.0);
       _setupChart(
           forPoint: endPoint,
           isWithinRenderer: true,
@@ -337,7 +337,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
         _details1Series2,
@@ -364,7 +364,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectionMode: SelectionMode.single, selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
         _details1Series2,
@@ -387,7 +387,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: false);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
         _details1Series2,
@@ -414,7 +414,7 @@ void main() {
 
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
         _details1Series2,
@@ -440,7 +440,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: true, maximumDomainDistance: 1);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(forPoint: point, isWithinRenderer: true, respondWithDetails: [
         _details1,
         _details1Series2,
@@ -463,7 +463,7 @@ void main() {
       _makeBehavior(SelectionModelType.info, SelectionTrigger.hover,
           selectionMode: SelectionMode.selectOverlapping,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       final series = MutableSeries<String>(Series(
           id: 'overlappingSeries',
           data: ['datum1', 'datum2'],
@@ -512,7 +512,7 @@ void main() {
       SelectNearestState behavior = _makeBehavior(
           SelectionModelType.info, SelectionTrigger.hover,
           selectClosestSeries: true);
-      Point<double> point = Point(100.0, 100.0);
+      Offset point = Offset(100.0, 100.0);
       _setupChart(
           forPoint: point,
           isWithinRenderer: true,

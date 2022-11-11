@@ -36,7 +36,7 @@ class ChartGestureDetector {
   bool _isDragging = false;
 
   Timer? _longPressTimer;
-  Point<double>? _lastTapPoint;
+  Offset? _lastTapPoint;
   double? _lastScale;
 
   late ChartContainerRenderObject Function() _containerResolver;
@@ -75,7 +75,7 @@ class ChartGestureDetector {
   void onTapDown(TapDownDetails d) {
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
-    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Offset(localPosition.dx, localPosition.dy);
     container.gestureProxy.onTapTest(_lastTapPoint!);
 
     // Kick off a timer to see if this is a LongPress.
@@ -92,7 +92,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
-    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Offset(localPosition.dx, localPosition.dy);
     container.gestureProxy.onTap(_lastTapPoint!);
   }
 
@@ -106,7 +106,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.focalPoint);
-    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Offset(localPosition.dx, localPosition.dy);
 
     _isDragging = container.gestureProxy.onDragStart(_lastTapPoint!);
   }
@@ -118,7 +118,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.focalPoint);
-    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Offset(localPosition.dx, localPosition.dy);
     _lastScale = d.scale;
 
     container.gestureProxy.onDragUpdate(_lastTapPoint!, d.scale);

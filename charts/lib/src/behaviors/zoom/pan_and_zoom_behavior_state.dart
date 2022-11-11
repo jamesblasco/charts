@@ -16,6 +16,7 @@
 import 'dart:math' show min, max, Point;
 
 import 'package:charts/behaviors.dart';
+import 'package:charts/charts.dart';
 import 'package:meta/meta.dart' show protected;
 
 /// Adds domain axis panning and zooming support to the chart.
@@ -51,7 +52,7 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
   final _maxScalingFactor = 5.0;
 
   @override
-  bool onDragStart(Point<double> localPosition) {
+  bool onDragStart(Offset localPosition) {
     if (chart == null) {
       return false;
     }
@@ -66,7 +67,7 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
   }
 
   @override
-  bool onDragUpdate(Point<double> localPosition, double scale) {
+  bool onDragUpdate(Offset localPosition, double scale) {
     // Swipe gestures should be handled by the [PanBehavior].
     if (scale == 1.0) {
       _isZooming = false;
@@ -113,7 +114,7 @@ class PanAndZoomBehaviorState<D> extends PanBehaviorState<D> {
 
   @override
   bool onDragEnd(
-    Point<double> localPosition,
+    Offset localPosition,
     double scale,
     double pixelsPerSec,
   ) {

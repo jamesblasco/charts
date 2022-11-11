@@ -73,7 +73,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   /// Returns null if [pointElement] is missing any of the data bounds, or if
   /// the line connecting them is located entirely outside of [drawBounds].
   @protected
-  List<Point<double>>? computeBoundedPointsForElement(
+  List<Offset>? computeBoundedPointsForElement(
     PointRendererElement<D> pointElement,
     Rect drawBounds,
   ) {
@@ -88,12 +88,12 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
     }
 
     // Construct the points that describe our line p1p2.
-    var p1 = Point<double>(point.xLower!, point.yLower!);
-    var p2 = Point<double>(point.xUpper!, point.yUpper!);
+    var p1 = Offset(point.xLower!, point.yLower!);
+    var p2 = Offset(point.xUpper!, point.yUpper!);
 
     // First check to see if there is no intersection at all between the line
     // p1p2 and [drawBounds].
-    final dataBoundsRect = Rect.fromPoints(p1.offset, p2.offset);
+    final dataBoundsRect = Rect.fromPoints(p1, p2);
     if (!drawBounds.overlaps(dataBoundsRect)) {
       return null;
     }
@@ -103,7 +103,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     // Next, slide p1 along the line p1p2 towards the edge of the draw area if
     // the point is located outside of it.
-    if (!drawBounds.containsPoint(p1.offset)) {
+    if (!drawBounds.containsPoint(p1)) {
       final p = _clampPointAlongLineToBoundingBox(p1, p1p2, drawBounds);
       if (p != null) {
         p1 = p;
@@ -112,7 +112,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     // Next, slide p2 along the line p1p2 towards the edge of the draw area if
     // the point is located outside of it.
-    if (!drawBounds.containsPoint(p2.offset)) {
+    if (!drawBounds.containsPoint(p2)) {
       final p = _clampPointAlongLineToBoundingBox(p2, p1p2, drawBounds);
       if (p != null) {
         p2 = p;
@@ -127,27 +127,27 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   ///
   /// This method assumes that we have already verified that the [line]
   /// intercepts the [bounds] somewhere.
-  Point<double>? _clampPointAlongLineToBoundingBox(
-    Point<double> p1,
+  Offset? _clampPointAlongLineToBoundingBox(
+    Offset p1,
     _Line line,
     Rect bounds,
   ) {
     // The top and bottom edges of the bounds box describe two horizontal lines,
     // with equations y = bounds.top and y = bounds.bottom. We can pass these
     // into a standard line interception method to find our point.
-    if (p1.y < bounds.top) {
+    if (p1.dy < bounds.top) {
       final p = line.intersection(_Line(0, bounds.top));
-      if (p != null && bounds.containsPoint(p.offset)) {
+      if (p != null && bounds.containsPoint(p)) {
         return p;
       }
     }
 
-    if (p1.y > bounds.bottom) {
+    if (p1.dy > bounds.bottom) {
       final p = line.intersection(_Line(0, bounds.bottom));
 
       if (p != null &&
           bounds.containsPoint(
-              Offset(p.x.roundToDouble(), p.y.roundToDouble()))) {
+              Offset(p.dx.roundToDouble(), p.dy.roundToDouble()))) {
         return p;
       }
     }
@@ -158,16 +158,16 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
     // [slope] and [yIntercept]:
     //
     // y = slope * x + yIntercept
-    if (p1.x < bounds.left) {
+    if (p1.dx < bounds.left) {
       final p = line.intersection(_Line.fromVertical(bounds.left));
-      if (p != null && bounds.containsPoint(p.offset)) {
+      if (p != null && bounds.containsPoint(p)) {
         return p;
       }
     }
 
-    if (p1.x > bounds.right) {
+    if (p1.dx > bounds.right) {
       final p = line.intersection(_Line.fromVertical(bounds.right.toDouble()));
-      if (p != null && bounds.containsPoint(p.offset)) {
+      if (p != null && bounds.containsPoint(p)) {
         return p;
       }
     }
@@ -181,17 +181,17 @@ class _Line {
   _Line(this.slope, this.yIntercept, [this.xIntercept]);
 
   /// Creates a line with end points [p1] and [p2].
-  factory _Line.fromPoints(Point<double> p1, Point<double> p2) {
+  factory _Line.fromPoints(Offset p1, Offset p2) {
     // Handle vertical lines.
-    if (p1.x == p2.x) {
-      return _Line.fromVertical(p1.x);
+    if (p1.dx == p2.dx) {
+      return _Line.fromVertical(p1.dx);
     }
 
     // Slope of the line p1p2.
-    final m = (p2.y - p1.y) / (p2.x - p1.x);
+    final m = (p2.dy - p1.dy) / (p2.dx - p1.dx);
 
     // y-intercept of the line p1p2.
-    final b = p1.y - (m * p1.x);
+    final b = p1.dy - (m * p1.dx);
 
     return _Line(m, b);
   }
@@ -220,7 +220,7 @@ class _Line {
   ///
   /// Returns the intersection of this and `other`, or `null` if they don't
   /// intersect.
-  Point<double>? intersection(_Line other) {
+  Offset? intersection(_Line other) {
     // Parallel lines have no intersection.
     if (slope == other.slope || (vertical && other.vertical)) {
       return null;
@@ -230,7 +230,7 @@ class _Line {
     // just plug its xIntercept value into the line equation as x and solve for
     // y.
     if (other.vertical) {
-      return Point<double>(
+      return Offset(
         other.xIntercept!,
         slope! * other.xIntercept! + yIntercept!,
       );
@@ -239,7 +239,7 @@ class _Line {
     // If this line is a vertical line (has undefined slope), then we can just
     // plug its xIntercept value into the line equation as x and solve for y.
     if (vertical) {
-      return Point<double>(
+      return Offset(
         xIntercept!,
         other.slope! * xIntercept! + other.yIntercept!,
       );
@@ -253,6 +253,6 @@ class _Line {
         slope! * (other.yIntercept! - yIntercept!) / (slope! - other.slope!) +
             yIntercept!;
 
-    return Point<double>(x, y);
+    return Offset(x, y);
   }
 }

@@ -133,36 +133,36 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     );
   }
 
-  List<Point<num>> calculateTickPositions(
+  List<Offset> calculateTickPositions(
     TickElement<D> tick,
     AxisOrientation orientation,
     Rect axisBounds,
     Rect drawAreaBounds,
     double tickLength,
   ) {
-    Point<num> tickStart;
-    Point<num> tickEnd;
+    Offset tickStart;
+    Offset tickEnd;
     final tickLocation = tick.location!;
     switch (orientation) {
       case AxisOrientation.top:
         final x = tickLocation;
-        tickStart = Point(x, axisBounds.bottom - tickLength);
-        tickEnd = Point(x, axisBounds.bottom);
+        tickStart = Offset(x, axisBounds.bottom - tickLength);
+        tickEnd = Offset(x, axisBounds.bottom);
         break;
       case AxisOrientation.bottom:
         final x = tickLocation;
-        tickStart = Point(x, axisBounds.top);
-        tickEnd = Point(x, axisBounds.top + tickLength);
+        tickStart = Offset(x, axisBounds.top);
+        tickEnd = Offset(x, axisBounds.top + tickLength);
         break;
       case AxisOrientation.right:
         final y = tickLocation;
-        tickStart = Point(axisBounds.left, y);
-        tickEnd = Point(axisBounds.left + tickLength, y);
+        tickStart = Offset(axisBounds.left, y);
+        tickEnd = Offset(axisBounds.left + tickLength, y);
         break;
       case AxisOrientation.left:
         final y = tickLocation;
-        tickStart = Point(axisBounds.right - tickLength, y);
-        tickEnd = Point(axisBounds.right, y);
+        tickStart = Offset(axisBounds.right - tickLength, y);
+        tickEnd = Offset(axisBounds.right, y);
         break;
     }
     return [tickStart, tickEnd];

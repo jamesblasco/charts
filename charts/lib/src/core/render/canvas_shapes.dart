@@ -110,7 +110,7 @@ class CanvasPie {
     this.strokeWidth = 0.0,
   });
   final List<CanvasPieSlice> slices;
-  Point center;
+  Offset center;
   double radius;
   double innerRadius;
 

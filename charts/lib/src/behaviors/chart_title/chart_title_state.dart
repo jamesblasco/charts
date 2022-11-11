@@ -482,8 +482,8 @@ class _ChartTitleLayoutView<D> extends LayoutView {
 
       canvas.drawText(
         _titleTextElement!,
-        labelPoint.x,
-        labelPoint.y,
+        labelPoint.dx,
+        labelPoint.dy,
         rotation: rotation,
       );
     }
@@ -506,8 +506,8 @@ class _ChartTitleLayoutView<D> extends LayoutView {
 
         canvas.drawText(
           _subTitleTextElement!,
-          labelPoint.x,
-          labelPoint.y,
+          labelPoint.dx,
+          labelPoint.dy,
           rotation: rotation,
         );
       }
@@ -551,7 +551,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a label element.
-  Point<double>? _getLabelPosition(
+  Offset? _getLabelPosition(
     bool isPrimaryTitle,
     Rect bounds,
     ChartTitleDirection titleDirection,
@@ -588,7 +588,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   /// Gets the resolved location for a title in the top or bottom margin.
-  Point<double> _getHorizontalLabelPosition(
+  Offset _getHorizontalLabelPosition(
     bool isPrimaryTitle,
     Rect bounds,
     ChartTitleDirection titleDirection,
@@ -660,11 +660,11 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       labelY = bounds.bottom - padding;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   /// Gets the resolved location for a title in the left or right margin.
-  Point<double> _getVerticalLabelPosition(
+  Offset _getVerticalLabelPosition(
     bool isPrimaryTitle,
     Rect bounds,
     ChartTitleDirection titleDirection,
@@ -734,7 +734,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
       labelX = bounds.right - padding;
     }
 
-    return Point<double>(labelX, labelY);
+    return Offset(labelX, labelY);
   }
 
   // Helper function that converts [TextStyle] to [TextStyle].

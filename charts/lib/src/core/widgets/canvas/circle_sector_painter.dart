@@ -34,7 +34,7 @@ class CircleSectorPainter {
   static void draw({
     required Canvas canvas,
     required Paint paint,
-    required Point center,
+    required Offset center,
     required double radius,
     required double innerRadius,
     required double startAngle,
@@ -44,31 +44,31 @@ class CircleSectorPainter {
     paint.color = fill!;
     paint.style = PaintingStyle.fill;
 
-    final innerRadiusStartPoint = Point<double>(
-      innerRadius * cos(startAngle) + center.x,
-      innerRadius * sin(startAngle) + center.y,
+    final innerRadiusStartPoint = Offset(
+      innerRadius * cos(startAngle) + center.dx,
+      innerRadius * sin(startAngle) + center.dy,
     );
 
-    final innerRadiusEndPoint = Point<double>(
-      innerRadius * cos(endAngle) + center.x,
-      innerRadius * sin(endAngle) + center.y,
+    final innerRadiusEndPoint = Offset(
+      innerRadius * cos(endAngle) + center.dx,
+      innerRadius * sin(endAngle) + center.dy,
     );
 
-    final radiusStartPoint = Point<double>(
-      radius * cos(startAngle) + center.x,
-      radius * sin(startAngle) + center.y,
+    final radiusStartPoint = Offset(
+      radius * cos(startAngle) + center.dx,
+      radius * sin(startAngle) + center.dy,
     );
 
-    final centerOffset = Offset(center.x.toDouble(), center.y.toDouble());
+    final centerOffset = Offset(center.dx.toDouble(), center.dy.toDouble());
 
     final isFullCircle = endAngle - startAngle == 2 * pi;
 
     final midpointAngle = (endAngle + startAngle) / 2;
 
     final path = Path()
-      ..moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
+      ..moveTo(innerRadiusStartPoint.dx, innerRadiusStartPoint.dy);
 
-    path.lineTo(radiusStartPoint.x, radiusStartPoint.y);
+    path.lineTo(radiusStartPoint.dx, radiusStartPoint.dy);
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
@@ -93,7 +93,7 @@ class CircleSectorPainter {
       );
     }
 
-    path.lineTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y);
+    path.lineTo(innerRadiusEndPoint.dx, innerRadiusEndPoint.dy);
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
@@ -120,7 +120,7 @@ class CircleSectorPainter {
 
     // Drawing two copies of this line segment, before and after the arcs,
     // ensures that the path actually gets closed correctly.
-    path.lineTo(radiusStartPoint.x, radiusStartPoint.y);
+    path.lineTo(radiusStartPoint.dx, radiusStartPoint.dy);
 
     canvas.drawPath(path, paint);
   }

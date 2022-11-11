@@ -96,7 +96,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
         _listener = GestureListener(
           onHover: hoverEventDelay == null
               ? _onSelect
-              : throttle<Point<double>, bool>(
+              : throttle<Offset, bool>(
                   _onSelect,
                   delay: Duration(milliseconds: hoverEventDelay!),
                   defaultReturn: false,
@@ -143,18 +143,18 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
 
   bool _delaySelect = false;
 
-  bool _onTapTest(Point<double> chartPoint) {
+  bool _onTapTest(Offset chartPoint) {
     // If the tap is within the drawArea, then claim the event from others.
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
     return _chart!.pointWithinRenderer(chartPoint);
   }
 
-  bool _onLongPressSelect(Point<double> chartPoint) {
+  bool _onLongPressSelect(Offset chartPoint) {
     _delaySelect = false;
     return _onSelect(chartPoint);
   }
 
-  bool _onSelect(Point<double> chartPoint, [double? ignored]) {
+  bool _onSelect(Offset chartPoint, [double? ignored]) {
     // If _chart has not yet been attached, then quit.
     if (_chart == null) return false;
 
@@ -228,7 +228,7 @@ class SelectNearestState<D> implements ChartBehaviorState<D> {
     }
   }
 
-  bool _onDeselectAll(Point<double> _, double __, double ___) {
+  bool _onDeselectAll(Offset _, double __, double ___) {
     // If the selection is delayed (waiting for long press), then quit early.
     if (_delaySelect) {
       return false;
