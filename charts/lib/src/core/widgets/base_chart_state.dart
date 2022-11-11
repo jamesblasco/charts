@@ -32,7 +32,6 @@ class BaseChartState<D> extends State<BaseChart<D>>
     implements ChartState {
   // Animation
   late AnimationController _animationController;
-  double _animationValue = 0;
 
   BaseChart<D>? _oldWidget;
 
@@ -88,11 +87,11 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
   /// Builds the common chart canvas widget.
   Widget _buildChartContainer() {
-    final chartContainer = ChartContainer<D>(
+    final chartContainer = ChartCustomPaint<D>(
       oldChartWidget: _oldWidget,
       chartWidget: widget,
       chartState: this,
-      animationValue: _animationValue,
+      animationValue: _animationController.value,
       rtl: Directionality.of(context) == TextDirection.rtl,
       rtlSpec: widget.rtlSpec,
       userManagedState: widget.userManagedState,
@@ -161,13 +160,10 @@ class BaseChartState<D> extends State<BaseChart<D>>
   void _playAnimation(Duration duration) {
     _animationController.duration = duration;
     _animationController.forward(from: (duration == Duration.zero) ? 1.0 : 0.0);
-    _animationValue = _animationController.value;
   }
 
   void _animationTick() {
-    setState(() {
-      _animationValue = _animationController.value;
-    });
+    setState(() {});
   }
 
   /// Get animation controller to be used by [behavior].

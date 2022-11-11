@@ -316,10 +316,10 @@ class LayoutManagerImpl implements LayoutManager {
     _MeasuredSizes? previousMeasurements,
     required bool useMax,
   }) {
-    final maxLeftWidth = config.leftSpec.getMaxPixels(width);
-    final maxRightWidth = config.rightSpec.getMaxPixels(width);
-    final maxBottomHeight = config.bottomSpec.getMaxPixels(height);
-    final maxTopHeight = config.topSpec.getMaxPixels(height);
+    final maxLeftWidth = config.margin.left.getMaxPixels(width);
+    final maxRightWidth = config.margin.right.getMaxPixels(width);
+    final maxBottomHeight = config.margin.bottom.getMaxPixels(height);
+    final maxTopHeight = config.margin.top.getMaxPixels(height);
 
     // Assume the full width and height of the chart is available when measuring
     // for the first time but adjust the maximum if margin spec is set.
@@ -340,7 +340,7 @@ class LayoutManagerImpl implements LayoutManager {
       fullHeight: height,
     );
 
-    leftWidth = max(leftSizes.total, config.leftSpec.getMinPixels(width));
+    leftWidth = max(leftSizes.total, config.margin.left.getMinPixels(width));
 
     final rightSizes = RightMarginLayoutStrategy().measure(
       rightViews,
@@ -348,7 +348,7 @@ class LayoutManagerImpl implements LayoutManager {
       height: adjustedHeight,
       fullHeight: height,
     );
-    rightWidth = max(rightSizes.total, config.rightSpec.getMinPixels(width));
+    rightWidth = max(rightSizes.total, config.margin.right.getMinPixels(width));
 
     final adjustedWidth = width - leftWidth - rightWidth;
 
@@ -359,7 +359,7 @@ class LayoutManagerImpl implements LayoutManager {
       fullWidth: width,
     );
     bottomHeight =
-        max(bottomSizes.total, config.bottomSpec.getMinPixels(height));
+        max(bottomSizes.total, config.margin.bottom.getMinPixels(height));
 
     final topSizes = TopMarginLayoutStrategy().measure(
       topViews,
@@ -367,7 +367,7 @@ class LayoutManagerImpl implements LayoutManager {
       width: adjustedWidth,
       fullWidth: width,
     );
-    topHeight = max(topSizes.total, config.topSpec.getMinPixels(height));
+    topHeight = max(topSizes.total, config.margin.top.getMinPixels(height));
 
     return _MeasuredSizes(
       leftWidth: leftWidth,

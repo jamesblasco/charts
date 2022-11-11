@@ -1127,12 +1127,12 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     // [Rectangle]. Clamp both ends to be within the draw area.
     final drawBounds = this.drawBounds!;
     final left = isRtl
-        ? clamp(extent.end, drawBounds.left, drawBounds.right)
-        : clamp(extent.start, drawBounds.left, drawBounds.right);
+        ? extent.end.clamp(drawBounds.left, drawBounds.right)
+        : extent.end.clamp(drawBounds.left, drawBounds.right);
 
     final right = isRtl
-        ? clamp(extent.start, drawBounds.left, drawBounds.right)
-        : clamp(extent.end, drawBounds.left, drawBounds.right);
+        ? extent.start.clamp(drawBounds.left, drawBounds.right)
+        : extent.end.clamp(drawBounds.left, drawBounds.right);
 
     return Rectangle<num>(
       left,

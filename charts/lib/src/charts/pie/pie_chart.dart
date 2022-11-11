@@ -32,10 +32,7 @@ class PieRenderChart<D> extends BaseRenderChart<D> {
   PieRenderChart({LayoutConfig? layoutConfig})
       : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
-    topSpec: MarginSpec.fromPixel(minPixel: 20),
-    bottomSpec: MarginSpec.fromPixel(minPixel: 20),
-    leftSpec: MarginSpec.fromPixel(minPixel: 20),
-    rightSpec: MarginSpec.fromPixel(minPixel: 20),
+    margin: LayoutMargin.all(LayoutValue.between(minPixel: 20)),
   );
 
   @override

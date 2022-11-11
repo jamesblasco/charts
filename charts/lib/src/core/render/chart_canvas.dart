@@ -18,8 +18,6 @@ import 'dart:math' show Point, Rectangle;
 import 'package:charts/core.dart';
 
 abstract class ChartCanvas {
-  /// Get [GraphicsFactory] for creating native graphics elements.
-  GraphicsFactory get graphicsFactory;
 
   /// Set the name of the view doing the rendering for debugging purposes,
   /// or null when we believe rendering is complete.

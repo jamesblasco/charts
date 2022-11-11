@@ -121,7 +121,7 @@ class _SymbolCustomPaint extends CustomPainter {
         Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
     final commonColor = color;
     symbolRenderer.paint(
-      FlutterChartCanvas(canvas, FlutterGraphicsFactory(context)),
+      FlutterChartCanvas(canvas),
       bounds,
       fillColor: commonColor,
       strokeColor: commonColor,

@@ -20,8 +20,9 @@ import 'package:flutter/rendering.dart' hide AxisDirection;
 import 'package:flutter/scheduler.dart';
 
 /// Widget that inflates to a [CustomPaint] that implements common [ChartContext].
-class ChartContainer<D> extends CustomPaint {
-  const ChartContainer({
+class ChartCustomPaint<D> extends CustomPaint {
+  const ChartCustomPaint({
+    super.key,
     this.oldChartWidget,
     required this.chartWidget,
     required this.chartState,
@@ -64,7 +65,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   bool _exploreMode = false;
   List<A11yNode>? _a11yNodes;
 
-  void reconfigure(ChartContainer<D> config, BuildContext context) {
+  void reconfigure(ChartCustomPaint<D> config, BuildContext context) {
     _chartState = config.chartState;
 
     _dateTimeFactory = (config.chartWidget is TimeSeriesChart)
@@ -324,7 +325,7 @@ class ChartContainerCustomPaint extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Performance.time('chartsPaint');
-    final chartsCanvas = FlutterChartCanvas(canvas, chart.graphicsFactory!);
+    final chartsCanvas = FlutterChartCanvas(canvas);
     chart.paint(chartsCanvas);
     Performance.timeEnd('chartsPaint');
   }

@@ -43,7 +43,7 @@ class ChartGestureDetector {
 
   GestureDetector makeWidget(
     BuildContext context,
-    ChartContainer<dynamic> chartContainer,
+    ChartCustomPaint<dynamic> chartContainer,
     Set<GestureType> desiredGestures,
   ) {
     _containerResolver = () {

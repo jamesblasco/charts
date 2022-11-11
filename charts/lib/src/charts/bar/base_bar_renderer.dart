@@ -730,8 +730,8 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
             _getDistance(chartPoint.y.round(), barBounds.top, barBounds.bottom);
 
         final nearestPoint = Point<double>(
-          clamp(chartPoint.x, barBounds.left, barBounds.right).toDouble(),
-          clamp(chartPoint.y, barBounds.top, barBounds.bottom).toDouble(),
+          chartPoint.x.clamp(barBounds.left, barBounds.right).toDouble(),
+          chartPoint.y.clamp(barBounds.top, barBounds.bottom).toDouble(),
         );
 
         final relativeDistance = chartPoint.distanceTo(nearestPoint);

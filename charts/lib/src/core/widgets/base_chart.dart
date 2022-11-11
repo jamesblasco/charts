@@ -234,7 +234,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// Gets distinct set of gestures this chart will subscribe to.
   ///
   /// This is needed to allow setup of the [GestureDetector] widget with only
-  /// gestures we need to listen to and it must wrap [ChartContainer] widget.
+  /// gestures we need to listen to and it must wrap [ChartCustomPaint] widget.
   /// Gestures are then setup to be proxied in [BaseRenderChart] and that is
   /// held by [ChartContainerRenderObject].
   Set<GestureType> getDesiredGestures(BaseChartState<D> chartState) {

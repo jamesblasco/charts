@@ -13,27 +13,64 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:equatable/equatable.dart';
+
 /// Collection of configurations that apply to the [LayoutManager].
-class LayoutConfig {
+class LayoutConfig extends Equatable {
   /// Create a new [LayoutConfig] used by [DynamicLayoutManager].
   LayoutConfig({
-    MarginSpec? leftSpec,
-    MarginSpec? rightSpec,
-    MarginSpec? topSpec,
-    MarginSpec? bottomSpec,
-  })  : leftSpec = leftSpec ?? MarginSpec.defaultSpec,
-        rightSpec = rightSpec ?? MarginSpec.defaultSpec,
-        topSpec = topSpec ?? MarginSpec.defaultSpec,
-        bottomSpec = bottomSpec ?? MarginSpec.defaultSpec;
-  final MarginSpec leftSpec;
-  final MarginSpec rightSpec;
-  final MarginSpec topSpec;
-  final MarginSpec bottomSpec;
+    LayoutMargin? margin,
+  }) : margin = margin ?? LayoutMargin.all(LayoutValue(50));
+
+  final LayoutMargin margin;
+
+  @override
+  List<Object?> get props => [margin];
+}
+
+class LayoutMargin extends Equatable {
+  const LayoutMargin({
+    this.top = LayoutValue.zero,
+    this.left = LayoutValue.zero,
+    this.right = LayoutValue.zero,
+    this.bottom = LayoutValue.zero,
+  });
+
+  const LayoutMargin.symetric({LayoutValue? horizontal, LayoutValue? vertical})
+      : top = vertical ?? LayoutValue.zero,
+        left = horizontal ?? LayoutValue.zero,
+        right = horizontal ?? LayoutValue.zero,
+        bottom = vertical ?? LayoutValue.zero;
+
+  const LayoutMargin.all(LayoutValue? value)
+      : top = value ?? LayoutValue.zero,
+        left = value ?? LayoutValue.zero,
+        right = value ?? LayoutValue.zero,
+        bottom = value ?? LayoutValue.zero;
+
+  static const LayoutMargin zero = LayoutMargin.all(LayoutValue.zero);
+
+  final LayoutValue top;
+  final LayoutValue left;
+  final LayoutValue right;
+  final LayoutValue bottom;
+
+  @override
+  List<Object?> get props => [top, left, right, bottom];
 }
 
 /// Specs that applies to one margin.
-class MarginSpec {
-  const MarginSpec._internal(
+class LayoutValue extends Equatable {
+  /// Create [LayoutValue] with a fixed pixel size [pixels].
+  ///
+  /// [pixels] if set must be greater than or equal to 0.
+  factory LayoutValue(int? pixels) {
+    // Require require or higher setting if set
+    assert(pixels == null || pixels >= 0);
+    return LayoutValue._internal(pixels, pixels, null, null);
+  }
+
+  const LayoutValue._internal(
     int? minPixel,
     int? maxPixel,
     int? minPercent,
@@ -43,12 +80,12 @@ class MarginSpec {
         _minPercent = minPercent,
         _maxPercent = maxPercent;
 
-  /// Create [MarginSpec] that specifies min/max pixels.
+  /// Create [LayoutValue] that specifies min/max pixels.
   ///
   /// [minPixel] if set must be greater than or equal to 0 and less than max if
   /// it is also set.
   /// [maxPixel] if set must be greater than or equal to 0.
-  factory MarginSpec.fromPixel({int? minPixel, int? maxPixel}) {
+  factory LayoutValue.between({int? minPixel, int? maxPixel}) {
     // Require zero or higher settings if set
     assert(minPixel == null || minPixel >= 0);
     assert(maxPixel == null || maxPixel >= 0);
@@ -58,25 +95,15 @@ class MarginSpec {
       assert(minPixel <= maxPixel);
     }
 
-    return MarginSpec._internal(minPixel, maxPixel, null, null);
+    return LayoutValue._internal(minPixel, maxPixel, null, null);
   }
 
-  /// Create [MarginSpec] with a fixed pixel size [pixels].
-  ///
-  /// [pixels] if set must be greater than or equal to 0.
-  factory MarginSpec.fixedPixel(int? pixels) {
-    // Require require or higher setting if set
-    assert(pixels == null || pixels >= 0);
-
-    return MarginSpec._internal(pixels, pixels, null, null);
-  }
-
-  /// Create [MarginSpec] that specifies min/max percentage.
+  /// Create [LayoutValue] that specifies min/max percentage.
   ///
   /// [minPercent] if set must be between 0 and 100 inclusive. If [maxPercent]
   /// is also set, then must be less than [maxPercent].
   /// [maxPercent] if set must be between 0 and 100 inclusive.
-  factory MarginSpec.fromPercent({int? minPercent, int? maxPercent}) {
+  factory LayoutValue.relativeBetween({int? minPercent, int? maxPercent}) {
     // Percent must be within 0 to 100
     assert(minPercent == null || (minPercent >= 0 && minPercent <= 100));
     assert(maxPercent == null || (maxPercent >= 0 && maxPercent <= 100));
@@ -86,11 +113,8 @@ class MarginSpec {
       assert(minPercent <= maxPercent);
     }
 
-    return MarginSpec._internal(null, null, minPercent, maxPercent);
+    return LayoutValue._internal(null, null, minPercent, maxPercent);
   }
-
-  /// [MarginSpec] that has max of 50 percent.
-  static const defaultSpec = MarginSpec._internal(null, null, null, 50);
 
   final int? _minPixel;
   final int? _maxPixel;
@@ -124,4 +148,9 @@ class MarginSpec {
       return totalPixels;
     }
   }
+
+  static const zero = LayoutValue._internal(0, 0, null, null);
+
+  @override
+  List<Object?> get props => [_minPixel, _maxPixel, _minPercent, _maxPercent];
 }

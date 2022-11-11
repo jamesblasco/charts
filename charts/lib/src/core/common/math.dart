@@ -36,17 +36,6 @@ bool withinBounds(
   return value + epsilon >= lowerBound && value - epsilon <= upperBound;
 }
 
-/// Takes a number and clamps it to within the provided bounds.
-///
-/// Returns the input number if it is within bounds, or the nearest number
-/// within the bounds.
-///
-/// [value] The input number.
-/// [minValue] The minimum value to return.
-/// [maxValue] The maximum value to return.
-num clamp(num value, num minValue, num maxValue) {
-  return min(max(value, minValue), maxValue);
-}
 
 /// Returns the minimum distance between point p and the line segment vw.
 ///

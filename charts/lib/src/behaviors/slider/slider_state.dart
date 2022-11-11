@@ -361,7 +361,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       final viewBounds = _view.componentBounds;
 
       // Clamp the position to the edge of the viewport.
-      final positionX = clamp(point.x, viewBounds.left, viewBounds.right);
+      final positionX = point.x.clamp(viewBounds.left, viewBounds.right);
 
       final previousYPosition = _handleBounds == null
           ? 0.0
@@ -379,8 +379,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       }
 
       // Clamp the position to the edge of the viewport.
-      positionY =
-          clamp(positionY, viewBounds.top, viewBounds.bottom).toDouble();
+      positionY = positionY.clamp(viewBounds.top, viewBounds.bottom).toDouble();
 
       final positionXChanged = _previousDomainCenterPoint != null &&
           positionX != _previousDomainCenterPoint!.x;

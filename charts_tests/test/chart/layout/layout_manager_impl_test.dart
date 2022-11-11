@@ -32,10 +32,12 @@ void main() {
   test('all fixed margin', () {
     var layout = LayoutManagerImpl(
       config: LayoutConfig(
-        topSpec: MarginSpec.fixedPixel(12),
-        rightSpec: MarginSpec.fixedPixel(11),
-        bottomSpec: MarginSpec.fixedPixel(10),
-        leftSpec: MarginSpec.fixedPixel(9),
+        margin: LayoutMargin(
+          top: LayoutValue(12),
+          right: LayoutValue(11),
+          bottom: LayoutValue(10),
+          left: LayoutValue(9),
+        ),
       ),
     );
     layout.measure(400, 300);

@@ -121,13 +121,12 @@ class TabularLegendLayout extends Equatable implements LegendLayout {
         ? legendEntries.length
         : min(legendEntries.length, desiredMaxRows);
 
-    final rows =
-        List.generate(maxRows, (_) => const TableRow(children: <Widget>[]));
+    final rows = List.generate(maxRows, (_) => <Widget>[]);
     for (var i = 0; i < legendEntries.length; i++) {
-      rows[i % maxRows].children!.add(legendEntries[i]);
+      rows[i % maxRows].add(legendEntries[i]);
     }
 
-    return _buildTableFromRows(rows);
+    return _buildTableFromRows(rows.map((e) => TableRow(children: e)).toList());
   }
 
   Table _buildTableFromRows(List<TableRow> rows) {

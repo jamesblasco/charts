@@ -75,33 +75,29 @@ class SparkBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      seriesList,
-      animate: animate,
+    return BarChart(seriesList,
+        animate: animate,
 
-      /// Assign a custom style for the measure axis.
-      ///
-      /// The NoneRenderSpec only draws an axis line (and even that can be hidden
-      /// with showAxisLine=false).
-      primaryMeasureAxis: NumericAxis(decoration: NoneAxisDecoration()),
+        /// Assign a custom style for the measure axis.
+        ///
+        /// The NoneRenderSpec only draws an axis line (and even that can be hidden
+        /// with showAxisLine=false).
+        primaryMeasureAxis: NumericAxis(decoration: NoneAxisDecoration()),
 
-      /// This is an OrdinalAxisSpec to match up with BarChart's default
-      /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
-      /// other .
-      domainAxis: OrdinalAxis(
-          // Make sure that we draw the domain axis line.
-          showAxisLine: true,
-          // But don't draw anything else.
-          decoration: NoneAxisDecoration()),
+        /// This is an OrdinalAxisSpec to match up with BarChart's default
+        /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
+        /// other .
+        domainAxis: OrdinalAxis(
+            // Make sure that we draw the domain axis line.
+            showAxisLine: true,
+            // But don't draw anything else.
+            decoration: NoneAxisDecoration()),
 
-      // With a spark chart we likely don't want large chart margins.
-      // 1px is the smallest we can make each margin.
-      layoutConfig: LayoutConfig(
-          leftSpec: MarginSpec.fixedPixel(0),
-          topSpec: MarginSpec.fixedPixel(0),
-          rightSpec: MarginSpec.fixedPixel(0),
-          bottomSpec: MarginSpec.fixedPixel(0)),
-    );
+        // With a spark chart we likely don't want large chart margins.
+        // 1px is the smallest we can make each margin.
+        layoutConfig: LayoutConfig(
+          margin: LayoutMargin.zero,
+        ));
   }
 
   /// Create series list with single series

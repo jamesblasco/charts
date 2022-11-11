@@ -74,10 +74,7 @@ abstract class CartesianRenderChart<D> extends BaseRenderChart<D> {
             disjointMeasureAxes ?? LinkedHashMap<String, NumericAxisElement>(),
         super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
-    topSpec: MarginSpec.fromPixel(minPixel: 20),
-    bottomSpec: MarginSpec.fromPixel(minPixel: 20),
-    leftSpec: MarginSpec.fromPixel(minPixel: 20),
-    rightSpec: MarginSpec.fromPixel(minPixel: 20),
+    margin: LayoutMargin.all(LayoutValue.between(minPixel: 20)),
   );
 
   bool vertical;

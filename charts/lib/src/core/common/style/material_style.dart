@@ -97,3 +97,24 @@ class MaterialChartTheme implements ChartThemeData {
   @override
   double get rangeBandSize => 0.65;
 }
+
+class MaterialPalette {
+  // Lazily-instantiated iterable, to avoid allocating colors that are not used.
+  static final Iterable<MaterialColor> _orderedPalettes = [
+    () => Colors.blue,
+    () => Colors.red,
+    () => Colors.yellow,
+    () => Colors.green,
+    () => Colors.purple,
+    () => Colors.cyan,
+    () => Colors.deepOrange,
+    () => Colors.lime,
+    () => Colors.indigo,
+    () => Colors.pink,
+    () => Colors.teal
+  ].map((f) => f());
+
+  static List<MaterialColor> getOrderedPalettes(int count) {
+    return _orderedPalettes.take(count).toList();
+  }
+}

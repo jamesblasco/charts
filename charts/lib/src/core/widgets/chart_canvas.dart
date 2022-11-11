@@ -21,14 +21,13 @@ import 'package:charts/src/core/render/chart_canvas.dart';
 import 'package:flutter/material.dart';
 
 class FlutterChartCanvas implements ChartCanvas {
-  FlutterChartCanvas(this.canvas, this.graphicsFactory);
+  FlutterChartCanvas(this.canvas);
 
   /// Pixels to allow to overdraw above the draw area that fades to transparent.
   static const double rectTopGradientPixels = 5;
 
   final Canvas canvas;
-  @override
-  final GraphicsFactory graphicsFactory;
+ 
   final _paint = Paint();
 
   @override

@@ -6,7 +6,7 @@ export 'canvas/pie_painter.dart';
 export 'canvas/point_painter.dart';
 export 'canvas/polygon_painter.dart';
 export 'chart_canvas.dart';
-export 'chart_container.dart';
+export 'chart_custom_paint.dart';
 export 'chart_gesture_detector.dart';
 export 'chart_state.dart';
 export 'find_render_object.dart';
