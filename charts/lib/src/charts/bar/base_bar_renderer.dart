@@ -618,7 +618,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<double>? boundsOverride, {
+    Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {
@@ -683,7 +683,7 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
   }
 
   @protected
-  Rectangle<double>? getBoundsForBar(R bar);
+  Rect? getBoundsForBar(R bar);
 
   @protected
   List<BaseAnimatedBar<D, R>> _getSegmentsForDomainValue(

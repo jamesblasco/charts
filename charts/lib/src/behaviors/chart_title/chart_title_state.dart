@@ -264,8 +264,8 @@ class _ChartTitleLayoutView<D> extends LayoutView {
 
   bool get isRtl => chart?.context.isRtl ?? false;
 
-  late Rectangle<double> _componentBounds;
-  late Rectangle<double> _drawAreaBounds;
+  late Rect _componentBounds;
+  late Rect _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -403,8 +403,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -554,7 +553,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   /// Gets the resolved location for a label element.
   Point<double>? _getLabelPosition(
     bool isPrimaryTitle,
-    Rectangle<num> bounds,
+    Rect bounds,
     ChartTitleDirection titleDirection,
     TextElement textElement,
     double titleHeight,
@@ -591,7 +590,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   /// Gets the resolved location for a title in the top or bottom margin.
   Point<double> _getHorizontalLabelPosition(
     bool isPrimaryTitle,
-    Rectangle<num> bounds,
+    Rect bounds,
     ChartTitleDirection titleDirection,
     TextElement textElement,
     double titleHeight,
@@ -667,7 +666,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   /// Gets the resolved location for a title in the left or right margin.
   Point<double> _getVerticalLabelPosition(
     bool isPrimaryTitle,
-    Rectangle<num> bounds,
+    Rect bounds,
     ChartTitleDirection titleDirection,
     TextElement textElement,
     double titleHeight,
@@ -752,7 +751,7 @@ class _ChartTitleLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<double> get componentBounds => _drawAreaBounds;
+  Rect get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;

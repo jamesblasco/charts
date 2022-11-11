@@ -16,6 +16,7 @@
 import 'dart:collection' show Queue;
 import 'dart:math' show MutableRectangle, Point, Rectangle, min;
 
+import 'package:charts/charts.dart';
 import 'package:charts/charts/treemap.dart';
 import 'package:flutter/foundation.dart';
 
@@ -168,7 +169,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<double>? boundsOverride, {
+    Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {
@@ -184,7 +185,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
       final node = queue.removeFirst();
       final element = _getRendererElement(node);
 
-      if (element.boundingRect.containsPoint(chartPoint)) {
+      if (element.boundingRect.containsPoint(chartPoint.offset)) {
         nearest.add(
           DatumDetails<D>(
             index: element.index,
@@ -270,7 +271,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   ///
   /// Available bounding rectangle is computed after padding is applied.
   @protected
-  MutableRectangle availableLayoutBoundingRect(TreeNode<Object> node) {
+  Rect availableLayoutBoundingRect(TreeNode<Object> node) {
     final element = _getRendererElement(node);
     final rect = element.boundingRect;
     final padding = config.rectPadding;
@@ -289,7 +290,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
       top += height / 2;
       height = 0;
     }
-    return MutableRectangle(left, top, width, height);
+    return Rect.fromLTWH(left, top, width, height);
   }
 
   /// Scales the area of each renderer element in [children] by a [scaleFactor].
@@ -312,8 +313,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
   /// Gets the area of a [Rectangle].
   @protected
-  double areaForRectangle(Rectangle rect) =>
-      rect.height.toDouble() * rect.width;
+  double areaForRectangle(Rect rect) => rect.height.toDouble() * rect.width;
 
   /// Gets the area for a tree [node].
   @protected
@@ -334,9 +334,9 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   ///                 width
   /// ```
   @protected
-  void position(
+  Rect position(
     Iterable<TreeNode<Object>> nodes,
-    MutableRectangle boundingRect,
+    Rect boundingRect,
     num side,
     num layoutArea,
   ) {
@@ -355,12 +355,16 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.top + boundingRect.height - top,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(),
+        element.boundingRect = Rect.fromLTWH(left.toDouble(), top.toDouble(),
             length.toDouble(), height.toDouble());
         top += height;
       }
-      boundingRect.left += length;
-      boundingRect.width -= length;
+      return Rect.fromLTWH(
+        boundingRect.left + length,
+        boundingRect.top,
+        boundingRect.width - length,
+        boundingRect.height,
+      );
     } else {
       // Positions rectangles horizontally.
       if (length > boundingRect.height) length = boundingRect.height.toInt();
@@ -370,12 +374,16 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           boundingRect.left + boundingRect.width - left,
           length > 0 ? (element.area / length) : 0,
         );
-        element.boundingRect = Rectangle(left.toDouble(), top.toDouble(),
+        element.boundingRect = Rect.fromLTWH(left.toDouble(), top.toDouble(),
             width.toDouble(), length.toDouble());
         left += width;
       }
-      boundingRect.top += length;
-      boundingRect.height -= length;
+      return Rect.fromLTWH(
+        boundingRect.left,
+        boundingRect.top + length,
+        boundingRect.width,
+        boundingRect.height - length,
+      );
     }
   }
 
@@ -464,7 +472,7 @@ class _AnimatedTreeMapRect<D> {
   void animateOut() {
     final newTarget = _currentRect!.clone();
     final rect = newTarget.boundingRect;
-    newTarget.boundingRect = Rectangle(
+    newTarget.boundingRect = Rect.fromLTWH(
       rect.left + (rect.width / 2),
       rect.top + (rect.height / 2),
       0,

@@ -26,7 +26,7 @@ class MockAxis extends Mock implements MutableAxisElement<String> {}
 
 class FakeCartesianRenderChart extends CartesianRenderChart<String> {
   @override
-  Rectangle<double> drawAreaBounds;
+  Rect drawAreaBounds;
 
   void callFireOnPostprocess(List<MutableSeries<String>> seriesList) {
     fireOnPostprocess(seriesList);
@@ -48,7 +48,7 @@ void main() {
 
   setUp(() {
     chart = FakeCartesianRenderChart()
-      ..drawAreaBounds = Rectangle(50, 20, 150, 80);
+      ..drawAreaBounds = Rect.fromLTWH(50, 20, 150, 80);
 
     behavior = DomainA11yExploreBehaviorState<String>(
         vocalizationCallback: domainVocalization);
@@ -84,11 +84,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(150, 20, 50, 80)));
   });
 
   test('creates nodes for vertically drawn RTL charts', () {
@@ -111,11 +111,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(150, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(50, 20, 50, 80)));
   });
 
   test('creates nodes for horizontally drawn charts', () {
@@ -138,11 +138,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 150, 20)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(50, 20, 150, 20)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(50, 40, 150, 20)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(50, 40, 150, 20)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 60, 150, 20)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(50, 60, 150, 20)));
   });
 
   test('creates nodes for horizontally drawn RTL charts', () {
@@ -165,11 +165,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 150, 20)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(50, 20, 150, 20)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(50, 40, 150, 20)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(50, 40, 150, 20)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 60, 150, 20)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(50, 60, 150, 20)));
   });
 
   test('nodes ordered correctly with a series missing a domain', () {
@@ -201,11 +201,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(150, 20, 50, 80)));
   });
 
   test('creates nodes with minimum width', () {
@@ -234,11 +234,11 @@ void main() {
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(Rect.fromLTWH(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(Rect.fromLTWH(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(Rect.fromLTWH(150, 20, 50, 80)));
   });
 }
 

@@ -26,7 +26,7 @@ abstract class TreeMapRendererDecorator<D> {
     TreeMapRendererElement<D> rendererElement,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
     bool renderVertically = false,

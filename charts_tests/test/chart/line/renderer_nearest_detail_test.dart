@@ -90,7 +90,7 @@ void main() {
     selectNearestByDomain = true;
 
     renderer = LineRenderer<int>(config: LineRendererConfig(strokeWidth: 1.0));
-    final layoutBounds = Rectangle<double>(70, 20, 200, 100);
+    final layoutBounds = Rect.fromLTWH(70, 20, 200, 100);
     renderer.layout(layoutBounds, layoutBounds);
     return renderer;
   });
@@ -350,7 +350,7 @@ void main() {
 
       renderer = LineRenderer<int>(
           config: LineRendererConfig(strokeWidth: 1.0, includeArea: true));
-      final layoutBounds = Rectangle<double>(70, 20, 200, 100);
+      final layoutBounds = Rect.fromLTWH(70, 20, 200, 100);
       renderer.layout(layoutBounds, layoutBounds);
       return renderer;
     });

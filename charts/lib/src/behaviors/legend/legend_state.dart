@@ -53,8 +53,8 @@ abstract class LegendBehaviorState<D>
   late BaseRenderChart<D> _chart;
   late final LifecycleListener<D> _lifecycleListener;
 
-  Rectangle<double>? _componentBounds;
-  Rectangle<double>? _drawAreaBounds;
+  Rect? _componentBounds;
+  Rect? _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -257,8 +257,7 @@ abstract class LegendBehaviorState<D>
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -269,14 +268,14 @@ abstract class LegendBehaviorState<D>
   void paint(ChartCanvas canvas, double animationPercent) {}
 
   @override
-  Rectangle<double>? get componentBounds => _componentBounds;
+  Rect? get componentBounds => _componentBounds;
 
   @override
   bool get isSeriesRenderer => false;
 
   // Gets the draw area bounds for native legend content to position itself
   // accordingly.
-  Rectangle<double>? get drawAreaBounds => _drawAreaBounds;
+  Rect? get drawAreaBounds => _drawAreaBounds;
 }
 
 /// Stores legend data used by native legend content builder.

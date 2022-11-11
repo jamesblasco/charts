@@ -77,7 +77,7 @@ void main() {
 
   SliderState _makeBehavior(SelectionTrigger eventTrigger,
       {Point<double> handleOffset,
-      Rectangle<double> handleSize,
+      Rect handleSize,
       double initialDomainValue,
       SliderListenerCallback onChangeCallback,
       bool snapToDatum = false,
@@ -95,8 +95,7 @@ void main() {
     tester = SliderTester(behavior);
 
     // Mock out chart layout by assigning bounds to the layout view.
-    tester.layout(
-        Rectangle<double>(0, 0, 200, 200), Rectangle<double>(0, 0, 200, 200));
+    tester.layout(Rect.fromLTWH(0, 0, 200, 200), Rect.fromLTWH(0, 0, 200, 200));
 
     return behavior;
   }
@@ -158,7 +157,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20));
+          handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
       Point<double> startPoint = Point(100.0, 100.0);
       _setupChart(
@@ -194,39 +193,39 @@ void main() {
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint1, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint1));
       expect(tester.domainValue, equals(2.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(45, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(45, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint2, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint2));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
 
       // Simulate onDragEnd.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
     });
 
     test('slider handle can render at top', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20),
+          handleSize: Rect.fromLTWH(0, 0, 10, 20),
           handlePosition: SliderHandlePosition.top);
 
       Point<double> startPoint = Point(100.0, 0.0);
@@ -262,35 +261,35 @@ void main() {
       // Start the drag.
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, -10, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, -10, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint1, 1.0);
       expect(tester.domainValue, equals(2.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(45, -10, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(45, -10, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint2, 1.0);
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, -10, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, -10, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, -10, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, -10, 10, 20)));
 
       // Simulate onDragEnd.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, -10, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, -10, 10, 20)));
     });
 
     test('can listen to press hold', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.pressHold,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20));
+          handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
       Point<double> startPoint = Point(100.0, 100.0);
       _setupChart(
@@ -326,39 +325,39 @@ void main() {
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint1, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint1));
       expect(tester.domainValue, equals(2.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(45, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(45, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint2, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint2));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
 
       // Simulate onDragEnd.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
     });
 
     test('can listen to long press hold', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.longPressHold,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20));
+          handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
       Point<double> startPoint = Point(100.0, 100.0);
       _setupChart(
@@ -394,39 +393,39 @@ void main() {
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint1, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint1));
       expect(tester.domainValue, equals(2.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(45, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(45, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint2, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint2));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
 
       // Simulate onDragEnd.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
     });
 
     test('no position update before long press', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.longPressHold,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20));
+          handleSize: Rect.fromLTWH(0, 0, 10, 20));
 
       Point<double> startPoint = Point(100.0, 100.0);
       _setupChart(
@@ -461,27 +460,27 @@ void main() {
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Simulate onDragEnd.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
     });
 
     test('can snap to datum', () {
       // Setup chart matches point with single domain single series.
       _makeBehavior(SelectionTrigger.tapAndDrag,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20),
+          handleSize: Rect.fromLTWH(0, 0, 10, 20),
           snapToDatum: true);
 
       Point<double> startPoint = Point(100.0, 100.0);
@@ -518,33 +517,33 @@ void main() {
       _chart.lastGestureListener.onDragStart(startPoint);
       expect(tester.domainCenterPoint, equals(startPoint));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag to first update point. The slider should follow the mouse during
       // each drag update.
       _chart.lastGestureListener.onDragUpdate(updatePoint1, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint1));
       expect(tester.domainValue, equals(2.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(45, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(45, 90, 10, 20)));
 
       // Drag to first update point.
       _chart.lastGestureListener.onDragUpdate(updatePoint2, 1.0);
       expect(tester.domainCenterPoint, equals(updatePoint2));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Drag the point to the end point.
       _chart.lastGestureListener.onDragUpdate(endPoint, 1.0);
       expect(tester.domainCenterPoint, equals(endPoint));
       expect(tester.domainValue, equals(6.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(115, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(115, 90, 10, 20)));
 
       // Simulate onDragEnd. This is where we expect the snap to occur.
       _chart.lastGestureListener.onDragEnd(endPoint, 1.0, 1.0);
 
       expect(tester.domainCenterPoint, equals(Point<int>(90, 100)));
       expect(tester.domainValue, equals(4.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(85, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(85, 90, 10, 20)));
     });
   });
 
@@ -553,7 +552,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       final slider = _makeBehavior(SelectionTrigger.tapAndDrag,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20),
+          handleSize: Rect.fromLTWH(0, 0, 10, 20),
           initialDomainValue: 1.0);
 
       _setupChart();
@@ -564,25 +563,25 @@ void main() {
       // Verify initial position.
       expect(tester.domainCenterPoint, equals(Point(20.0, 100.0)));
       expect(tester.domainValue, equals(1.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(15, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(15, 90, 10, 20)));
 
       // Move to first domain value.
       slider.moveSliderToDomain(2);
       expect(tester.domainCenterPoint, equals(Point(40.0, 100.0)));
       expect(tester.domainValue, equals(2.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(35, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(35, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(5);
       expect(tester.domainCenterPoint, equals(Point(100.0, 100.0)));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(7.5);
       expect(tester.domainCenterPoint, equals(Point(150.0, 100.0)));
       expect(tester.domainValue, equals(7.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(145, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(145, 90, 10, 20)));
     });
 
     test('can set domain and measure position when handle position is manual',
@@ -590,7 +589,7 @@ void main() {
       // Setup chart matches point with single domain single series.
       final slider = _makeBehavior(SelectionTrigger.tapAndDrag,
           handleOffset: Point<double>(0.0, 0.0),
-          handleSize: Rectangle<double>(0, 0, 10, 20),
+          handleSize: Rect.fromLTWH(0, 0, 10, 20),
           initialDomainValue: 1.0,
           handlePosition: SliderHandlePosition.manual);
 
@@ -602,25 +601,25 @@ void main() {
       // Verify initial position.
       expect(tester.domainCenterPoint, equals(Point(20.0, 100.0)));
       expect(tester.domainValue, equals(1.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(15, 190, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(15, 190, 10, 20)));
 
       // Move to first domain value.
       slider.moveSliderToDomain(2, measure: 5);
       expect(tester.domainCenterPoint, equals(Point(40.0, 100.0)));
       expect(tester.domainValue, equals(2.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(35, 90, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(35, 90, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(5, measure: 7);
       expect(tester.domainCenterPoint, equals(Point(100.0, 100.0)));
       expect(tester.domainValue, equals(5.0));
-      expect(tester.handleBounds, equals(Rectangle<double>(95, 130, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(95, 130, 10, 20)));
 
       // Move to second domain value.
       slider.moveSliderToDomain(7.5, measure: 3);
       expect(tester.domainCenterPoint, equals(Point(150.0, 100.0)));
       expect(tester.domainValue, equals(7.5));
-      expect(tester.handleBounds, equals(Rectangle<double>(145, 50, 10, 20)));
+      expect(tester.handleBounds, equals(Rect.fromLTWH(145, 50, 10, 20)));
     });
   });
 

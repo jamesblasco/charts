@@ -13,13 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Point, Rectangle, max;
+import 'dart:math' show Point, max;
 
-import 'package:charts/src/core/layout/layout_config.dart' show LayoutConfig;
-import 'package:charts/src/core/layout/layout_manager.dart';
-import 'package:charts/src/core/layout/layout_margin_strategy.dart';
-import 'package:charts/src/core/layout/layout_view.dart'
-    show LayoutView, LayoutPosition;
+import 'package:charts/charts.dart';
 
 /// Default Layout manager for [LayoutView]s.
 class LayoutManagerImpl implements LayoutManager {
@@ -47,7 +43,7 @@ class LayoutManagerImpl implements LayoutManager {
 
   late _MeasuredSizes _measurements;
 
-  late Rectangle<double> _drawAreaBounds;
+  late Rect _drawAreaBounds;
   bool _drawAreaBoundsOutdated = true;
   bool _viewsNeedPaintSort = true;
   bool _viewsNeedPositionSort = true;
@@ -113,13 +109,13 @@ class LayoutManagerImpl implements LayoutManager {
   }
 
   @override
-  Rectangle<double> get drawAreaBounds {
+  Rect get drawAreaBounds {
     assert(_drawAreaBoundsOutdated == false);
     return _drawAreaBounds;
   }
 
   @override
-  Rectangle<double> get drawableLayoutAreaBounds {
+  Rect get drawableLayoutAreaBounds {
     assert(_drawAreaBoundsOutdated == false);
 
     final drawableViews =
@@ -132,11 +128,12 @@ class LayoutManagerImpl implements LayoutManager {
         if (view.componentBounds != null) {
           // See https://github.com/dart-lang/language/issues/1308 for why
           // `componentBounds` isn't promoted to be non-nullable.
-          componentBounds = componentBounds!.boundingBox(view.componentBounds!);
+          componentBounds =
+              componentBounds!.expandToInclude(view.componentBounds!);
         }
       }
     } else {
-      componentBounds = const Rectangle(0, 0, 0, 0);
+      componentBounds = Rect.zero;
     }
 
     return componentBounds!;
@@ -168,7 +165,7 @@ class LayoutManagerImpl implements LayoutManager {
 
   @override
   bool withinDrawArea(Point<num> point) {
-    return _drawAreaBounds.containsPoint(point);
+    return _drawAreaBounds.containsPoint(point.offset);
   }
 
   /// Measure and layout with given [width] and [height].
@@ -245,7 +242,7 @@ class LayoutManagerImpl implements LayoutManager {
     );
 
     // Bounds for the draw area.
-    _drawAreaBounds = Rectangle<double>(
+    _drawAreaBounds = Rect.fromLTWH(
       measurements.leftWidth,
       measurements.topHeight,
       drawAreaWidth,
@@ -266,7 +263,7 @@ class LayoutManagerImpl implements LayoutManager {
         _viewsForPositions(LayoutPosition.left, LayoutPosition.fullLeft);
     final drawAreaViews = _viewsForPositions(LayoutPosition.drawArea);
 
-    final fullBounds = Rectangle<double>(0, 0, width, height);
+    final fullBounds = Rect.fromLTWH(0, 0, width, height);
 
     // Layout the margins.
     LeftMarginLayoutStrategy()

@@ -15,6 +15,7 @@
 
 import 'dart:math' show Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:charts/src/core/layout/layout_config.dart' show LayoutConfig;
 import 'package:charts/src/core/layout/layout_view.dart' show LayoutView;
 
@@ -41,11 +42,11 @@ abstract class LayoutManager {
   void updateConfig(LayoutConfig layoutConfig);
 
   /// Returns the bounds of the drawArea. Must be called after layout().
-  Rectangle<double> get drawAreaBounds;
+  Rect get drawAreaBounds;
 
   /// Returns the combined bounds of the drawArea, and all components that
   /// function as series draw areas. Must be called after layout().
-  Rectangle<double> get drawableLayoutAreaBounds;
+  Rect get drawableLayoutAreaBounds;
 
   /// Gets the measured size of the bottom margin, available after layout.
   double get marginBottom;

@@ -55,7 +55,7 @@ abstract class BuildableBehavior<B extends ChartBehaviorState> {
   InsideJustification get insideJustification;
 
   /// Chart's draw area bounds are used for positioning.
-  Rectangle<double>? get drawAreaBounds;
+  Rect? get drawAreaBounds;
 }
 
 /// Types of gestures accepted by a chart.

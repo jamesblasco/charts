@@ -72,8 +72,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   final _currentKeys = <String>[];
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     if (config.includePoints) {
@@ -1122,7 +1121,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
 
   /// Builds a clip region bounding box within the component [drawBounds] for a
   /// given domain range [extent].
-  Rectangle<num> _getClipBoundsForExtent(_Range<num> extent) {
+  Rect _getClipBoundsForExtent(_Range<num> extent) {
     // In RTL mode, the domain range extent has start on the right side of the
     // chart. Adjust the calculated positions to define a regular left-anchored
     // [Rectangle]. Clamp both ends to be within the draw area.
@@ -1135,10 +1134,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         ? extent.start.clamp(drawBounds.left, drawBounds.right)
         : extent.end.clamp(drawBounds.left, drawBounds.right);
 
-    return Rectangle<num>(
-      left,
+    return  Rect.fromLTWH(
+      left.toDouble(),
       drawBounds.top - drawBoundTopExtension,
-      right - left,
+      right - left.toDouble(),
       drawBounds.height + drawBoundTopExtension + drawBoundBottomExtension,
     );
   }
@@ -1175,7 +1174,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<double>? boundsOverride, {
+    Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {

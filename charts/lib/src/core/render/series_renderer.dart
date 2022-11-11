@@ -15,6 +15,7 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
+import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart';
 
@@ -102,7 +103,7 @@ abstract class SeriesRenderer<D> extends LayoutView {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<double>? boundsOverride, {
+    Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   });
@@ -145,9 +146,9 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   @override
   SymbolRenderer? symbolRenderer;
 
-  Rectangle<double>? _drawAreaBounds;
+  Rect? _drawAreaBounds;
 
-  Rectangle<double>? get drawBounds => _drawAreaBounds;
+  Rect? get drawBounds => _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -290,13 +291,12 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
   @override
-  Rectangle<double>? get componentBounds => _drawAreaBounds;
+  Rect? get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => true;
@@ -399,15 +399,14 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
   /// [bounds] optional override for component bounds. If this is passed, then
   /// we will check whether the point is within these bounds instead of the
   /// component bounds.
-  bool isPointWithinBounds(
-      Point<double> chartPoint, Rectangle<double>? bounds) {
+  bool isPointWithinBounds(Point<double> chartPoint, Rect? bounds) {
     // Was it even in the drawArea?
     if (bounds != null) {
-      if (!bounds.containsPoint(chartPoint)) {
+      if (!bounds.containsPoint(chartPoint.offset)) {
         return false;
       }
     } else if (componentBounds == null ||
-        !componentBounds!.containsPoint(chartPoint)) {
+        !componentBounds!.containsPoint(chartPoint.offset)) {
       return false;
     }
 

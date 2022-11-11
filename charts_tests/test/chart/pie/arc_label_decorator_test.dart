@@ -83,12 +83,12 @@ class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {}
 void main() {
   ChartCanvas canvas;
   GraphicsFactory graphicsFactory;
-  Rectangle<double> drawBounds;
+  Rect drawBounds;
 
   setUpAll(() {
     canvas = MockCanvas();
     graphicsFactory = FakeGraphicsFactory();
-    drawBounds = Rectangle(0, 0, 200, 200);
+    drawBounds = Rect.fromLTWH(0, 0, 200, 200);
   });
 
   group('pie chart', () {

@@ -45,7 +45,7 @@ class SquarifiedTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
     final children = node.children;
     if (children.isNotEmpty) {
       final remainingNodes = Queue.of(children);
-      final rect = availableLayoutBoundingRect(node);
+      var rect = availableLayoutBoundingRect(node);
       final analyzer = _SquarifyRatioAnalyzer(_ratio, areaForTreeNode);
 
       var bestScore = double.infinity;
@@ -65,14 +65,14 @@ class SquarifiedTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
           bestScore = score;
         } else {
           analyzer.removeLast();
-          position(analyzer.nodes, rect, width, analyzer.layoutArea);
+         rect = position(analyzer.nodes, rect, width, analyzer.layoutArea);
           width = math.min(rect.width, rect.height);
           analyzer.reset();
           bestScore = double.infinity;
         }
       }
       if (analyzer.nodes.isNotEmpty) {
-        position(analyzer.nodes, rect, width, analyzer.layoutArea);
+        rect = position(analyzer.nodes, rect, width, analyzer.layoutArea);
         analyzer.reset();
       }
     }

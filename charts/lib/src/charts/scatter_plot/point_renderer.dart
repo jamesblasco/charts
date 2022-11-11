@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
+import 'package:charts/charts.dart';
 import 'package:collection/collection.dart';
 import 'dart:math' show min, Point, Rectangle;
 import 'package:vector_math/vector_math.dart' show Vector2;
@@ -379,8 +380,8 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
         // near the edge will be allowed to render partially outside. This
         // prevents harshly clipping off half of the shape.
         if (point.point!.y != null &&
-            componentBounds!.containsPoint(point.point!.toPoint())) {
-          final bounds = Rectangle<double>(
+            componentBounds!.containsPoint(point.point!.toPoint().offset)) {
+          final bounds = Rect.fromLTWH(
             point.point!.x! - point.radius,
             point.point!.y! - point.radius,
             point.radius * 2,
@@ -485,7 +486,7 @@ class PointRenderer<D> extends BaseCartesianRenderer<D> {
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
-    Rectangle<double>? boundsOverride, {
+    Rect? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
   }) {

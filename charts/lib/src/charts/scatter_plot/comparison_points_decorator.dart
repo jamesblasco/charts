@@ -14,7 +14,9 @@
 // limitations under the License.
 
 import 'dart:math' show Point, Rectangle;
+import 'dart:ui';
 
+import 'package:charts/charts.dart';
 import 'package:charts/charts/scatter_plot.dart';
 import 'package:flutter/foundation.dart';
 
@@ -40,7 +42,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
     PointRendererElement<D> pointElement,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
   }) {
@@ -73,7 +75,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   @protected
   List<Point<double>>? computeBoundedPointsForElement(
     PointRendererElement<D> pointElement,
-    Rectangle drawBounds,
+    Rect drawBounds,
   ) {
     // All bounds points must be defined for a valid comparison point to be
     // drawn.
@@ -91,8 +93,8 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     // First check to see if there is no intersection at all between the line
     // p1p2 and [drawBounds].
-    final dataBoundsRect = Rectangle<num>.fromPoints(p1, p2);
-    if (!drawBounds.intersects(dataBoundsRect)) {
+    final dataBoundsRect = Rect.fromPoints(p1.offset, p2.offset);
+    if (!drawBounds.overlaps(dataBoundsRect)) {
       return null;
     }
 
@@ -101,7 +103,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     // Next, slide p1 along the line p1p2 towards the edge of the draw area if
     // the point is located outside of it.
-    if (!drawBounds.containsPoint(p1)) {
+    if (!drawBounds.containsPoint(p1.offset)) {
       final p = _clampPointAlongLineToBoundingBox(p1, p1p2, drawBounds);
       if (p != null) {
         p1 = p;
@@ -110,7 +112,7 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
 
     // Next, slide p2 along the line p1p2 towards the edge of the draw area if
     // the point is located outside of it.
-    if (!drawBounds.containsPoint(p2)) {
+    if (!drawBounds.containsPoint(p2.offset)) {
       final p = _clampPointAlongLineToBoundingBox(p2, p1p2, drawBounds);
       if (p != null) {
         p2 = p;
@@ -128,21 +130,24 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
   Point<double>? _clampPointAlongLineToBoundingBox(
     Point<double> p1,
     _Line line,
-    Rectangle<num> bounds,
+    Rect bounds,
   ) {
     // The top and bottom edges of the bounds box describe two horizontal lines,
     // with equations y = bounds.top and y = bounds.bottom. We can pass these
     // into a standard line interception method to find our point.
     if (p1.y < bounds.top) {
-      final p = line.intersection(_Line(0, bounds.top.toDouble()));
-      if (p != null && bounds.containsPoint(p)) {
+      final p = line.intersection(_Line(0, bounds.top));
+      if (p != null && bounds.containsPoint(p.offset)) {
         return p;
       }
     }
 
     if (p1.y > bounds.bottom) {
-      final p = line.intersection(_Line(0, bounds.bottom.toDouble()));
-      if (p != null && bounds.containsPoint(p)) {
+      final p = line.intersection(_Line(0, bounds.bottom));
+
+      if (p != null &&
+          bounds.containsPoint(
+              Offset(p.x.roundToDouble(), p.y.roundToDouble()))) {
         return p;
       }
     }
@@ -154,15 +159,15 @@ class ComparisonPointsDecorator<D> extends PointRendererDecorator<D> {
     //
     // y = slope * x + yIntercept
     if (p1.x < bounds.left) {
-      final p = line.intersection(_Line.fromVertical(bounds.left.toDouble()));
-      if (p != null && bounds.containsPoint(p)) {
+      final p = line.intersection(_Line.fromVertical(bounds.left));
+      if (p != null && bounds.containsPoint(p.offset)) {
         return p;
       }
     }
 
     if (p1.x > bounds.right) {
       final p = line.intersection(_Line.fromVertical(bounds.right.toDouble()));
-      if (p != null && bounds.containsPoint(p)) {
+      if (p != null && bounds.containsPoint(p.offset)) {
         return p;
       }
     }
@@ -176,24 +181,24 @@ class _Line {
   _Line(this.slope, this.yIntercept, [this.xIntercept]);
 
   /// Creates a line with end points [p1] and [p2].
-  factory _Line.fromPoints(Point<num> p1, Point<num> p2) {
+  factory _Line.fromPoints(Point<double> p1, Point<double> p2) {
     // Handle vertical lines.
     if (p1.x == p2.x) {
       return _Line.fromVertical(p1.x);
     }
 
     // Slope of the line p1p2.
-    final m = ((p2.y - p1.y) / (p2.x - p1.x)).toDouble();
+    final m = (p2.y - p1.y) / (p2.x - p1.x);
 
     // y-intercept of the line p1p2.
-    final b = (p1.y - (m * p1.x)).toDouble();
+    final b = p1.y - (m * p1.x);
 
     return _Line(m, b);
   }
 
   /// Creates a vertical line, with the question x = [xIntercept].
-  factory _Line.fromVertical(num xIntercept) {
-    return _Line(null, null, xIntercept.toDouble());
+  factory _Line.fromVertical(double xIntercept) {
+    return _Line(null, null, xIntercept);
   }
 
   /// Slope of the line.

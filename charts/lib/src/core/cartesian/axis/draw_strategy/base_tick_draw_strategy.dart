@@ -15,6 +15,7 @@
 
 import 'dart:math';
 
+import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
 import 'package:flutter/material.dart';
 
@@ -383,27 +384,27 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   void drawAxisLine(
     ChartCanvas canvas,
     AxisOrientation orientation,
-    Rectangle<double> axisBounds,
+    Rect axisBounds,
   ) {
     Point<num> start;
     Point<num> end;
 
     switch (orientation) {
       case AxisOrientation.top:
-        start = axisBounds.bottomLeft;
-        end = axisBounds.bottomRight;
+        start = axisBounds.bottomLeft.point;
+        end = axisBounds.bottomRight.point;
         break;
       case AxisOrientation.bottom:
-        start = axisBounds.topLeft;
-        end = axisBounds.topRight;
+        start = axisBounds.topLeft.point;
+        end = axisBounds.topRight.point;
         break;
       case AxisOrientation.right:
-        start = axisBounds.topLeft;
-        end = axisBounds.bottomLeft;
+        start = axisBounds.topLeft.point;
+        end = axisBounds.bottomLeft.point;
         break;
       case AxisOrientation.left:
-        start = axisBounds.topRight;
-        end = axisBounds.bottomRight;
+        start = axisBounds.topRight.point;
+        end = axisBounds.bottomRight.point;
         break;
     }
 
@@ -422,8 +423,8 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<double> axisBounds,
-    required Rectangle<double>? drawAreaBounds,
+    required Rect axisBounds,
+    required Rect? drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,

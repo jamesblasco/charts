@@ -15,6 +15,7 @@
 
 import 'dart:math' show cos, min, sin, pi, Point, Rectangle;
 
+import 'package:charts/charts.dart';
 import 'package:charts/charts/pie.dart';
 import 'package:equatable/equatable.dart';
 
@@ -83,7 +84,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
     List<ArcRendererElementList<D>> arcElementsList,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
   }) {
@@ -143,7 +144,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
         );
 
         final bounds =
-            Rectangle<double>.fromPoints(arcElements.center, outerPoint);
+            Rect.fromPoints(arcElements.center.offset, outerPoint.offset);
 
         // Get space available inside and outside the arc.
         final totalPadding = labelPadding * 2;
@@ -291,7 +292,7 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
   /// Draws a label outside of an arc.
   List<Object>? _drawOutsideLabel(
     ChartCanvas canvas,
-    Rectangle drawBounds,
+    Rect drawBounds,
     ArcRendererElementList<D> arcElements,
     TextElement labelElement,
     double centerAngle,

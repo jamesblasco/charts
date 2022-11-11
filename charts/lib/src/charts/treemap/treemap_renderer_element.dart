@@ -19,7 +19,7 @@ import 'package:charts/charts/treemap.dart';
 /// A renderer element that represents a TreeNode.
 class TreeMapRendererElement<D> {
   TreeMapRendererElement({
-    Rectangle<double>? boundingRect,
+    Rect? boundingRect,
     double? area,
     this.fillColor,
     this.fillPattern,
@@ -35,9 +35,9 @@ class TreeMapRendererElement<D> {
         _area = area;
 
   /// Bounding rectangle of this element.
-  Rectangle<double> get boundingRect => _boundingRect!;
-  set boundingRect(Rectangle<double> value) => _boundingRect = value;
-  Rectangle<double>? _boundingRect;
+  Rect get boundingRect => _boundingRect!;
+  set boundingRect(Rect value) => _boundingRect = value;
+  Rect? _boundingRect;
 
   /// Occupied area of this element in pixel.
   double get area => _area!;
@@ -78,7 +78,7 @@ class TreeMapRendererElement<D> {
   TreeMapRendererElement<D> clone() => TreeMapRendererElement(
         boundingRect: _boundingRect == null
             ? null
-            : Rectangle.fromPoints(
+            : Rect.fromPoints(
                 boundingRect.topLeft,
                 boundingRect.bottomRight,
               ),

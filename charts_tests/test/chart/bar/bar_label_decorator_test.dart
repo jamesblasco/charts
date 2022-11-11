@@ -75,7 +75,7 @@ class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final String datum;
 
   @override
-  final Rectangle<double> bounds;
+  final Rect bounds;
 
   @override
   int index;
@@ -97,12 +97,12 @@ class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {}
 void main() {
   ChartCanvas canvas;
   GraphicsFactory graphicsFactory;
-  Rectangle<double> drawBounds;
+  Rect drawBounds;
 
   setUpAll(() {
     canvas = MockCanvas();
     graphicsFactory = FakeGraphicsFactory();
-    drawBounds = Rectangle(0, 0, 200, 100);
+    drawBounds = Rect.fromLTWH(0, 0, 200, 100);
   });
 
   group('vertical bar chart', () {
@@ -123,19 +123,19 @@ void main() {
         // 'LabelC' does not fit because of the width, default to outside.
         FakeBarRendererElement(
             'A',
-            Rectangle(
+            Rect.fromLTWH(
                 leftPositionA, topPositionA, barWidthA, 100 - topPositionA),
             (_) => 'LabelA',
             data),
         FakeBarRendererElement(
             'B',
-            Rectangle(
+            Rect.fromLTWH(
                 leftPositionB, topPositionB, barWidthB, 100 - topPositionB),
             (_) => 'LabelB',
             data),
         FakeBarRendererElement(
             'C',
-            Rectangle(
+            Rect.fromLTWH(
                 leftPositionC, topPositionC, barWidthC, 100 - topPositionC),
             (_) => 'LabelC',
             data)
@@ -194,7 +194,7 @@ void main() {
         // 'LabelABC' would not fit inside the bar in auto setting because it
         // has a width of 8.
         FakeBarRendererElement(
-            'A', Rectangle(10, 80, 6, 20), (_) => 'LabelABC', ['A']),
+            'A', Rect.fromLTWH(10, 80, 6, 20), (_) => 'LabelABC', ['A']),
       ];
 
       BarLabelDecorator<String>(
@@ -219,7 +219,7 @@ void main() {
     test('LabelPosition.outside always paints outside the bar', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A']),
+            'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A']),
       ];
 
       BarLabelDecorator<String>(
@@ -245,7 +245,7 @@ void main() {
     test('Outside label with new lines draws multiline labels', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA\n(50)', ['A']),
+            'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA\n(50)', ['A']),
       ];
 
       BarLabelDecorator<String>(
@@ -283,9 +283,9 @@ void main() {
         // 'LabelB' would not fit inside the bar in auto setting because it has
         // width of 4.
         FakeBarRendererElement(
-            'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', data),
+            'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', data),
         FakeBarRendererElement(
-            'B', Rectangle(25, 80, 4, 20), (_) => 'LabelB', data)
+            'B', Rect.fromLTWH(25, 80, 4, 20), (_) => 'LabelB', data)
       ];
       final insideColor = Colors.black;
       final outsideColor = Colors.white;
@@ -326,7 +326,7 @@ void main() {
     group('Null and empty label scenarios', () {
       test('Skip label if label accessor does not exist', () {
         final barElements = [
-          FakeBarRendererElement('A', Rectangle(0, 0, 10, 20), null, ['A'])
+          FakeBarRendererElement('A', Rect.fromLTWH(0, 0, 10, 20), null, ['A'])
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -341,9 +341,9 @@ void main() {
       test('Skip label if label is null or empty', () {
         final data = ['A', 'B'];
         final barElements = [
-          FakeBarRendererElement('A', Rectangle(0, 0, 10, 20), null, data),
+          FakeBarRendererElement('A', Rect.fromLTWH(0, 0, 10, 20), null, data),
           FakeBarRendererElement(
-              'B', Rectangle(0, 50, 10, 20), (_) => '', data),
+              'B', Rect.fromLTWH(0, 50, 10, 20), (_) => '', data),
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -360,7 +360,7 @@ void main() {
       test('Paints positive outside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A']),
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A']),
         ];
 
         BarLabelDecorator<String>(
@@ -388,7 +388,7 @@ void main() {
       test('Paints negative outside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A'],
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A'],
               measureFn: (_) => -1.0),
         ];
 
@@ -416,7 +416,7 @@ void main() {
       test('Paints positive inside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A']),
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A']),
         ];
 
         BarLabelDecorator<String>(
@@ -443,7 +443,7 @@ void main() {
       test('Paints negative inside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A'],
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A'],
               measureFn: (_) => -1.0),
         ];
 
@@ -479,9 +479,9 @@ void main() {
         // 'LabelB' would not fit inside the bar in auto setting because it has
         // width of 5.
         FakeBarRendererElement(
-            'A', Rectangle(0, 20, 50, 20), (_) => 'LabelA', data),
+            'A', Rect.fromLTWH(0, 20, 50, 20), (_) => 'LabelA', data),
         FakeBarRendererElement(
-            'B', Rectangle(0, 70, 5, 20), (_) => 'LabelB', data)
+            'B', Rect.fromLTWH(0, 70, 5, 20), (_) => 'LabelB', data)
       ];
       final decorator = BarLabelDecorator<String>();
 
@@ -516,10 +516,10 @@ void main() {
         // 'LabelABC' would not fit inside the bar in auto setting because it
         // has a width of 8.
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 8, 20), (_) => 'LabelABC', ['A']),
+            'A', Rect.fromLTWH(0, 0, 8, 20), (_) => 'LabelABC', ['A']),
       ];
       // Draw bounds with width of 14 means that space inside the bar is larger.
-      final smallDrawBounds = Rectangle<double>(0, 0, 14, 20);
+      final smallDrawBounds = Rect.fromLTWH(0, 0, 14, 20);
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.
@@ -543,7 +543,7 @@ void main() {
         // 'LabelABC' would not fit inside the bar in auto setting because it
         // has a width of 8.
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 8, 20), (_) => 'LabelABC', ['A']),
+            'A', Rect.fromLTWH(0, 0, 8, 20), (_) => 'LabelABC', ['A']),
       ];
 
       BarLabelDecorator<String>(
@@ -569,12 +569,12 @@ void main() {
         // 'LabelABC' would not fit inside the bar in auto setting because it
         // has a width of 8.
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 6, 20), (_) => 'LabelABC', ['A']),
+            'A', Rect.fromLTWH(0, 0, 6, 20), (_) => 'LabelABC', ['A']),
       ];
 
       // Draw bounds with width of 12 means that label can fit neither inside
       // nor outside.
-      final smallDrawBounds = Rectangle<double>(0, 0, 12, 20);
+      final smallDrawBounds = Rect.fromLTWH(0, 0, 12, 20);
 
       BarLabelDecorator<String>(
               labelPadding: 0, // Turn off label padding for testing.
@@ -590,7 +590,7 @@ void main() {
     test('LabelPosition.outside always paints outside the bar', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'Label', ['A']),
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'Label', ['A']),
       ];
 
       BarLabelDecorator<String>(
@@ -618,9 +618,9 @@ void main() {
         // 'LabelB' would not fit inside the bar in auto setting because it has
         // width of 5.
         FakeBarRendererElement(
-            'A', Rectangle(0, 20, 50, 20), (_) => 'LabelA', data),
+            'A', Rect.fromLTWH(0, 20, 50, 20), (_) => 'LabelA', data),
         FakeBarRendererElement(
-            'B', Rectangle(0, 70, 5, 20), (_) => 'LabelB', data)
+            'B', Rect.fromLTWH(0, 70, 5, 20), (_) => 'LabelB', data)
       ];
       final insideColor = Colors.black;
       final outsideColor = Colors.white;
@@ -660,7 +660,7 @@ void main() {
     test('TextAnchor.end starts on the right most of bar', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'LabelA', ['A'])
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'LabelA', ['A'])
       ];
 
       BarLabelDecorator<String>(
@@ -685,7 +685,7 @@ void main() {
     test('RTL TextAnchor.start starts on the right', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'LabelA', ['A'])
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'LabelA', ['A'])
       ];
 
       BarLabelDecorator<String>(
@@ -711,7 +711,7 @@ void main() {
     test('RTL TextAnchor.end starts on the left', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'LabelA', ['A'])
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'LabelA', ['A'])
       ];
 
       BarLabelDecorator<String>(
@@ -737,7 +737,7 @@ void main() {
     test('RTL right label position', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'LabelA', ['A'])
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'LabelA', ['A'])
       ];
 
       BarLabelDecorator<String>(
@@ -761,7 +761,7 @@ void main() {
     test('RTL top right label position', () {
       final barElements = [
         FakeBarRendererElement(
-            'A', Rectangle(0, 0, 10, 20), (_) => 'LabelA', ['A'])
+            'A', Rect.fromLTWH(0, 0, 10, 20), (_) => 'LabelA', ['A'])
       ];
 
       BarLabelDecorator<String>(
@@ -786,7 +786,7 @@ void main() {
     group('Null and empty label scenarios', () {
       test('Skip label if label accessor does not exist', () {
         final barElements = [
-          FakeBarRendererElement('A', Rectangle(0, 0, 10, 20), null, ['A']),
+          FakeBarRendererElement('A', Rect.fromLTWH(0, 0, 10, 20), null, ['A']),
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -801,9 +801,9 @@ void main() {
       test('Skip label if label is null or empty', () {
         final data = ['A', 'B'];
         final barElements = [
-          FakeBarRendererElement('A', Rectangle(0, 0, 10, 20), null, data),
+          FakeBarRendererElement('A', Rect.fromLTWH(0, 0, 10, 20), null, data),
           FakeBarRendererElement(
-              'B', Rectangle(0, 50, 10, 20), (_) => '', data),
+              'B', Rect.fromLTWH(0, 50, 10, 20), (_) => '', data),
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -818,7 +818,7 @@ void main() {
       test('Skip label if no width available', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(0, 0, 200, 20), (_) => 'a', ['A'])
+              'A', Rect.fromLTWH(0, 0, 200, 20), (_) => 'a', ['A'])
         ];
 
         BarLabelDecorator<String>(
@@ -837,7 +837,7 @@ void main() {
       test('Paints positive outside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A']),
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A']),
         ];
 
         BarLabelDecorator<String>(
@@ -864,7 +864,7 @@ void main() {
       test('Paints negative outside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A'],
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A'],
               measureFn: (_) => -1.0),
         ];
 
@@ -892,7 +892,7 @@ void main() {
       test('Paints positive inside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A']),
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A']),
         ];
 
         BarLabelDecorator<String>(
@@ -919,7 +919,7 @@ void main() {
       test('Paints negative inside labels', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', Rectangle(10, 80, 10, 20), (_) => 'LabelA', ['A'],
+              'A', Rect.fromLTWH(10, 80, 10, 20), (_) => 'LabelA', ['A'],
               measureFn: (_) => -1.0),
         ];
 

@@ -56,7 +56,7 @@ class FlutterChartCanvas implements ChartCanvas {
   @override
   void drawLine({
     required List<Point> points,
-    Rectangle<num>? clipBounds,
+    Rect? clipBounds,
     Color? fill,
     Color? stroke,
     bool? roundEndCaps,
@@ -104,7 +104,7 @@ class FlutterChartCanvas implements ChartCanvas {
   @override
   void drawPolygon({
     required List<Point> points,
-    Rectangle<num>? clipBounds,
+    Rect? clipBounds,
     Color? fill,
     Color? stroke,
     double? strokeWidth,
@@ -131,12 +131,12 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawRect(
-    Rectangle<num> bounds, {
+    Rect bounds, {
     Color? fill,
     FillPatternType? pattern,
     Color? stroke,
     double? strokeWidth,
-    Rectangle<num>? drawAreaBounds,
+    Rect? drawAreaBounds,
   }) {
     // TODO: remove this explicit `bool` type when no longer needed
     // to work around https://github.com/dart-lang/language/issues/1785
@@ -146,7 +146,7 @@ class FlutterChartCanvas implements ChartCanvas {
     final strokeWidthOffset = drawStroke ? strokeWidth : 0;
 
     // Factor out stroke width, if a stroke is enabled.
-    final fillRectBounds = Rectangle<num>(
+    final fillRectBounds = Rect.fromLTWH(
       bounds.left + strokeWidthOffset / 2,
       bounds.top + strokeWidthOffset / 2,
       bounds.width - strokeWidthOffset,
@@ -210,7 +210,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   @override
   void drawRRect(
-    Rectangle<num> bounds, {
+    Rect bounds, {
     Color? fill,
     Color? stroke,
     Color? patternColor,
@@ -242,7 +242,7 @@ class FlutterChartCanvas implements ChartCanvas {
   }
 
   @override
-  void drawBarStack(CanvasBarStack barStack, {Rectangle<num>? drawAreaBounds}) {
+  void drawBarStack(CanvasBarStack barStack, {Rect? drawAreaBounds}) {
     // only clip if rounded rect.
 
     // Clip a rounded rect for the whole region if rounded bars.
@@ -331,7 +331,7 @@ class FlutterChartCanvas implements ChartCanvas {
   }
 
   @override
-  void setClipBounds(Rectangle<double> clipBounds) {
+  void setClipBounds(Rect clipBounds) {
     canvas
       ..save()
       ..clipRect(_getRect(clipBounds));
@@ -343,7 +343,7 @@ class FlutterChartCanvas implements ChartCanvas {
   }
 
   /// Convert dart:math [Rectangle] to Flutter [Rect].
-  Rect _getRect(Rectangle<num> rectangle) {
+  Rect _getRect(Rect rectangle) {
     return Rect.fromLTWH(
       rectangle.left.toDouble(),
       rectangle.top.toDouble(),
@@ -354,7 +354,7 @@ class FlutterChartCanvas implements ChartCanvas {
 
   /// Convert dart:math [Rectangle] and to Flutter [RRect].
   RRect _getRRect(
-    Rectangle<num> rectangle, {
+    Rect rectangle, {
     double radius = 0,
     bool roundTopLeft = false,
     bool roundTopRight = false,
@@ -377,12 +377,12 @@ class FlutterChartCanvas implements ChartCanvas {
 
   /// Draws a forward hatch pattern in the given bounds.
   _drawForwardHatchPattern(
-    Rectangle<num> bounds,
+    Rect bounds,
     Canvas canvas, {
     Color? background,
     Color? fill,
     double fillWidth = 4.0,
-    Rectangle<num>? drawAreaBounds,
+    Rect? drawAreaBounds,
   }) {
     background ??= StyleFactory.style.white;
     fill ??= StyleFactory.style.black;

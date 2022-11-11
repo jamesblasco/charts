@@ -80,8 +80,8 @@ abstract class TickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<double> axisBounds,
-    required Rectangle<double> drawAreaBounds,
+    required Rect axisBounds,
+    required Rect drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -90,6 +90,6 @@ abstract class TickDrawStrategy<D> {
   void drawAxisLine(
     ChartCanvas canvas,
     AxisOrientation orientation,
-    Rectangle<double> axisBounds,
+    Rect axisBounds,
   );
 }

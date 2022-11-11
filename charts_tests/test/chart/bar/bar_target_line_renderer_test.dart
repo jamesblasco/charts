@@ -36,7 +36,7 @@ class MockCanvas extends Mock implements ChartCanvas {
   @override
   void drawLine(
       {List<Point> points,
-      Rectangle<num> clipBounds,
+      Rect clipBounds,
       Color fill,
       Color stroke,
       bool roundEndCaps,

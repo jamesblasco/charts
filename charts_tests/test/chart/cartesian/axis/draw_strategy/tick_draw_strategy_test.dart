@@ -57,8 +57,8 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     @required AxisOrientation orientation,
-    @required Rectangle<double> axisBounds,
-    @required Rectangle<double> drawAreaBounds,
+    @required Rect axisBounds,
+    @required Rect drawAreaBounds,
     @required bool isFirst,
     @required bool isLast,
     bool collision = false,
@@ -69,8 +69,8 @@ class BaseTickDrawStrategyImpl<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     @required AxisOrientation orientation,
-    @required Rectangle<double> axisBounds,
-    @required Rectangle<double> drawAreaBounds,
+    @required Rect axisBounds,
+    @required Rect drawAreaBounds,
     bool isFirst = false,
     bool isLast = false,
     bool collision = false,
@@ -493,7 +493,7 @@ void main() {
 
     test('Draw multiline label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
+      final axisBounds = Rect.fromLTWH(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -525,7 +525,7 @@ void main() {
 
     test('Draw single line label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
+      final axisBounds = Rect.fromLTWH(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -619,7 +619,7 @@ void main() {
 
     test('Draw multiline label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
+      final axisBounds = Rect.fromLTWH(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,
@@ -652,7 +652,7 @@ void main() {
 
     test('Draw single line label', () {
       final chartCanvas = MockChartCanvas();
-      final axisBounds = Rectangle<double>(0, 0, 1000, 1000);
+      final axisBounds = Rect.fromLTWH(0, 0, 1000, 1000);
 
       drawStrategy.drawLabel(
         chartCanvas,

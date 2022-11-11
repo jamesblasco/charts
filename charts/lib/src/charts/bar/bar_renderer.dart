@@ -256,7 +256,7 @@ class BarRenderer<D>
 
       if (bar != unmodifiedBar) {
         bounds = renderingVertically
-            ? Rectangle<double>(
+            ? Rect.fromLTWH(
                 bar.bounds!.left,
                 max(
                   0,
@@ -266,7 +266,7 @@ class BarRenderer<D>
                 bar.bounds!.width,
                 max(0, bar.bounds!.height - _stackedBarPadding),
               )
-            : Rectangle<double>(
+            : Rect.fromLTWH(
                 max(
                   0,
                   bar.bounds!.left +
@@ -373,7 +373,7 @@ class BarRenderer<D>
 
   /// Calculate the clipping region for a rectangle that represents the full bar
   /// stack.
-  Rectangle<double> _getBarStackBounds(Rectangle<double> barStackRect) {
+  Rect _getBarStackBounds(Rect barStackRect) {
     double left;
     double right;
     double top;
@@ -401,11 +401,11 @@ class BarRenderer<D>
     final width = right - left;
     final height = bottom - top;
 
-    return Rectangle(left, top, width, height);
+    return Rect.fromLTWH(left, top, width, height);
   }
 
   /// Generates a set of bounds that describe a bar.
-  Rectangle<double> _getBarBounds(
+  Rect _getBarBounds(
     D? domainValue,
     ImmutableAxisElement<D> domainAxis,
     double domainWidth,
@@ -487,10 +487,10 @@ class BarRenderer<D>
       measureEnd = measureAxis.getLocation(measureValue + measureOffsetValue)!;
     }
 
-    Rectangle<double> bounds;
+    Rect bounds;
     if (renderingVertically) {
       // Rectangle clamps to zero width/height
-      bounds = Rectangle<double>(
+      bounds = Rect.fromLTWH(
         domainStart,
         measureEnd,
         domainEnd - domainStart,
@@ -498,7 +498,7 @@ class BarRenderer<D>
       );
     } else {
       // Rectangle clamps to zero width/height
-      bounds = Rectangle<double>(
+      bounds = Rect.fromLTWH(
         min(measureStart, measureEnd),
         domainStart,
         (measureEnd - measureStart).abs(),
@@ -509,7 +509,7 @@ class BarRenderer<D>
   }
 
   @override
-  Rectangle<double>? getBoundsForBar(BarRendererElement<D> bar) => bar.bounds;
+  Rect? getBoundsForBar(BarRendererElement<D> bar) => bar.bounds;
 }
 
 abstract class ImmutableBarRendererElement<D> {
@@ -519,7 +519,7 @@ abstract class ImmutableBarRendererElement<D> {
 
   int? get index;
 
-  Rectangle<double>? get bounds;
+  Rect? get bounds;
 }
 
 class BarRendererElement<D> extends BaseBarRendererElement
@@ -537,7 +537,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
   ImmutableSeries<D>? series;
 
   @override
-  Rectangle<double>? bounds;
+  Rect? bounds;
 
   int? round;
 
@@ -578,7 +578,7 @@ class BarRendererElement<D> extends BaseBarRendererElement
         ((targetBounds.left - previousBounds.left) * animationPercent) +
             previousBounds.left;
 
-    bounds = Rectangle<double>(
+    bounds =  Rect.fromLTWH(
       left,
       top,
       right - left,
@@ -604,7 +604,7 @@ class AnimatedBar<D> extends BaseAnimatedBar<D, BarRendererElement<D>> {
     final localTarget = target as BarRendererElement<D>;
 
     // TODO: Animate out bars in the middle of a stack.
-    localTarget.bounds = Rectangle<double>(
+    localTarget.bounds =  Rect.fromLTWH(
       localTarget.bounds!.left + (localTarget.bounds!.width / 2).round(),
       localTarget.measureAxisPosition!,
       0,

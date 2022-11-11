@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:charts/charts/bar.dart';
 
@@ -47,7 +48,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle<num> drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     required bool renderingVertically,
     bool rtl = false,
@@ -87,16 +88,16 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             final rectWidth =
                 min(this.strokeWidth + 2 * outlineWidth, barWidth);
             final strokeWidth = rectWidth - 2 * outlineWidth;
-            final rectEndpointLength =
-                min(this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+            final rectEndpointLength = min(
+                this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
             final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
             if (outlineWidth > 0) {
               // Draw rectangle rendering the outline for the vertical line.
               canvas.drawRect(
-                Rectangle.fromPoints(
-                  Point(x - rectWidth / 2, startY),
-                  Point(x + rectWidth / 2, endY),
+                Rect.fromPoints(
+                  Offset(x - rectWidth / 2, startY),
+                  Offset(x + rectWidth / 2, endY),
                 ),
                 fill: outlineColor,
                 strokeWidth: outlineWidth,
@@ -105,7 +106,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
               // Draw rectangle rendering the outline for the horizontal
               // endpoint representing the lower bound.
               canvas.drawRect(
-                Rectangle(
+                Rect.fromLTWH(
                   x - rectEndpointLength / 2,
                   startY - rectWidth / 2,
                   rectEndpointLength,
@@ -118,7 +119,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
               // Draw rectangle rendering the outline for the horizontal
               // endpoint representing the upper bound.
               canvas.drawRect(
-                Rectangle(
+                Rect.fromLTWH(
                   x - rectEndpointLength / 2,
                   endY - rectWidth / 2,
                   rectEndpointLength,
@@ -172,16 +173,16 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
             final rectWidth =
                 min(this.strokeWidth + 2 * outlineWidth, barWidth.toDouble());
             final strokeWidth = rectWidth - 2 * outlineWidth;
-            final rectEndpointLength =
-                min(this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
+            final rectEndpointLength = min(
+                this.endpointLength + 2 * outlineWidth, barWidth.toDouble());
             final endpointLength = rectEndpointLength - 2 * outlineWidth;
 
             if (outlineWidth > 0) {
               // Draw rectangle rendering the outline for the horizontal line.
               canvas.drawRect(
-                Rectangle.fromPoints(
-                  Point(startX, y - rectWidth / 2),
-                  Point(endX, y + rectWidth / 2),
+                Rect.fromPoints(
+                  Offset(startX, y - rectWidth / 2),
+                  Offset(endX, y + rectWidth / 2),
                 ),
                 fill: outlineColor,
                 strokeWidth: outlineWidth,
@@ -190,7 +191,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
               // Draw rectangle rendering the outline for the vertical
               // endpoint representing the lower bound.
               canvas.drawRect(
-                Rectangle(
+                Rect.fromLTWH(
                   startX - rectWidth / 2,
                   y - rectEndpointLength / 2,
                   rectWidth,
@@ -203,7 +204,7 @@ class BarErrorDecorator<D> extends BarRendererDecorator<D> {
               // Draw rectangle rendering the outline for the vertical
               // endpoint representing the upper bound.
               canvas.drawRect(
-                Rectangle(
+                Rect.fromLTWH(
                   endX - rectWidth / 2,
                   y - rectEndpointLength / 2,
                   rectWidth,

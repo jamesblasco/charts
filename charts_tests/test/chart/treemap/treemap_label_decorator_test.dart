@@ -98,7 +98,7 @@ class FakeTreeMapRendererElement extends TreeMapRendererElement<String> {
   FakeTreeMapRendererElement(
     this.labelAccessor,
     this.data, {
-    @required Rectangle<double> /*?*/ boundingRect,
+    @required Rect /*?*/ boundingRect,
     @required int index,
     @required bool isLeaf,
   }) : super(
@@ -126,12 +126,12 @@ const _90DegreeClockwise = pi / 2;
 void main() {
   ChartCanvas canvas;
   GraphicsFactory graphicsFactory;
-  Rectangle<double> drawBounds;
+  Rect drawBounds;
 
   setUpAll(() {
     canvas = MockCanvas();
     graphicsFactory = FakeGraphicsFactory();
-    drawBounds = Rectangle(0, 0, 100, 100);
+    drawBounds = Rect.fromLTWH(0, 0, 100, 100);
   });
 
   group('tree map', () {
@@ -357,7 +357,7 @@ void main() {
         'rotation, ltr, multiline, the MaxWidthStrategy of the last '
         'line should be ellipsize', () {
       final data = ['A'];
-      final rect = Rectangle<double>(0, 0, 50, 100);
+      final rect = Rect.fromLTWH(0, 0, 50, 100);
       final renderElement = FakeTreeMapRendererElement(
         (_) => 'This Label is too long for a single line therefore it will be '
             'ellipsized with ellipsis at the end of the new truncated label '

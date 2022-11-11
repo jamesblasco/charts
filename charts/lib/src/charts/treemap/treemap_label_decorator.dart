@@ -51,7 +51,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
     TreeMapRendererElement<D> rendererElement,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
     bool renderVertically = false,
@@ -144,7 +144,7 @@ class TreeMapLabelDecorator<D> extends TreeMapRendererDecorator<D> {
   }
 
   _TreeMapLabelSegment _createLabelSegment(
-    Rectangle elementBoundingRect,
+    Rect elementBoundingRect,
     num labelHeight,
     TextElement labelElement,
     int position, {

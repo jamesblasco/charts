@@ -223,14 +223,13 @@ abstract class LayoutView {
   ViewMeasuredSizes? measure(double maxWidth, double maxHeight);
 
   /// Layout this component.
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds);
+  void layout(Rect componentBounds, Rect drawAreaBounds);
 
   /// Draw this component on the canvas.
   void paint(ChartCanvas canvas, double animationPercent);
 
   /// Bounding box for drawing this component.
-  Rectangle<double>? get componentBounds;
+  Rect? get componentBounds;
 
   /// Whether or not this component is a series renderer that draws series
   /// data.

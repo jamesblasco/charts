@@ -81,7 +81,7 @@ class DatumDetails<D> {
     NullablePoint? chartPosition,
     NullablePoint? chartPositionLower,
     NullablePoint? chartPositionUpper,
-    Rectangle<double>? bounds,
+    Rect? bounds,
     DomainFormatter<D>? domainFormatter,
     double? domainDistance,
     double? measureDistance,
@@ -206,7 +206,7 @@ class DatumDetails<D> {
   /// This is currently only populated by the bar series renderer.
   ///
   /// TODO: Fill this in for other series renderers.
-  final Rectangle<double>? bounds;
+  final Rect? bounds;
 
   /// Distance of [domain] from a given (x, y) coordinate.
   final double? domainDistance;

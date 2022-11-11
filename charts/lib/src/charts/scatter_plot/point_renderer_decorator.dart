@@ -29,7 +29,7 @@ abstract class PointRendererDecorator<D> {
     PointRendererElement<D> pointElement,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
   });

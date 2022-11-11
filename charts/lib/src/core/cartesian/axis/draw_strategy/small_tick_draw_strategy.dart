@@ -97,8 +97,8 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<double> axisBounds,
-    required Rectangle<double> drawAreaBounds,
+    required Rect axisBounds,
+    required Rect drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -136,8 +136,8 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   List<Point<num>> calculateTickPositions(
     TickElement<D> tick,
     AxisOrientation orientation,
-    Rectangle<double> axisBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect axisBounds,
+    Rect drawAreaBounds,
     double tickLength,
   ) {
     Point<num> tickStart;

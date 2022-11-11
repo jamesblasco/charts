@@ -289,9 +289,9 @@ class _LinePointLayoutView<D> extends LayoutView {
 
   final List<int>? dashPattern;
 
-  late Rectangle<double> _drawAreaBounds;
+  late Rect _drawAreaBounds;
 
-  Rectangle<double> get drawBounds => _drawAreaBounds;
+  Rect get drawBounds => _drawAreaBounds;
 
   final bool drawFollowLinesAcrossChart;
 
@@ -316,8 +316,7 @@ class _LinePointLayoutView<D> extends LayoutView {
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
@@ -490,7 +489,7 @@ class _LinePointLayoutView<D> extends LayoutView {
       }
       final point = pointElement.point.toPoint();
 
-      final bounds = Rectangle<double>(
+      final bounds = Rect.fromLTWH(
         point.x - pointElement.radius,
         point.y - pointElement.radius,
         pointElement.radius * 2,
@@ -510,7 +509,7 @@ class _LinePointLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<double> get componentBounds => _drawAreaBounds;
+  Rect get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;

@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show Rectangle, min, max, Point;
+import 'dart:math' show min, max, Point;
 
 import 'package:charts/core.dart';
 
@@ -27,7 +27,7 @@ class CanvasRect {
     this.stroke,
     this.strokeWidth,
   });
-  final Rectangle<double> bounds;
+  final Rect bounds;
   final List<int>? dashPattern;
   final Color? fill;
   final FillPatternType? pattern;
@@ -65,7 +65,7 @@ class CanvasBarStack {
 
     final width = right - left;
     final height = bottom - top;
-    final fullStackRect = Rectangle<double>(left, top, width, height);
+    final fullStackRect = Rect.fromLTWH(left, top, width, height);
 
     return CanvasBarStack._internal(
       segments,
@@ -96,7 +96,7 @@ class CanvasBarStack {
   final bool roundTopRight;
   final bool roundBottomLeft;
   final bool roundBottomRight;
-  final Rectangle<double> fullStackRect;
+  final Rect fullStackRect;
 }
 
 /// A list of [CanvasPieSlice]s to be painted by [ChartCanvas].

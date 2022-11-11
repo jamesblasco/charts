@@ -35,7 +35,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
     String? rendererId,
     SymbolAnnotationRendererConfig<D>? config,
   }) : super(rendererId: rendererId ?? 'symbolAnnotation', config: config);
-  late Rectangle<double> _componentBounds;
+  late Rect _componentBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -196,7 +196,7 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
         final y = componentBounds.top + seriesInfo.rowStart;
 
         final domainAxis = _chart.domainAxis!;
-        final bounds = Rectangle<double>(
+        final bounds =  Rect.fromLTWH(
           componentBounds.left,
           y,
           componentBounds.width,
@@ -233,15 +233,14 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _componentBounds = componentBounds;
 
     super.layout(componentBounds, drawAreaBounds);
   }
 
   @override
-  Rectangle<double> get componentBounds => _componentBounds;
+  Rect get componentBounds => _componentBounds;
 }
 
 class _SeriesInfo<D> {

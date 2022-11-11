@@ -74,7 +74,7 @@ abstract class CustomSymbolRenderer extends SymbolRenderer
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -117,8 +117,7 @@ class _SymbolCustomPaint extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final bounds =
-        Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
+    final bounds = Rect.fromLTWH(0, 0, size.width, size.height);
     final commonColor = color;
     symbolRenderer.paint(
       FlutterChartCanvas(canvas),

@@ -76,8 +76,8 @@ void main() {
 
     var maxWidth = 100.0;
     var maxHeight = 500.0;
-    var componentBounds = Rectangle<double>(0, 0, maxWidth, maxHeight);
-    var drawBounds = Rectangle<double>(0, 0, maxWidth, maxHeight);
+    var componentBounds = Rect.fromLTWH(0, 0, maxWidth, maxHeight);
+    var drawBounds = Rect.fromLTWH(0, 0, maxWidth, maxHeight);
     axis.layout(componentBounds, drawBounds);
 
     verify(drawStrategy.updateTickWidth(

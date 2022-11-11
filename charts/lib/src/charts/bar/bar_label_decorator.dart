@@ -69,7 +69,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle<double> drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     required bool renderingVertically,
     bool rtl = false,
@@ -102,7 +102,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory,
-    Rectangle<double> drawBounds,
+    Rect drawBounds,
     bool rtl,
   ) {
     // Create [TextStyle] from [TextStyle] to be used by all the elements.
@@ -205,9 +205,9 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
               break;
             case BarLabelAnchor.middle:
               labelY = bounds.bottom -
-                      bounds.height / 2 -
-                      totalLabelHeight / 2 +
-                      offsetHeight;
+                  bounds.height / 2 -
+                  totalLabelHeight / 2 +
+                  offsetHeight;
               break;
             case BarLabelAnchor.start:
               labelY = bounds.bottom -
@@ -229,8 +229,8 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
 
         // Center the label inside the bar.
         final labelX = bounds.left +
-                bounds.width / 2 -
-                labelElement.measurement.horizontalSliceWidth / 2;
+            bounds.width / 2 -
+            labelElement.measurement.horizontalSliceWidth / 2;
 
         canvas.drawText(labelElement, labelX, labelY);
         labelsDrawn += 1;
@@ -242,7 +242,7 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
     Iterable<ImmutableBarRendererElement<D>> barElements,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory,
-    Rectangle<double> drawBounds,
+    Rect drawBounds,
     bool rtl,
   ) {
     // Create [TextStyle] from [TextStyle] to be used by all the elements.

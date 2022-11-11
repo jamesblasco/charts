@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+import 'package:charts/charts.dart';
 import 'package:charts/src/core/layout/layout_view.dart';
 
 class SizeList {
@@ -110,8 +111,8 @@ abstract class VerticalMarginStrategy {
   void layout(
     List<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   );
 }
 
@@ -121,8 +122,8 @@ class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   ) {
     var prevBoundsRight = drawAreaBounds.left;
 
@@ -142,7 +143,7 @@ class LeftMarginLayoutStrategy extends VerticalMarginStrategy {
       prevBoundsRight = left - params.viewMargin.left;
 
       // Layout this component.
-      view.layout(Rectangle(left, top, width, height), drawAreaBounds);
+      view.layout(Rect.fromLTWH(left, top, width, height), drawAreaBounds);
 
       i++;
     }
@@ -155,8 +156,8 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   ) {
     var prevBoundsLeft = drawAreaBounds.right;
 
@@ -176,7 +177,7 @@ class RightMarginLayoutStrategy extends VerticalMarginStrategy {
       prevBoundsLeft = left + width + params.viewMargin.right;
 
       // Layout this component.
-      view.layout(Rectangle(left, top, width, height), drawAreaBounds);
+      view.layout(Rect.fromLTWH(left, top, width, height), drawAreaBounds);
 
       i++;
     }
@@ -226,8 +227,8 @@ abstract class HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   );
 }
 
@@ -237,8 +238,8 @@ class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   ) {
     var prevBoundsBottom = drawAreaBounds.top;
 
@@ -259,7 +260,7 @@ class TopMarginLayoutStrategy extends HorizontalMarginStrategy {
       prevBoundsBottom = top - params.viewMargin.top;
 
       // Layout this component.
-      view.layout(Rectangle(left, top, width, height), drawAreaBounds);
+      view.layout(Rect.fromLTWH(left, top, width, height), drawAreaBounds);
 
       i++;
     }
@@ -272,8 +273,8 @@ class BottomMarginLayoutStrategy extends HorizontalMarginStrategy {
   void layout(
     Iterable<LayoutView> views,
     SizeList measuredSizes,
-    Rectangle<double> fullBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect fullBounds,
+    Rect drawAreaBounds,
   ) {
     var prevBoundsTop = drawAreaBounds.bottom;
 
@@ -294,7 +295,7 @@ class BottomMarginLayoutStrategy extends HorizontalMarginStrategy {
       prevBoundsTop = top + height + params.viewMargin.bottom;
 
       // Layout this component.
-      view.layout(Rectangle(left, top, width, height), drawAreaBounds);
+      view.layout(Rect.fromLTWH(left, top, width, height), drawAreaBounds);
 
       i++;
     }

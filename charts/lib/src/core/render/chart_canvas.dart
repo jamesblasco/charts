@@ -65,7 +65,7 @@ abstract class ChartCanvas {
   /// equivalent to "1,2,3,1,2,3."
   void drawLine({
     required List<Point> points,
-    Rectangle<num>? clipBounds,
+    Rect? clipBounds,
     Color? fill,
     Color? stroke,
     bool? roundEndCaps,
@@ -110,7 +110,7 @@ abstract class ChartCanvas {
   /// edges of the polygon. Both must be provided together for a line to appear.
   void drawPolygon({
     required List<Point> points,
-    Rectangle<num>? clipBounds,
+    Rect? clipBounds,
     Color? fill,
     Color? stroke,
     double? strokeWidth,
@@ -123,16 +123,16 @@ abstract class ChartCanvas {
   /// platform) exceeding the draw area will apply a gradient to transparent
   /// with anything exceeding the x pixels to be transparent.
   void drawRect(
-    Rectangle<num> bounds, {
+    Rect bounds, {
     Color? fill,
     Color? stroke,
     double? strokeWidth,
-    Rectangle<num>? drawAreaBounds,
+    Rect? drawAreaBounds,
   });
 
   /// Renders a rounded rectangle.
   void drawRRect(
-    Rectangle<num> bounds, {
+    Rect bounds, {
     Color? fill,
     Color? stroke,
     Color? patternColor,
@@ -157,7 +157,7 @@ abstract class ChartCanvas {
   /// with anything exceeding the x pixels to be transparent.
   void drawBarStack(
     CanvasBarStack canvasBarStack, {
-    Rectangle<num>? drawAreaBounds,
+    Rect? drawAreaBounds,
   });
 
   void drawText(
@@ -170,7 +170,7 @@ abstract class ChartCanvas {
   /// Request the canvas to clip to [clipBounds].
   ///
   /// Applies to all operations until [restClipBounds] is called.
-  void setClipBounds(Rectangle<double> clipBounds);
+  void setClipBounds(Rect clipBounds);
 
   /// Restore
   void resetClipBounds();

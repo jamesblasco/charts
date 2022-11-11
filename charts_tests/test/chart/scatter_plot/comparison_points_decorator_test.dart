@@ -28,18 +28,18 @@ class MyRow {
 
 class TestComparisonPointsDecorator<D> extends ComparisonPointsDecorator<D> {
   List<Point<double>> testComputeBoundedPointsForElement(
-      PointRendererElement<D> pointElement, Rectangle drawBounds) {
+      PointRendererElement<D> pointElement, Rect drawBounds) {
     return computeBoundedPointsForElement(pointElement, drawBounds);
   }
 }
 
 void main() {
   TestComparisonPointsDecorator decorator;
-  Rectangle bounds;
+  Rect bounds;
 
   setUp(() {
     decorator = TestComparisonPointsDecorator<num>();
-    bounds = Rectangle<double>(0, 0, 100, 100);
+    bounds = Rect.fromLTWH(0, 0, 100, 100);
   });
 
   group('compute bounded points', () {

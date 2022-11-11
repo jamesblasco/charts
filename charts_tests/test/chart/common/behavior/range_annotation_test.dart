@@ -65,9 +65,9 @@ class MockGraphicsFactory extends Mock implements GraphicsFactory {}
 class MockTickDrawStrategy extends Mock implements TickDrawStrategy<num> {}
 
 void main() {
-  Rectangle<double> drawBounds;
-  Rectangle<double> domainAxisBounds;
-  Rectangle<double> measureAxisBounds;
+  Rect drawBounds;
+  Rect domainAxisBounds;
+  Rect measureAxisBounds;
 
   ConcreteChart _chart;
 
@@ -145,9 +145,9 @@ void main() {
   }
 
   setUpAll(() {
-    drawBounds = Rectangle<double>(0, 0, 100, 100);
-    domainAxisBounds = Rectangle<double>(0, 0, 100, 100);
-    measureAxisBounds = Rectangle<double>(0, 0, 100, 100);
+    drawBounds = Rect.fromLTWH(0, 0, 100, 100);
+    domainAxisBounds = Rect.fromLTWH(0, 0, 100, 100);
+    measureAxisBounds = Rect.fromLTWH(0, 0, 100, 100);
   });
 
   setUp(() {

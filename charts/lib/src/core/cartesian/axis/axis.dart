@@ -149,8 +149,8 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   /// Ticks used by the axis for drawing.
   final _axisTicks = <AxisTicksElement<D>>[];
 
-  Rectangle<double>? _componentBounds;
-  late Rectangle<double>? _drawAreaBounds;
+  Rect? _componentBounds;
+  late Rect? _drawAreaBounds;
 
   /// Order for chart layout painting.
   ///
@@ -544,8 +544,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
 
   /// Layout this component.
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _componentBounds = componentBounds;
     _drawAreaBounds = drawAreaBounds;
 
@@ -578,7 +577,7 @@ abstract class MutableAxisElement<D> extends ImmutableAxisElement<D>
   bool get isSeriesRenderer => false;
 
   @override
-  Rectangle<double>? get componentBounds => _componentBounds;
+  Rect? get componentBounds => _componentBounds;
 
   bool get drawAxisLine {
     if (forceDrawAxisLine != null) {
@@ -649,8 +648,7 @@ class OrdinalAxisElement extends MutableAxisElement<String> {
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     super.layout(componentBounds, drawAreaBounds);
 
     // We are purposely clearing the viewport starting domain and data size

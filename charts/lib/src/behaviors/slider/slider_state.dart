@@ -173,7 +173,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
   Point<double>? _previousDomainCenterPoint;
 
   /// Bounding box for the slider drag handle.
-  Rectangle<double>? _handleBounds;
+  Rect? _handleBounds;
 
   /// Domain value of the current slider position.
   ///
@@ -257,7 +257,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
   }
 
   bool _sliderContainsPoint(Point<double> chartPoint) {
-    return _handleBounds!.containsPoint(chartPoint);
+    return _handleBounds!.containsPoint(chartPoint.offset);
   }
 
   /// Sets the drag state to "initial" when new data is drawn on the chart.
@@ -288,12 +288,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
     final element = _SliderElement<D>(
       domainCenterPoint:
           Point<double>(domainCenterPoint.x, domainCenterPoint.y),
-      buttonBounds: Rectangle<double>(
-        handleBounds.left,
-        handleBounds.top,
-        handleBounds.width,
-        handleBounds.height,
-      ),
+      buttonBounds: handleBounds,
       fill: _style.fillColor,
       stroke: _style.strokeColor,
       strokeWidth: _style.strokeWidth,
@@ -421,7 +416,7 @@ class SliderState<D> implements ChartBehaviorState<D> {
       }
 
       // Move the slider handle along the domain axis.
-      _handleBounds = Rectangle<double>(
+      _handleBounds = Rect.fromLTWH(
         _domainCenterPoint!.x -
             _style.handleSize.width / 2 +
             _style.handleOffset.x,
@@ -534,7 +529,7 @@ class SliderStyle extends Equatable {
   SliderStyle({
     Color? fillColor,
     this.handleOffset = const Point<double>(0, 0),
-    this.handleSize = const Rectangle<double>(0, 0, 10, 20),
+    this.handleSize = const Rect.fromLTWH(0, 0, 10, 20),
     Color? strokeColor,
     this.handlePosition = SliderHandlePosition.middle,
     this.strokeWidth = 2.0,
@@ -554,7 +549,7 @@ class SliderStyle extends Equatable {
   SliderHandlePosition handlePosition;
 
   /// Specifies the size of the slider handle.
-  Rectangle<double> handleSize;
+  Rect handleSize;
 
   /// Stroke width of the slider line and the slider handle.
   double strokeWidth;
@@ -598,9 +593,9 @@ class _SliderLayoutView<D> extends LayoutView {
   @override
   final LayoutViewConfig layoutConfig;
 
-  late Rectangle<double> _drawAreaBounds;
+  late Rect _drawAreaBounds;
 
-  Rectangle<double> get drawBounds => _drawAreaBounds;
+  Rect get drawBounds => _drawAreaBounds;
 
   @override
   GraphicsFactory? graphicsFactory;
@@ -621,8 +616,7 @@ class _SliderLayoutView<D> extends LayoutView {
   }
 
   @override
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     _drawAreaBounds = drawAreaBounds;
   }
 
@@ -649,7 +643,7 @@ class _SliderLayoutView<D> extends LayoutView {
   }
 
   @override
-  Rectangle<double> get componentBounds => _drawAreaBounds;
+  Rect get componentBounds => _drawAreaBounds;
 
   @override
   bool get isSeriesRenderer => false;
@@ -665,7 +659,7 @@ class _SliderElement<D> {
     required this.strokeWidth,
   });
   Point<double> domainCenterPoint;
-  Rectangle<double> buttonBounds;
+  Rect buttonBounds;
   Color fill;
   Color stroke;
   double strokeWidth;
@@ -711,12 +705,7 @@ class _SliderElement<D> {
         ((targetBounds.left - previousBounds.left) * animationPercent) +
             previousBounds.left;
 
-    buttonBounds = Rectangle<double>(
-      left,
-      top,
-      right - left,
-      bottom - top,
-    );
+    buttonBounds = Rect.fromLTRB(left, top, right, bottom);
 
     fill = getAnimatedColor(previous.fill, target.fill, animationPercent);
 
@@ -755,12 +744,7 @@ class _AnimatedSlider<D> {
     final bottom = targetBounds.bottom;
     final left = right;
 
-    newTarget.buttonBounds = Rectangle<double>(
-      left,
-      top,
-      right - left,
-      bottom - top,
-    );
+    newTarget.buttonBounds = Rect.fromLTRB(left, top, right, bottom);
 
     // Animate the stroke width to 0 so that we don't get a lingering line after
     // animation is done.
@@ -845,10 +829,9 @@ class SliderTester<D> {
 
   D? get domainValue => behavior._domainValue;
 
-  Rectangle<double>? get handleBounds => behavior._handleBounds;
+  Rect? get handleBounds => behavior._handleBounds;
 
-  void layout(
-      Rectangle<double> componentBounds, Rectangle<double> drawAreaBounds) {
+  void layout(Rect componentBounds, Rect drawAreaBounds) {
     behavior._view.layout(componentBounds, drawAreaBounds);
   }
 

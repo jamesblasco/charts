@@ -43,7 +43,7 @@ abstract class SymbolRenderer extends BaseSymbolRenderer {
 
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -88,7 +88,7 @@ class RoundedRectSymbolRenderer extends SymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -139,7 +139,7 @@ class LineSymbolRenderer extends SymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -199,7 +199,7 @@ class CircleSymbolRenderer extends SymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -236,7 +236,7 @@ class RectSymbolRenderer extends SymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,
@@ -264,7 +264,7 @@ class TriangleSymbolRenderer extends SymbolRenderer {
   @override
   void paint(
     ChartCanvas canvas,
-    Rectangle<num> bounds, {
+    Rect bounds, {
     List<int>? dashPattern,
     Color? fillColor,
     FillPatternType? fillPattern,

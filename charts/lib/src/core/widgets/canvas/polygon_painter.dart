@@ -33,7 +33,7 @@ class PolygonPainter {
     required Canvas canvas,
     required Paint paint,
     required List<Point> points,
-    Rectangle<num>? clipBounds,
+    Rect? clipBounds,
     Color? fill,
     Color? stroke,
     double? strokeWidth,

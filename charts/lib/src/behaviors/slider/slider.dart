@@ -65,7 +65,7 @@ class SliderBehavior<D> extends ChartBehavior<D> {
     eventTrigger ??= SelectionTrigger.tapAndDrag;
     handleRenderer ??= const RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.
-    style ??= SliderStyle(handleSize: const Rectangle<double>(0, 0, 20, 30));
+    style ??= SliderStyle(handleSize: const Rect.fromLTWH(0, 0, 20, 30));
     return SliderBehavior._internal(
       eventTrigger: eventTrigger,
       handleRenderer: handleRenderer,
@@ -164,7 +164,6 @@ class SliderBehavior<D> extends ChartBehavior<D> {
         snapToDatum: snapToDatum,
         style: style,
       );
-
 
   @override
   String get role => 'Slider-${eventTrigger.toString()}';

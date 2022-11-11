@@ -184,8 +184,8 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     ChartCanvas canvas,
     TickElement<D> tick, {
     required AxisOrientation orientation,
-    required Rectangle<double> axisBounds,
-    required Rectangle<double> drawAreaBounds,
+    required Rect axisBounds,
+    required Rect drawAreaBounds,
     required bool isFirst,
     required bool isLast,
     bool collision = false,
@@ -311,8 +311,8 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     RangeAxisTicks<D> tick,
     ChartCanvas canvas,
     AxisOrientation orientation,
-    Rectangle<double> axisBounds,
-    Rectangle<double> drawAreaBounds,
+    Rect axisBounds,
+    Rect drawAreaBounds,
     bool isFirst,
     bool isLast,
   ) {
@@ -352,31 +352,31 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     final rangeEndTickEnd = rangeEndPositions.last;
 
     // Draw range shade.
-    Rectangle rangeShade;
+    Rect rangeShade;
     switch (orientation) {
       case AxisOrientation.top:
       case AxisOrientation.bottom:
-        rangeShade = Rectangle(
-          rangeStartTickStart.x,
+        rangeShade = Rect.fromLTWH(
+          rangeStartTickStart.x.toDouble(),
           rangeStartTickStart.y + rangeShadeOffsetFromAxis,
-          rangeEndTickStart.x - rangeStartTickStart.x,
+          rangeEndTickStart.x.toDouble() - rangeStartTickStart.x,
           rangeShadeHeight,
         );
         break;
       case AxisOrientation.right:
-        rangeShade = Rectangle(
+        rangeShade = Rect.fromLTWH(
           rangeEndTickStart.x + rangeShadeOffsetFromAxis,
-          rangeEndTickStart.y,
+          rangeEndTickStart.y.toDouble(),
           rangeShadeHeight,
-          rangeEndTickStart.y - rangeEndTickStart.y,
+          rangeEndTickStart.y.toDouble() - rangeEndTickStart.y,
         );
         break;
       case AxisOrientation.left:
-        rangeShade = Rectangle(
+        rangeShade = Rect.fromLTWH(
           rangeEndTickStart.x - rangeShadeOffsetFromAxis - rangeShadeHeight,
-          rangeEndTickStart.y,
+          rangeEndTickStart.y.toDouble(),
           rangeShadeHeight,
-          rangeEndTickStart.y - rangeEndTickStart.y,
+          rangeEndTickStart.y.toDouble() - rangeEndTickStart.y,
         );
         break;
     }

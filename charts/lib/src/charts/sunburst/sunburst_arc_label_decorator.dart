@@ -71,7 +71,7 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
     List<ArcRendererElementList<D>> arcElementsList,
     ChartCanvas canvas,
     GraphicsFactory graphicsFactory, {
-    required Rectangle drawBounds,
+    required Rect drawBounds,
     required double animationPercent,
     bool rtl = false,
   }) {

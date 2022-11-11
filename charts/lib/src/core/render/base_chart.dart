@@ -15,6 +15,7 @@
 
 import 'dart:math' show Rectangle, Point;
 
+import 'package:charts/charts.dart';
 import 'package:charts/core.dart';
 import 'package:meta/meta.dart' show protected;
 
@@ -227,7 +228,7 @@ abstract class BaseRenderChart<D> {
     return _usingRenderers.any(
       (String rendererId) => getSeriesRenderer(rendererId)
           .componentBounds!
-          .containsPoint(chartPosition),
+          .contains(chartPosition.offset),
     );
   }
 
@@ -327,8 +328,8 @@ abstract class BaseRenderChart<D> {
 
       for (final dynamic datum in series.data) {
         details.add(
-          getSeriesRenderer(rendererId)
-              .getDetailsForSeriesDatum(SeriesDatum<D>(series:series, datum:datum)),
+          getSeriesRenderer(rendererId).getDetailsForSeriesDatum(
+              SeriesDatum<D>(series: series, datum: datum)),
         );
       }
     }
@@ -456,7 +457,7 @@ abstract class BaseRenderChart<D> {
   }
 
   /// Returns the bounds of the chart draw area.
-  Rectangle<double> get drawAreaBounds => _layoutManager.drawAreaBounds;
+  Rect get drawAreaBounds => _layoutManager.drawAreaBounds;
 
   double get marginBottom => _layoutManager.marginBottom;
 
@@ -468,8 +469,7 @@ abstract class BaseRenderChart<D> {
 
   /// Returns the combined bounds of the chart draw area and all layout
   /// components that draw series data.
-  Rectangle<double> get drawableLayoutAreaBounds =>
-      _layoutManager.drawableLayoutAreaBounds;
+  Rect get drawableLayoutAreaBounds => _layoutManager.drawableLayoutAreaBounds;
 
   //
   // Draw methods
